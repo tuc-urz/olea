@@ -1,0 +1,19 @@
+{
+    "name": "@openasist/view-timetable-list",
+    "version": "0.0.1",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+      "@openasist/core": "0.0.1",
+      "moment": "^2.29.4",
+      "react-native-elements": "^3.4.3",
+      "react-native-paper": "^5.14.5",
+      "react-native-swipe-gestures": "^1.0.5"
+    },
+    "author": "",
+    "license": "Apache-2.0"
+  }
+

@@ -1,0 +1,19 @@
+{
+  "name": "@openasist/context-connectivity",
+  "version": "0.0.1",
+  "description": "Context for connectivity status",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "context",
+    "connectivity"
+  ],
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@react-native-community/netinfo": "^11.4.1"
+  }
+}

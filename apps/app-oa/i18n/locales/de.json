@@ -1,0 +1,378 @@
+{
+  "home": {
+    "noConnectionTitle": "Keine Serverbindung",
+    "noConnectionSubtitle": "Verbindungsprobleme",
+    "noConnectionText": "Leider konnte keine Verbindung mit dem Server hergestellt werden. Bitte ziehen Sie die Ansicht mit dem Finger nach unten um zu aktualisieren.",
+    "noItemTitle": "Kein neuer Eintrag verfügbar",
+    "noItemSubtitle": "Neuigkeiten",
+    "noItemText": "Aktuell gibt es leider keine Neuigkeiten. Bitte ziehen Sie die Ansicht mit dem Finger nach unten um zu aktualisieren.",
+    "readMore": "Weiterlesen",
+    "title": "TU Chemnitz"
+  },
+  "books": {
+    "library": "Bibliothek",
+    "format": "Format",
+    "edition": "Edition",
+    "language": "Sprache",
+    "publisher": "Herausgeber",
+    "status": "Status",
+    "shelf": "Regal",
+    "location": "Standort",
+    "availability": "Verfügbarkeit",
+    "available": "Verfügbar",
+    "availableCount": "x verfügbar",
+    "notAvailable": "Nicht verfügbar",
+    "from": "von",
+    "noLibraryFound": "Es konnte keine Bibliothek gefunden werden, in der das Medium verfügbar ist. Bei eBooks und digitalen Medien ist der Status ggf. nicht verfügbar.",
+    "couldNotLoad": "Buchdetails konnten nicht geladen werden!"
+  },
+  "canteen": {
+    "allergeneTitle": "Allergene und Zusatzstoffe",
+    "title": "Mensa",
+    "noMealAvailable": "Leider sind aktuell keine Gerichte verfügbar.",
+    "navCanteens": "Zur Mensa Übersicht",
+    "navSettings": "Zur Mensa Einstellung",
+    "todayMeal": "Heutiges Gericht",
+    "priceTypeEmployee": "Mitarbeiter",
+    "priceTypeStudent": "Student",
+    "priceTypeGuest": "Gast",
+    "weekend": "An Wochenenden und feiertags geschlossen",
+    "closed": "Heute geschlossen",
+    "priceTypeShortEmployee": "M",
+    "priceTypeShortStudent": "S",
+    "priceTypeShortGuest": "G",
+    "price": "Preis",
+    "prices": "Preise",
+    "meal": "Essen",
+    "news": "MENSA",
+    "notAvailable": "Es konnten noch keine Mensen gefunden werden, bitte warte einen Moment",
+    "notice": "Die Tagesangebote der favorisierten Mensen werden auf der Startseite angezeigt. Ist keine Mensa markiert, werden sämtliche Angebote angezeigt.",
+    "noMeals": "Kein Essen für gew. Filter",
+    "amountOfFilteredMeals": "{{filteredMealAmount}}/{{mealAmount}} Essen für Filter: {{filters, list(style: long; type: conjuncunittion)}}",
+    "allergens": {
+      "title": "Kennzeichnungspflichtige Allergene",
+      "cereals containing gluten": "(13) glutenhaltiges Getreide",
+      "crustaceans": "(14) Krebstiere",
+      "egg": "(15) Eier",
+      "fish": "(16) Fisch",
+      "peanuts": "(17) Erdnüsse",
+      "soy": "(18) Soja",
+      "milk/lactose": "(19) Milch/Milchzucker",
+      "nuts": "(20) Schalenfrüchte/Nüsse",
+      "celery": "(21) Sellerie",
+      "mustard": "(22) Senf",
+      "sesame": "(23) Sesam",
+      "sulfite/sulfur dioxide": "(24) Sulfit/Schwefeldioxid",
+      "lupine": "(25) Lupine",
+      "mollusc": "(26) Weichtiere",
+      "insects": "(27) Insekten",
+      "almond": "(71) Mandel",
+      "hazelnut": "(72) Haselnüsse",
+      "walnut": "(73) Walnüsse",
+      "cashew": "(74) Cashewnüsse",
+      "pecan": "(75) Pekannüsse",
+      "brazil nut": "(76) Paranüsse",
+      "pistachio": "(77) Pistazien",
+      "macadamia": "(78) Macadamianüsse",
+      "wheat": "(81) Weizen",
+      "rye": "(82) Roggen",
+      "barley": "(83) Gerste",
+      "oat": "(84) Hafer",
+      "spelt": "(85) Dinkel",
+      "kamut": "(86) Kamut"
+    },
+    "additives": {
+      "title": "Kennzeichnungspflichtige Zusatzstoffe",
+      "colouring": "(1) Farbstoffe",
+      "preservatives": "(2) Konservierungsstoffe",
+      "antioxidants": "(3) Antioxidationsmittel",
+      "flavour enhancers": "(4) mit Geschmacksverstärker",
+      "sulphurated": "(5) geschwefelt",
+      "blackened": "(6) geschwärzt",
+      "waxed": "(7) gewachst",
+      "phosphate": "(8) Phosphat",
+      "sweetener": "(9) Süßungsmittel",
+      "phenylalanine": "(10) phenylalaninhaltig",
+      "caffeine": "(11) koffeinhaltig",
+      "chinine": "(12) chininhaltig",
+      "azodyes": "(13) Azofarbstoffe"
+    },
+    "selection": {
+      "vegan": "vegan",
+      "vegetarian": "vegetarisch",
+      "pork": "Schwein",
+      "beef": "Rind",
+      "venison": "Wild",
+      "lamb": "Lamm",
+      "chicken": "Huhn",
+      "fish/seafood": "Fisch/Meerestiere",
+      "alcohol": "Alkohol",
+      "climate-dish": "Klimateller"
+    },
+    "favoriteCanteen": {
+      "title": "Mensen für die Startseite wählen",
+      "select": "Wähle Mensen für die Startseite"
+    }
+  },
+  "common": {
+    "noDetails": "Keine Angaben",
+    "dayMoShort": "Mo",
+    "dayTuShort": "Di",
+    "dayWeShort": "Mi",
+    "dayThShort": "Do",
+    "dayFrShort": "Fr",
+    "daySaShort": "Sa",
+    "daySuShort": "So",
+    "dayMo": "Montag",
+    "dayTu": "Dienstag",
+    "dayWe": "Mittwoch",
+    "dayTh": "Donnerstag",
+    "dayFr": "Freitag",
+    "daySa": "Samstag",
+    "daySu": "Sonntag",
+    "isoWeekDay": {
+      "1": {
+        "long": "Montag",
+        "short": "Mo"
+      },
+      "2": {
+        "long": "Dienstag",
+        "short": "Di"
+      },
+      "3": {
+        "long": "Mittwoch",
+        "short": "Mi"
+      },
+      "4": {
+        "long": "Donnerstag",
+        "short": "Do"
+      },
+      "5": {
+        "long": "Freitag",
+        "short": "Fr"
+      },
+      "6": {
+        "long": "Samstag",
+        "short": "Sa"
+      },
+      "7": {
+        "long": "Sonntag",
+        "short": "So"
+      }
+    },
+    "time": "Uhr",
+    "minutes": "min",
+    "notAvailableShort": "n.V.",
+    "changeLabel": "Ändern",
+    "okLabel": "Ok",
+    "cancelLabel": "Abbrechen",
+    "openInBrowser": "Im Browser öffnen",
+    "reload": "Neu laden"
+  },
+  "contact": {
+    "title": "Kontakt",
+    "contactInformation": "Kontaktdaten",
+    "phone": "Telefon",
+    "building": "Gebäude",
+    "department": "Abteilung",
+    "room": "Raum",
+    "email": "Email",
+    "couldNotLoad": "Kontakt konnte nicht geladen werden!"
+  },
+  "corona": {
+    "title": "Studienguide",
+    "menuEntriesNotAvailable": "Informationen nicht verfügbar"
+  },
+  "course": {
+    "nextLecture": "Deine nächste Vorlesung",
+    "lectureInformation": "Infos zur Vorlesung",
+    "noLectureFound": "Keine Veranstaltungen gefunden. Bitte importiere zunächst deinen Stundenplan.",
+    "noLecturesAvailable": "Du hast heute keine anstehenden Veranstaltungen. Füge Veranstaltungen im Vorlesungsverzeichnis zu deinem Stundenplan hinzu.",
+    "couldNotLoad": "Vorlesungsdaten konnten nicht geladen werden!",
+    "lecturer": "Tutor"
+  },
+  "news": {
+    "title": "Neuigkeiten",
+    "feeds": "Newsfeeds",
+    "noResult": "Aktuell keine News verfügbar.",
+    "couldNotLoadNews": "Nachrichten konnten nicht geladen werden!",
+    "couldNotLoad": "Nachricht konnte nicht geladen werden!"
+  },
+  "opal": {
+    "title": "OPAL",
+    "url": "https://bildungsportal.sachsen.de/opal"
+  },
+  "quicklinks": {
+    "title": "Wichtige Webseiten",
+    "titles": {
+      "opal": "OPAL",
+      "openasist": "OLEA",
+      "library": "Bib"
+    },
+    "urls": {
+      "library": "https://bibliothek.htwk-leipzig.de"
+    }
+  },
+  "room": {
+    "title": "Raum",
+    "directory": "Raumverzeichnis",
+    "building": "Gebäude",
+    "address": "Anschrift",
+    "campusFinderLink": "Link zum Campusplan",
+    "googleMapsLink": "In Google-Maps anzeigen",
+    "old": "alt",
+    "campusFinder": "Campusplan",
+    "googleMaps": "Google Maps"
+  },
+  "search": {
+    "title": "Kontakte- und Raumsuche",
+    "inProgress": "Dieser Vorgang dauert einen Moment. Bitte warten ...",
+    "noResults": "Nichts gefunden!",
+    "noResultsTitle": "Ergebnisse nicht gefunden",
+    "noResultsSubtitle": "Wir können keinen Artikel finden, der mit Ihrer Sucheingabe übereinstimmt.",
+    "noInternetTitle": "Wir können keinen Artikel finden, der mit Ihrer Sucheingabe übereinstimmt.",
+    "tabs": {
+      "all": "Alle",
+      "books": "Bücher",
+      "contacts": "Kontakte",
+      "rooms": "Räume",
+      "news": "News"
+    }
+  },
+  "settings": {
+    "common": {
+      "title": "Allgemeine Einstellungen",
+      "language": "Sprache",
+      "languageChange": "Sprache ändern",
+      "languageChangeText": "Sind Sie sicher, dass Sie die Sprache ändern möchten?",
+      "languageChangeOk": "Ja",
+      "languages": {
+        "de": "Deutsch",
+        "en": "English"
+      }
+    },
+    "canteens": {
+      "title": "Mensa-Einstellungen",
+      "priceSelection": "Preiskategorie wählen",
+      "preferredSelections": "Bevorzugte Ernährungsweise"
+    },
+    "weather": {
+      "title": "Wetter Einstellungen",
+      "location": "Standort für Wetter",
+      "locations": {
+        "uni": "Universität - Straße der Nationen",
+        "user": "Nutzerstandort"
+      }
+    },
+    "develop": {
+      "dialog": "Entwickleroptionen",
+      "useStagingServer": "Stage-Server verwenden",
+      "notificationSubscriberId": "SubscriberID",
+      "resetPushMessage": "Push Nachricht zurücksetzen",
+      "showDeepLink": "Deep Link Alert anzeigen"
+    },
+    "accessibility": {
+      "title": "Barrierefreiheit",
+      "highContrast": "Hoher Kontrast",
+      "increaseFontSize": "Große Schrift",
+      "restartRequired": "Neustart erforderlich",
+      "restartRequiredDesc": "Damit alle Änderungen wirksam werden, muss die App neu gestartet werden. Bitte führen Sie diesen manuell durch, wenn sich die App nicht selbst neu startet.",
+      "cancelRestart": "Jetzt nicht",
+      "doRestart": "Neustarten"
+    },
+    "version": {
+      "title": "App-Info",
+      "version": "Aktuelle Version",
+      "unknown": "Unbekannt"
+    },
+    "notifications": {
+      "title": "Push Benachrichtigungen",
+      "enablePushNotifications": "Push-Benachrichtigungen an/aus",
+      "enableAllNotifications": "Alle Benachrichtigungen erhalten",
+      "feeds": "Newsfeeds",
+      "alert": "Alarmierung bei Gefahren",
+      "alertDesc": "erhalte bei Gefahren in der Hochschule eine Nachricht",
+      "grades": "Neue Noten im QiS",
+      "gradesDesc": "erhalte eine Nachricht, sobald eine Note eingetragen wird",
+      "activationMessageTitle": "Push Benachrichtigungen aktivieren",
+      "activationMessageDesc": "Um dir Push Benachrichtigungen zusenden zu können, werden Google Services verwendet.",
+      "activationMessageCancel": "Nicht aktivieren",
+      "activationMessageOk": "Aktivieren",
+      "initialMessageTitle": "Neue Funktion",
+      "initialMessageContent": "Ab sofort sind alle Mensen des Studentenwerks Leipzig verfügbar.In den Einstellungen könnt Ihr die anzuzeigenden Mensen für die Startseite auswählen."
+    }
+  },
+  "timetable": {
+    "title": "Stundenplan",
+    "moreEvents": "Sonstige Veranstaltungen",
+    "notImportedYet": "Sie haben noch keinen Stundenplan importiert. Dies können Sie wie folgt tun:\n\n 1. Auf der folgenden Webseite können Sie einen individuellen Stundenplan erstellen: https://cal.htwk-leipzig.de\n\n 2. Kopieren Sie den Link oder Token für die App und fügen Sie diesen hier ein.",
+    "inputTimetableCode": "Sie haben bereits einen Stundenplan hinterlegt.\nBitte geben Sie einen Link oder Token ein, um einen anderen Stundenplan zu importieren. Bitte beachten Sie, dass Ihr aktueller Plan dadurch entfernt wird.\nAuf folgender Webseite können Sie einen neuen individuellen Stundenplan erstellen: https://cal.htwk-leipzig.de",
+    "importInProgress": "Ihr Stundenplan wird importiert.\nDies kann einige Minuten dauern.\nDie App kann währenddessen weiter genutzt werden.",
+    "inputPlaceholder": "Token oder Code",
+    "importButton": "Stundenplan importieren",
+    "noEvents": "Keine Ereignisse",
+    "evenWeek": "Gerade Woche",
+    "oddWeek": "Ungerade Woche",
+    "weekNumber": "KW {{kw}}",
+    "close": "Schließen",
+    "errorCodeShort": {
+      "title": "Stundenplan-Code zu kurz",
+      "message": "Bitte geben Sie alle 8 Zeichen des Stundenplan-Codes ein."
+    },
+    "codeNotFoundError": "Zu ihrem eingegebenen Code {{timetableCode}} wurden keine Daten gefunden!",
+    "importError": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.",
+    "today": "HEUTE",
+    "day": "Tag",
+    "week": "Woche",
+    "month": "Monat",
+    "deleteCode": "Code löschen"
+  },
+  "weather": {
+    "sunny": "Sonnig",
+    "partlySunny": "Teilweise bewölkt",
+    "rainy": "Regen",
+    "thunderstorm": "Sturm",
+    "notAvailable": "Wetter aktuell nicht verfügbar"
+  },
+  "jobs": {
+    "noJobsTitle": "Es konnten keine Stellenangebote gefunden werden, bitte versuche es später noch einmal."
+  },
+  "menu": {
+    "title": "Menü",
+    "titles": {
+      "about": "Über diese App",
+      "aboutUs": "Über OLEA",
+      "accessibility": "Barrierefreiheit",
+      "canteens": "Mensen",
+      "corona": "Corona Info",
+      "dataPolicy": "Datenschutz",
+      "feedback": "Feedback zur App",
+      "hochschulinfo": "Infos Hochschulbetrieb",
+      "hozapp": "Hochschulsport-App",
+      "imprint": "Impressum",
+      "job": "Stellenportal",
+      "library": "Hochschulbibliothek",
+      "opal": "OPAL",
+      "pts": "Haltestellenauskunft",
+      "services": "Services",
+      "settings": "Einstellungen",
+      "settingsAccessibility": "Barrierefreiheit Einstellungen",
+      "settingsCanteens": "Mensa Einstellungen",
+      "settingsGeneral": "Allgemeine Einstellungen",
+      "settingsWeather": "Wetter Einstellungen",
+      "settingsNotifications": "Benachrichtigungen",
+      "studienguide": "Studien-Guide",
+      "timetable": "Stundenplan",
+      "timetableCalendar": "Stundenplan (neu)",
+      "version": "App-Info",
+      "wlan": "WLAN",
+      "howhy": "HOWHY - learning by playing"
+    },
+    "urls": {
+      "feedback": "https://www.tu-chemnitz.de/urz/mail/fba.html?1-a29tbXVuaWthdGlvbkA="
+    }
+  },
+  "warning": {
+    "noConnection": "Keine Internetverbindung"
+  }
+}

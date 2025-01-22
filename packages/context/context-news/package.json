@@ -1,0 +1,16 @@
+{
+  "name": "@openasist/context-news",
+  "version": "0.0.1",
+  "description": "Context for news",
+  "main": "index.js",
+  "type": "module",
+  "keywords": [
+    "context",
+    "news"
+  ],
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@openasist/base-api-provider": "^0.0.1"
+  }
+}

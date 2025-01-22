@@ -1,0 +1,6 @@
+{
+    "name": "OLEA (staging)",
+    "android": {
+        "package": "de.openasist.staging"
+    }
+}

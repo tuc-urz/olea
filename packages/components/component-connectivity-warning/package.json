@@ -1,0 +1,15 @@
+{
+  "name": "@openasist/component-connectivity-warning",
+  "version": "0.0.1",
+  "description": "Displays a small warning if the user is offline",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@openasist/context-connectivity": "0.0.1",
+    "react-native-paper": "^5.14.5"
+  }
+}

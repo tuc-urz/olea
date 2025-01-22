@@ -1,0 +1,59 @@
+{
+  "accessibility": {
+    "topNewsHint": "Read article",
+    "appbar": {
+      "back": "Back to last view",
+      "navigateBack": "Navigate back",
+      "changeFavorites": "Change favorites",
+      "saveFavorites": "Save favorites",
+      "reload": "Reload",
+      "search": "Search"
+    },
+    "navigation":{
+      "dashboard": "Start",
+      "search": "Search",
+      "canteens": "Canteens",
+      "feeds": "News",
+      "menu": "Menu",
+      "timetable": "Timetable"
+    },
+    "canteens": {
+      "isFavorite": "marked as favorite",
+      "isNotFavorite": "not marked as favorite."
+    },
+    "pts": {
+      "isFavorite": "marked as favorite.",
+      "isNotFavorite": "not marked as favorite.",
+      "centerLocation": "Center location on map.",
+      "isDeparted": "{{type}} in the direction of {{direction}}. Line {{line}}. Already departed.",
+      "departureTime": "{{type}} in the direction of {{direction}}. Line {{line}}. Departure time {{time}}.",
+      "minutesUntilDeparture": "{{minutes}} Minutes to departure.",
+      "speechTime": ""
+    },
+    "jobs": {
+      "descriptionWithCompany": "{{title}} at {{company}} in {{place}}",
+      "descriptionWithoutCompany": "{{title}} in {{place}}"
+    },
+    "weather": "The current weather: {{temperature}} Celsius, {{description}}",
+    "feedNewsItem": "{{news}}. From {{date}}",
+    "feedNewsItemHint": "Read article",
+    "search": {
+      "searchBarClearButton": "clear"
+    },
+    "timetable": {
+      "startTime": "starts",
+      "endTime": "ends",
+      "to": "to",
+      "at": "at",
+      "downloadTimetableButton": "Download timetable",
+      "showImportButton": "Show import dialog",
+      "showTimetableButton": "Show timetable"
+    },
+    "quicklinks": {
+      "externalLinkSymbol": "Web pages are opened in the browser",
+      "titles": {
+        "studyservice": "study service"
+      }
+    }
+  }
+}

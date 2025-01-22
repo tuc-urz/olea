@@ -1,0 +1,60 @@
+{
+  "accessibility": {
+    "topNewsHint": "Beitrag lesen",
+    "appbar": {
+      "back": "Zurück zu vorherigen Ansicht",
+      "navigateBack": "Zurückgehen",
+      "changeFavorites": "Favoriten ändern",
+      "saveFavorites": "Favoriten speichern",
+      "reload": "Neu laden",
+      "search": "Suche"
+    },
+    "navigation":{
+      "dashboard": "Start",
+      "search": "Suche",
+      "canteens": "Mensa",
+      "feeds": "Neuigkeiten",
+      "menu": "Menü",
+      "timetable": "Stundenplan"
+    },
+    "canteens": {
+      "isFavorite": "Ist als Favorit markiert.",
+      "isNotFavorite": "Ist nicht als Favorit markiert."
+    },
+    "pts": {
+      "isFavorite": "Ist als Favorit markiert.",
+      "isNotFavorite": "Ist nicht als Favorit markiert.",
+      "centerLocation": "Standort auf Karte zentrieren.",
+      "isDeparted": "{{type}} in Richtung {{direction}}. Linie {{line}}. Bereits abgefahren.",
+      "departureTime": "{{type}} in Richtung {{direction}}. Linie {{line}}. Abfahrtszeit {{time}}.",
+      "minutesUntilDeparture": "{{minutes}} Minuten bis zur Abfahrt.",
+      "speechTime": "Uhr"
+    },
+    "jobs": {
+      "descriptionWithCompany": "{{title}} bei {{company}} in {{place}}",
+      "descriptionWithoutCompany": "{{title}} in {{place}}"
+    },
+    "weather": "Das aktuelle Wetter: {{temperature}} Celsius, {{description}}",
+    "feedNewsItem": "{{news}}. Vom {{date}}",
+    "feedNewsItemHint": "Beitrag lesen",
+    "search": {
+      "searchBarClearButton": "löschen"
+    },
+    "timetable": {
+      "startTime": "startet",
+      "endTime": "endet",
+      "to": "bis",
+      "at": "um",
+      "downloadTimetableButton": "Stundenplan herunterladen",
+      "showImportButton": "Import dialog öffnen",
+      "showTimetableButton": "Stundenplan anzeigen"
+    },
+    "quicklinks": {
+      "externalLinkSymbol" : "Webseiten werden im Browser geöffnet",
+      "titles": {
+        "library": "Bibliothek",
+        "studyservice": "Studienportal"
+      }
+    }
+  }
+}

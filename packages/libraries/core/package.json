@@ -1,0 +1,18 @@
+{
+  "name": "@openasist/core",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@openasist/core-plugins": "^0.0.1",
+    "@react-native-async-storage/async-storage": "~2.2.0",
+    "@openasist/redux-offline": "^2.6.0-expo.0",
+    "react-redux": "^9.2.0",
+    "redux": "^4.0.5"
+  }
+}

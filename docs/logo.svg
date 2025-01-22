@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="3647"
+   height="784"
+   viewBox="0 0 964.93539 207.43333"
+   version="1.1"
+   id="svg145"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs142" />
+  <g
+     id="layer1">
+    <rect
+       style="fill:#00535c;fill-opacity:1;stroke-width:0.499999;stroke-linecap:round;stroke-linejoin:round;paint-order:stroke fill markers"
+       id="rect422"
+       width="964.93542"
+       height="207.43333"
+       x="-4.0690106e-06"
+       y="-5.0862633e-07" />
+    <g
+       id="lettering-2"
+       transform="matrix(0.79101256,0,0,0.79101256,-49.436321,-140.70621)">
+      <text
+         x="349.25232"
+         y="323.40463"
+         text-anchor="middle"
+         dominant-baseline="middle"
+         class="custom"
+         id="text6-9"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:221.63px;font-family:Break;-inkscape-font-specification:'Break, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;dominant-baseline:middle;text-anchor:middle;fill:#70e0d0;stroke-width:1.10814">OLEA</text>
+      <text
+         x="653.34753"
+         y="240.08942"
+         text-anchor="middle"
+         dominant-baseline="middle"
+         class="custom"
+         id="text6-5-1"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:90.0251px;font-family:'Break Fill';-inkscape-font-specification:'Break Fill, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;dominant-baseline:middle;text-anchor:start;display:inline;fill:#70e0d0;stroke-width:1.65111"><tspan
+           x="653.34753"
+           y="240.08942"
+           id="tspan456-2"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:90.0251px;font-family:'Break Fill';-inkscape-font-specification:'Break Fill, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:1.65111"
+           dy="23.039154">Open Learning</tspan><tspan
+           id="tspan454-7"
+           x="653.34753"
+           y="352.62079"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:90.0251px;font-family:'Break Fill';-inkscape-font-specification:'Break Fill, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:1.65111">Education App</tspan></text>
+      <text
+         x="1221.4662"
+         y="319.41528"
+         text-anchor="middle"
+         dominant-baseline="middle"
+         class="custom"
+         id="text6-5-3-0"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:88.2652px;font-family:Break;-inkscape-font-specification:'Break, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;dominant-baseline:middle;text-anchor:start;display:inline;fill:#70e0d0;stroke-width:1.61886"><tspan
+           x="1221.4662"
+           y="319.41528"
+           style="font-size:88.2652px;stroke-width:1.61886"
+           id="tspan1249-9">&amp;</tspan></text>
+    </g>
+  </g>
+</svg>
