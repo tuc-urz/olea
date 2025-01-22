@@ -1,0 +1,21 @@
+{
+  "name": "@openasist/component-mensa-slider",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@openasist/core": "0.0.1",
+    "@openasist/component-meal-item": "0.0.1",
+    "react-native-paper": "^4.12.5",
+    "expo-linear-gradient": "^12.7.2",
+    "moment": "^2.29.4"
+  },
+  "resolutions": {
+    "expo-linear-gradient": "~12.7.2"
+  }
+}

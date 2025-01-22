@@ -1,0 +1,16 @@
+{
+  "name": "@openasist/view-settings-app-info",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@openasist/icons-openasist": "^0.0.1",
+    "expo-application": "~5.8.3",
+    "react-native-paper": "^4.12.5"
+  },
+  "author": "",
+  "license": "Apache-2.0"
+}

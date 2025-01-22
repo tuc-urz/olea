@@ -1,0 +1,20 @@
+{
+  "name": "@openasist/view-jobs",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@react-navigation/drawer": "^7.0.19",
+    "@react-navigation/native": "^7.0.13",
+    "react-native-elements": "^3.4.3",
+    "react-native-modalbox": "^2.0.2",
+    "react-native-paper": "^4.12.5",
+    "react-native-vector-icons": "^9.2.0",
+    "react-native-webview": "^13.8.2"
+  }
+}

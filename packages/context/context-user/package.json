@@ -1,0 +1,22 @@
+{
+  "name": "@openasist/context-user",
+  "version": "0.0.1",
+  "description": "Context for user infos",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "context",
+    "user"
+  ],
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "expo-auth-session": "~6.0.2",
+    "expo-crypto": "~14.0.2",
+    "jwt-decode": "4.0.0",
+    "expo-web-browser": "~14.0.2"
+  }
+}

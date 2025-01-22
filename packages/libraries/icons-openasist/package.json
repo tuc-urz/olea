@@ -1,0 +1,18 @@
+{
+  "name": "@openasist/icons-openasist",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@expo/vector-icons": "^13.0.0"
+  },
+  "dependencies": {
+    "react-native-vector-icons": "^9.2.0",
+    "react-native-svg": "15.10.1"
+  }
+}

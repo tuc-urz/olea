@@ -1,0 +1,14 @@
+{
+  "name": "@openasist/container",
+  "version": "",
+  "private": true,
+  "author": "codeculture<info@codeculture.de>",
+  "license": "Apache-2.0",
+  "workspaces": [
+    "app/",
+    "packages/libraries/*",
+    "packages/views/*",
+    "packages/components/*",
+    "packages/context/*"
+  ]
+}
