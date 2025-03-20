@@ -1,0 +1,6 @@
+{
+    "name": "OpenASiST (staging)",
+    "android": {
+        "package": "de.openasist.staging"
+    }
+}

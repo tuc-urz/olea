@@ -1,0 +1,374 @@
+{
+  "home": {
+    "noConnectionTitle": "No server connection",
+    "noConnectionSubtitle": "Connection problems",
+    "noConnectionText": "Unfortunately, no connection to the server could be established. Please swipe downwards with your finger to refresh the view.",
+    "noItemTitle": "No new article available",
+    "noItemSubtitle": "News",
+    "noItemText": "Unfortunately there are currently no news. Please swipe downwards with your finger to refresh the view.",
+    "readMore": "Read more",
+    "title": "TU Chemnitz"
+  },
+  "books": {
+    "library": "Library",
+    "format": "Format",
+    "edition": "Edition",
+    "language": "Language",
+    "publisher": "Publisher",
+    "status": "Status",
+    "shelf": "Shelf",
+    "location": "Location",
+    "availability": "Availability",
+    "available": "Available",
+    "availableCount": "x available",
+    "notAvailable": "Not available",
+    "from": "from",
+    "noLibraryFound": "No library could be found, in which the medium is available. The status may not be available for eBooks and digital media",
+    "couldNotLoad": "Book details could not be loaded!"
+  },
+  "canteen": {
+    "allergeneTitle": "Allergens and additives",
+    "title": "Canteen",
+    "noMealAvailable": "Unfortunately, no meals are currently available.",
+    "navCanteens": "To the canteen overview",
+    "navSettings": "To the canteen settings",
+    "todayMeal": "Today's meal",
+    "weekend": "Closed on weekends/holidays",
+    "closed": "Today closed",
+    "priceTypeEmployee": "Employee",
+    "priceTypeStudent": "Student",
+    "priceTypeGuest": "Guest",
+    "priceTypeShortEmployee": "E",
+    "priceTypeShortStudent": "S",
+    "priceTypeShortGuest": "G",
+    "price": "Price",
+    "prices": "Prices",
+    "meal": "Meal",
+    "news": "CANTEEN",
+    "notAvailable": "No canteens could be found yet, please wait a moment",
+    "notice": "The daily offers of the favorite canteen are displayed on the home page. If no canteen is selected, all menus are displayed.",
+    "noMeals": "No meals for chosen filter",
+    "amountOfFilteredMeals": "{{filteredMealAmount}}/{{mealAmount}} meals for filters: {{filters, list(style: long; type: conjuncunittion)}}",
+    "allergens": {
+      "title": "Allergens subject to labeling",
+      "cereals containing gluten": "(13) cereals containing gluten",
+      "crustaceans": "(14) crustaceans",
+      "egg": "(15) egg",
+      "fish": "(16) fish",
+      "peanuts": "(17) peanuts",
+      "soy": "(18) soy",
+      "milk/lactose": "(19) milk/lactose",
+      "nuts": "(20) nuts",
+      "celery": "(21) celery",
+      "mustard": "(22) mustard",
+      "sesame": "(23) sesame",
+      "sulfite/sulfur dioxide": "(24) sulfite/sulfur dioxide",
+      "lupine": "(25) lupine",
+      "mollusc": "(26) molluscs",
+      "insects": "(27) insects",
+      "almond": "(71) almond",
+      "hazelnut": "(72) hazelnut",
+      "walnut": "(73) walnut",
+      "cashew": "(74) cashew",
+      "pecan": "(75) pecan",
+      "brazil nut": "(76) brazil nut",
+      "pistachio": "(77) pistachio",
+      "macadamia": "(78) macadamia",
+      "wheat": "(81) wheat",
+      "rye": "(82) rye",
+      "barley": "(83) barley",
+      "oat": "(84) oat",
+      "spelt": "(85) spelt",
+      "kamut": "(86) kamut"
+    },
+    "additives": {
+      "title": "Additives subject to labeling",
+      "colouring": "(1) artificial colouring",
+      "preservatives": "(2) preservatives",
+      "antioxidants": "(3) antioxidants",
+      "flavour enhancers": "(4) flavour enhancers",
+      "sulphurated": "(5) sulfur dioxid",
+      "blackened": "(6) blackened",
+      "waxed": "(7) waxed",
+      "phosphate": "(8) phosphate",
+      "sweetener": "(9) sweetener",
+      "phenylalanine": "(10) phenylalanine",
+      "caffeine": "(11) caffeine",
+      "chinine": "(12) quinine",
+      "azodyes": "(13) azo dyes"
+    },
+    "selection": {
+      "vegan": "vegan",
+      "vegetarian": "vegetarian",
+      "pork": "pork",
+      "beef": "beef",
+      "venison": "venison",
+      "lamb": "lamb",
+      "chicken": "chicken",
+      "fish/seafood": "fish/seafood",
+      "alcohol": "alcohol",
+      "climate-dish": "climate dish"
+    },
+    "favoriteCanteen": {
+      "title": "Select canteens for the start page",
+      "select": "Select canteens for the start page"
+    }
+  },
+  "common": {
+    "noDetails": "Not specified",
+    "dayMoShort": "Mo",
+    "dayTuShort": "Tu",
+    "dayWeShort": "We",
+    "dayThShort": "Th",
+    "dayFrShort": "Fr",
+    "daySaShort": "Sa",
+    "daySuShort": "Su",
+    "dayMo": "Monday",
+    "dayTu": "Tuesday",
+    "dayWe": "Wednesday",
+    "dayTh": "Thursday",
+    "dayFr": "Friday",
+    "daySa": "Saturday",
+    "daySu": "Sunday",
+    "isoWeekDay": {
+      "1": {
+        "long": "Monday",
+        "short": "Mon"
+      },
+      "2": {
+        "long": "Tuesday",
+        "short": "Tue"
+      },
+      "3": {
+        "long": "Wednesday",
+        "short": "Wed"
+      },
+      "4": {
+        "long": "Thursday",
+        "short": "Thu"
+      },
+      "5": {
+        "long": "Friday",
+        "short": "Fri"
+      },
+      "6": {
+        "long": "Saturday",
+        "short": "Sat"
+      },
+      "7": {
+        "long": "Sunday",
+        "short": "Sun"
+      }
+    },
+    "time": "Time",
+    "minutes": "min",
+    "notAvailableShort": "N/A",
+    "changeLabel": "Change",
+    "okLabel": "Ok",
+    "cancelLabel": "Cancel",
+    "openInBrowser": "Open in browser",
+    "reload": "Reload"
+  },
+  "contact": {
+    "title": "Contact",
+    "contactInformation": "Contact details",
+    "phone": "Phone",
+    "building": "Building",
+    "department": "Department",
+    "room": "Room",
+    "email": "Email",
+    "couldNotLoad": "Contact could not be loaded!"
+  },
+  "corona": {
+    "title": "Study Guide",
+    "menuEntriesNotAvailable": "No information available"
+  },
+  "course": {
+    "nextLecture": "Your next lecture",
+    "lectureInformation": "Information about the lecture",
+    "noLectureFound": "No events found. Please import your timetable first.",
+    "noLecturesAvailable": "You have no upcoming events today. Add events in the course catalog to your timetable.",
+    "couldNotLoad": "Lecture data could not be loaded!",
+    "lecturer": "Tutor"
+  },
+  "news": {
+    "title": "News",
+    "feeds": "Newsfeed",
+    "noResult": "No News available right now.",
+    "couldNotLoadNews": "News could not be loaded!",
+    "couldNotLoad": "News details could not be loaded!"
+  },
+  "opal": {
+    "title": "OPAL",
+    "url": "https://bildungsportal.sachsen.de/opal"
+  },
+  "quicklinks": {
+    "title": "Important Websites",
+    "titles": {
+      "opal": "OPAL",
+      "openasist": "OpenASiST",
+      "library": "Library"
+    },
+    "urls": {
+      "library": "https://bibliothek.htwk-leipzig.de/en/micrositeen"
+    }
+  },
+  "room": {
+    "title": "Room",
+    "directory": "Room directory",
+    "building": "Building",
+    "address": "Address",
+    "campusFinderLink": "Link to the campus map",
+    "googleMapsLink": "Show on Google-Maps",
+    "old": "old",
+    "campusFinder": "Campusfinder",
+    "googleMaps": "Google Maps"
+  },
+  "search": {
+    "title": "Contacts- and room search",
+    "inProgress": "This process may take a moment. Please wait ...",
+    "noResults": "Nothing found!",
+    "noResultsTitle": "No results found",
+    "noResultsSubtitle": "We can't find any item matching with your search input.",
+    "tabs": {
+      "all": "All",
+      "books": "Books",
+      "contacts": "Contacts",
+      "rooms": "Rooms",
+      "news": "News"
+    }
+  },
+  "settings": {
+    "common": {
+      "title": "General Settings",
+      "language": "Language",
+      "languageChange": "Change",
+      "languageChangeText": "Are you sure you want to change the language?",
+      "languageChangeOk": "Yes",
+      "languages": {
+        "de": "Deutsch",
+        "en": "English"
+      }
+    },
+    "canteens": {
+      "title": "Canteen Settings",
+      "priceSelection": "Select Price Category",
+      "preferredSelections": "Preferred Nutrition"
+    },
+    "weather": {
+      "title": "Weather Settings",
+      "location": "Weather Location",
+      "locations": {
+        "uni": "University - Straße der Nationen",
+        "user": "Location of user"
+      }
+    },
+    "develop": {
+      "dialog": "Developer Settings",
+      "useStagingServer": "Use Stage-Server",
+      "notificationSubscriberId": "SubscriberID",
+      "resetPushMessage": "Reset Push Message",
+      "showDeepLink": "Show deep link alert"
+    },
+    "accessibility": {
+      "title": "Accessibility",
+      "highContrast": "High contrast",
+      "increaseFontSize": "Large font size",
+      "restartRequired": "Restart required",
+      "restartRequiredDesc": "The app must be restarted for all changes to take effect. Please do this manually if the app does not restart itself.",
+      "cancelRestart": "Cancel restart",
+      "doRestart": "Restart Now"
+    },
+    "version": {
+      "title": "App-Info",
+      "version": "Current version",
+      "unknown": "unknown"
+    },
+    "notifications": {
+      "title": "Push Notifications",
+      "enablePushNotifications": "Push notifications on/off",
+      "enableAllNotifications": "Receive all notifications",
+      "feeds": "Newsfeeds",
+      "alert": "Alarm in case of danger",
+      "alertDesc": "receive a message in case of danger in the university",
+      "grades": "New grades in QiS",
+      "gradesDesc": "receive a message as soon as a grade is entered",
+      "activationMessageTitle": "Enable Push Notifications",
+      "activationMessageDesc": "To be able to send you push notifications, Google Services are used.",
+      "activationMessageCancel": "do not activate",
+      "activationMessageOk": "Activate",
+      "initialMessageTitle": "New feature",
+      "initialMessageContent": "All Studentenwerk Leipzig canteens are now available.You can select the canteens to be displayed on the start page in the settings."
+    }
+  },
+  "timetable": {
+    "title": "Timetable",
+    "moreEvents": "Other Events",
+    "notImportedYet": "You have not imported a timetable yet. You can do this as follows:\n\n 1. You can create an individual timetable on the following website: https://cal.htwk-leipzig.de\n\n 2. Copy the link or token for the app and paste it here.",
+    "inputTimetableCode": "You have already saved a timetable.\nPlease enter a link or token to import another timetable. Please note that your current timetable will be removed.\nYou can create a new individual timetable on the following website: https://cal.htwk-leipzig.de",
+    "importInProgress": "Your schedule is being imported.\nThis may take a few minutes.\nYou can continue using the app in the meantime.",
+    "inputPlaceholder": "Token or Code",
+    "importButton": "Import timetable",
+    "noEvents": "No Events",
+    "evenWeek": "Even Week",
+    "oddWeek": "Odd Week",
+    "weekNumber": "CW {{kw}}",
+    "close": "Close",
+    "codeShortError": "Code too short!",
+    "codeNotFoundError": "There was no data found for your entered code {{timetableCode}}!",
+    "importError": "An error occurred while importing your timetable. Please try again later.",
+    "today": "TODAY",
+    "day": "Day",
+    "week": "Week",
+    "month": "Month",
+    "deleteCode": "Delete Code"
+  },
+  "weather": {
+    "sunny": "Sunny",
+    "partlySunny": "Partly cloudy",
+    "rainy": "Rainy",
+    "thunderstorm": "Storm",
+    "notAvailable": "Weather currently not available"
+  },
+  "jobs": {
+    "noJobsTitle": "No jobs could be found, please try again later."
+  },
+  "menu": {
+    "title": "Menu",
+    "titles": {
+      "about": "About",
+      "aboutUs": "About OpenASiST",
+      "accessibility": "Accessibility",
+      "canteens": "Canteens",
+      "corona": "Corona Info",
+      "dataPolicy": "Privacy",
+      "feedback": "Feedback about the app",
+      "hochschulinfo": "Info HTWK operations",
+      "hozapp": "College Sports App",
+      "imprint": "Imprint",
+      "job": "Job Portal",
+      "library": "College Library",
+      "opal": "OPAL",
+      "pts": "Public Transportation System",
+      "services": "Services",
+      "settings": "Settings",
+      "settingsAccessibility": "Accessibility Settings",
+      "settingsCanteens": "Canteen Settings",
+      "settingsGeneral": "General Settings",
+      "settingsWeather": "Weather Settings",
+      "settingsNotifications": "Notification Settings",
+      "studienguide": "Study Guide",
+      "timetable": "Timetable",
+      "timetableCalendar": "Timetable (new)",
+      "wlan": "WLAN",
+      "howhy": "HOWHY - learning by playing",
+      "version": "App-Info"
+    },
+    "urls": {
+      "feedback": "https://www.tu-chemnitz.de/urz/mail/fba.html?1-a29tbXVuaWthdGlvbkA="
+    }
+  },
+  "warning": {
+    "noConnection": "No internet connection"
+  }
+}

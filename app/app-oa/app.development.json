@@ -1,0 +1,6 @@
+{
+    "name": "OpenASiST",
+    "android": {
+        "package": "de.openasist.app"
+    }
+}

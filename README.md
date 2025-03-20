@@ -1,3 +1,5 @@
+![open-asist-banner.png](docs/open-asist-banner.png)
+
 # OpenASiST(work in progress)
 
 The open source release of the app is currently in progress. All the necessary information is being added step by step and will be recorded in the roadmap.
