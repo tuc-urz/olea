@@ -1,7 +1,7 @@
 export default {
     name: 'OLEA',
-    logo: require('./../assets/images/logo.png'),
-    header: require('./../assets/images/header.jpeg'),
+    logo: require('../assets/images/logo.png'),
+    header: require('../assets/images/header.jpeg'),
     mealPlaceboImage: null,
     googleMapsUrl: 'https://www.google.com/maps/place/',
     defaultCity: 'Chemnitz',

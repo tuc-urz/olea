@@ -8,7 +8,7 @@ import paddings from './layout/Paddings';
 import {themeColors, themeColorsHighContrast} from './layout/Colors';
 import { Asset } from 'expo-asset';
 
-const fontFamily = Asset.fromModule(require('./../assets/fonts/Poppins-Regular.ttf')).uri;
+const fontFamily = Asset.fromModule(require('../assets/fonts/Poppins-Regular.ttf')).uri;
 
 const theme = {
     dark: false,
