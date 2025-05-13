@@ -25,7 +25,7 @@ import { useTranslation } from "react-i18next";
 
 import { onUpdateRefreshing } from "@olea/core";
 
-import IconsOpenasist from "@olea/icons-openasist";
+import IconsOLEA from "@olea/icons-olea";
 
 import componentStyles from "./styles";
 
@@ -100,7 +100,7 @@ function TimetableListComponent(props) {
             {showDetails && (room?.data || info?.data || url?.data) ?
                 <View style={styles.btnPosition}>
                     <Button style={styles.btnAddionals} onPress={() => setDialogVisible(true)}>
-                        <IconsOpenasist icon={"info"} color={colors.secondaryText} size={22} />
+                        <IconsOLEA icon={"info"} color={colors.secondaryText} size={22} />
                     </Button>
                     {dialogVisible ? <CourseDetailDialog visible={dialogVisible} hideDialog={() => setDialogVisible(false)} course={course} styles={styles} showDetails={showDetails} {...props} /> : null}
                 </View>
@@ -146,7 +146,7 @@ function CourseDetailDialogText(props) {
             <>
                 <Text style={[styles.detailLabel, isBigFont ? styles.textDetailBigFont : styles.textDetail]}>{detail?.displayname}</Text>
                 <Text style={[styles.detailValue, isBigFont ? styles.textDetailBigFont : styles.textDetail]} numberOfLines={1} ellipsizeMode='tail'>{detail?.data}</Text>
-                {icon ? <IconsOpenasist icon={icon} size={25} color={colors.icon} /> : null}
+                {icon ? <IconsOLEA icon={icon} size={25} color={colors.icon} /> : null}
             </>
         );
    

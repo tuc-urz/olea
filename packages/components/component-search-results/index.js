@@ -28,7 +28,7 @@ import {store} from '@olea/core';
 
 
 import componentStyles from "./styles"
-import IconsOpenasist from "@olea/icons-openasist";
+import IconsOLEA from "@olea/icons-olea";
 import BookDetailComponent from "@olea/component-book-detail";
 import ContactDetailComponent from "@olea/component-contact-detail";
 import RoomDetailComponent from "@olea/component-room-detail";
@@ -187,14 +187,14 @@ class SearchResultsComponent extends React.Component {
                   onPress={() => this._onCardPress(type, item)}
             >
                 <View style={themeStyles.cardLeftIcon}>
-                    <IconsOpenasist icon={icon} size={35} color={colors.messages.iconDefault} />
+                    <IconsOLEA icon={icon} size={35} color={colors.messages.iconDefault} />
                 </View>
                 <View style={themeStyles.cardContent}>
                     <Text style={themeStyles.cardTitle}>{this._getShortTitle(title)}</Text>
                     <Text style={themeStyles.cardSubTitle}>{subtitle}</Text>
                 </View>
                 <View style={themeStyles.cardRightIcon}>
-                    <IconsOpenasist icon={"forward"} size={25} color={colors.icon} />
+                    <IconsOLEA icon={"forward"} size={25} color={colors.icon} />
                 </View>
             </TouchableOpacity>
         );
@@ -327,7 +327,7 @@ class SearchResultsComponent extends React.Component {
              (type === this.resultTypes.rooms &&(this.props.searchResults.rooms === null || this.props.searchResults.rooms.length === 0))) {
             return (
                 <View style={[this.styles.containerInner, this.styles.containerErrorMsg]}>
-                    <IconsOpenasist icon={"search"} size={48} color={colors.primary}/>
+                    <IconsOLEA icon={"search"} size={48} color={colors.primary}/>
                     <Text style={this.styles.title}>{t('search:noResultsTitle')}</Text>
                     <Text style={this.styles.subtitle}>{t('search:noResultsSubtitle')}</Text>
                 </View>

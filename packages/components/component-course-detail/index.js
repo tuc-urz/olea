@@ -26,7 +26,7 @@ import merge from 'lodash/merge';
 
 import componentStyles from "./styles"
 import AppbarComponent from "@olea/component-app-bar";
-import IconsOpenasist from "@olea/icons-openasist";
+import IconsOLEA from "@olea/icons-olea";
 import {withTranslation} from "react-i18next";
 
 
@@ -244,7 +244,7 @@ class CourseDetailComponent extends React.Component {
                                     descriptionStyle={this.styles.listDescription}
                                     right={props =>
                                         <List.Icon {...props}
-                                                   icon={props => <IconsOpenasist icon={"map-search"} size={25}
+                                                   icon={props => <IconsOLEA icon={"map-search"} size={25}
                                                                                   color={colors.icon}/>}/>
                                     }
                                     onPress={() => Linking.openURL(roomItem.url)}
@@ -261,7 +261,7 @@ class CourseDetailComponent extends React.Component {
                                 right={props =>
                                     item.url ? (
                                         <List.Icon {...props}
-                                               icon={props => <IconsOpenasist icon={"map-search"} size={25}
+                                               icon={props => <IconsOLEA icon={"map-search"} size={25}
                                                                               color={colors.icon}/>}/>
                                     ) : null
                                 }
@@ -281,7 +281,7 @@ class CourseDetailComponent extends React.Component {
                                        onPress={() => item.url && Linking.openURL(item.url)}
                                        right={
                                        props => item.url && <List.Icon {...props}
-                                                                icon={props => <IconsOpenasist
+                                                                icon={props => <IconsOLEA
                                                                     icon={"forward"} size={25}
                                                                     color={colors.icon}/>}/>}
                             />);

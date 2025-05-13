@@ -30,7 +30,7 @@ import { CommonActions, useNavigation } from '@react-navigation/native';
 
 import componentStyles from "./styles";
 import AppbarComponent from "@olea/component-app-bar";
-import IconsOpenasist from "@olea/icons-openasist";
+import IconsOLEA from "@olea/icons-olea";
 import MensaMenu from "@olea/component-mensa-menu";
 import { useCanteen, useCanteens, useFilteredMenu } from '@olea/context-canteen';
 
@@ -69,7 +69,7 @@ function CanteensAccordionHeader({ canteenId, menuDate, isExpanded, styles }) {
             <View style={[themeStyles.cardLeftIcon, { marginStart: 5 }]}>
                 {
                     canteen?.type
-                        ? <IconsOpenasist icon={((canteen.type === "cafeteria") ? "coffee" : "mensa")} size={25} color={colors.icon} />
+                        ? <IconsOLEA icon={((canteen.type === "cafeteria") ? "coffee" : "mensa")} size={25} color={colors.icon} />
                         : null
                 }
             </View>
@@ -89,7 +89,7 @@ function CanteensAccordionHeader({ canteenId, menuDate, isExpanded, styles }) {
                 }
             </View>
             <View style={styles.arrowIcon}>
-                <IconsOpenasist icon={isExpanded ? "up" : "down"} size={20} color={colors.grayLight5} />
+                <IconsOLEA icon={isExpanded ? "up" : "down"} size={20} color={colors.grayLight5} />
             </View>
         </View>
     );

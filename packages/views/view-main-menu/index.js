@@ -33,7 +33,7 @@ import {withTranslation}     from "react-i18next";
 import { onSettingDevelopOverride, onSettingGeneralOverride, onUpdateRefreshing, store } from "@olea/core";
 
 import componentStyles from "./styles"
-import IconsOpenasist from "@olea/icons-openasist";
+import IconsOLEA from "@olea/icons-olea";
 import AppbarComponent from "@olea/component-app-bar";
 import MainMenuEntry from '@olea/component-main-menu-entry';
 

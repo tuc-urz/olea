@@ -24,7 +24,7 @@ import NetInfo from '@react-native-community/netinfo';
 import { SearchService } from "@olea/core";
 
 import componentStyles from "./styles";
-import IconsOpenasist from "@olea/icons-openasist";
+import IconsOLEA from "@olea/icons-olea";
 import AppbarComponent from "@olea/component-app-bar";
 import SearchResultsComponent from "@olea/component-search-results";
 
@@ -122,7 +122,7 @@ function SearchView(props) {
                     onIconPress={() => _onPressButton()}
                     onChangeText={setSearchString}
                     icon={(props) =>
-                        <IconsOpenasist icon={"search"} size={32} color={colors.icon} />
+                        <IconsOLEA icon={"search"} size={32} color={colors.icon} />
                     }
                     style={styles.searchBar}
                     inputStyle={styles.searchBarInput}
@@ -155,7 +155,7 @@ function SearchView(props) {
                                 }
                             </View>
                           : <View style={[styles.containerInner, styles.containerLoading]}>
-                                <IconsOpenasist icon={"search"} size={48} color={props.theme.colors.loadingIndicator} />
+                                <IconsOLEA icon={"search"} size={48} color={props.theme.colors.loadingIndicator} />
                                 <Text style={styles.title}>{t('search:noInternetTitle')}</Text>
                                 <Text style={styles.subtitle}>{t('search:noInternetSubtitle')}</Text>
                             </View>

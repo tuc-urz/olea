@@ -9,7 +9,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@olea/icons-openasist": "0.0.1",
+    "@olea/icons-olea": "0.0.1",
     "react-native-paper": "^4.12.5"
   }
 }

@@ -22,7 +22,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { connect } from 'react-redux';
 
-import IconsOpenasist from '@olea/icons-openasist';
+import IconsOLEA from '@olea/icons-olea';
 
 import componentStyles from './styles';
 
@@ -45,7 +45,7 @@ function AppbarComponent({ settings, title, leftAction, rightAction, subtitle, s
                 leftAction
                     ? leftAction
                     : <Appbar.Action
-                        icon={(props) => <IconsOpenasist {...props} icon={'back'} color={colors.appbarIconColor} />}
+                        icon={(props) => <IconsOLEA {...props} icon={'back'} color={colors.appbarIconColor} />}
                         onPress={() => navigation.goBack(null)}
                         accessible={true}
                         accessibilityHint={t('accessibility:appbar.back')}

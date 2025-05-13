@@ -18,7 +18,7 @@ import { withTheme } from "react-native-paper";
 import { useTranslation } from 'react-i18next';
 
 import componentStyles from "./styles"
-import IconsOpenasist from "@olea/icons-openasist";
+import IconsOLEA from "@olea/icons-olea";
 
 /**
  * Quicklink Component
@@ -47,7 +47,7 @@ function QuickLinksComponent({ theme, theme: { colors } }) {
       <View style={styles.container}>
         <View style={[styles.innerContainer, { alignItems: "center" }]}>
           <Text style={[styles.headline, { marginRight: 5 }]}>{t('quicklinks:title')}</Text>
-          <IconsOpenasist
+          <IconsOLEA
             icon={"open-external"}
             color={colors.secondaryText}
             size={10}
@@ -82,7 +82,7 @@ function QuickLinksComponent({ theme, theme: { colors } }) {
                     }
                   >
                     <View style={styles.roundButtons}>
-                      <IconsOpenasist icon={icon} color={colors.primaryText} size={35} />
+                      <IconsOLEA icon={icon} color={colors.primaryText} size={35} />
                       <View style={styles.linkextern}>
                         <Text style={styles.quicklinkLabel}>
                           {title}

@@ -27,7 +27,7 @@ import merge from 'lodash/merge';
 
 
 import AppbarComponent from "@olea/component-app-bar";
-import IconsOpenasist from "@olea/icons-openasist";
+import IconsOLEA from "@olea/icons-olea";
 
 import componentStyles from "./styles";
 import {WebView} from "react-native-webview";
@@ -178,7 +178,7 @@ class RoomDetailComponent extends React.Component {
                                     })
                                 }}
                             >
-                                <IconsOpenasist
+                                <IconsOLEA
                                     icon={'map-search'}
                                     size={25}
                                     color={colors.messages.noticeText}
@@ -205,7 +205,7 @@ class RoomDetailComponent extends React.Component {
                                     })
                                 }}
                             >
-                                <IconsOpenasist
+                                <IconsOLEA
                                     icon={'location'}
                                     size={25}
                                     color={colors.messages.noticeText}
@@ -245,7 +245,7 @@ class RoomDetailComponent extends React.Component {
                     <AppbarComponent {...this.props}
                                     title={title}
                                     leftAction={<Appbar.Action
-                                        icon={props => <IconsOpenasist {...props} icon={'back'} color={colors.primaryText} /> }
+                                        icon={props => <IconsOLEA {...props} icon={'back'} color={colors.primaryText} /> }
                                         onPress={() => this.setState({webview: {title: '', url: ''}})} />}/>
                     <WebView
                         ref={ref => this.webView.ref = ref}

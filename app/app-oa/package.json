@@ -16,7 +16,7 @@
     "@olea/component-news-detail": "0.0.1",
     "@olea/context-connectivity": "0.0.1",
     "@olea/core": "0.0.1",
-    "@olea/icons-openasist": "0.0.1",
+    "@olea/icons-olea": "0.0.1",
     "@olea/redux-offline": "^2.6.0-expo.0",
     "@olea/view-canteens": "0.0.1",
     "@olea/view-dashboard": "0.0.1",

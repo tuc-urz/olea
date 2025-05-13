@@ -22,7 +22,7 @@ import { connect } from 'react-redux'
 import merge from 'lodash/merge';
 
 import componentStyles from "./styles"
-import IconsOpenasist from "@olea/icons-openasist";
+import IconsOLEA from "@olea/icons-olea";
 
 
 
@@ -117,7 +117,7 @@ class PtsDepartureComponent extends React.Component {
                 left={props => <List.Icon {...props}
                                           style={{paddingTop: 4, backgroundColor: (departure.type.toUpperCase() === 'TRAM' ? colors.primary : colors.secondary)}}
                                           color={(departure.type.toUpperCase() === 'TRAM' ? colors.primaryText : colors.secondaryText)}
-                                          icon={ props => <IconsOpenasist icon={(departure.type.toUpperCase() === 'TRAM' ? 'tram': 'bus')} size={30}/>}
+                                          icon={ props => <IconsOLEA icon={(departure.type.toUpperCase() === 'TRAM' ? 'tram': 'bus')} size={30}/>}
                 />}
                 accessible={true}
                 accessibilityLabel={departureTime.isDeparted ?

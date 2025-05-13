@@ -28,7 +28,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import moment from 'moment';
 import { DateTime } from 'luxon';
 
-import IconsOpenasist from '@olea/icons-openasist';
+import IconsOLEA from '@olea/icons-olea';
 import { useDateCourses, weekModes } from '@olea/context-timetable';
 
 import componentStyles from './styles';
@@ -193,7 +193,7 @@ function CourseInfoComponent(props) {
                     </View>
                     <View style={styles.innerContainer}>
                         <View style={styles.iconContainer}>
-                            <IconsOpenasist icon={"timetable"} color={colors.black} size={40} />
+                            <IconsOLEA icon={"timetable"} color={colors.black} size={40} />
                         </View>
                         {
                             nextOrigineCourse

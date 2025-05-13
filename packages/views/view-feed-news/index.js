@@ -31,7 +31,7 @@ import moment from "moment";
 
 import {feedApi, onUpdateRefreshing} from "@olea/core";
 import AppbarComponent from "@olea/component-app-bar";
-import IconsOpenasist from "@olea/icons-openasist";
+import IconsOLEA from "@olea/icons-olea";
 
 import componentStyles from "./styles";
 import { handleHtmlEntities } from '@olea/core/helper/format.helper';
@@ -124,7 +124,7 @@ class FeedNewsView extends React.Component {
                     <View style={item.imageUrl ? themeStyles.cartHeaderSplitDetails : themeStyles.cartHeaderDetails}>
                         <Text style={[themeStyles.cardTitle, this.styles.newsTitle]}>{item.title}</Text>
                         <View style={[themeStyles.flexRow, {alignItems: 'center', alignContent: 'center'}]}>
-                            <IconsOpenasist icon={'time'} size={20} color={colors.accent}/>
+                            <IconsOLEA icon={'time'} size={20} color={colors.accent}/>
                             <Text style={[themeStyles.cardSubTitle, this.styles.newsDate]}>{pubDate}</Text>
                         </View>
                     </View>
@@ -134,13 +134,13 @@ class FeedNewsView extends React.Component {
                         <Text style={themeStyles.cardText}>{handleHtmlEntities(description)}</Text>
                     </View>
                     <View style={[themeStyles.cardRightIcon, this.styles.newsIcon]}>
-                        <IconsOpenasist icon={"forward"} size={25} color={colors.messages.icon} />
+                        <IconsOLEA icon={"forward"} size={25} color={colors.messages.icon} />
                     </View>
                 </View>
                 {item.link ? (
                     <TouchableOpacity style={themeStyles.cardLinkExternal} onPress={() => {Linking.openURL(item.link)}}>
                         <Text style={themeStyles.cardLinkTextExternal}>{t('common:openInBrowser')}</Text>
-                        <IconsOpenasist icon={"open-external"} size={18} color={colors.subtitle} />
+                        <IconsOLEA icon={"open-external"} size={18} color={colors.subtitle} />
                     </TouchableOpacity>
                 ) : null}
             </TouchableOpacity>

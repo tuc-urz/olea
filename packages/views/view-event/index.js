@@ -33,7 +33,7 @@ import { TabView, TabBar } from 'react-native-tab-view';
 import moment from "moment";
 import componentStyles from "./styles";
 import AppbarComponent from "@olea/component-app-bar";
-import IconsOpenasist from "@olea/icons-openasist";
+import IconsOLEA from "@olea/icons-olea";
 import EventCodeInputComponent from "@olea/component-event-code-input";
 import TimetableEventComponent from "@olea/component-timetable-event"
 import * as SecureStore from 'expo-secure-store';
@@ -64,11 +64,11 @@ function ListHeader(props) {
   return (
     <View style={styles.header}>
       <View style={[themeStyles.cardLeftIcon, { marginStart: 5 }]}>
-        <IconsOpenasist icon={('info')} size={25} color={colors.icon} />
+        <IconsOLEA icon={('info')} size={25} color={colors.icon} />
       </View>
       <Text style={styles.headerText}>{`${listTitle.startTs} ${t('event:type.to')} ${listTitle.endTs} ${t('event:type.oclock')}`}</Text>
       <View style={styles.arrowIcon}>
-        <IconsOpenasist icon={isExpanded ? "up" : "down"} size={20} color={colors.grayLight5} />
+        <IconsOLEA icon={isExpanded ? "up" : "down"} size={20} color={colors.grayLight5} />
       </View>
     </View>
   );
@@ -329,7 +329,7 @@ function EventsView(props) {
   const leftAction = useMemo(
     () => (
       <Appbar.Action
-        icon={props => <IconsOpenasist {...props} icon={'back'} color={colors.primaryText} />}
+        icon={props => <IconsOLEA {...props} icon={'back'} color={colors.primaryText} />}
         onPress={() => {
           navigation.goBack(null);
         }} />

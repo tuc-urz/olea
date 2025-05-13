@@ -19,7 +19,7 @@ import { useTheme } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 
-import IconsOpenasist from '@olea/icons-openasist';
+import IconsOLEA from '@olea/icons-olea';
 
 import componentStyles from './styles';
 
@@ -32,16 +32,16 @@ import componentStyles from './styles';
  * Wird ein Übersetzungsschlüssel in die `url`-Eigenschaft hinterlegt, muss die `isLocalized`Eigenschaft auf true gesetzt werden.
  * Die Webview wird mit dem Titel des Eintrags initialisert.
  *
- * Für die Eigenschaften icon, iconSVG und iconSize siehe {@link IconsOpenasist}.
+ * Für die Eigenschaften icon, iconSVG und iconSize siehe {@link IconsOLEA}.
  *
  * @param {object}  props
  * @param {string}  props.title Titel des Menüeintrages. Dies kann der direkte Titel oder ein Übersetungsschlüssel sein
  * @param {string}  [props.view] Name der View, zu der gewechselt werden soll
  * @param {string}  [props.url] URL, welche in einer Webview geöffnet werde soll
  * @param {boolean} [props.isLocalized] Soll der URL-String durch die Übersetzung gegeben werden, um die entgültige URL zu bekommen
- * @param {string}  [props.icon] Schlüssel des Icons (siehe {@link IconsOpenasist})
- * @param {string}  [props.iconSvg] siehe {@link IconsOpenasist}
- * @param {number}  [props.iconSize] Größe des Icons (siehe {@link IconsOpenasist})
+ * @param {string}  [props.icon] Schlüssel des Icons (siehe {@link IconsOLEA})
+ * @param {string}  [props.iconSvg] siehe {@link IconsOLEA}
+ * @param {number}  [props.iconSize] Größe des Icons (siehe {@link IconsOLEA})
  */
 export default function MainMenuEntry({ title, icon, iconSVG, iconSize, view, url, isLocalized }) {
     const { t } = useTranslation();
@@ -77,7 +77,7 @@ export default function MainMenuEntry({ title, icon, iconSVG, iconSize, view, ur
             }>
             <View style={styles.textContainer} accessiblity={true} accessibilityLabel={translatedTitle}>
                 <View style={styles.iconContainer}>
-                    <IconsOpenasist icon={icon} iconSVG={iconSVG} color={colors.iconDefault} size={iconSize ?? 34} />
+                    <IconsOLEA icon={icon} iconSVG={iconSVG} color={colors.iconDefault} size={iconSize ?? 34} />
                 </View>
                 <Text style={styles.titleText}>
                     {translatedTitle}

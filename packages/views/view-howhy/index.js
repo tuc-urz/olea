@@ -21,7 +21,7 @@ import merge from 'lodash/merge';
 
 import componentStyles from "./styles";
 import AppbarComponent from "@olea/component-app-bar";
-import IconsOpenasist from "@olea/icons-openasist";
+import IconsOLEA from "@olea/icons-olea";
 
 /**
  * Howy View
@@ -95,7 +95,7 @@ class HowyView extends React.Component {
                         title={t('howhy:title')}
                         leftAction={
                             <Appbar.Action
-                                icon={props => <IconsOpenasist {...props} icon={'back'} color={colors.primaryText} /> }
+                                icon={props => <IconsOLEA {...props} icon={'back'} color={colors.primaryText} /> }
                                 onPress={() => {
                                     if (this.webView.canGoBack) {
                                         this.webView.ref.goBack();

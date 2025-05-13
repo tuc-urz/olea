@@ -26,7 +26,7 @@ import { withTranslation } from 'react-i18next';
 
 import moment from 'moment';
 
-import IconsOpenasist from '@olea/icons-openasist';
+import IconsOLEA from '@olea/icons-olea';
 
 import componentStyles from './styles';
 
@@ -68,7 +68,7 @@ function NewsListItem({ theme, theme: { themeStyles, colors, fontSizes }, t, new
                     {
                         publicationDate
                           ? <View style={[themeStyles.flexRow, { alignItems: 'center', alignContent: 'center' }]}>
-                                <IconsOpenasist icon={'time'} size={fontSizes.l} color={colors.iconSubtitle} />
+                                <IconsOLEA icon={'time'} size={fontSizes.l} color={colors.iconSubtitle} />
                                 <Text style={[themeStyles.cardSubTitle, styles.publicationDate]}>{publicationDate}</Text>
                             </View>
                           : null

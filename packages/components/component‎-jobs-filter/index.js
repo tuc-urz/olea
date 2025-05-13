@@ -22,7 +22,7 @@ import { CheckBox } from 'react-native-elements'
 import merge from 'lodash/merge';
 import componentStyles from "./styles";
 import AppbarComponent from "@olea/component-app-bar";
-import IconsOpenasist from "@olea/icons-openasist";
+import IconsOLEA from "@olea/icons-olea";
 
 
 
@@ -162,7 +162,7 @@ class JobFilterComponent extends React.Component {
                       title="Filter"
                       leftAction={
                           <Appbar.Action
-                              icon={props => <IconsOpenasist {...props} icon={'back'} color={colors.primaryText} /> }
+                              icon={props => <IconsOLEA {...props} icon={'back'} color={colors.primaryText} /> }
                               onPress={() => {
                                   this.goBack();
                               }} />

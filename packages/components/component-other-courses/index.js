@@ -27,7 +27,7 @@ import {DataService, store} from "@olea/core";
 
 import componentStyles from "./styles"
 import AppbarComponent from "@olea/component-app-bar";
-import IconsOpenasist from "@olea/icons-openasist";
+import IconsOLEA from "@olea/icons-olea";
 import TimetableListComponent from "@olea/component-timetable-list";
 import {withTranslation} from "react-i18next";
 
@@ -120,7 +120,7 @@ class OtherCoursesComponent extends React.Component {
                     <AppbarComponent {...this.props}
                                      title={t('timetable:moreEvents')}
                                      leftAction={<Appbar.Action
-                                         icon={props => <IconsOpenasist {...props} icon={'down'} color={colors.primaryText} />}
+                                         icon={props => <IconsOLEA {...props} icon={'down'} color={colors.primaryText} />}
                                          onPress={() => {
                                              this.props.navigation.goBack(null);
                                          }}/>}/>
@@ -136,7 +136,7 @@ class OtherCoursesComponent extends React.Component {
                 <AppbarComponent {...this.props}
                 title={t('timetable:moreEvents')}
                 leftAction={<Appbar.Action
-                    icon={props => <IconsOpenasist {...props} icon={'down'} color={colors.primaryText} />}
+                    icon={props => <IconsOLEA {...props} icon={'down'} color={colors.primaryText} />}
                     onPress={() => {
                         this.props.navigation.goBack(null);
                     }} />}/>

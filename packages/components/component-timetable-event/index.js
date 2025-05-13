@@ -28,7 +28,7 @@ import {
 import { withTranslation } from "react-i18next";
 import { onUpdateRefreshing } from "@olea/core";
 import componentStyles from "./styles";
-import IconsOpenasist from '@olea/icons-openasist';
+import IconsOLEA from '@olea/icons-olea';
 
 function TimetableEventComponent(props) {
     const {
@@ -134,7 +134,7 @@ function TimetableEventComponent(props) {
                  starrable
                     ? <View style={styles.starPosition}>
                         <TouchableOpacity onPress={handleSelectionChange}>
-                            <IconsOpenasist icon={isSelected ? "star-selected" : "star"} size= {25} color="#005F50" />
+                            <IconsOLEA icon={isSelected ? "star-selected" : "star"} size= {25} color="#005F50" />
                         </TouchableOpacity>
                     </View>
                     : null

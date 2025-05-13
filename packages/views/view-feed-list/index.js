@@ -33,7 +33,7 @@ import {onUpdateRefreshing} from "@olea/core";
 
 import componentStyles from "./styles";
 import AppbarComponent from "@olea/component-app-bar";
-import IconsOpenasist from "@olea/icons-openasist";
+import IconsOLEA from "@olea/icons-olea";
 
 /**
  * Feed List View
@@ -90,7 +90,7 @@ class FeedListView extends React.Component {
                     <Text style={[themeStyles.cardSubTitle, this.styles.cardSubTitle]}>{item.desc}</Text>
                 </View>
                 <View style={themeStyles.cardRightIcon}>
-                    <IconsOpenasist icon={"forward"} size={25} color={colors.messages.icon} />
+                    <IconsOLEA icon={"forward"} size={25} color={colors.messages.icon} />
                 </View>
             </TouchableOpacity>
         );

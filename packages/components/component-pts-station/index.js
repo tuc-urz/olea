@@ -24,7 +24,7 @@ import merge from 'lodash/merge';
 
 import {onSettingPtsStationOverride, store} from "@olea/core";
 import PtsDepartureComponent from  "@olea/component-pts-departure";
-import IconsOpenasist from "@olea/icons-openasist";
+import IconsOLEA from "@olea/icons-olea";
 
 import componentStyles from "./styles"
 
@@ -146,7 +146,7 @@ class PtsStationComponent extends React.Component {
                                     accessibilityRole={'button'}
                                     accessibilityState={editMode ? {selected: isFavorite} : null}
                                 >
-                                    <IconsOpenasist
+                                    <IconsOLEA
                                         icon={isFavorite ? "star-selected" : "star"}
                                         size={25}
                                         color={colors.icon}

@@ -21,7 +21,7 @@ import {
 
 import { useTheme } from 'react-native-paper';
 
-import IconsOpenasist from '@olea/icons-openasist';
+import IconsOLEA from '@olea/icons-olea';
 
 import componentStyles from './styles';
 
@@ -76,7 +76,7 @@ export default function FlexMenuEntry({ title, description, leftIconImage, right
                 }
             </View>
             <View style={[themeStyles.cardRightIcon]}>
-                <IconsOpenasist icon={rightIcon ?? 'forward'} size={25} color={colors.icon} />
+                <IconsOLEA icon={rightIcon ?? 'forward'} size={25} color={colors.icon} />
             </View>
         </TouchableOpacity>
     )

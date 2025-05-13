@@ -25,7 +25,7 @@ import { useTranslation } from "react-i18next";
 
 import { onUpdateRefreshing } from "@olea/core";
 
-import IconsOpenasist from "@olea/icons-openasist";
+import IconsOLEA from "@olea/icons-olea";
 
 import componentStyles from "./styles";
 
@@ -85,7 +85,7 @@ function CourseDetailDialogText(props) {
             <>
                 <Text style={[styles.detailLabel, isBigFont ? styles.textDetailBigFont : styles.textDetail]}>{detail?.displayname}</Text>
                 <Text style={[styles.detailValue, isBigFont ? styles.textDetailBigFont : styles.textDetail]} numberOfLines={1} ellipsizeMode='tail'>{detail?.data}</Text>
-                {icon ? <IconsOpenasist icon={icon} size={25} color={colors.icon}/> : null}
+                {icon ? <IconsOLEA icon={icon} size={25} color={colors.icon}/> : null}
             </>
         );
    

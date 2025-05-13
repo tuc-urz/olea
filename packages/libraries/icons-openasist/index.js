@@ -91,7 +91,7 @@ const CustomIcon = createIconSet(glyphMap, 'olea');
  * Navigation-Parameters:
  *  - none
  */
-function IconsOpenasist({ icon, iconSVG: IconSVG, size, color, accessibilityLabel, ...props }) {
+function IconsOLEA({ icon, iconSVG: IconSVG, size, color, accessibilityLabel, ...props }) {
     const theme = useTheme();
     const { AppIcons } = theme;
 
@@ -133,11 +133,11 @@ function IconsOpenasist({ icon, iconSVG: IconSVG, size, color, accessibilityLabe
 }
 
 // propTypes für Funktionen wird in react.js 19 entfernt
-IconsOpenasist.propTypes = {
+IconsOLEA.propTypes = {
     icon: PropTypes.string,
     iconSVG: PropTypes.func,
     size: PropTypes.number,
     color: PropTypes.string
 };
 
-export default IconsOpenasist;
+export default IconsOLEA;

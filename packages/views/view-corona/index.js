@@ -28,7 +28,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 
 import AppbarComponent from '@olea/component-app-bar';
-import IconsOpenasist from '@olea/icons-openasist';
+import IconsOLEA from '@olea/icons-olea';
 import ViewCoronaDetail from '@olea/view-corona-detail';
 import FlexMenuEntry from '@olea/component-flex-menu-entry';
 
@@ -142,7 +142,7 @@ function CoronaView(props) {
                     contentContainerStyle={{ paddingBottom: paddings.default }}
                     ListEmptyComponent={
                         <View style={[styles.containerInner, styles.containerErrorMsg]}>
-                            <IconsOpenasist icon={'info'} size={48} color={colors.primary} />
+                            <IconsOLEA icon={'info'} size={48} color={colors.primary} />
                             <Text style={styles.title}>{t('corona:menuEntriesNotAvailable')}</Text>
                         </View>
                     }

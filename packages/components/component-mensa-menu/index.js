@@ -27,7 +27,7 @@ import { useTranslation } from 'react-i18next';
 import { useFilteredMenu } from '@olea/context-canteen';
 
 import { onUpdateRefreshing } from "@olea/core";
-import IconsOpenasist from "@olea/icons-openasist";
+import IconsOLEA from "@olea/icons-olea";
 
 import componentStyles from './styles';
 
@@ -62,7 +62,7 @@ function SelectionIcons({ selections, iconSize }) {
                 selections.map(
                     selection =>
                         <View key={selection} style={{ marginLeft: 2, lineHeight: 20 }}>
-                            <IconsOpenasist icon={"mensa-" + selection} color={colors.secondaryText} size={iconSize} />
+                            <IconsOLEA icon={"mensa-" + selection} color={colors.secondaryText} size={iconSize} />
                         </View>
                 )
             }
@@ -209,7 +209,7 @@ function Meal({ settings, meal, priceGroupCode, priceGroupName }) {
                                     accessibilityLabel={t('canteen:allergeneTitle')}
                                     onPress={() => setAdditionalDialogVisible(true)}
                                 >
-                                    <IconsOpenasist
+                                    <IconsOLEA
                                         icon={"info"}
                                         color={colors.secondaryText}
                                         size={15}
