@@ -19,7 +19,7 @@ import notifee, { AndroidStyle, EventType } from '@notifee/react-native';
 import { feedApi, RootNavigation, store, updateFeeds } from "@olea/core";
 import SubscriberService from './services/subscriber.service'
 
-export default class OpenASiSTNotifications {
+export default class OLEANotifications {
     subscriberService = null
 
     navConfig = null;
