@@ -50,7 +50,7 @@ export class DataService {
      */
     checkCourses = async (resetState, hideErrors = false) => {
         try {
-            const timetableCode = await AsyncStorage.getItem('OpenASiST:courses_timetableCode');
+            const timetableCode = await AsyncStorage.getItem('OLEA:courses_timetableCode');
             if (timetableCode !== null) {
                 store.dispatch( updateCourses(timetableCode, hideErrors) );
                 if (resetState) {
