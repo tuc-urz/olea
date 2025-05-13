@@ -206,7 +206,7 @@
     "title": "Important Websites",
     "titles": {
       "opal": "OPAL",
-      "openasist": "OpenASiST",
+      "olea": "OLEA",
       "library": "Library"
     },
     "urls": {
@@ -337,7 +337,7 @@
     "title": "Menu",
     "titles": {
       "about": "About",
-      "aboutUs": "About OpenASiST",
+      "aboutUs": "About OLEA",
       "accessibility": "Accessibility",
       "canteens": "Canteens",
       "corona": "Corona Info",

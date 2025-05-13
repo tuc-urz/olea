@@ -13,9 +13,9 @@
  */
 
 /**
- * OpenASiST App Core Module
+ * OLEA App Core Module
  *
- * This module contains all core functionality of the OpenASiSt App.
+ * This module contains all core functionality of the OLEA App.
  * This includes redux and services (rest-api, ...)
  */
 

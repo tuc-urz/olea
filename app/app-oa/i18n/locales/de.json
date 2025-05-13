@@ -206,7 +206,7 @@
     "title": "Wichtige Webseiten",
     "titles": {
       "opal": "OPAL",
-      "openasist": "OpenASiST",
+      "olea": "OLEA",
       "library": "Bib"
     },
     "urls": {
@@ -341,7 +341,7 @@
     "title": "Menü",
     "titles": {
       "about": "Über diese App",
-      "aboutUs": "Über OpenASiST",
+      "aboutUs": "Über OLEA",
       "accessibility": "Barrierefreiheit",
       "canteens": "Mensen",
       "corona": "Corona Info",

@@ -1,6 +1,6 @@
 ![open-asist-banner.png](docs/open-asist-banner.png)
 
-# OpenASiST(work in progress)
+# OLEA(work in progress)
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftuc-urz%2Fopenasist.svg?type=shield&issueType=license)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftuc-urz%2Fopenasist?ref=badge_shield&issueType=license)
 
@@ -16,7 +16,7 @@ The open source release of the app is currently in progress. All the necessary i
 - [ ] Add server api documentation
 
 
-## Made with ❤️ by the OpenASiST team
+## Made with ❤️ by the OLEA team
 ![TU Chemnitz](https://tuc.app/images/logo.png)
 ![codeculture](https://codeculture.de/wp-content/uploads/2025/03/logo_codeculture-e1742565533364.png)
 ![Bildungsportal Sachsen](https://bildungsportal.sachsen.de/portal/wp-content/uploads/2018/06/cropped-BPS_Web_Logo-02-2.png)
@@ -25,9 +25,9 @@ The open source release of the app is currently in progress. All the necessary i
 
 ## Mitwirken
 
-Jeder ist herzlichst eingeladen an der Entwicklung der OpenASiST-App mitzuwirken.
-Es werden Personen aus allen Bereichen gesucht, so dass das OpenASiST-Team alle Beiträge mit Freuden annimmt.
-Hast du eine kreative Idee, die noch nicht in der OpenASiST-App umgesetzt ist?
+Jeder ist herzlichst eingeladen an der Entwicklung der OLEA-App mitzuwirken.
+Es werden Personen aus allen Bereichen gesucht, so dass das OLEA-Team alle Beiträge mit Freuden annimmt.
+Hast du eine kreative Idee, die noch nicht in der OLEA-App umgesetzt ist?
 Dir ist ein Fehler oder eine Absturzursache aufgefallen?
 Dann erstelle einen Issue, damit die Community über deinen Vorschlag oder Fehlerbericht diskutieren kann.
 Ist in deinem Eifer bereits Code entstanden und du möchtest deine Arbeit in das Projekt mit einfließen lassen?

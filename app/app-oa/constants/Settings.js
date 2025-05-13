@@ -1,5 +1,5 @@
 export default {
-    name: 'OpenASiST',
+    name: 'OLEA',
     logo: require('./../assets/images/logo.png'),
     header: require('./../assets/images/header.jpeg'),
     mealPlaceboImage: null,
@@ -160,7 +160,7 @@ export default {
         dashboard: {
             quicklinks: [
                 {
-                    title: 'quicklinks:titles:openasist',
+                    title: 'quicklinks:titles:olea',
                     icon: 'rocket',
                     url: 'https://tuc.app/mitmachen.html',
                 },

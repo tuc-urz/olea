@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "OpenASiST App",
+    "name": "OLEA App",
     "description": "",
-    "slug": "openasist-openasist",
+    "slug": "olea-olea",
     "privacy": "public",
     "platforms": [
       "ios",
       "android"
     ],
-    "scheme": "de.openasist.app",
+    "scheme": "de.olea.app",
     "notification": {
       "color": "#000000"
     },
@@ -34,7 +34,7 @@
       "enabled": false,
       "checkAutomatically": "NEVER",
       "useClassicUpdates": true,
-      "url": "https://exp.host/@abastian/openasist-openasist"
+      "url": "https://exp.host/@abastian/olea-olea"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -48,7 +48,7 @@
         "aps-environment": "development"
       },
       "supportsTablet": true,
-      "bundleIdentifier": "de.openasist.app",
+      "bundleIdentifier": "de.olea.app",
       "buildNumber": "1",
       "icon": "./assets/images/AppIcon.png",
       "infoPlist": {
@@ -67,7 +67,7 @@
       }
     },
     "android": {
-      "package": "de.openasist.app",
+      "package": "de.olea.app",
       "icon": "./assets/images/AppIcon.png",
       "permissions": [
         "ACCESS_NETWORK_STATE",

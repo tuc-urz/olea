@@ -1,6 +1,6 @@
 {
-    "name": "OpenASiST",
+    "name": "OLEA",
     "android": {
-        "package": "de.openasist.app"
+        "package": "de.olea.app"
     }
 }
