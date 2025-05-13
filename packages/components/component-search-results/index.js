@@ -24,16 +24,16 @@ import { connect } from 'react-redux'
 
 import merge from 'lodash/merge';
 import unescape from 'lodash/unescape';
-import {store} from '@openasist/core';
+import {store} from '@olea/core';
 
 
 import componentStyles from "./styles"
-import IconsOpenasist from "@openasist/icons-openasist";
-import BookDetailComponent from "@openasist/component-book-detail";
-import ContactDetailComponent from "@openasist/component-contact-detail";
-import RoomDetailComponent from "@openasist/component-room-detail";
-import NewsDetailComponent from "@openasist/component-news-detail";
-import {handleHtmlEntities} from "@openasist/core/helper/format.helper";
+import IconsOpenasist from "@olea/icons-openasist";
+import BookDetailComponent from "@olea/component-book-detail";
+import ContactDetailComponent from "@olea/component-contact-detail";
+import RoomDetailComponent from "@olea/component-room-detail";
+import NewsDetailComponent from "@olea/component-news-detail";
+import {handleHtmlEntities} from "@olea/core/helper/format.helper";
 
 
 

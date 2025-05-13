@@ -1,5 +1,5 @@
 {
-  "name": "@openasist/component-news-detail",
+  "name": "@olea/component-news-detail",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
@@ -9,8 +9,8 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@openasist/core": "0.0.1",
-    "@openasist/react-native-webview-autoheight": "^1.0.6",
+    "@olea/core": "0.0.1",
+    "@olea/react-native-webview-autoheight": "^1.0.6",
     "react-native-paper": "^4.12.5"
   }
 }

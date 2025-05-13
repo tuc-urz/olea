@@ -1,5 +1,5 @@
 {
-  "name": "@openasist/context-timetable",
+  "name": "@olea/context-timetable",
   "version": "0.0.1",
   "description": "Context for timetable",
   "main": "index.js",
@@ -14,6 +14,6 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@openasist/base-api-provider": "0.0.1"
+    "@olea/base-api-provider": "0.0.1"
   }
 }

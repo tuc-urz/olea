@@ -32,10 +32,10 @@ import { AccordionList } from "accordion-collapse-react-native";
 import { TabView, TabBar } from 'react-native-tab-view';
 import moment from "moment";
 import componentStyles from "./styles";
-import AppbarComponent from "@openasist/component-app-bar";
-import IconsOpenasist from "@openasist/icons-openasist";
-import EventCodeInputComponent from "@openasist/component-event-code-input";
-import TimetableEventComponent from "@openasist/component-timetable-event"
+import AppbarComponent from "@olea/component-app-bar";
+import IconsOpenasist from "@olea/icons-openasist";
+import EventCodeInputComponent from "@olea/component-event-code-input";
+import TimetableEventComponent from "@olea/component-timetable-event"
 import * as SecureStore from 'expo-secure-store';
 
 import EventAPIProvider, { useEventApiClient } from './EventAPIContext'

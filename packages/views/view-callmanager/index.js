@@ -28,10 +28,10 @@ import { useTranslation } from 'react-i18next';
 import { useFocusEffect } from '@react-navigation/native';
 import moment from 'moment';
 
-import { useCallManagerContext, useParallelCalls } from '@openasist/context-callmanager';
-import { useUser } from '@openasist/context-user';
+import { useCallManagerContext, useParallelCalls } from '@olea/context-callmanager';
+import { useUser } from '@olea/context-user';
 
-import AppbarComponent from '@openasist/component-app-bar';
+import AppbarComponent from '@olea/component-app-bar';
 
 import componentStyles from './styles';
 

@@ -30,15 +30,15 @@ import { useTranslation } from "react-i18next";
 import { useFocusEffect } from '@react-navigation/native';
 import { DateTime, Duration } from 'luxon';
 
-import { onUpdateRefreshing, store } from "@openasist/core";
+import { onUpdateRefreshing, store } from "@olea/core";
 
-import OtherCoursesComponent from "@openasist/component-other-courses";
-import TimetableListComponent from "@openasist/component-timetable-list";
-import TimetableCodeInput from '@openasist/component-timetable-code-input';
+import OtherCoursesComponent from "@olea/component-other-courses";
+import TimetableListComponent from "@olea/component-timetable-list";
+import TimetableCodeInput from '@olea/component-timetable-code-input';
 
 import componentStyles from "./styles";
-import AppbarComponent from "@openasist/component-app-bar";
-import { ApiProviderNotInitializedError, useCourses, useTimetableCode } from '@openasist/context-timetable';
+import AppbarComponent from "@olea/component-app-bar";
+import { ApiProviderNotInitializedError, useCourses, useTimetableCode } from '@olea/context-timetable';
 
 /**
  * Timetable View

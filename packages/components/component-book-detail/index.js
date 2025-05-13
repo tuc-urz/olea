@@ -26,12 +26,12 @@ import {withTranslation} from "react-i18next";
 import merge from 'lodash/merge';
 import unescape from 'lodash/unescape';
 import uniqBy from 'lodash/uniqBy';
-import {libraryApi} from '@openasist/core';
+import {libraryApi} from '@olea/core';
 
 
 import componentStyles from "./styles"
-import AppbarComponent from "@openasist/component-app-bar";
-import {handleHtmlEntities} from "@openasist/core/helper/format.helper";
+import AppbarComponent from "@olea/component-app-bar";
+import {handleHtmlEntities} from "@olea/core/helper/format.helper";
 
 
 class BookDetailComponent extends React.Component {

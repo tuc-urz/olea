@@ -29,10 +29,10 @@ import moment from "moment";
 import { CommonActions, useNavigation } from '@react-navigation/native';
 
 import componentStyles from "./styles";
-import AppbarComponent from "@openasist/component-app-bar";
-import IconsOpenasist from "@openasist/icons-openasist";
-import MensaMenu from "@openasist/component-mensa-menu";
-import { useCanteen, useCanteens, useFilteredMenu } from '@openasist/context-canteen';
+import AppbarComponent from "@olea/component-app-bar";
+import IconsOpenasist from "@olea/icons-openasist";
+import MensaMenu from "@olea/component-mensa-menu";
+import { useCanteen, useCanteens, useFilteredMenu } from '@olea/context-canteen';
 
 function generateDayRoutes(begin, daysToRender, language, disabledWeekdays = []) {
     const beginMoment = begin?.clone();

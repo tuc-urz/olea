@@ -18,8 +18,8 @@ import { useTheme } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { DateTime } from 'luxon';
 
-import { onSettingCanteenMerge, useStagingServer } from "@openasist/core";
-import { useUser } from '@openasist/context-user';
+import { onSettingCanteenMerge, useStagingServer } from "@olea/core";
+import { useUser } from '@olea/context-user';
 import { intersection } from 'lodash';
 
 import CollektorVersion2ApiProvider, { NotModifiedResponse } from './CollektorVersion2ApiProvider.js';

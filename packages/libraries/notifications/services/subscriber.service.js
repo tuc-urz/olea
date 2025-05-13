@@ -2,9 +2,9 @@ import uuid from 'react-native-uuid';
 import messaging from '@react-native-firebase/messaging';
 import debounce from 'lodash/debounce';
 
-import { store } from '@openasist/core';
-import { POSTOptions } from '@openasist/core/constants/api';
-import { onNotificationsSubscriberUpdate } from '@openasist/core/redux/actions/notifications';
+import { store } from '@olea/core';
+import { POSTOptions } from '@olea/core/constants/api';
+import { onNotificationsSubscriberUpdate } from '@olea/core/redux/actions/notifications';
 
 
 export default class SubscriberService {

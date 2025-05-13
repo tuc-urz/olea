@@ -28,8 +28,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import moment from 'moment';
 import { DateTime } from 'luxon';
 
-import IconsOpenasist from '@openasist/icons-openasist';
-import { useDateCourses, weekModes } from '@openasist/context-timetable';
+import IconsOpenasist from '@olea/icons-openasist';
+import { useDateCourses, weekModes } from '@olea/context-timetable';
 
 import componentStyles from './styles';
 

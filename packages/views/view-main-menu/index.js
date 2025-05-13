@@ -30,12 +30,12 @@ import {TabView, TabBar} from 'react-native-tab-view';
 import merge from 'lodash/merge';
 import {withTranslation}     from "react-i18next";
 
-import { onSettingDevelopOverride, onSettingGeneralOverride, onUpdateRefreshing, store } from "@openasist/core";
+import { onSettingDevelopOverride, onSettingGeneralOverride, onUpdateRefreshing, store } from "@olea/core";
 
 import componentStyles from "./styles"
-import IconsOpenasist from "@openasist/icons-openasist";
-import AppbarComponent from "@openasist/component-app-bar";
-import MainMenuEntry from '@openasist/component-main-menu-entry';
+import IconsOpenasist from "@olea/icons-openasist";
+import AppbarComponent from "@olea/component-app-bar";
+import MainMenuEntry from '@olea/component-main-menu-entry';
 
 /**
  * Main Menu View

@@ -19,7 +19,7 @@ import { useTheme } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 
-import IconsOpenasist from '@openasist/icons-openasist';
+import IconsOpenasist from '@olea/icons-openasist';
 
 import componentStyles from './styles';
 

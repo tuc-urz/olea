@@ -1,4 +1,4 @@
-import HttpApiProvider, { JsonContentType } from '@openasist/base-api-provider';
+import HttpApiProvider, { JsonContentType } from '@olea/base-api-provider';
 
 /**
  * Provider that provides a REST interface to the ASiST server.

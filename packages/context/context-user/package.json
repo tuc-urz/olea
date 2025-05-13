@@ -1,5 +1,5 @@
 {
-  "name": "@openasist/context-user",
+  "name": "@olea/context-user",
   "version": "0.0.1",
   "description": "Context for user infos",
   "main": "index.js",

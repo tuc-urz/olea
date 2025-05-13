@@ -16,7 +16,7 @@ import { createContext, useContext, useMemo, useEffect, useState, useCallback } 
 
 import { useTheme } from 'react-native-paper';
 
-import { useAccessToken, useLogoutEffect } from '@openasist/context-user';
+import { useAccessToken, useLogoutEffect } from '@olea/context-user';
 
 import TucCallManager from './TucCallManager';
 

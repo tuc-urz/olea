@@ -1,5 +1,5 @@
 {
-  "name": "@openasist/component-news-list",
+  "name": "@olea/component-news-list",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
@@ -9,7 +9,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@openasist/component-scaled-image": "0.0.1",
+    "@olea/component-scaled-image": "0.0.1",
     "react-native-paper": "^4.12.5"
   }
 }

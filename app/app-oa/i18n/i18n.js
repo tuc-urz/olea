@@ -5,7 +5,7 @@ import localeEN from './locales/en';
 import localeDE from './locales/de';
 import localeDEAccessibility from './locales/de-accessibility';
 import localeENAccessibility from './locales/en-accessibility';
-import {store} from "@openasist/core";
+import {store} from "@olea/core";
 
 const resources = {
     en: {...localeEN, ...localeENAccessibility},

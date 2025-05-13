@@ -26,11 +26,11 @@ import {withTranslation} from "react-i18next";
 
 import merge from 'lodash/merge';
 
-import {onUpdateRefreshing, DataService} from '@openasist/core';
-import TopNewsComponent from "@openasist/component-top-news-htwk";
-import MensaSliderCompnent from "@openasist/component-mensa-slider";
-import CourseInfoCompnent from "@openasist/component-course-info";
-import QuickLinksComponent from "@openasist/component-quick-links"
+import {onUpdateRefreshing, DataService} from '@olea/core';
+import TopNewsComponent from "@olea/component-top-news-htwk";
+import MensaSliderCompnent from "@olea/component-mensa-slider";
+import CourseInfoCompnent from "@olea/component-course-info";
+import QuickLinksComponent from "@olea/component-quick-links"
 
 import componentStyles from "./styles"
 export const scrollRangeForAnimation = 160;

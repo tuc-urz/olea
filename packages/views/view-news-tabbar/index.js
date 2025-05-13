@@ -27,9 +27,9 @@ import { connect } from 'react-redux'
 import { withTheme } from 'react-native-paper';
 import { withTranslation } from 'react-i18next';
 
-import { onUpdateRefreshing } from '@openasist/core';
-import AppbarComponent from '@openasist/component-app-bar';
-import NewsList from '@openasist/component-news-list';
+import { onUpdateRefreshing } from '@olea/core';
+import AppbarComponent from '@olea/component-app-bar';
+import NewsList from '@olea/component-news-list';
 
 import componentStyles from './styles';
 

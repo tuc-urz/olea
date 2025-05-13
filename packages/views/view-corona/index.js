@@ -27,10 +27,10 @@ import { useTheme } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 
-import AppbarComponent from '@openasist/component-app-bar';
-import IconsOpenasist from '@openasist/icons-openasist';
-import ViewCoronaDetail from '@openasist/view-corona-detail';
-import FlexMenuEntry from '@openasist/component-flex-menu-entry';
+import AppbarComponent from '@olea/component-app-bar';
+import IconsOpenasist from '@olea/icons-openasist';
+import ViewCoronaDetail from '@olea/view-corona-detail';
+import FlexMenuEntry from '@olea/component-flex-menu-entry';
 
 import componentStyles from './styles';
 

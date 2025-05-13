@@ -1,5 +1,5 @@
 {
-  "name": "@openasist/react-native-webview-autoheight",
+  "name": "@olea/react-native-webview-autoheight",
   "version": "1.0.6",
   "description": "React Native WebView with AutoHeight",
   "main": "index.js",

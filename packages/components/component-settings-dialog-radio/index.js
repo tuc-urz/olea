@@ -18,7 +18,7 @@ import { StyleSheet } from 'react-native';
 import { RadioButton, useTheme } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
-import SettingsDialog from '@openasist/component-settings-dialog';
+import SettingsDialog from '@olea/component-settings-dialog';
 
 import componentStyles from './styles';
 

@@ -26,9 +26,9 @@ import {
     Text
 } from "react-native-paper";
 import { withTranslation } from "react-i18next";
-import { onUpdateRefreshing } from "@openasist/core";
+import { onUpdateRefreshing } from "@olea/core";
 import componentStyles from "./styles";
-import IconsOpenasist from '@openasist/icons-openasist';
+import IconsOpenasist from '@olea/icons-openasist';
 
 function TimetableEventComponent(props) {
     const {

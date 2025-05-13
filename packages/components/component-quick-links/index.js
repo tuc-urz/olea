@@ -18,7 +18,7 @@ import { withTheme } from "react-native-paper";
 import { useTranslation } from 'react-i18next';
 
 import componentStyles from "./styles"
-import IconsOpenasist from "@openasist/icons-openasist";
+import IconsOpenasist from "@olea/icons-openasist";
 
 /**
  * Quicklink Component

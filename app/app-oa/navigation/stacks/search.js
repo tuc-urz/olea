@@ -1,8 +1,8 @@
 import React                    from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 
-import SearchView               from "@openasist/view-search";
-import ModalComponent           from "@openasist/component-modal";
+import SearchView               from "@olea/view-search";
+import ModalComponent           from "@olea/component-modal";
 
 import TabBarIcon               from "../tabBarIcon";
 

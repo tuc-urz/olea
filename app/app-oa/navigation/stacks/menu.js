@@ -1,21 +1,21 @@
 import React                    from 'react';
 import { createStackNavigator, CardStyleInterpolators } from "@react-navigation/stack";
 
-import MainMenuView                 from "@openasist/view-main-menu";
-import OpalView                     from "@openasist/view-opal";
-import GeneralSettingsView          from "@openasist/view-settings-general";
-import CanteensSettingsView         from "@openasist/view-settings-canteens";
-import AccessibilitySettingsView    from "@openasist/view-settings-accessibility";
-import SearchView                   from "@openasist/view-search";
-import WebviewsView                 from "@openasist/view-webviews";
-import ModalComponent               from "@openasist/component-modal";
-import CourseDetailComponent        from "@openasist/component-course-detail";
-import JobPortalView                from "@openasist/view-jobs";
-import JobFilterComponent           from "@openasist/component-jobs-filter";
-import CoronaDetail                 from "@openasist/view-corona-detail";
+import MainMenuView                 from "@olea/view-main-menu";
+import OpalView                     from "@olea/view-opal";
+import GeneralSettingsView          from "@olea/view-settings-general";
+import CanteensSettingsView         from "@olea/view-settings-canteens";
+import AccessibilitySettingsView    from "@olea/view-settings-accessibility";
+import SearchView                   from "@olea/view-search";
+import WebviewsView                 from "@olea/view-webviews";
+import ModalComponent               from "@olea/component-modal";
+import CourseDetailComponent        from "@olea/component-course-detail";
+import JobPortalView                from "@olea/view-jobs";
+import JobFilterComponent           from "@olea/component-jobs-filter";
+import CoronaDetail                 from "@olea/view-corona-detail";
 import TabBarIcon                   from "../tabBarIcon";
-import AppInfoSettingsView          from "@openasist/view-settings-app-info";
-import TimetableCalendarView        from "@openasist/view-timetable-calendar";
+import AppInfoSettingsView          from "@olea/view-settings-app-info";
+import TimetableCalendarView        from "@olea/view-timetable-calendar";
 
 /**
  * Tab Options

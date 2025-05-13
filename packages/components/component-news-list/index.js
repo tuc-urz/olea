@@ -25,8 +25,8 @@ import { withTheme } from 'react-native-paper';
 import { withTranslation } from 'react-i18next';
 import { useFocusEffect } from '@react-navigation/native';
 
-import { feedApi } from '@openasist/core';
-import NewsListItem from '@openasist/component-news-list-item'
+import { feedApi } from '@olea/core';
+import NewsListItem from '@olea/component-news-list-item'
 
 import componentStyles from './styles';
 

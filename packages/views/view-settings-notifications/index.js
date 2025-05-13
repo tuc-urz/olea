@@ -21,8 +21,8 @@ import {withTranslation} from "react-i18next";
 
 import merge from 'lodash/merge';
 
-import { onSettingNotificationsOverride, store } from "@openasist/core"
-import AppbarComponent from "@openasist/component-app-bar";
+import { onSettingNotificationsOverride, store } from "@olea/core"
+import AppbarComponent from "@olea/component-app-bar";
 import componentStyles from "./styles";
 
 /**

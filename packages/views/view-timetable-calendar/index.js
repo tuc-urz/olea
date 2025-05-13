@@ -18,17 +18,17 @@ import { connect } from 'react-redux';
 import { withTheme, Headline } from 'react-native-paper';
 import componentStyles from "./styles";
 import { withTranslation } from 'react-i18next';
-import { onUpdateRefreshing } from '@openasist/core';
-import { useTimetableCode } from '@openasist/context-timetable';
+import { onUpdateRefreshing } from '@olea/core';
+import { useTimetableCode } from '@olea/context-timetable';
 import { Ionicons } from '@expo/vector-icons';
-import AppbarComponent from "@openasist/component-app-bar";
+import AppbarComponent from "@olea/component-app-bar";
 import { TabView, TabBar } from 'react-native-tab-view';
-import CalendarDay from '@openasist/component-timetable-day';
-import CalendarWeek from '@openasist/component-timetable-week';
-import CalendarMonth from '@openasist/component-timetable-month';
+import CalendarDay from '@olea/component-timetable-day';
+import CalendarWeek from '@olea/component-timetable-week';
+import CalendarMonth from '@olea/component-timetable-month';
 import moment from 'moment';
 import 'moment/locale/de';
-import { useCourses, TimetableNotFoundError } from '@openasist/context-timetable';
+import { useCourses, TimetableNotFoundError } from '@olea/context-timetable';
 
 
 function TimetableViewCalendar(props) {

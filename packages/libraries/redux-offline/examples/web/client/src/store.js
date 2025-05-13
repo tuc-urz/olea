@@ -1,6 +1,6 @@
 import { applyMiddleware, compose, createStore } from 'redux';
-import { offline, createOffline } from '@openasist/redux-offline';
-import defaultConfig from '@openasist/redux-offline/lib/defaults';
+import { offline, createOffline } from '@olea/redux-offline';
+import defaultConfig from '@olea/redux-offline/lib/defaults';
 
 const initialState = {
   timer: 0

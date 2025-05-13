@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { useTheme } from 'react-native-paper';
 
-import { useAccessToken, useIdToken, useAccessToken } from '@openasist/context-user';
+import { useAccessToken, useIdToken, useAccessToken } from '@olea/context-user';
 
 export function useProvider(provider, providersInitializers) {
     const theme = useTheme();

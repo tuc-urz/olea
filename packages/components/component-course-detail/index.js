@@ -25,8 +25,8 @@ import { connect } from 'react-redux'
 import merge from 'lodash/merge';
 
 import componentStyles from "./styles"
-import AppbarComponent from "@openasist/component-app-bar";
-import IconsOpenasist from "@openasist/icons-openasist";
+import AppbarComponent from "@olea/component-app-bar";
+import IconsOpenasist from "@olea/icons-openasist";
 import {withTranslation} from "react-i18next";
 
 

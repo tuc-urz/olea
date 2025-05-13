@@ -1,4 +1,4 @@
-import HttpApiProvider from '@openasist/base-api-provider';
+import HttpApiProvider from '@olea/base-api-provider';
 import { TimetableNotFoundError } from './ProviderErrors';
 
 /**

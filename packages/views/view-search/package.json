@@ -1,5 +1,5 @@
 {
-  "name": "@openasist/view-search",
+  "name": "@olea/view-search",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
@@ -9,10 +9,10 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@openasist/component-book-detail": "0.0.1",
-    "@openasist/component-contact-detail": "0.0.1",
-    "@openasist/component-room-detail": "0.0.1",
-    "@openasist/core": "0.0.1",
+    "@olea/component-book-detail": "0.0.1",
+    "@olea/component-contact-detail": "0.0.1",
+    "@olea/component-room-detail": "0.0.1",
+    "@olea/core": "0.0.1",
     "react-native-tab-view": "3.5.2",
     "react-native-paper": "^4.12.5"
   }

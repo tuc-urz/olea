@@ -1,10 +1,10 @@
 import React                    from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 
-import NewsDetailComponent      from "@openasist/component-news-detail";
-import NewsTabBarView           from "@openasist/view-news-tabbar";
-import NewsList        from "@openasist/component-news-list";
-import ModalComponent           from "@openasist/component-modal";
+import NewsDetailComponent      from "@olea/component-news-detail";
+import NewsTabBarView           from "@olea/view-news-tabbar";
+import NewsList        from "@olea/component-news-list";
+import ModalComponent           from "@olea/component-modal";
 
 import TabBarIcon               from "../tabBarIcon";
 

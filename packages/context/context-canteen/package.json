@@ -1,5 +1,5 @@
 {
-  "name": "@openasist/context-canteen",
+  "name": "@olea/context-canteen",
   "version": "0.0.1",
   "description": "Context for canteen",
   "main": "index.js",

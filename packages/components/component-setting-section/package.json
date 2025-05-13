@@ -1,5 +1,5 @@
 {
-  "name": "@openasist/component-setting-section",
+  "name": "@olea/component-setting-section",
   "version": "0.0.1",
   "description": "component as a basis for settings dialogues",
   "main": "index.js",

@@ -1,5 +1,5 @@
 {
-  "name": "@openasist/component-app-bar",
+  "name": "@olea/component-app-bar",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
@@ -9,7 +9,7 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@openasist/icons-openasist": "0.0.1",
+    "@olea/icons-openasist": "0.0.1",
     "react-native-paper": "^4.12.5"
   }
 }

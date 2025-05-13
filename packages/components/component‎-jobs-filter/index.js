@@ -21,8 +21,8 @@ import { CheckBox } from 'react-native-elements'
 
 import merge from 'lodash/merge';
 import componentStyles from "./styles";
-import AppbarComponent from "@openasist/component-app-bar";
-import IconsOpenasist from "@openasist/icons-openasist";
+import AppbarComponent from "@olea/component-app-bar";
+import IconsOpenasist from "@olea/icons-openasist";
 
 
 

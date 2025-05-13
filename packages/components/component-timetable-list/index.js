@@ -23,9 +23,9 @@ import { connect } from 'react-redux'
 import { useTheme, Text, Dialog, Button, Portal } from "react-native-paper";
 import { useTranslation } from "react-i18next";
 
-import { onUpdateRefreshing } from "@openasist/core";
+import { onUpdateRefreshing } from "@olea/core";
 
-import IconsOpenasist from "@openasist/icons-openasist";
+import IconsOpenasist from "@olea/icons-openasist";
 
 import componentStyles from "./styles";
 

@@ -1,11 +1,11 @@
 import React                    from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 
-import TimetableViewCalendar    from '@openasist/view-timetable-calendar';
-import TimetableViewList        from '@openasist/view-timetable-list';
-import TimetableCourseView      from "@openasist/component-course-detail";
+import TimetableViewCalendar    from '@olea/view-timetable-calendar';
+import TimetableViewList        from '@olea/view-timetable-list';
+import TimetableCourseView      from "@olea/component-course-detail";
 
-import ModalComponent           from "@openasist/component-modal";
+import ModalComponent           from "@olea/component-modal";
 
 import TabBarIcon               from "../tabBarIcon";
 

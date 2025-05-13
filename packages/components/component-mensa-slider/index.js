@@ -22,10 +22,10 @@ import { LinearGradient } from 'expo-linear-gradient'
 
 import moment from 'moment';
 
-import MealItemComponent from '@openasist/component-meal-item';
-import { toIsoDateString } from '@openasist/core/helper/date';
+import MealItemComponent from '@olea/component-meal-item';
+import { toIsoDateString } from '@olea/core/helper/date';
 
-import { useCanteen, useFilteredMenu, useFavoriteCanteens } from '@openasist/context-canteen';
+import { useCanteen, useFilteredMenu, useFavoriteCanteens } from '@olea/context-canteen';
 
 import componentStyles from './styles'
 

@@ -1,5 +1,5 @@
 {
-  "name": "@openasist/context-connectivity",
+  "name": "@olea/context-connectivity",
   "version": "0.0.1",
   "description": "Context for connectivity status",
   "main": "index.js",

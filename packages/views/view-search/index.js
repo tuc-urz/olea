@@ -21,12 +21,12 @@ import { withTranslation } from "react-i18next";
 
 import NetInfo from '@react-native-community/netinfo';
 
-import { SearchService } from "@openasist/core";
+import { SearchService } from "@olea/core";
 
 import componentStyles from "./styles";
-import IconsOpenasist from "@openasist/icons-openasist";
-import AppbarComponent from "@openasist/component-app-bar";
-import SearchResultsComponent from "@openasist/component-search-results";
+import IconsOpenasist from "@olea/icons-openasist";
+import AppbarComponent from "@olea/component-app-bar";
+import SearchResultsComponent from "@olea/component-search-results";
 
 
 /**

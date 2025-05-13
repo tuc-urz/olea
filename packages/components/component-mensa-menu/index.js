@@ -24,10 +24,10 @@ import { connect } from 'react-redux'
 import { Button, Dialog, Portal, useTheme } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
-import { useFilteredMenu } from '@openasist/context-canteen';
+import { useFilteredMenu } from '@olea/context-canteen';
 
-import { onUpdateRefreshing } from "@openasist/core";
-import IconsOpenasist from "@openasist/icons-openasist";
+import { onUpdateRefreshing } from "@olea/core";
+import IconsOpenasist from "@olea/icons-openasist";
 
 import componentStyles from './styles';
 

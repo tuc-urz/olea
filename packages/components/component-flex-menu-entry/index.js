@@ -21,7 +21,7 @@ import {
 
 import { useTheme } from 'react-native-paper';
 
-import IconsOpenasist from '@openasist/icons-openasist';
+import IconsOpenasist from '@olea/icons-openasist';
 
 import componentStyles from './styles';
 

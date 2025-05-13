@@ -1,5 +1,5 @@
 {
-  "name": "@openasist/component-settings-dialog-radio",
+  "name": "@olea/component-settings-dialog-radio",
   "version": "0.0.1",
   "description": "component as a basis for settings dialogues",
   "main": "index.js",

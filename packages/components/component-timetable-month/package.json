@@ -1,5 +1,5 @@
 {
-    "name": "@openasist/component-timetable-month",
+    "name": "@olea/component-timetable-month",
     "version": "0.0.1",
     "description": "",
     "main": "index.js",
@@ -9,7 +9,7 @@
     "author": "",
     "license": "Apache-2.0",
     "dependencies": {
-      "@openasist/core": "0.0.1"
+      "@olea/core": "0.0.1"
     }
   }
   

@@ -23,12 +23,12 @@ import {Appbar, withTheme} from "react-native-paper";
 
 import { connect } from 'react-redux'
 import merge from 'lodash/merge';
-import {DataService, store} from "@openasist/core";
+import {DataService, store} from "@olea/core";
 
 import componentStyles from "./styles"
-import AppbarComponent from "@openasist/component-app-bar";
-import IconsOpenasist from "@openasist/icons-openasist";
-import TimetableListComponent from "@openasist/component-timetable-list";
+import AppbarComponent from "@olea/component-app-bar";
+import IconsOpenasist from "@olea/icons-openasist";
+import TimetableListComponent from "@olea/component-timetable-list";
 import {withTranslation} from "react-i18next";
 
 

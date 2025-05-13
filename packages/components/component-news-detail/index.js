@@ -34,12 +34,12 @@ import { connect } from 'react-redux'
 import merge from 'lodash/merge';
 import moment from "moment";
 
-import WebViewAutoHeight from '@openasist/react-native-webview-autoheight';
+import WebViewAutoHeight from '@olea/react-native-webview-autoheight';
 
 
 import componentStyles from "./styles"
-import AppbarComponent from "@openasist/component-app-bar";
-import {selectFeedById} from "@openasist/core/redux/reducers/api";
+import AppbarComponent from "@olea/component-app-bar";
+import {selectFeedById} from "@olea/core/redux/reducers/api";
 
 
 /**

@@ -26,7 +26,7 @@ import { withTranslation } from 'react-i18next';
 
 import moment from 'moment';
 
-import IconsOpenasist from '@openasist/icons-openasist';
+import IconsOpenasist from '@olea/icons-openasist';
 
 import componentStyles from './styles';
 

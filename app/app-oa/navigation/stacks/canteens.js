@@ -1,10 +1,10 @@
 import React                    from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 
-import CanteensTabView          from '@openasist/view-canteens';
+import CanteensTabView          from '@olea/view-canteens';
 
 
-import ModalComponent           from "@openasist/component-modal";
+import ModalComponent           from "@olea/component-modal";
 
 import TabBarIcon               from "../tabBarIcon";
 

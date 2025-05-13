@@ -22,9 +22,9 @@ import {connect} from 'react-redux'
 import concat from "lodash/concat";
 import merge from 'lodash/merge';
 
-import {onSettingPtsStationOverride, store} from "@openasist/core";
-import PtsDepartureComponent from  "@openasist/component-pts-departure";
-import IconsOpenasist from "@openasist/icons-openasist";
+import {onSettingPtsStationOverride, store} from "@olea/core";
+import PtsDepartureComponent from  "@olea/component-pts-departure";
+import IconsOpenasist from "@olea/icons-openasist";
 
 import componentStyles from "./styles"
 

@@ -23,11 +23,11 @@ import {withTranslation} from "react-i18next";
 
 import merge from 'lodash/merge';
 
-import AppbarComponent from "@openasist/component-app-bar";
-import WebviewComponent from "@openasist/component-web-view";
+import AppbarComponent from "@olea/component-app-bar";
+import WebviewComponent from "@olea/component-web-view";
 
 import componentStyles from "./styles";
-import IconsOpenasist from '@openasist/icons-openasist';
+import IconsOpenasist from '@olea/icons-openasist';
 import { WebView } from 'react-native-webview';
 
 
