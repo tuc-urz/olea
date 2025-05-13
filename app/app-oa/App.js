@@ -65,7 +65,7 @@ export default class App extends React.Component {
                 'poppins-regular':    require('./assets/fonts/Poppins-Regular.ttf'),
                 'poppins-semi-bold':  require('./assets/fonts/Poppins-SemiBold.ttf'),
                 'poppins-bold':       require('./assets/fonts/Poppins-Bold.ttf'),
-                'openasist':                  require('./assets/fonts/olea-wl-app.ttf')
+                'olea':               require('./assets/fonts/olea-wl-app.ttf')
             }),
         ]).then(async () => {await this._handleFinishLoading()});
     };

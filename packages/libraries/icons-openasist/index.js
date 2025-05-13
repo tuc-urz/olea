@@ -74,7 +74,7 @@ const glyphMap = {
     "share":                    "1",
     "accessibility":            "A3",
 };
-const CustomIcon = createIconSet(glyphMap, 'openasist');
+const CustomIcon = createIconSet(glyphMap, 'olea');
 
 
 /**

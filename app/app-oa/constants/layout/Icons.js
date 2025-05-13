@@ -89,4 +89,4 @@ const glyphMap = {
     "mensa-bio":                0xa1,
     "mensa-insects":            0xa2,
 };
-export default createIconSet(glyphMap, 'openasist');
+export default createIconSet(glyphMap, 'olea');
