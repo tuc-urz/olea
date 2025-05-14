@@ -7,7 +7,7 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>$(DEVELOPMENT_LANGUAGE)</string>
     <key>CFBundleDisplayName</key>
-    <string>OpenASiST App</string>
+    <string>OLEA App</string>
     <key>CFBundleExecutable</key>
     <string>$(EXECUTABLE_NAME)</string>
     <key>CFBundleIdentifier</key>
@@ -27,14 +27,14 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>de.openasist.app</string>
-          <string>de.openasist.app</string>
+          <string>de.olea.app</string>
+          <string>de.olea.app</string>
         </array>
       </dict>
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>exp+openasist-openasist</string>
+          <string>exp+olea-olea</string>
         </array>
       </dict>
     </array>
