@@ -1,4 +1,4 @@
-package de.openasist.app
+package de.olea.app
 
 import android.app.Application
 import android.content.res.Configuration

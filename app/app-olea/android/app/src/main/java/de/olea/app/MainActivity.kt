@@ -1,4 +1,4 @@
-package de.openasist.app
+package de.olea.app
 import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build

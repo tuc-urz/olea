@@ -86,9 +86,9 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'de.openasist.app'
+    namespace 'de.olea.app'
     defaultConfig {
-        applicationId 'de.openasist.app'
+        applicationId 'de.olea.app'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
