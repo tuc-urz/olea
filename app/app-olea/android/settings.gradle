@@ -21,7 +21,7 @@ extensions.configure(com.facebook.react.ReactSettingsExtension) { ex ->
   }
 }
 
-rootProject.name = 'OLEA App'
+rootProject.name = 'OLEA'
 
 dependencyResolutionManagement {
   versionCatalogs {
