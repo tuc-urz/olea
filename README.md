@@ -25,7 +25,7 @@ The open source release of the app is currently in progress. All the necessary i
 
 ## Mitwirken
 
-Jeder ist herzlichst eingeladen an der Entwicklung der OLEA mitzuwirken.
+Jeder ist herzlichst eingeladen an der Entwicklung der OLEA (Open Learning and Education Application) mitzuwirken.
 Es werden Personen aus allen Bereichen gesucht, so dass das OLEA-Team alle Beiträge mit Freuden annimmt.
 Hast du eine kreative Idee, die noch nicht in der OLEA umgesetzt ist?
 Dir ist ein Fehler oder eine Absturzursache aufgefallen?
