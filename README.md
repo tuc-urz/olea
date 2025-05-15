@@ -25,9 +25,9 @@ The open source release of the app is currently in progress. All the necessary i
 
 ## Mitwirken
 
-Jeder ist herzlichst eingeladen an der Entwicklung der OLEA-App mitzuwirken.
+Jeder ist herzlichst eingeladen an der Entwicklung der OLEA mitzuwirken.
 Es werden Personen aus allen Bereichen gesucht, so dass das OLEA-Team alle Beiträge mit Freuden annimmt.
-Hast du eine kreative Idee, die noch nicht in der OLEA-App umgesetzt ist?
+Hast du eine kreative Idee, die noch nicht in der OLEA umgesetzt ist?
 Dir ist ein Fehler oder eine Absturzursache aufgefallen?
 Dann erstelle einen Issue, damit die Community über deinen Vorschlag oder Fehlerbericht diskutieren kann.
 Ist in deinem Eifer bereits Code entstanden und du möchtest deine Arbeit in das Projekt mit einfließen lassen?
