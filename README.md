@@ -1,6 +1,6 @@
-[OLEA_banner](https://github.com/user-attachments/assets/2f0f2ffb-219a-44c9-9031-64b233b38a0b)
+![OLEA_banner](https://github.com/user-attachments/assets/2f0f2ffb-219a-44c9-9031-64b233b38a0b)
 
-# OLEA(work in progress) !
+# OLEA (work in progress)
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftuc-urz%2Fopenasist.svg?type=shield&issueType=license)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftuc-urz%2Fopenasist?ref=badge_shield&issueType=license)
 
