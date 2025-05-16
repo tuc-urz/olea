@@ -1,4 +1,4 @@
-![OLEA_banner](https://github.com/user-attachments/assets/2f0f2ffb-219a-44c9-9031-64b233b38a0b)
+![OLEA_banner](docs/OLEA_banner.png)
 
 # OLEA (work in progress)
 
