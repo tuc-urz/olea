@@ -1,26 +1,26 @@
-![open-asist-banner.png](docs/open-asist-banner.png)
+[OLEA_banner](https://github.com/user-attachments/assets/2f0f2ffb-219a-44c9-9031-64b233b38a0b)
 
-# OLEA(work in progress)
+# OLEA(work in progress) !
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftuc-urz%2Fopenasist.svg?type=shield&issueType=license)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftuc-urz%2Fopenasist?ref=badge_shield&issueType=license)
 
-The open source release of the app is currently in progress. All the necessary information is being added step by step and will be recorded in the roadmap.
+Die Open-Source-Version der App ist derzeit in Arbeit. Alle notwendigen Informationen werden Schritt für Schritt hinzugefügt und in der Roadmap festgehalten.
 
-## Roadmap
+## Fahrplan
 
-- [ ] Add project description
-- [ ] Add contribution guidelines
-- [ ] Add code of conduct
-- [ ] Explain project structure
-- [ ] Add Build instructions
-- [ ] Add server api documentation
+- [ ] Projektbeschreibung hinzufügen
+- [ ] Beitragsrichtlinien hinzufügen
+- [ ] Verhaltenskodex hinzufügen
+- [ ] Projektstruktur erläutern
+- [ ] Build-Anweisungen hinzufügen
+- [ ] Server-Api-Dokumentation hinzufügen
 
 
-## Made with ❤️ by the OLEA team
-![TU Chemnitz](https://tuc.app/images/logo.png)
-![codeculture](https://codeculture.de/wp-content/uploads/2025/03/logo_codeculture-e1742565533364.png)
-![Bildungsportal Sachsen](https://bildungsportal.sachsen.de/portal/wp-content/uploads/2018/06/cropped-BPS_Web_Logo-02-2.png)
-
+## Mit ❤️ gemacht vom OLEA Team
+TU Chemnitz
+HTWK Leipzig
+Bildungsportal Sachsen
+codeculture
 
 
 ## Mitwirken
