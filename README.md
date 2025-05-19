@@ -17,9 +17,9 @@ Die Open-Source-Version der App ist derzeit in Arbeit. Alle notwendigen Informat
 
 
 ## Mit ❤️ gemacht vom OLEA Team
-TU Chemnitz
-HTWK Leipzig
-Bildungsportal Sachsen
+TU Chemnitz\
+HTWK Leipzig\
+Bildungsportal Sachsen\
 codeculture
 
 
