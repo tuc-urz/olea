@@ -25,7 +25,7 @@
       }
     },
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/AppIcon.png",
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
