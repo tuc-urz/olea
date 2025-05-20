@@ -14,7 +14,7 @@
 		96905EF65AED1B983A6B3ABC /* libPods-OLEA.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-OLEA.a */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
-		048E142F3F7041B19C261676 /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = B359F2FF8BAE41C18BBD7557 /* noop-file.swift */; };
+		DEEB894A8ACC4913A5F25AA4 /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1021AB7A14148E1914C10EF /* noop-file.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,8 +31,8 @@
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-OLEA/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
-		B359F2FF8BAE41C18BBD7557 /* noop-file.swift */ = {isa = PBXFileReference; name = "noop-file.swift"; path = "OLEA/noop-file.swift"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.swift; explicitFileType = undefined; includeInIndex = 0; };
-		6A9D3D7FEF4B484C9DC5BB4C /* OLEA-Bridging-Header.h */ = {isa = PBXFileReference; name = "OLEA-Bridging-Header.h"; path = "OLEA/OLEA-Bridging-Header.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
+		A1021AB7A14148E1914C10EF /* noop-file.swift */ = {isa = PBXFileReference; name = "noop-file.swift"; path = "OLEA/noop-file.swift"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.swift; explicitFileType = undefined; includeInIndex = 0; };
+		BF85547997364B4B9D5AE174 /* OLEA-Bridging-Header.h */ = {isa = PBXFileReference; name = "OLEA-Bridging-Header.h"; path = "OLEA/OLEA-Bridging-Header.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,8 +57,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				B359F2FF8BAE41C18BBD7557 /* noop-file.swift */,
-				6A9D3D7FEF4B484C9DC5BB4C /* OLEA-Bridging-Header.h */,
+				A1021AB7A14148E1914C10EF /* noop-file.swift */,
+				BF85547997364B4B9D5AE174 /* OLEA-Bridging-Header.h */,
 			);
 			name = OLEA;
 			sourceTree = "<group>";
@@ -198,7 +198,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				8EA5074BE59E41AAABC38B6A /* OLEA-Bridging-Header.h in Resources */,
+				74812C5C373D4EAAA37C93DB /* OLEA-Bridging-Header.h in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,7 +274,7 @@
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */,
-				048E142F3F7041B19C261676 /* noop-file.swift in Sources */,
+				DEEB894A8ACC4913A5F25AA4 /* noop-file.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
