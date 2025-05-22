@@ -1,4 +1,4 @@
-![OLEA_banner](docs/OLEA_banner.png)
+![OLEA_banner](docs/OLEA_banner_new.png)
 
 # OLEA (work in progress)
 
