@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import { useState, useMemo } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -25,12 +25,9 @@ import {
 import { connect } from 'react-redux'
 import { useTheme, Text, Button } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
-import { useFocusEffect } from '@react-navigation/native';
-import moment from 'moment';
 
-import { useCallManagerContext, useParallelCalls } from '@openasist/context-callmanager';
+import { useParallelCalls } from '@openasist/context-callmanager';
 import { useUser } from '@openasist/context-user';
-
 import AppbarComponent from '@openasist/component-app-bar';
 
 import componentStyles from './styles';

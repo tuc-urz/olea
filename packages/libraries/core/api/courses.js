@@ -3,7 +3,7 @@
 // course : Courses of university
 // -----------------------------------
 
-import {ApiSettings, GETOptions} from './../constants/api';
+import {ApiSettings, GETOptions} from '../constants/api';
 import {action, commitAction, rollbackAction} from "./../constants/actions";
 
 const defaultType = action.coursesV2.getCourses;

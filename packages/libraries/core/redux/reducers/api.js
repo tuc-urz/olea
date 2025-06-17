@@ -1,4 +1,4 @@
-import { action, commitAction, rollbackAction } from './../../constants/actions';
+import { action, commitAction, rollbackAction } from '../../constants/actions';
 import { onUpdateRefreshing } from '../../redux/actions/state';
 import { CourseStatusEnum } from '../../constants/enums';
 import { toIsoDateString } from '../../helper/date';

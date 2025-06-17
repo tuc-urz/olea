@@ -12,28 +12,28 @@
  * limitations under the License.
  */
 
-import React, { useState, useMemo } from "react";
-import { SafeAreaView, View, StyleSheet } from "react-native";
+import React, { useState, useMemo } from 'react';
+import { SafeAreaView, View, StyleSheet } from 'react-native';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import { useTheme } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
-import { onSettingCanteenMerge, store } from "@openasist/core";
-import AppbarComponent from "@openasist/component-app-bar";
+import { onSettingCanteenMerge, store } from '@openasist/core';
+import AppbarComponent from '@openasist/component-app-bar';
 import SettingsDialogSelect from '@openasist/component-settings-dialog-select';
 import SettingsDialogRadio from '@openasist/component-settings-dialog-radio';
-import { useCanteens, useFavoriteCanteens, usePriceGroupCode } from "@openasist/context-canteen";
+import { useCanteens, useFavoriteCanteens, usePriceGroupCode } from '@openasist/context-canteen';
 import SettingSection from '@openasist/component-setting-section';
 
-import componentStyles from "./styles";
+import componentStyles from './styles';
 
 /**
  * Renders the Canteens Settings view.
  *
  * @param {Object} props - The component props.
  * @param {Object} props.settings - The settings object.
- * @returns {JSX.Element} The rendered component.
+ * @returns {React.JSX.Element} The rendered component.
  */
 function CanteensSettingsView(props) {
     // Get theme from theme context
@@ -45,7 +45,7 @@ function CanteensSettingsView(props) {
 
     // Extract required datas using destructuring
     const { settings } = props;
-    const { colors, appSettings: { mealSelections, groupsOfPersons, mealTypes }, themeStyles } = theme;
+    const { appSettings: { mealSelections, groupsOfPersons, mealTypes }, themeStyles } = theme;
 
     // Get canteen settings from settings property or use default
     const settingsCanteens = settings?.settingsCanteens;
@@ -80,13 +80,13 @@ function CanteensSettingsView(props) {
         // SafeAreaView is used to render content within the safe area boundaries of a device.
         <SafeAreaView style={[styles.container, themeStyles.appSafeAreaContainer]}>
             {/* AppbarComponent is a custom component for the app's header bar. */}
-            <AppbarComponent {...props} t={t} title={t("settings:canteens.title")} />
+            <AppbarComponent {...props} t={t} title={t('settings:canteens.title')} />
 
             {/* This View contains the main content of the screen. */}
             <View accessible={false} style={themeStyles.container}>
                 {/* List.Section groups related content. */}
                 <SettingSection
-                    title={t("settings:canteens.priceSelection")}
+                    title={t('settings:canteens.priceSelection')}
                     description={
                         favoritePrice
                             ? t(
@@ -115,8 +115,8 @@ function CanteensSettingsView(props) {
                                 })
                             )
                     }
-                    onDismiss={() => { setShowPriceDialog(false) }}
-                    onOk={() => { setShowPriceDialog(false) }}
+                    onDismiss={() => setShowPriceDialog(false)}
+                    onOk={() => setShowPriceDialog(false)}
                     onChange={setFavoritePrice}
                 />
 
@@ -125,18 +125,18 @@ function CanteensSettingsView(props) {
                     Array.isArray(mealSelections)
                         ? <>
                             <SettingSection
-                                title={t("settings:canteens.preferredSelections")}
+                                title={t('settings:canteens.preferredSelections')}
                                 description={
                                     mealSelections
                                         .filter(selection => favoriteSelection.includes(selection.code))
                                         .map(selection => selection.labelKey)
                                         .map(selectionLabelKey => t(selectionLabelKey))
-                                        .join(", ")
+                                        .join(', ')
                                 }
                                 onPress={() => setShowSelectionsDialog(true)}
                             />
                             <SettingsDialogSelect
-                                title={t("settings:canteens.preferredSelections")}
+                                title={t('settings:canteens.preferredSelections')}
                                 selectedOptions={favoriteSelection}
                                 visible={showSelectionsDialog}
                                 options={
@@ -154,7 +154,7 @@ function CanteensSettingsView(props) {
                                     selectedOptions =>
                                         store.dispatch(
                                             onSettingCanteenMerge(
-                                                "canteenSettings",
+                                                'canteenSettings',
                                                 { favoriteSelection: selectedOptions }
                                             )
                                         )
@@ -165,12 +165,12 @@ function CanteensSettingsView(props) {
                 }
 
                 <SettingSection
-                    title={t("canteen:favoriteCanteen:title")}
+                    title={t('canteen:favoriteCanteen:title')}
                     description={
                         Object.entries(canteens)
                             .filter(([canteenId, canteenDatas]) => favoriteCanteens.includes(canteenId))
                             .map(([canteenId, canteenDatas]) => canteenDatas.title)
-                            .join(", ")
+                            .join(', ')
                     }
                     onPress={() => setShowCanteensDialog(true)}
                 />
@@ -201,7 +201,7 @@ function CanteensSettingsView(props) {
                                         .filter(mealType => activeMealTypes.includes(mealType.code))
                                         .map(mealType => mealType.labelKey)
                                         .map(mealTypeLabelKey => t(mealTypeLabelKey))
-                                        .join(", ")
+                                        .join(', ')
                                 }
                                 onPress={() => setShowMealTypesDialog(true)}
                             />
@@ -224,7 +224,7 @@ function CanteensSettingsView(props) {
                                     selectedOptions =>
                                         store.dispatch(
                                             onSettingCanteenMerge(
-                                                "canteenSettings",
+                                                'canteenSettings',
                                                 { favoriteMealTypes: selectedOptions }
                                             )
                                         )
@@ -236,7 +236,7 @@ function CanteensSettingsView(props) {
             </View>
         </SafeAreaView>
     );
-};
+}
 
 // Map the Redux state to component props
 const mapStateToProps = (state) => {

@@ -3,7 +3,7 @@
 // library : Books and stuff
 // -----------------------------------
 
-import {ApiSettings, GETOptions} from './../constants/api';
+import {ApiSettings, GETOptions} from '../constants/api';
 
 
 export const libraryApi = {

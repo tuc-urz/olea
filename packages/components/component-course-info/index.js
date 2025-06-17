@@ -12,24 +12,23 @@
  * limitations under the License.
  */
 
-import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
     StyleSheet,
     Text,
     TouchableOpacity,
     View,
-    AppState,
 } from 'react-native';
 
-import { withTheme } from 'react-native-paper';
-import { withTranslation } from 'react-i18next';
-import { useFocusEffect } from '@react-navigation/native';
+import { useTheme } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
 
 import moment from 'moment';
 import { DateTime } from 'luxon';
 
 import IconsOpenasist from '@openasist/icons-openasist';
-import { useDateCourses, weekModes } from '@openasist/context-timetable';
+import { useDateCourses } from '@openasist/context-timetable';
 
 import componentStyles from './styles';
 
@@ -45,9 +44,12 @@ import componentStyles from './styles';
  * Navigation-Parameters:
  *  - none
  */
-function CourseInfoComponent(props) {
+export default function CourseInfoComponent(props) {
     const componentName = arguments.callee.name;
-    const { theme, theme: { colors }, t, navigation } = props;
+    const theme = useTheme();
+    const { colors } = theme;
+    const { t } = useTranslation();
+    const navigation = useNavigation();
 
     const [now, setNow] = useState(moment());
 
@@ -55,7 +57,7 @@ function CourseInfoComponent(props) {
     const academicQuarter = moment.duration(30, 'minutes');
 
     // Vorlesungen von Stundenplan-Kontext abrufen, die heute stattfinden.
-    const [courses, refreshCourses] = useDateCourses(todayDate);
+    const [courses] = useDateCourses(todayDate);
 
     console.debug(componentName, ': Count of courses: ', courses?.length ?? 0);
 
@@ -176,9 +178,12 @@ function CourseInfoComponent(props) {
             return (
                 <TouchableOpacity
                     onPress={
-                        () => nextOrigineCourse
-                            ? navigation.navigate('CourseInfo', { course: nextOrigineCourse })
-                            : navigation.navigate('TimetableList', { initial: false })
+                        () => navigation.navigate(
+                            'timetableModule',
+                            nextOrigineCourse
+                                ? { course: nextOrigineCourse }
+                                : { showCodeInput: true }
+                        )
                     }
                     accessible={true}
                     accessibilityLabel={t('course:nextLecture')}
@@ -212,5 +217,3 @@ function CourseInfoComponent(props) {
         [nextOrigineCourse, errorMessage, navigation, styles, t, colors]
     );
 }
-
-export default withTranslation()(withTheme(CourseInfoComponent))

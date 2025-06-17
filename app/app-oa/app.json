@@ -67,8 +67,12 @@
       }
     },
     "android": {
+      "edgeToEdgeEnabled": true,
       "package": "de.openasist.app",
-      "icon": "./assets/images/AppIcon.png",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/AppIcon.png",
+        "backgroundColor": "#ffffff"
+      },
       "permissions": [
         "ACCESS_NETWORK_STATE",
         "INTERNET"
@@ -115,7 +119,8 @@
           },
           "ios": {
             "useFrameworks": "static",
-            "deploymentTarget": "15.1"
+            "deploymentTarget": "15.1",
+            "carbonLanguageVersion": "1.3"
           }
         }
       ]

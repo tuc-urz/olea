@@ -9,6 +9,6 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "react-native-paper": "^4.12.5"
+    "react-native-paper": "^5.14.5"
   }
 }

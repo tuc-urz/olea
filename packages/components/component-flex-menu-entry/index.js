@@ -17,6 +17,7 @@ import {
     Text,
     TouchableOpacity,
     Image,
+    GestureResponderEvent,
 } from 'react-native';
 
 import { useTheme } from 'react-native-paper';
@@ -40,7 +41,7 @@ import componentStyles from './styles';
  */
 export default function FlexMenuEntry({ title, description, leftIconImage, rightIcon, onPress }) {
     const theme = useTheme();
-    const { themeStyles, colors, appSettings } = theme;
+    const { themeStyles, colors } = theme;
 
     const styles = componentStyles(theme);
 

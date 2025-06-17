@@ -1,5 +1,3 @@
-import {Dimensions} from 'react-native';
-
 export default function(theme) {
     return {
       activity: {
@@ -27,7 +25,8 @@ export default function(theme) {
       },
       content: {
         backgroundColor: theme.colors.background,
-        flex: 1
+        flex: 1,
+        padding: "2%",
       },
       date:{
         fontSize: theme.fontSizes.s,
@@ -59,6 +58,6 @@ export default function(theme) {
         color: theme.colors.jobsTitleColor,
         textAlign: 'center',
         marginBottom: theme.paddings.default
-      },  
+      },
     }
 };

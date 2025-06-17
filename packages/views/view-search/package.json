@@ -13,7 +13,7 @@
     "@openasist/component-contact-detail": "0.0.1",
     "@openasist/component-room-detail": "0.0.1",
     "@openasist/core": "0.0.1",
-    "react-native-tab-view": "3.5.2",
-    "react-native-paper": "^4.12.5"
+    "react-native-tab-view": "4.1.0",
+    "react-native-paper": "^5.14.5"
   }
 }

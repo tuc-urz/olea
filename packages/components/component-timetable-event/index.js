@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import {
     StyleSheet,
     View,
@@ -20,23 +20,26 @@ import {
     Pressable,
     Linking,
 } from 'react-native';
+
 import { connect } from 'react-redux'
 import {
     withTheme,
     Text
-} from "react-native-paper";
-import { withTranslation } from "react-i18next";
-import { onUpdateRefreshing } from "@openasist/core";
-import componentStyles from "./styles";
+} from 'react-native-paper';
+import { withTranslation } from 'react-i18next';
+
+import { onUpdateRefreshing } from '@openasist/core';
 import IconsOpenasist from '@openasist/icons-openasist';
 
+import componentStyles from './styles';
+
 function TimetableEventComponent(props) {
+    const componentName = arguments.callee.name;
+
     const {
         theme,
-        theme: { themeStyles },
         t,
         settings,
-
         times,
         type,
         title,
@@ -49,7 +52,7 @@ function TimetableEventComponent(props) {
 
     const isBigFont = settings?.settingsAccessibility?.increaseFontSize ?? false;
     const [isSelected, setIsSelected] = useState(false);
- 
+
     const styles = useMemo(
         () => StyleSheet.create(componentStyles(theme)),
         [theme]
@@ -57,7 +60,7 @@ function TimetableEventComponent(props) {
 
     const handleSelectionChange = () => {
         setIsSelected(isSelected => !isSelected);
-        
+
         onSelectionChange?.(!isSelected)
     };
 
@@ -67,7 +70,7 @@ function TimetableEventComponent(props) {
     const titleStyle = isBigFont ? styles.titleBigFont : styles.title;
 
     return (
-        <View style={[isBigFont ? [styles.card, styles.courseCard] : styles.card, { backgroundColor: 'rgba(0, 95, 80, 0.25)', elevation: 0}]} onPress={() => { console.log("Clicking is currently not working. Don't try it!") }}>
+        <View style={[isBigFont ? [styles.card, styles.courseCard] : styles.card, { backgroundColor: 'rgba(0, 95, 80, 0.25)', elevation: 0 }]} onPress={() => { console.log("Clicking is currently not working. Don't try it!") }}>
             {
                 //times
                 //    ? <View style={[isBigFont ? [styles.courseTimeContainer, styles.courseTimeContainerBigFont] : styles.courseTimeContainer, { backgroundColor: 'rgba(0, 95, 80, 0)' }]}>
@@ -78,28 +81,28 @@ function TimetableEventComponent(props) {
                 //    : null
             }
             {
-            //times ? <View style={styles.verticalSeperator} /> : null
+                //times ? <View style={styles.verticalSeperator} /> : null
             }
             <View style={[styles.otherCourseContainer, { backgroundColor: 'rgba(0, 95, 80, 0)' }]}>
                 {
                     type || times
-                      ? <Text style={styles.type}>
+                        ? <Text style={styles.type}>
                             {
                                 type
-                                  ? <Text style={{ fontWeight: 'bold' }}>
+                                    ? <Text style={{ fontWeight: 'bold' }}>
                                         {type}
                                     </Text>
-                                  : null
+                                    : null
                             }
                             {
                                 type && times
-                                  ? ' | '
-                                  : null
+                                    ? ' | '
+                                    : null
                             }
                             {
                                 times
-                                  ? `${times?.start} - ${times?.end} `
-                                  : null
+                                    ? `${times?.start} - ${times?.end} `
+                                    : null
                             }
                         </Text>
                         : null
@@ -114,10 +117,16 @@ function TimetableEventComponent(props) {
                 }
                 {
                     location
-                      ? <Pressable
+                        ? <Pressable
                             onPress={
                                 locationUrl
-                                    ? () => Linking.openURL(locationUrl).catch(reason => alert("Link konnte nicht geöffnet werden."))
+                                    ? () => Linking.openURL(locationUrl)
+                                        .catch(
+                                            reason => {
+                                                console.debug(componentName, ':', 'can`t open link', ':', reason);
+                                                alert('Link konnte nicht geöffnet werden.');
+                                            }
+                                        )
                                     : null
                             }
                         >
@@ -127,18 +136,17 @@ function TimetableEventComponent(props) {
                                 {location}
                             </Text>
                         </Pressable>
-                      : null
+                        : null
                 }
             </View>
             {
-                 starrable
+                starrable
                     ? <View style={styles.starPosition}>
                         <TouchableOpacity onPress={handleSelectionChange}>
-                            <IconsOpenasist icon={isSelected ? "star-selected" : "star"} size= {25} color="#005F50" />
+                            <IconsOpenasist icon={isSelected ? 'star-selected' : 'star'} size={25} color='#005F50' />
                         </TouchableOpacity>
                     </View>
                     : null
- 
             }
         </View>
     );

@@ -11,6 +11,7 @@ import { Asset } from 'expo-asset';
 const fontFamily = Asset.fromModule(require('./../assets/fonts/Poppins-Regular.ttf')).uri;
 
 const theme = {
+    version: 2,
     dark: false,
     roundness: 4,
     paddings: paddings,

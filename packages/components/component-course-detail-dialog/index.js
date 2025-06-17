@@ -12,108 +12,158 @@
  * limitations under the License.
  */
 
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import {
     StyleSheet,
-    View,
     Linking,
     TouchableOpacity
 } from 'react-native';
-import { connect } from 'react-redux'
-import { useTheme, Text, Dialog, Button, Portal } from "react-native-paper";
-import { useTranslation } from "react-i18next";
 
-import { onUpdateRefreshing } from "@openasist/core";
+import { useTheme, Text, Dialog, Portal } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 
-import IconsOpenasist from "@openasist/icons-openasist";
+import IconsOpenasist from '@openasist/icons-openasist';
+import { useIncreaseFontSize } from '@openasist/core';
 
-import componentStyles from "./styles";
-
-
+import componentStyles from './styles';
 
 /**
- * Timetable List Component
+ * Ein Dialog, der sich über die derzeitige Ansicht legt, welcher die Detailinformationen zu einer Vorlesung anzeigt.
  *
- * Displays the list for timetable,
+ * @param {object} props
+ * @param {object} props.course Das JSON-Objekt, welches die Daten der Vorlesung enthält
+ * @param {boolean} props.visible `true`, wenn der Dialog angezeigt werden soll, ansonsten `false`
+ * @param {() => void} [props.onClose]
+ * @param {() => void} [props.onDismiss]
+ * @example
+ * const [showDetailDialog, setShowDetailDialog] = useState(true);
  *
- * Parameters:
- *  - none
+ * const course = {
+ *     title:     { displayName: 'Bezeichnung', data: 'Programierung' },
+ *     room:      { displayName: 'Raum',        data: '13.344.3' },
+ *     startTime: { displayName: 'Begin',       data: '12:00' }
+ * };
  *
- * Navigation-Parameters:
- *  - none
+ * return (
+ *     <CourseDetailDialog
+ *         course={course}
+ *         visible={showDetailDialog}
+ *         onDismiss={() => setShowDetailDialog(false)}
+ *         onClose={() => setShowDetailDialog(false)}
+ *     />
+ * );
  */
-
-
-
-function CourseDetailDialog(props) {
-    const { visible, hideDialog, course, theme: {colors}} = props;
-    const { title, room, type, professor, url, start, end, info } = course;
+export default function CourseDetailDialog({ course, visible, onClose, onDismiss }) {
+    const theme = useTheme();
     const { t } = useTranslation();
-    return (
-            <Portal>
-                <Dialog visible={visible} onDismiss={hideDialog}>
-                    <Dialog.Title>{title}</Dialog.Title>
-                    <Dialog.Content>
-                        <Text>{room}</Text>
-                        <Text>{type}</Text>
-                        <Text>{professor}</Text>
-                        <Text>{`${start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - ${end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}</Text>
-                        <Text>{info}</Text>
-                        {/* TODO: info noch zur json hinzufügen und andere Sachen*/}
-                        {/* <CourseDetailDialogText {...props } detail={type}/>
-                        <CourseDetailDialogText {...props } detail={url} icon={"forward"}/>
-                        <CourseDetailDialogText {...props } detail={professor}/>
-                        <CourseDetailDialogText {...props } detail={start}/>
-                        <CourseDetailDialogText {...props } detail={end}/>
-                        <CourseDetailDialogText {...props } detail={info}/> */}
-                    </Dialog.Content>
-                    <Dialog.Actions>
-                        <Button onPress={hideDialog} color={colors.icon}>{t('timetable:close')}</Button>
-                    </Dialog.Actions>
-                </Dialog>
-            </Portal>
+
+    const styles = useMemo(
+        () => StyleSheet.create(componentStyles(theme)),
+        [theme]
     );
 
-}
+    const { room, url, info, title, times, type, lecturer, ...extraCourseData } = course ?? {};
+    const courseDetails = [
+        { ...room, key: 'room', displayName: t('timetable:detail.room'), icon: 'map-search' },
+        { key: 'startTimes', data: times?.[0]?.start, displayName: t('timetable:detail.start') },
+        { key: 'endTimes', data: times?.[0]?.end, displayName: t('timetable:detail.end') },
+        { ...type, key: 'type', displayName: t('timetable:detail.type') },
+        { ...lecturer?.[0], key: 'lecturer', displayName: t('timetable:detail.lecturer') },
+        { ...url, key: 'url', displayName: t('timetable:detail.url'), icon: 'forward' },
+        { ...info, key: 'info', displayName: t('timetable:detail.info') },
 
-function CourseDetailDialogText(props) {
-    const { styles, settings, icon, detail, theme: {colors} } = props;
-    const isBigFont = settings.settingsAccessibility.increaseFontSize;
+        // Restliche Daten werden in Format gebracht und angefügt
+        ...Object.entries(extraCourseData)
+            .map(
+                ([courseDataKey, courseDataValue]) =>
+                (
+                    {
+                        key: courseDataKey,
+                        displayName: courseDataValue?.displayname,
+                        ...courseDataValue,
+                    }
+                )
+            )
+    ]
+        .filter(courseDetail => courseDetail?.data ? true : false);
 
-    const commonJSX =
-        (
-            <>
-                <Text style={[styles.detailLabel, isBigFont ? styles.textDetailBigFont : styles.textDetail]}>{detail?.displayname}</Text>
-                <Text style={[styles.detailValue, isBigFont ? styles.textDetailBigFont : styles.textDetail]} numberOfLines={1} ellipsizeMode='tail'>{detail?.data}</Text>
-                {icon ? <IconsOpenasist icon={icon} size={25} color={colors.icon}/> : null}
-            </>
-        );
-   
     return (
-        detail?.data ?
-
-            detail?.url ?
-
-                <TouchableOpacity style={[styles.detailContainer, styles.textDetail]} onPress={() => Linking.openURL(detail?.url)} >
-                    {commonJSX}
-                </TouchableOpacity>
-
-                :
-
-                <View style={[styles.detailContainer, styles.textDetail]}>
-                    {commonJSX}
-                </View>
-
-            : null
+        <Portal>
+            <Dialog visible={visible} onDismiss={onDismiss}>
+                <Dialog.Title>{title?.data ?? 'Keine weiteren Informationen'}</Dialog.Title>
+                <Dialog.Content>
+                    {
+                        courseDetails
+                            ? courseDetails.map(
+                                courseDetail =>
+                                    <CourseDetailDialogText
+                                        key={courseDetail?.displayName}
+                                        title={courseDetail?.displayName}
+                                        content={courseDetail?.data}
+                                        url={courseDetail?.url}
+                                        icon={courseDetail?.icon}
+                                    />
+                            )
+                            : <Text>
+                                Keine Informationen verfügbar
+                            </Text>
+                    }
+                </Dialog.Content>
+                <Dialog.Actions>
+                    <TouchableOpacity onPress={onClose}>
+                        <Text style={styles.dismissButton}>{t('timetable:close')}</Text>
+                    </TouchableOpacity>
+                </Dialog.Actions>
+            </Dialog>
+        </Portal>
     );
 }
 
-const mapStateTo = state => {
-    return {
-        pluginComponent: state.pluginReducer.timetable.component,
-        pluginStyles: state.pluginReducer.timetable.styles,
-        settings: state.settingReducer
-    };
-};
+/**
+ * Eine einzelne Information im {@link CourseDetailDialog}
+ *
+ * @param {object} props
+ * @param {string} props.title
+ * @param {string} props.content
+ * @param {string} props.url
+ * @param {string} props.icon
+ */
+function CourseDetailDialogText({ title, content, url, icon }) {
+    const increaseFontSize = useIncreaseFontSize();
 
-export default connect(mapStateTo, { onUpdateRefreshing })(CourseDetailDialog);
+    const theme = useTheme();
+    const { colors } = theme;
+
+    const styles = useMemo(
+        () => StyleSheet.create(componentStyles(theme)),
+        [theme]
+    );
+
+    return (
+        <TouchableOpacity
+            style={[styles.detailContainer, styles.textDetail]}
+            onPress={
+                url
+                    ? () => Linking.openURL(url)
+                    : null
+            }
+            disabled={
+                url
+                    ? false
+                    : true
+            }
+        >
+            <Text style={[styles.detailLabel, increaseFontSize ? styles.textDetailBigFont : styles.textDetail]} >
+                {title}
+            </Text>
+            <Text style={[styles.detailValue, increaseFontSize ? styles.textDetailBigFont : styles.textDetail]} ellipsizeMode='tail' >
+                {content}
+            </Text>
+            {
+                icon && url
+                    ? <IconsOpenasist icon={icon} size={25} color={colors.icon} />
+                    : null
+            }
+        </TouchableOpacity>
+    )
+}

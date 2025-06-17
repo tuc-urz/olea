@@ -1,9 +1,3 @@
-import {Dimensions} from "react-native";
-import { tabColors } from "../../../apps/app-tuc/constants/layout/Colors";
-
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
-
 export default function(theme) {
     return {
         card: {

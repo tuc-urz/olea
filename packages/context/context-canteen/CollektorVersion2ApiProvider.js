@@ -44,18 +44,20 @@ export default class CollektorVersion2ApiProvider extends HttpApiProvider {
     }
 
     /**
-     * Returns the request URL to get all courses of a personal timetable code from the collektor.
-     * @param {String} personalTimetableCode Personal timetable code to get.
-     * @returns {URL}
+     * Returns the request URL to get the menu of a day from the collector.
+     * @param {String} canteenId Canteen.
+     * @param {String} date ISO-8601 date of day to get.
+     * @returns {URL} URL of the menu from the given day.
      */
     getMenuUrl(canteenId, date) {
         return this.extendBaseUrl(['canteens', canteenId, 'menus', date]);
     }
 
     /**
-     * Returns a list of all courses from the queried personal timetable code.
-     * @param {String} personalTimetableCode Personal code of the timetable.
-     * @returns {Array} Array of all courses of the timetable.
+     * Returns a list of all meals from the queried day.
+     * @param {String} canteenId Canteen.
+     * @param {String} date ISO-8601 date of day to get.
+     * @returns {Array} Array of all meals of the day.
      */
     getMenu(canteenId, date) {
         const getMenuUrl = this.getMenuUrl(canteenId, date);
@@ -76,7 +78,7 @@ export default class CollektorVersion2ApiProvider extends HttpApiProvider {
                     if (response.status === 304) {
                         throw new NotModifiedResponse();
                     } else {
-                        responseETag = response?.headers.get('ETag');
+                        const responseETag = response?.headers.get('ETag');
                         this.#menusETags[`${canteenId}-${date}`] = responseETag
                         return response.json();
                     }

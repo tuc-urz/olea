@@ -3,7 +3,7 @@
 // pts : public transportation system
 // -----------------------------------
 
-import {ApiSettings, GETOptions} from './../constants/api';
+import {ApiSettings, GETOptions} from '../constants/api';
 
 
 export const ptsApi = {

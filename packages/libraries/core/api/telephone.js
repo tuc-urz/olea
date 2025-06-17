@@ -3,7 +3,7 @@
 // telephone : Telephone and E-Mail
 // -----------------------------------
 
-import {ApiSettings, GETOptions} from './../constants/api';
+import {ApiSettings, GETOptions} from '../constants/api';
 
 
 export const telephoneApi = {

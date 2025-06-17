@@ -17,7 +17,6 @@ import {
     Text,
     StyleSheet,
     View,
-    FlatList,
     Image
 } from 'react-native';
 import { connect } from 'react-redux'
@@ -169,7 +168,7 @@ function Meal({ settings, meal, priceGroupCode, priceGroupName }) {
         <View style={themeStyles.flexRow}>
             <View style={[themeStyles.cardContent, styles.mealContent]}>
                 {
-                    meal.imageUrl ?? null !== null
+                    meal?.imageUrl
                         ? <Image
                             style={styles.mealImage}
                             source={{ uri: meal.imageUrl }}
@@ -273,7 +272,7 @@ function MensaMenu(props) {
             {
                 Array.isArray(menu) && menu.length > 0
                     ? menu.flatMap(
-                        (meal, index, array) => [
+                        (meal) => [
                             <Meal
                                 key={meal.title}
                                 meal={meal}

@@ -1,4 +1,4 @@
-export default function(theme) {
+export default function (theme) {
     return {
         container: {
             flex: 1,
@@ -17,7 +17,7 @@ export default function(theme) {
             textAlign: 'left'
         },
         optionIconContainer: {
-           flex: 0.2
+            flex: 0.2
         },
         option: {
             backgroundColor: theme.colors.background,
@@ -31,11 +31,6 @@ export default function(theme) {
             fontSize: theme.fontSizes.subtitle,
             marginTop: 1,
             alignSelf: 'center'
-        },
-        selectOption: {
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between'
         }
     }
 };

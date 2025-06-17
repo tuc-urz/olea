@@ -16,14 +16,15 @@ import React from 'react';
 import { SafeAreaView, View, Text } from 'react-native';
 
 import { connect } from 'react-redux'
-import { Button, List, Dialog, Portal, RadioButton, withTheme, TouchableRipple } from 'react-native-paper';
-import { withTranslation } from "react-i18next";
+import { Button, List, Dialog, Portal, RadioButton, withTheme } from 'react-native-paper';
+import { withTranslation } from 'react-i18next';
 
 import merge from 'lodash/merge';
 
-import { onSettingGeneralOverride, store } from "@openasist/core";
-import AppbarComponent from "@openasist/component-app-bar";
-import componentStyles from "./styles";
+import { onSettingGeneralOverride, store } from '@openasist/core';
+import AppbarComponent from '@openasist/component-app-bar';
+
+import componentStyles from './styles';
 
 /**
  * Settings General
@@ -45,7 +46,7 @@ class GeneralSettingsView extends React.Component {
         // PLUGIN FUNCTIONALITY
         // ------------------------------------------------------------------------
 
-        const {pluginStyles, theme} = this.props;
+        const { pluginStyles, theme } = this.props;
         this.styles = componentStyles(theme);
 
         if (pluginStyles) {
@@ -81,7 +82,7 @@ class GeneralSettingsView extends React.Component {
         const { theme, t } = this.props;
         const { colors } = theme;
         const languages = theme.appSettings.languages.map(language =>
-            <View key={"lanuage-" + language.code} >
+            <View key={'lanuage-' + language.code} >
                 <RadioButton.Item
                     value={language.code}
                     color={colors.checkboxChecked}
@@ -92,7 +93,7 @@ class GeneralSettingsView extends React.Component {
                 />
             </View>
         );
-       
+
         return (
             <RadioButton.Group
                 onValueChange={value => this.setState({ language: value })}
@@ -121,30 +122,30 @@ class GeneralSettingsView extends React.Component {
 
         return (
             <SafeAreaView style={[this.styles.container, themeStyles.appSafeAreaContainer]}>
-                <AppbarComponent {...this.props} title={t('settings:common.title')}/>
+                <AppbarComponent {...this.props} title={t('settings:common.title')} />
                 <View accessible={false} style={themeStyles.container}>
                     <List.Section>
-                        <List.Item accessible={false} key="language" title={t('settings:common.language')} description={t(this.getLanguageByKey().labelKey)}
-                                   titleStyle={this.styles.listItemTitle} descriptionStyle={this.styles.listItemDescription}
-                        right={() => <Button accessible={true} labelStyle={this.styles.buttonLabel} onPress={this._showDialog} color={colors.buttonText}>{t('common:changeLabel')}</Button>
-                        }>
+                        <List.Item accessible={false} key='language' title={t('settings:common.language')} description={t(this.getLanguageByKey().labelKey)}
+                            titleStyle={this.styles.listItemTitle} descriptionStyle={this.styles.listItemDescription}
+                            right={() => <Button accessible={true} labelStyle={this.styles.buttonLabel} onPress={this._showDialog} color={colors.buttonText}>{t('common:changeLabel')}</Button>
+                            }>
                         </List.Item>
                     </List.Section>
                     <Portal>
                         <Dialog visible={this.state.visible}
-                                onDismiss={this._hideDialog}>
+                            onDismiss={this._hideDialog}>
                             <Dialog.Title style={this.styles.dialogTitle}>{t('settings:common.language')}</Dialog.Title>
                             <Dialog.Content>
                                 {this._renderLanguages()}
                             </Dialog.Content>
                             <Dialog.Actions>
-                                <Button labelStyle={this.styles.dialogContent} onPress={() => {this.setState({ isChangeMessageVisible: true }); this._hideDialog();}} color={colors.buttonText}>{t('common:okLabel')}</Button>
+                                <Button labelStyle={this.styles.dialogContent} onPress={() => { this.setState({ isChangeMessageVisible: true }); this._hideDialog(); }} color={colors.buttonText}>{t('common:okLabel')}</Button>
                             </Dialog.Actions>
                         </Dialog>
                     </Portal>
                     <Portal>
                         <Dialog visible={this.state.isChangeMessageVisible}
-                                onDismiss={() => this.setState({ isChangeMessageVisible: false })}>
+                            onDismiss={() => this.setState({ isChangeMessageVisible: false })}>
                             <Dialog.Title style={this.styles.dialogTitle}>{t('settings:common.languageChange')}</Dialog.Title>
                             <Dialog.Content>
                                 <Text style={this.styles.dialogContent}>{t('settings:common.languageChangeText')}</Text>

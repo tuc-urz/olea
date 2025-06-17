@@ -12,30 +12,148 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
     SafeAreaView,
     ScrollView,
     StyleSheet,
     Text,
-    TouchableNativeFeedback,
-    TouchableOpacity,
-    View
 } from 'react-native';
 
-import {connect} from 'react-redux'
-import {withTheme, Appbar, Portal, Dialog, Checkbox, Button} from "react-native-paper";
-import {TabView, TabBar} from 'react-native-tab-view';
+import { connect } from 'react-redux'
+import { withTheme, useTheme, Appbar } from 'react-native-paper';
+import { TabView, TabBar, TabBarItem } from "react-native-tab-view";
+import { withTranslation, useTranslation } from 'react-i18next';
 
 import merge from 'lodash/merge';
-import {withTranslation}     from "react-i18next";
+import moment from "moment/moment";
 
-import { onSettingDevelopOverride, onSettingGeneralOverride, onUpdateRefreshing, store } from "@openasist/core";
-
-import componentStyles from "./styles"
-import IconsOpenasist from "@openasist/icons-openasist";
-import AppbarComponent from "@openasist/component-app-bar";
+import { onUpdateRefreshing, useActiveStagingMenuItems } from '@openasist/core';
+import AppbarComponent from '@openasist/component-app-bar';
 import MainMenuEntry from '@openasist/component-main-menu-entry';
+import DevelopmentDialog from '@openasist/component-development-dialog';
+
+import componentStyles from './styles'
+
+/**
+ * Die Daten für einen Menüeintrag, welche für das Rendern eines Menüseintarges in einem Menü verwendet wird.
+ * Es kann eine Views oder eine URL als Ziel hinterlegt werden.
+ * Soll eine URL in einer webview geöffnet werden, muss eine URL als String über das Datenfels `url` hinterlegt werden.
+ * Eine View wird geöffnet, wenn das Datenfeld `view` einen View-Namen enthält.
+ * Das anzuzeigende Icon kann über das Datenfeld `icon` oder `iconSVG` übergeben werden.
+ *
+ * @typedef {object} MenuItem
+ * @property {string} title - Titel des Menüeintrages
+ * @property {string} [icon] Schlüssel des Icons, welches mit dem Titel angeziegt werden soll. Stattdessen kann auch `iconSVG` verwendet werden.
+ * @property {React.ReactNode} [iconSVG] Icon als SVG-ReactNode. Stattdessen kann auch `icon` verwendet werden.
+ * @property {string} [url] URL welche in einer Webview geöffnet werden soll, wenn der Nutzer den Menueintrag auswählt.
+ * @property {string} [view] Name der zu öffnenden View
+ */
+
+/**
+ * Liste von Hauptmenüeinträgen
+ *
+ * @param {object} props
+ * @param {MenuItem[]} props.menuItems Liste der anzuzeigenden Menueinträge als {@link MenuItem}s
+ * @returns {React.JSX.Element[]}
+ */
+function MainMenuEntryList({ menuItems }) {
+    return menuItems
+        ? menuItems.map(
+            menuItem =>
+                <MainMenuEntry
+                    key={menuItem.title}
+                    title={menuItem.title}
+                    view={menuItem?.view}
+                    url={menuItem?.url}
+                    icon={menuItem?.icon}
+                    iconSVG={menuItem?.iconSVG}
+                    isLocalized={menuItem?.isLocalized}
+                />
+        )
+        : (
+            <Text>Nicht verfügbar</Text>
+        );
+}
+
+/**
+ * Tabbar für die Kategorien des Menüs.
+ */
+function MainMenuTabbar(props) {
+    const { t } = useTranslation();
+    const theme = useTheme();
+    const { themeStyles } = theme;
+
+    return (
+        <TabBar
+            {...props}
+            scrollEnabled
+            style={themeStyles.tabs}
+            labelStyle={themeStyles.tab}
+            activeColor={themeStyles.tabs.activeColor}
+            inactiveColor={themeStyles.tabs.inactiveColor}
+            indicatorStyle={themeStyles.tabIndicator}
+            tabStyle={{ width: 'auto', paddingHorizontal: 20 }}
+            renderTabBarItem={({ route, navigationState, ...rest}) =>
+              <TabBarItem
+                {...rest}
+                key={route.key}
+                route={route}
+                navigationState={navigationState}
+                labelStyle={themeStyles.tab}
+                activeColor={themeStyles.tabs.activeColor}
+                inactiveColor={themeStyles.tabs.inactiveColor}
+                // Die einbindung von moment.js zum Anzeigen des Wochentages sollte langfristig entfernt werden.
+                // Funktioniert die Luxon funktionalität der Wochenanzeige nicht unter iOS datetime.toFormat('ccc')
+                labelText={t(route.title).toUpperCase()}
+                accessible={true}
+                accessibilityLabel={({ route }) => t(route.title)}
+              />
+            }
+        />
+    );
+}
+
+/**
+ * Scene/Inhalt eines Tabs des Hauptmenüs.
+ *
+ * @param {object} props
+ * @param {object} props.route
+ * @param {string} props.route.key Schlüssel der Route und Schlüssel, welcher für die errechnung der Menüeintrage verwendet wird
+ */
+function MainMenuScene({ route: { key: mainMenuItemsKey } }) {
+    const theme = useTheme();
+    const availableMenuItems = theme?.appSettings?.mainMenu?.items?.[mainMenuItemsKey];
+    const activeStagingMenuItems = useActiveStagingMenuItems();
+
+    const styles = useMemo(
+        () => StyleSheet.create(componentStyles(theme)),
+        [theme]
+    );
+
+    // Es werden Hauptmenüeintrage herausgefiltert, die nur im Stagingmodus angezeigt werden sollen, aber nicht aktiv sind
+    const activeMenuItems = useMemo(
+        () => availableMenuItems.filter(
+            menuItem => {
+                const menuItemKey = `${menuItem?.title}`;
+                // Ist der Menüpunkt durch Appeinstellungen aktiv?
+                const isActive = menuItem?.active ?? true;
+                // Ist der Menüpunkt durch die Entwicklereinstellungen aktiviert?
+                const isActiveStagingMenuItem = activeStagingMenuItems.includes(menuItemKey);
+
+                // Entweder ist der Menüpunkt standadtmäßig aktiv oder er wurde durch den Developmenteinstellungen-Dialog aktiviert
+                return isActive || isActiveStagingMenuItem;
+            }
+        ),
+        [availableMenuItems, activeStagingMenuItems]
+    );
+
+    return (
+        <ScrollView style={styles.container}>
+            <MainMenuEntryList menuItems={activeMenuItems} />
+        </ScrollView>
+    );
+}
 
 /**
  * Main Menu View
@@ -63,9 +181,6 @@ class MainMenuView extends React.Component {
         routes: null,
         developCounter: 0,
         isDevelopMenuVisible: false,
-        devUseStaging: store.getState().settingReducer.settingsDevelop.devUseStaging,
-        showDeeplinkAlert: store.getState().settingReducer.settingsDevelop.showDeeplinkAlert,
-        activeStagingMenuItems: store?.getState()?.settingReducer?.settingsDevelop?.activeStagingMenuItems ?? [],
     };
 
 
@@ -76,7 +191,7 @@ class MainMenuView extends React.Component {
         // PLUGIN FUNCTIONALITY
         // ------------------------------------------------------------------------
 
-        const {pluginStyles,theme} = this.props;
+        const { pluginStyles, theme } = this.props;
         this.styles = componentStyles(theme);
 
         if (pluginStyles) {
@@ -87,241 +202,22 @@ class MainMenuView extends React.Component {
 
         // ------------------------------------------------------------------------
 
-        const {appSettings} = this.props.theme;
+        const { appSettings } = this.props.theme;
         const menuRoutes = appSettings.mainMenu.routes;
-        if(menuRoutes) {
+        if (menuRoutes) {
             this.state.routes = menuRoutes;
         }
-
-        this.state.devUseStaging = this.props.settings.settingsDevelop.useStaging;
     }
 
     componentDidMount() {
         this.props.navigation.addListener('focus', () => {
-            this.setState({developCounter: 0});
+            this.setState({ developCounter: 0 });
         });
     }
 
     _hideDevDialog = () => {
-        store.dispatch(onSettingDevelopOverride('settingsDevelop', {
-            useStaging: this.state.devUseStaging,
-            showDeeplinkAlert: this.state.showDeeplinkAlert,
-            activeStagingMenuItems: this.state.activeStagingMenuItems,
-        }));
-        this.setState({isDevelopMenuVisible: false});
+        this.setState({ isDevelopMenuVisible: false });
     }
-
-    _renderDevelopmentOptions = () => {
-        const { t, theme: { colors, appSettings } } = this.props;
-        const { devUseStaging, activeStagingMenuItems, routes } = this.state;
-        let subscriberId = store.getState().notificationsReducer.subscriberId;
-
-        // Use menu items of app settings
-        const menuItems = appSettings?.mainMenu?.items ?? {};
-
-        const output = [];
-
-        output.push(
-            <View key={'item_use_stg'} style={this.styles.selectOption}>
-                <Text>{t('settings:develop.useStagingServer')}</Text>
-                <Checkbox.Android status={devUseStaging ? 'checked' : 'unchecked'}
-                    onPress={() => {
-                        this.setState({devUseStaging: !devUseStaging})
-                    }}
-                    color={colors.checkboxChecked}
-                    uncheckedColor={colors.checkboxUnchecked}
-                />  
-            </View>
-        );
-
-        output.push(
-            <View key={'item_notification_subscriber'} style={[{marginBottom: 30}]}>
-                <Text>{t('settings:develop.notificationSubscriberId')}</Text>
-                <Text>{subscriberId}</Text>
-            </View>
-        );
-        output.push(
-            <View key={'item_notification_push_message'} style={[{marginBottom: 30}]}>
-                <Text>{t('settings:develop.resetPushMessage')}</Text>
-                <Button
-                    color={colors.buttonText}
-                    onPress={
-                    () => store.dispatch({type: 'UPDATE_PUSH_MESSAGE_SHOWN', pushMessageShown: false})
-                }>Reset</Button>
-            </View>
-        );
-        output.push(
-            <View key={'item_deeplink_show_url'} style={[{marginBottom: 30}, this.styles.selectOption]}>
-                <Text>{t('settings:develop.showDeepLink')}</Text>
-                <Checkbox
-                    status={this.state.showDeeplinkAlert ? 'checked' : 'unchecked'}
-                    onPress={() => {
-                        this.setState({showDeeplinkAlert: !this.state.showDeeplinkAlert})
-                    }}
-                    color={colors.checkboxChecked}
-                    uncheckedColor={colors.checkboxUnchecked}
-                ></Checkbox>
-            </View>
-        );
-
-        // Für jeden Menü-Tab einen Bereich erstellen und im Bereich für jeden Menüpunkt eine Checkbox anbieten.
-        // Menüpunkte-Objekt in ein Array umwandeln
-        const activatableMenuItemsSettings = Object.entries(menuItems)
-            // Aus der Liste der Menüpunkten, werden die Menüpunkte herausgefiltert, die immer aktiv/eingeschaltet sind.
-            .map(
-                ([menuItemKey, menuItemEntries]) => {
-                    const stagingMenuItemEntries = menuItemEntries.filter(
-                        menuItemEntry =>
-                            // Wenn active-Property nicht vorhanden, ist der Menüpunkt activ, dann Negierung, weil nicht aktive Menueinträge gefiltert werden 
-                            !(menuItemEntry?.active ?? true)
-                    );
-                    return [menuItemKey, stagingMenuItemEntries];
-                }
-            )
-            // Es werden Menü-Tabs herausgefiltert, die keine Menüpunkte, die nur im Stagingmodus zu sehen sind.
-            .filter(
-                ([menuItemKey, stagingMenuItemEntries]) => (stagingMenuItemEntries?.length ?? 0) > 0
-            )
-            // Rendern der Menü-Tabs und deren Menüeinträge
-            .map(
-                ([menuItemKey, stagingMenuItemEntries]) => {
-                    const mainMenuRouteTitleKey = routes
-                        ?.find(route => route?.key === menuItemKey)
-                        ?.title;
-
-                    return (
-                        < View key={`item_menuitems_${menuItemKey}`} >
-                            <Text>{t(mainMenuRouteTitleKey)}-Tab</Text>
-                            <View style={{ paddingLeft: 20 }}>
-                                {
-                                    // Rendern der Menüpunkte einers Menü-Tabs
-                                    stagingMenuItemEntries.map(
-                                        stagingMenuItemEntry => {
-                                            const stagingMenuItemEntryKey = `${stagingMenuItemEntry?.title}`;
-
-                                            // Der Menüpunkt ist aktiv, wenn sein Schlüssel in der Liste der activen Menüpunkte zu finden ist
-                                            const isActive = activeStagingMenuItems.includes(stagingMenuItemEntryKey);
-
-                                            return (
-                                                <View
-                                                    key={`item_menuitems_${menuItemKey}_${stagingMenuItemEntry?.title}`}
-                                                    style={this.styles.selectOption}
-                                                >
-                                                    <Text>{t(stagingMenuItemEntry?.title)}</Text>
-                                                    <Checkbox
-                                                        status={isActive ? 'checked' : 'unchecked'}
-                                                        color={colors.checkboxChecked}
-                                                        uncheckedColor={colors.checkboxUnchecked}
-                                                        onPress={() => this.setState({
-                                                            activeStagingMenuItems: isActive
-                                                                // Wenn der Menüpunkt schon aktiv ist, wird er aus der Liste der aktiven Punkte entfernt.
-                                                                ? activeStagingMenuItems.filter(activeStagingMenuItem => activeStagingMenuItem !== stagingMenuItemEntryKey)
-                                                                // Wenn der Menüpunkt nicht aktiv ist, wird er zur Liste der aktiven Punkte hinzugefügt.
-                                                                : [...activeStagingMenuItems, stagingMenuItemEntryKey]
-                                                        })
-                                                        }
-                                                    />
-                                                </View>
-                                            )
-                                        }
-                                    )
-                                }
-                            </View>
-                        </View>
-                    )
-                }
-            );
-
-        return [
-            ...output,
-            ...activatableMenuItemsSettings,
-        ];
-    };
-
-    /**
-     * Renders a list of links
-     *
-     * @param route
-     *
-     * @returns {Array|*}
-     *
-     * @private
-     */
-    _renderMenuItems(route) {
-        const { t, settings: { settingsDevelop: { useStaging } } } = this.props;
-        const { colors, appSettings } = this.props.theme;
-        const activeStagingMenuItems = this?.state?.activeStagingMenuItems ?? [];
-
-        // Use menu items of app settings
-        const menuItems = appSettings.mainMenu.items;
-        if(!menuItems[route]) {
-            return <Text>Nicht verfügbar</Text>;
-        }
-
-        let routeMenuItems = menuItems[route];
-
-        // Es werden Hauptmenüeintrage herausgefiltert, die nur im Stagingmodus angezeigt werden sollen, aber nicht aktiv sind
-        routeMenuItems = routeMenuItems.filter(routeMenuItem => {
-            const routeMenuItemKey = `${routeMenuItem?.title}`;
-            const isActive = routeMenuItem?.active ?? true;
-            const isActiveStagingMenuItem = activeStagingMenuItems.includes(routeMenuItemKey);
-
-            // Entweder ist der Menüpunkt standadtmäßig aktiv oder er wurde durch das DevelopMenu aktiviert
-            return isActive || isActiveStagingMenuItem;
-        });
-
-        return routeMenuItems.map(
-            routeMenuItem =>
-                <MainMenuEntry
-                    key={routeMenuItem.title}
-                    title={routeMenuItem.title}
-                    view={routeMenuItem?.view}
-                    url={routeMenuItem?.url}
-                    icon={routeMenuItem?.icon}
-                    iconSVG={routeMenuItem?.iconSVG}
-                    isLocalized={routeMenuItem?.isLocalized}
-                />
-        );
-    }
-
-    /**
-     * Render scene variable
-     *
-     * Has to be defined below the definition of the used functions
-     *
-     * @type {Function}
-     * @private
-     */
-    _renderScene = ({route}) => (<ScrollView style={this.styles.container}>{this._renderMenuItems(route.key)}</ScrollView>);
-
-
-    /**
-     * Render a tab for each category
-     *
-     * @param props
-     *
-     * @returns {*}
-     *
-     * @private
-     */
-    _renderTabBar = (props) => {
-        const {t} = this.props;
-        const {themeStyles} = this.props.theme;
-
-        return (
-            <TabBar
-                {...props}
-                scrollEnabled
-                style={themeStyles.tabs}
-                labelStyle={themeStyles.tab}
-                indicatorStyle={themeStyles.tabIndicator}
-                tabStyle={{ width: 'auto', paddingHorizontal: 20 }}
-                getLabelText={({route}) => t(route.title).toUpperCase()}
-                getAccessible={() => true}
-                getAccessibilityLabel={({route}) => t(route.title)}
-            />
-        );
-    };
 
     render() {
         // ------------------------------------------------------------------------
@@ -335,8 +231,8 @@ class MainMenuView extends React.Component {
 
         const {
             t,
-            theme:{themeStyles, colors},
-            settings: {settingsDevelop: {useStaging}}} = this.props;
+            theme: { themeStyles, colors },
+            settings: { settingsDevelop: { useStaging } } } = this.props;
         const {
             developCounter
         } = this.state;
@@ -344,70 +240,34 @@ class MainMenuView extends React.Component {
         return (
             <SafeAreaView style={[this.styles.container, themeStyles.appSafeAreaContainer]}>
                 <AppbarComponent title={t('menu:title')} {...this.props}
-                                 rightAction={
-                                     <>
-                                        {useStaging ? <Text>Server: Staging</Text> : null}
-                                        <Appbar.Action icon={developCounter >= 10 ? "grid" : undefined} onPress={this._handlePressDevelop.bind(this)}/>
-                                     </>
-                                 }
+                    rightAction={
+                        <>
+                            {useStaging ? <Text>Server: Staging</Text> : null}
+                            <Appbar.Action icon={developCounter >= 10 ? 'grid' : undefined} onPress={this._handlePressDevelop.bind(this)} />
+                        </>
+                    }
                 />
                 {this.state.routes && <TabView
                     style={this.props.style}
                     navigationState={this.state}
-                    renderScene={this._renderScene}
-                    renderTabBar={this._renderTabBar}
-                    onIndexChange={index => this.setState({index})}
+                    renderTabBar={MainMenuTabbar}
+                    renderScene={(props) => <MainMenuScene {...props} />}
+                    onIndexChange={index => this.setState({ index })}
                 />}
-                <Portal>
-                    <Dialog visible={this.state.isDevelopMenuVisible}
-                            onDismiss={this._hideDevDialog}>
-                        <Dialog.Title>{t('settings:develop.dialog')}</Dialog.Title>
-                        <Dialog.Content>
-                            {this._renderDevelopmentOptions()}
-                        </Dialog.Content>
-                        <Dialog.Actions>
-                            <Button onPress={this._hideDevDialog} color={colors.buttonText}>{t('common:okLabel')}</Button>
-                        </Dialog.Actions>
-                    </Dialog>
-                </Portal>
+                <DevelopmentDialog
+                    visible={this.state.isDevelopMenuVisible}
+                    onDismiss={this._hideDevDialog}
+                />
             </SafeAreaView>
         );
     }
 
     _handlePressDevelop = () => {
-        if(this.state.developCounter >= 10) {
-            this.setState({isDevelopMenuVisible: true});
+        if (this.state.developCounter >= 10) {
+            this.setState({ isDevelopMenuVisible: true });
         }
-        this.setState({developCounter: this.state.developCounter + 1});
+        this.setState({ developCounter: this.state.developCounter + 1 });
     }
-
-    /**
-     * User has pressed a menu item
-     *
-     * Depending on the settings of this item, the app will navigate
-     * to the set view or navigate to the web view component
-     *
-     * @param menuItem
-     *
-     * @private
-     */
-    _handlePressItem = (menuItem) => {
-        const {t} = this.props;
-
-        if(menuItem.view) {
-            this.props.navigation.navigate(menuItem.view);
-
-        } else if(menuItem.url) {
-            let url = menuItem.url;
-
-            // The url is localized via i18n files, use the given key to get the correct url
-            if(menuItem.isLocalized) {
-                url = t(menuItem.url)
-            }
-
-            this.props.navigation.navigate('Web', {title: t(menuItem.title), url: url});
-        }
-    };
 }
 
 const mapStateToProps = state => {
@@ -418,4 +278,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, {onUpdateRefreshing})(withTranslation()(withTheme(MainMenuView)))
+export default connect(mapStateToProps, { onUpdateRefreshing })(withTranslation()(withTheme(MainMenuView)))

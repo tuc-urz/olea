@@ -102,7 +102,7 @@ class JobFilterComponent extends React.Component {
     addOrRemSelectedIds = (data, index, selectedIds) => {
       for(var i = 0; i < data[index].id.length; i++){
         let value = data[index].id[i];
-        if(selectedIds.indexOf(value) == -1){
+        if(selectedIds.indexOf(value) === -1){
           selectedIds.push(value);
         }else{
           selectedIds.splice(selectedIds.indexOf(value), 1);

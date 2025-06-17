@@ -11,6 +11,6 @@
   "dependencies": {
     "@openasist/core": "0.0.1",
     "@openasist/react-native-webview-autoheight": "^1.0.6",
-    "react-native-paper": "^4.12.5"
+    "react-native-paper": "^5.14.5"
   }
 }

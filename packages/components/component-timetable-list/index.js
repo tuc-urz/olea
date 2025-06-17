@@ -12,15 +12,14 @@
  * limitations under the License.
  */
 
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import {
     StyleSheet,
     View,
-    Linking,
-    TouchableOpacity
 } from 'react-native';
+
 import { connect } from 'react-redux'
-import { useTheme, Text, Dialog, Button, Portal } from "react-native-paper";
+import { useTheme, Text, Button } from "react-native-paper";
 import { useTranslation } from "react-i18next";
 
 import { onUpdateRefreshing } from "@openasist/core";
@@ -41,11 +40,11 @@ import componentStyles from "./styles";
  *
  * Navigation-Parameters:
  *  - none
+ *
+ * @param {object} props
+ * @param {(course: object) => void} [props.onCourseSelected]
  */
-
-
-function TimetableListComponent(props) {
-    const { course, times, settings } = props;
+function TimetableListComponent({ course, times, settings, onCourseSelected }) {
     const { t } = useTranslation();
     const theme = useTheme();
     const { colors, themeStyles, appSettings } = theme;
@@ -55,8 +54,6 @@ function TimetableListComponent(props) {
 
     const isBigFont = settings.settingsAccessibility.increaseFontSize;
     const showDetails = appSettings?.modules?.timetable?.showDetails;
-
-    const [dialogVisible, setDialogVisible] = useState(false);
 
     const styles = useMemo(
         () => StyleSheet.create(componentStyles(theme)),
@@ -99,73 +96,12 @@ function TimetableListComponent(props) {
             </View>
             {showDetails && (room?.data || info?.data || url?.data) ?
                 <View style={styles.btnPosition}>
-                    <Button style={styles.btnAddionals} onPress={() => setDialogVisible(true)}>
+                    <Button style={styles.btnAddionals} onPress={() => onCourseSelected?.(course)}>
                         <IconsOpenasist icon={"info"} color={colors.secondaryText} size={22} />
                     </Button>
-                    {dialogVisible ? <CourseDetailDialog visible={dialogVisible} hideDialog={() => setDialogVisible(false)} course={course} styles={styles} showDetails={showDetails} {...props} /> : null}
                 </View>
                 : null}
         </View>
-
-
-    );
-
-}
-
-function CourseDetailDialog(props) {
-    const { visible, hideDialog, course, showDetails } = props;
-    const { title, room, info, url } = course;
-    const { t } = useTranslation();
-    return (
-        showDetails ?
-            <Portal>
-                <Dialog visible={visible} onDismiss={hideDialog}>
-                    <Dialog.Title>{title.data}</Dialog.Title>
-                    <Dialog.Content>
-                        <CourseDetailDialogText {...props } detail={room} icon={"map-search"}/>
-                        <CourseDetailDialogText {...props } detail={info}/>
-                        <CourseDetailDialogText {...props } detail={url} icon={"forward"}/>
-                    </Dialog.Content>
-                    <Dialog.Actions>
-                        <Button onPress={hideDialog}>{t('timetable:close')}</Button>
-                    </Dialog.Actions>
-                </Dialog>
-            </Portal>
-            : null
-    );
-
-}
-
-function CourseDetailDialogText(props) {
-    const { colors } = useTheme();
-    const { styles, settings, icon, detail } = props;
-    const isBigFont = settings.settingsAccessibility.increaseFontSize;
-
-    const commonJSX =
-        (
-            <>
-                <Text style={[styles.detailLabel, isBigFont ? styles.textDetailBigFont : styles.textDetail]}>{detail?.displayname}</Text>
-                <Text style={[styles.detailValue, isBigFont ? styles.textDetailBigFont : styles.textDetail]} numberOfLines={1} ellipsizeMode='tail'>{detail?.data}</Text>
-                {icon ? <IconsOpenasist icon={icon} size={25} color={colors.icon} /> : null}
-            </>
-        );
-   
-    return (
-        detail?.data ?
-
-            detail?.url ?
-
-                <TouchableOpacity style={[styles.detailContainer, styles.textDetail]} onPress={() => Linking.openURL(detail?.url)} >
-                    {commonJSX}
-                </TouchableOpacity>
-
-                :
-
-                <View style={[styles.detailContainer, styles.textDetail]}>
-                    {commonJSX}
-                </View>
-
-            : null
     );
 }
 

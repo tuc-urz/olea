@@ -3,7 +3,7 @@
 // lostfound : Lost and found for university
 // -----------------------------------
 
-import {ApiSettings, POSTOptions, GETOptions} from './../constants/api';
+import {ApiSettings, POSTOptions, GETOptions} from '../constants/api';
 
 
 export const lostfoundApi = {
