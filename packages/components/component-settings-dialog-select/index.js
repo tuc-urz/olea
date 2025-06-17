@@ -58,7 +58,7 @@ export default function SettingsDialogSelect({ title, visible, options, onDismis
                 onPress={
                   () => {
                     const nextSelectedOptions = selectedOptions.includes(optionKey)
-                      ? selectedOptions.filter(selectedOption => selectedOption != optionKey)
+                      ? selectedOptions.filter(selectedOption => selectedOption !== optionKey)
                       : [...selectedOptions, optionKey];
                     onChange(nextSelectedOptions);
                   }

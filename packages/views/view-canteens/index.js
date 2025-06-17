@@ -20,36 +20,48 @@ import {
     StyleSheet,
     Text
 } from 'react-native';
-import {AccordionList} from "accordion-collapse-react-native";
-import {TabView, TabBar} from 'react-native-tab-view';
-import {connect} from 'react-redux'
+
 import { useTheme } from 'react-native-paper';
+import { AccordionList } from 'accordion-collapse-react-native';
+import { TabView, TabBar, TabBarItem } from 'react-native-tab-view';
 import { useTranslation } from 'react-i18next';
-import moment from "moment";
-import { CommonActions, useNavigation } from '@react-navigation/native';
+import { CommonActions, useNavigation, useRoute } from '@react-navigation/native';
 
-import componentStyles from "./styles";
-import AppbarComponent from "@openasist/component-app-bar";
-import IconsOpenasist from "@openasist/icons-openasist";
-import MensaMenu from "@openasist/component-mensa-menu";
+import { DateTime, Duration } from 'luxon';
+
+import moment from 'moment';
+import 'moment/locale/de';
+
+import AppbarComponent from '@openasist/component-app-bar';
+import IconsOpenasist from '@openasist/icons-openasist';
+import MensaMenu from '@openasist/component-mensa-menu';
 import { useCanteen, useCanteens, useFilteredMenu } from '@openasist/context-canteen';
+import { useLanguage } from '@openasist/core';
 
+import componentStyles from './styles';
+
+/**
+ * Generiert die Tabs/Routen für die Mensa-Tabview
+ *
+ * @param {DateTime} begin Tag mit dem die Generierung der Tabs/Routen beginnen soll
+ * @param {Number} daysToRender Anzahl der Tage, die gerendert werden sollen
+ * @param {string} language Sprache, welche für die Datumsformatierung der Tabs verwendet werden soll
+ * @param {Number[]} disabledWeekdays Liste an Wochentagen welche nicht mit in die Tabs aufgenommen werden sollen im ISO Wochentagsnummer-Format
+ * @returns
+ */
 function generateDayRoutes(begin, daysToRender, language, disabledWeekdays = []) {
-    const beginMoment = begin?.clone();
-    disabledWeekdays = disabledWeekdays ?? [];
-
     return Array?.from(
         { length: daysToRender },
         (_, index) => {
-            const currentDay = beginMoment?.clone()?.locale(language)?.add(index, 'days')?.startOf('day');
-            const isoDayDate = currentDay?.format('YYYY-MM-DD');
+            const currentDay = begin.setLocale(language).plus({ days: index }).startOf('day');
+            const isoDayDate = currentDay?.toISODate();
             return {
                 key: isoDayDate,
                 date: currentDay,
             }
         }
-    )?.filter(dayRoute => !disabledWeekdays?.includes(dayRoute?.date?.isoWeekday()));
-};
+    )?.filter(dayRoute => !disabledWeekdays?.includes(dayRoute?.date?.weekday));
+}
 
 function CanteensAccordionHeader({ canteenId, menuDate, isExpanded, styles }) {
     const { t } = useTranslation();
@@ -69,7 +81,7 @@ function CanteensAccordionHeader({ canteenId, menuDate, isExpanded, styles }) {
             <View style={[themeStyles.cardLeftIcon, { marginStart: 5 }]}>
                 {
                     canteen?.type
-                        ? <IconsOpenasist icon={((canteen.type === "cafeteria") ? "coffee" : "mensa")} size={25} color={colors.icon} />
+                        ? <IconsOpenasist icon={((canteen.type === 'cafeteria') ? 'coffee' : 'mensa')} size={25} color={colors.icon} />
                         : null
                 }
             </View>
@@ -89,7 +101,7 @@ function CanteensAccordionHeader({ canteenId, menuDate, isExpanded, styles }) {
                 }
             </View>
             <View style={styles.arrowIcon}>
-                <IconsOpenasist icon={isExpanded ? "up" : "down"} size={20} color={colors.grayLight5} />
+                <IconsOpenasist icon={isExpanded ? 'up' : 'down'} size={20} color={colors.grayLight5} />
             </View>
         </View>
     );
@@ -98,7 +110,7 @@ function CanteensAccordionHeader({ canteenId, menuDate, isExpanded, styles }) {
 /**
  * Akkordion, welches die Mensen einer Universität anzeigt.
  * Es werden automatisch die Mensen aus dem Mensa-Kontext geladen.
- * 
+ *
  * @component
  * @param {Object} props
  * @param {string} props.menuDate - Datum des Essensangebotes, welches als String im ISO 8601 Format zu übergeben ist.
@@ -191,15 +203,16 @@ function CanteensAccordion({ expandedCanteenId, menuDate, onCanteenSelect, Cante
  */
 
 
-//TODO: 
+//TODO:
 //  - remove unused dependencies
 //  - add comments
 //  - recheck code
 //  - rename to view-canteens?
 
-function CanteensView(props) {
+export default function CanteensView(props) {
+    const language = useLanguage();
+    const route = useRoute();
 
-    const { settings, route, settings: { settingsGeneral: { language } } } = props;
     const { style } = props;
 
     const theme = useTheme();
@@ -214,14 +227,15 @@ function CanteensView(props) {
 
     const disabledWeekdays = theme?.appSettings?.modules?.canteen?.disabledWeekdays ?? [];
     const weeksToRender = theme?.appSettings?.modules?.canteen?.weeksToRender ?? 1;
-    const daysToRender = moment.duration(weeksToRender, 'week').asDays();
-    const begin = moment().startOf('isoWeek');
+    const daysToRender = Duration.fromDurationLike({ week: weeksToRender }).as('days');
+    const now = DateTime.now();
+    const begin = now.startOf('week');
     const daysTabViewRoutes = generateDayRoutes(begin, daysToRender, language, disabledWeekdays);
 
     // Derzeitiger Tag
-    const today = moment().startOf('day');
+    const today = now.startOf('day');
     // Suche nach dem Index des heutigen Tages oder den Tag danach. Kann kein Index gefunden werden, wird -1 genommen.
-    let initialDayTabIndex = daysTabViewRoutes.findIndex(dayTab => dayTab.date.isSameOrAfter(today));
+    let initialDayTabIndex = daysTabViewRoutes.findIndex(dayTab => dayTab.date >= today);
     // Wenn kein Index gefunden werden konnte, wird der letzte Tab genommen
     // Wenn nur eine Woche gerendert wird und die Wochenendtagen ausgeschalten wird, wird kein folgetag gefunden.
     initialDayTabIndex = initialDayTabIndex === -1 ? daysTabViewRoutes.length - 1 : initialDayTabIndex;
@@ -231,8 +245,6 @@ function CanteensView(props) {
     const [activeCanteen, setActiveCanteen] = useState(null);
 
     const [index, setIndex] = useState(initialDayTabIndex);
-    const [routes, setRoutes] = useState(daysTabViewRoutes);
-    const [routeBegining, setRouteBegining] = useState(begin);
 
     useEffect(() => {
         const unsubscribeFocusListener = navigation.addListener('focus', () => {
@@ -246,18 +258,11 @@ function CanteensView(props) {
         };
     }, [route.params?.canteenId]);
 
-    useEffect(() => {
-        const disabledWeekdays = theme?.appSettings?.modules?.canteen?.disabledWeekdays ?? [];
-        const weeksToRender = theme?.appSettings?.modules?.canteen?.weeksToRender ?? 2;
-        const daysToRender = moment.duration(weeksToRender, 'week').asDays();
-        const begin = routeBegining ?? moment().startOf('isoWeek');
-
-        setRoutes(generateDayRoutes(begin, daysToRender, language, disabledWeekdays));
-    }, [language, theme]); // Runs when canteens, theme, language, or begin changes
-
-    const _updateSections = (key, index, isExpanded) => {
-        setActiveCanteen(isExpanded ? index : null)
-    };
+    // Generieren der Tagestabs
+    const routes = useMemo(
+        () => generateDayRoutes(begin, daysToRender, language, disabledWeekdays),
+        [begin.toISODate(), daysToRender, language, disabledWeekdays]
+    )
 
     /*
      When a user presses a component meal item in dashboard she is taken to the Canteen Tab View.
@@ -284,9 +289,9 @@ function CanteensView(props) {
 
         if (!menuDate) return;
 
-        const menuDateIndex = routes.findIndex(route => route.date.format('YYYY-MM-DD') === menuDate);
+        const menuDateIndex = routes.findIndex(route => route.date.toISODate() === menuDate);
         setIndex(menuDateIndex);
-        navigation.dispatch(CommonActions.setParams({menuDate: undefined}));
+        navigation.dispatch(CommonActions.setParams({ menuDate: undefined }));
     };
 
     const _renderTabBar = props => {
@@ -295,11 +300,25 @@ function CanteensView(props) {
                 {...props}
                 scrollEnabled
                 style={themeStyles.tabs}
-                labelStyle={themeStyles.tab}
+                activeColor={themeStyles.tabs.activeColor}
+                inactiveColor={themeStyles.tabs.inactiveColor}
                 indicatorStyle={themeStyles.tabIndicator}
                 tabStyle={{ width: 'auto', paddingHorizontal: 20 }}
-                getLabelText={({ route, focus }) => `${route.date.format('dd')}, ${route.date.format('DD.MM.')}`}
-                getAccessibilityLabel={({ route }) => route.date.format('dddd L')}
+                renderTabBarItem={({ route, navigationState, ...rest}) =>
+                  <TabBarItem
+                    {...rest}
+                    key={route.key}
+                    route={route}
+                    navigationState={navigationState}
+                    labelStyle={themeStyles.tab}
+                    activeColor={themeStyles.tabs.activeColor}
+                    inactiveColor={themeStyles.tabs.inactiveColor}
+                    // Die einbindung von moment.js zum Anzeigen des Wochentages sollte langfristig entfernt werden.
+                    // Funktioniert die Luxon funktionalität der Wochenanzeige nicht unter iOS datetime.toFormat('ccc')
+                    labelText={`${moment.unix(route.date.toUnixInteger()).locale(language).format('dd')}, ${route.date.toFormat('dd.LL.')}`}
+                    accessibilityLabel={route.date.toFormat('DDDD')}
+                  />
+                }
             />
         );
     };
@@ -338,7 +357,7 @@ function CanteensView(props) {
                                     CanteensEmptyComponent={
                                         <View>
                                             <Text>{t('canteen:notAvailable')}</Text>
-                                            <ActivityIndicator style={styles.activity} size="large" color={colors.primary} />
+                                            <ActivityIndicator style={styles.activity} size='large' color={colors.primary} />
                                         </View>
                                     }
                                 />
@@ -361,12 +380,4 @@ function CanteensView(props) {
 
         </SafeAreaView>
     );
-};
-
-const mapStateToProps = state => {
-    return {
-        settings: state.settingReducer
-    };
-};
-
-export default connect(mapStateToProps)(CanteensView)
+}

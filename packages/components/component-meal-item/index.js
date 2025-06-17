@@ -76,7 +76,7 @@ export function MealItemComponent({ meal, canteenId, menuDate, settings }) {
             <Text style={styles.mensaItemText}>{title} {isShorted ? '...' : ''}</Text>
         </TouchableOpacity>
     );
-};
+}
 
 const mapStateToProps = state => {
     return {
@@ -84,4 +84,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, null)(MealItemComponent)
+export default connect(mapStateToProps)(MealItemComponent)

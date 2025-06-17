@@ -12,13 +12,18 @@
  * limitations under the License.
  */
 
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Dimensions, SafeAreaView, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme, Headline } from 'react-native-paper';
 import componentStyles from "./styles";
 import { withTranslation } from 'react-i18next';
-import { onUpdateRefreshing } from '@openasist/core';
+
+import { DateTime, Duration } from 'luxon';
+import moment from 'moment';
+import 'moment/locale/de';
+
+import { onUpdateRefreshing, useLanguage } from '@openasist/core';
 import { useTimetableCode } from '@openasist/context-timetable';
 import { Ionicons } from '@expo/vector-icons';
 import AppbarComponent from "@openasist/component-app-bar";
@@ -26,13 +31,13 @@ import { TabView, TabBar } from 'react-native-tab-view';
 import CalendarDay from '@openasist/component-timetable-day';
 import CalendarWeek from '@openasist/component-timetable-week';
 import CalendarMonth from '@openasist/component-timetable-month';
-import moment from 'moment';
-import 'moment/locale/de';
 import { useCourses, TimetableNotFoundError } from '@openasist/context-timetable';
-
+import CourseDetailDialog from '@openasist/component-course-detail-dialog';
 
 function TimetableViewCalendar(props) {
-  const { theme, theme: { themeStyles, colors, appSettings, appSettings: { modules: { timetable: { code } } } }, t, settings } = props;
+  const { theme, theme: { themeStyles, colors, appSettings, appSettings: { modules: { timetable: { code, calendarStarttime } } } }, t, settings } = props;
+  const language = useLanguage();
+
   const styles = useMemo(
     () => StyleSheet.create(componentStyles(theme)),
     [theme]
@@ -42,17 +47,32 @@ function TimetableViewCalendar(props) {
   const [timetableCode, saveTimetableCode, deleteTimetableCode] = useTimetableCode();
 
   const [timetableCodeInput, setTimetableCodeInput] = useState(timetableCode);
-  const [kw, setKw] = useState(moment().week());
-  const [month, setMonth] = useState(moment().month());
+  const [selectedDayModeDate, setSelectedDayModeDate] = useState(() => DateTime.now());
+  const [selectedWeekModeISOWeekDate, setSelectedWeekModeISOWeekDate] = useState(() => DateTime.now().startOf('week').toISOWeekDate());
   const [index, setIndex] = useState(0);
   const [formVisible, setFormVisible] = useState(false);
   const [infoVisible, setInfoVisible] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [coursesImportedYet, setCoursesImportedYet] = useState(true);
   const [today, setToday] = useState(new Date());
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   const [errorMessage, setErrorMessage] = useState('');
   const [infoMessage, setInfoMessage] = useState('');
+
+  // Berechnen der Uhrzeit zu der beim Öffnen des Stundenplan Kalenders hingepsrungen werden soll.
+  // Wird in einem State gespeichert, weil später noch beim Focus-Wechsel erneut berechnet werden muss.
+  const [calendarScrollOffsetMinutes, setCalendarScrollOffsetMinutes] = useState(
+    () => {
+      // Berechnen der Uhrzeit, falls im Custemizing eine angegeben ist, ansonsten wird die jetzige Stunde verwendet.
+      // Speichern als Duration.
+      const calendarScrollOffsetDuration = calendarStarttime
+        ? Duration.fromISOTime(calendarStarttime)
+        : Duration.fromObject({ hours: DateTime.now().hour });
+
+      // Duration wird in Minuten umgewandelt, weil der Kalender ein Minutenoffset erwartet
+      return calendarScrollOffsetDuration.as('minutes');
+    }
+  );
 
   const [courses, refreshCourses] = useCourses();
 
@@ -62,36 +82,52 @@ function TimetableViewCalendar(props) {
   const timetableCodeInputPreSaveFilters = Array.isArray(code?.preSaveFilters) ? code.preSaveFilters : [];
   const timetableCodeInputFilterToUpperCase = timetableCodeInputFilters?.toUpperCase ?? false;
 
-  const language = settings?.settingsGeneral?.language;
-
   const routes = [
     appSettings?.modules?.timetable?.enableDayTab ? { key: 'day', title: t('timetable:day') } : null,
     appSettings?.modules?.timetable?.enableWeekTab ? { key: 'week', title: t('timetable:week') } : null,
     appSettings?.modules?.timetable?.enableMonthTab ? { key: 'month', title: t('timetable:month') } : null,
   ].filter(Boolean); // Filter out null values
 
+  const activeMode = routes?.[index]?.key;
+  const activeHeaderDate =
+    activeMode === 'day'
+      ? selectedDayModeDate
+      : DateTime.fromISO(selectedWeekModeISOWeekDate);
+
+  const unsetSelectedEvent = useCallback(
+    () => setSelectedEvent(null),
+    [setSelectedEvent]
+  );
+
   const renderScene = useCallback(({ route }) => {
     switch (route.key) {
       case 'day':
-        return <CalendarDay today={today} setToday={setToday} kw={kw} setKw={setKw} month={month} setMonth={setMonth} coursesImportedYet={coursesImportedYet} />;
+        return <CalendarDay
+          selectedDate={selectedDayModeDate}
+          calendarScrollOffsetMinutes={calendarScrollOffsetMinutes}
+          onDateChanged={setSelectedDayModeDate}
+          onCourseSelected={setSelectedEvent}
+        />;
       case 'week':
-        return <CalendarWeek today={today} setToday={setToday} kw={kw} setKw={setKw} month={month} setMonth={setMonth} />;
+        return <CalendarWeek
+          selectedISOWeek={selectedWeekModeISOWeekDate}
+          calendarScrollOffsetMinutes={calendarScrollOffsetMinutes}
+          onWeekChanged={setSelectedWeekModeISOWeekDate}
+          onCourseSelected={setSelectedEvent}
+        />;
       case 'month':
-        return <CalendarMonth today={today} setToday={setToday} month={month} setMonth={setMonth} />;
+        return <CalendarMonth today={today} setToday={setToday} month={month} setMonth={setMonth} calendarScrollOffsetMinutes={calendarScrollOffsetMinutes} />;
       default:
         return null;
     }
-  });
-  // hier werden die Monate mithilfe von moment.js geholt
-  //dabei wird beachtet welche Sprache eingestellt ist
+  },
+    [language, selectedDayModeDate, calendarScrollOffsetMinutes, selectedDayModeDate, setSelectedDayModeDate, selectedWeekModeISOWeekDate, setSelectedWeekModeISOWeekDate]
+  );
+
+  // Unter verwendung von Luxon wird eine Liste der Monatsnamen generiert, dabei wird die eingestellte Sprache berücksichtigt
   const months = moment.months();
 
-  const handleTodayButtonPressed = () => {
-    setToday(new Date());
-  };
-
   const handleImportButtonPress = async () => {
-    setCoursesImportedYet(false);
     setLoading(true);
     setErrorMessage('');
     setInfoMessage('');
@@ -107,14 +143,11 @@ function TimetableViewCalendar(props) {
     const endDate = new Date(copyToday.setDate(copyToday.getDate() + 151));
     await refreshCourses(startDate.toISOString().split('T')[0], endDate.toISOString().split('T')[0])
       .then(() => {
-          setFormVisible(false);
-          setLoading(false);
-          setCoursesImportedYet(true);
-
+        setFormVisible(false);
+        setLoading(false);
       })
       .catch((error) => {
         if (error instanceof TimetableNotFoundError) {
-          console.error(error.message);
           setErrorMessage(t('timetable:codeNotFoundError', { timetableCode: timetableCodeInput }));
           setLoading(false);
         }
@@ -124,6 +157,7 @@ function TimetableViewCalendar(props) {
         }
       });
   };
+
   useEffect(() => {
     setErrorMessage('')
     if (infoVisible) {
@@ -132,8 +166,8 @@ function TimetableViewCalendar(props) {
       setInfoMessage('');
     }
   }, [infoVisible]);
-
   const tabView = useMemo(() => {
+    console.error(themeStyles.tabs)
     return (
       <TabView
         style={{ backgroundColor: '#fff' }}
@@ -147,6 +181,8 @@ function TimetableViewCalendar(props) {
         renderTabBar={props => (
           <TabBar
             {...props}
+            activeColor={themeStyles.tabs.activeColor}
+            inactiveColor={themeStyles.tabs.inactiveColor}
             style={themeStyles.tabs}
             labelStyle={themeStyles.tab}
             indicatorStyle={themeStyles.tabIndicator}
@@ -229,12 +265,22 @@ function TimetableViewCalendar(props) {
     <SafeAreaView style={{ flex: 1, backgroundColor: whiteAppbar }}>
       <AppbarComponent
         rightAction={
-          <TouchableOpacity onPress={handleTodayButtonPressed}>
+          <TouchableOpacity
+            onPress={
+              activeMode === 'day'
+                ? () => setSelectedDayModeDate(() => DateTime.now())
+                : () => setSelectedWeekModeISOWeekDate(() => DateTime.now().startOf('week').toISOWeekDate())
+            }
+          >
             <Text style={{ color: whiteAppbar === colors.primary ? '#fff' : '#000' }}>{t("timetable:today")}</Text>
           </TouchableOpacity>
         }
         style={{ backgroundColor: colors.primary /* whiteAppbar */ }}//hintergrundappbar
-        title={index === 2 ? `${months[month]}` : `${months[month]} ${t('timetable:weekNumber', { kw })} `}
+        title={
+          activeMode === 'month'
+            ? `${months[activeHeaderDate.month - 1]}`
+            : `${months[activeHeaderDate.month - 1]} ${t('timetable:weekNumber', { kw: activeHeaderDate.weekNumber })}`
+        }
       />
       {tabView}
       {formVisible && (
@@ -257,6 +303,18 @@ function TimetableViewCalendar(props) {
           <Ionicons name="add-outline" size={40} color="#000" />
         </TouchableOpacity>
       )}
+
+      {
+        selectedEvent
+          ? <CourseDetailDialog
+            course={selectedEvent}
+            visible={selectedEvent ? true : false}
+            onClose={unsetSelectedEvent}
+            onDismiss={unsetSelectedEvent}
+          />
+          : null
+      }
+
     </SafeAreaView>
   );
 }

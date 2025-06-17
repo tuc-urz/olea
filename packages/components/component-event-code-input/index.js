@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-import React, { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import {
     ActivityIndicator,
     KeyboardAvoidingView,
@@ -24,17 +24,17 @@ import {
     Text
 } from 'react-native';
 
-import { withTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 import {
     Headline,
     Paragraph,
     TextInput,
-    withTheme,
-} from "react-native-paper";
-import { connect } from 'react-redux';
-import * as SecureStore from 'expo-secure-store';
+    useTheme,
+} from 'react-native-paper';
 
-import componentStyles from "./styles";
+import { usePersonalEvents, usePersonalEventsCode } from '@openasist/context-event';
+
+import componentStyles from './styles';
 
 
 /**
@@ -48,107 +48,54 @@ import componentStyles from "./styles";
  * Navigation-Parameters:
  *  - none
  */
+export default function EventCodeInputComponent({ onClose, onPersonalEventsImported }) {
+    const theme = useTheme();
+    const { colors } = theme;
+    const { t } = useTranslation();
 
-
-
-function EventCodeInputComponent(props) {
-
-    const { setShowCodeView, eventCode, setEventCode, setContinuedWithout, setCodeInCache, theme, theme: { colors, themeStyles }, t } = props;
-    const [inProgress, setInProgress] = useState(props.inProgress);
-    const [codeEntered, setCodeEntered] = useState(true);
-    const [tempEventCode, setTempEventCode] = useState("");
-
-    const getTempEventCode = async () => {
-        const tempCode = await SecureStore.getItemAsync('tempEventCode');
-        setTempEventCode(tempCode)
-    }
-
-    useEffect(() => {
-        getTempEventCode();
-    }, [])
-
-
-
-    /*
-    if a code is entered a different text should be showing up. this makes sure that the text shown up,
-    is only changing when a code was imported. Not while typing the code. changes might still be needed
-    with safing the code in the cache.
-    */
-    useEffect(() => {
-        if (eventCode === '' || eventCode === null) {
-            setCodeEntered(false);
-        }
-    }, []);
+    const [, refreshPersonalEvents] = usePersonalEvents();
+    const [personalEventsCode, setPersonalEventsCode] = usePersonalEventsCode();
+    const [personalEventsImportedImporting, setPersonalEventsImportedImporting] = useState(false);
+    const [personalEventsCodeInput, setPersonalEventsCodeInput] = useState(personalEventsCode ? personalEventsCode : '');
 
     const styles = useMemo(
         () => StyleSheet.create(componentStyles(theme)),
         [theme]
     )
-    //let dataService = null
-    const regex = /https?:\/\/(?:www\.)?([-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b)*(\/[\/\d\w\.-]*)*(?:[\?])*(.+)*/gi;
 
+    const handleImportButtonPressed = () => {
+        setPersonalEventsImportedImporting(true);
 
-    async function _onImportButtonPressed() {
-        const { t } = props;
-        setInProgress(true);
-        let trimmedCode = eventCode?.trim();
-        const eCode = regex.exec(trimmedCode);
-
-        if (eCode) {
-            trimmedCode = eCode[2].replace(/\//g, '');
-            if (trimmedCode !== eventCode) {
-                setTempEventCode(trimmedCode);
-            }
-        }
-        if (tempEventCode.length < 8) {
+        if (personalEventsCodeInput.length < 8) {
             alert(t('eventCode:codeShortError'));
-            setInProgress(false);
-        } else if (tempEventCode.length > 8) {
+            setPersonalEventsImportedImporting(false);
+        } else if (personalEventsCodeInput.length > 8) {
             alert(t('eventCode:codeLongError'));
-            setInProgress(false);
+            setPersonalEventsImportedImporting(false);
         } else {
-            try {
-                //eventCode wird erst hier gesetzt, somit sollte man nicht ohne den import Button zu drücken schon ausgewählte Veranstaltungen sehen
-                setEventCode(tempEventCode);
-                await SecureStore.setItemAsync('tempEventCode', tempEventCode);
-                await SecureStore.setItemAsync('eventCode', tempEventCode);
-                setCodeInCache(true);
-                setShowCodeView(false);
-
-
-            } catch (error) {
-                alert(error);
-                setInProgress(false);
-            }
+            setPersonalEventsCode(personalEventsCodeInput);
+            refreshPersonalEvents()
+                .then(() => setPersonalEventsImportedImporting(false))
+                .then(() => onPersonalEventsImported?.());
         }
-    }
-
-    async function _onContinueWithoutCodeButtonPressed() {
-        setContinuedWithout(true);
-        setShowCodeView(false);
     }
 
     return (
         <ScrollView style={styles.container}>
             <KeyboardAvoidingView behavior={"padding"} >
                 <View style={styles.paragraph}>
-                    {
-                        !codeEntered && (
-                            <Text style={styles.paragraphText} selectable={true} dataDetectorType={'link'}>
-                                {t('eventCode:notImportedYet')}
-                                <Text style={styles.linkText} selctable={true} dataDetectorType={'link'} onPress={() => Linking.openURL('https://www.tu-chemnitz.de/tu/veranstaltungen/tuctag/alle-angebote.html')}>
-                                    {t('eventCode:tucDayLinkText')}
+                    <Text style={styles.paragraphText} selectable={true} dataDetectorType={'link'}>
+                        {
+                            personalEventsCodeInput
+                                ? t('eventCode:inputEventCode')
+                                : <Text style={styles.paragraphText} selectable={true} dataDetectorType={'link'}>
+                                    {t('eventCode:notImportedYet')}
+                                    <Text style={styles.linkText} selctable={true} dataDetectorType={'link'} onPress={() => Linking.openURL('https://www.tu-chemnitz.de/tu/veranstaltungen/tuctag/alle-angebote.html')}>
+                                        {t('eventCode:tucDayLinkText')}
+                                    </Text>
                                 </Text>
-                            </Text>
-                        )
-                    }
-                    {
-                        codeEntered && (
-                            <Text style={styles.paragraphText} selectable={true} dataDetectorType={'link'}>
-                                {t('eventCode:inputEventCode')}
-                            </Text>
-                        )
-                    }
+                        }
+                    </Text>
                 </View>
                 <View style={styles.importTextInput}>
                     <TextInput
@@ -157,44 +104,43 @@ function EventCodeInputComponent(props) {
                         maxLength={8}
                         selectionColor={colors.textInputSelection}
                         label={t('eventCode:inputPlaceholder')}
-                        value={tempEventCode}
-                        onChangeText={tempEventCode => setTempEventCode(tempEventCode)}
+                        value={personalEventsCodeInput}
+                        onChangeText={text => setPersonalEventsCodeInput(text.trim())}
                     />
                 </View>
 
                 <View style={styles.container}>
-                    <TouchableOpacity style={styles.importButton}
+                    <TouchableOpacity
+                        style={styles.importButton}
                         labelStyle={styles.importButtonLabel}
                         label={t('eventCode:importButton')}
-                        onPress={() => {
-                            _onImportButtonPressed()
-                        }}>
-                        <Headline style={styles.importButtonLabel} color={colors.buttonText}>{t('eventCode:importButton')}</Headline>
+                        onPress={handleImportButtonPressed}
+                    >
+                        <Headline style={styles.importButtonLabel} color={colors.buttonText}>
+                            {t('eventCode:importButton')}
+                        </Headline>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.continueWithoutCodeButton}
+                    <TouchableOpacity
+                        style={styles.continueWithoutCodeButton}
                         labelStyle={styles.importButtonLabel}
                         label={t('eventCode:importButton')}
-                        onPress={() => {
-                            _onContinueWithoutCodeButtonPressed()
-                        }}>
+                        onPress={() => onClose?.()}>
                         <Headline style={styles.continueWithoutCodeButtonLabel} color={colors.buttonText}>{t('eventCode:continueWithoutCodeButton')}</Headline>
                     </TouchableOpacity>
                 </View>
 
 
-                {inProgress && <ActivityIndicator style={styles.activity} size="large" color={colors.loadingIndicator} />}
-                {inProgress && <View style={styles.paragraph}><Paragraph>{t('timetable:importInProgress', '')}</Paragraph></View>}
+                {
+                    personalEventsImportedImporting
+                        ? <ActivityIndicator style={styles.activity} size="large" color={colors.loadingIndicator} />
+                        : null
+                }
+                {
+                    personalEventsImportedImporting
+                        ? <View style={styles.paragraph}><Paragraph>{t('timetable:importInProgress', '')}</Paragraph></View>
+                        : null
+                }
             </KeyboardAvoidingView>
         </ScrollView>
     );
 }
-
-const mapStateToProps = state => {
-    return {
-        pluginComponent: state.pluginReducer.opal.component,
-        pluginStyles: state.pluginReducer.opal.styles,
-    };
-};
-
-export default connect(mapStateToProps, null)(withTranslation()(withTheme(EventCodeInputComponent)))
-

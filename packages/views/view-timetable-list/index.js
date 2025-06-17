@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -25,20 +25,21 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux'
 import { TabView, TabBar } from 'react-native-tab-view';
-import { Appbar, useTheme, Text } from "react-native-paper";
-import { useTranslation } from "react-i18next";
+import { Appbar, useTheme, Text } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 import { useFocusEffect } from '@react-navigation/native';
+
 import { DateTime, Duration } from 'luxon';
 
-import { onUpdateRefreshing, store } from "@openasist/core";
-
-import OtherCoursesComponent from "@openasist/component-other-courses";
-import TimetableListComponent from "@openasist/component-timetable-list";
-import TimetableCodeInput from '@openasist/component-timetable-code-input';
-
-import componentStyles from "./styles";
-import AppbarComponent from "@openasist/component-app-bar";
+import { onUpdateRefreshing, store } from '@openasist/core';
 import { ApiProviderNotInitializedError, useCourses, useTimetableCode } from '@openasist/context-timetable';
+import AppbarComponent from '@openasist/component-app-bar';
+import OtherCoursesComponent from '@openasist/component-other-courses';
+import TimetableListComponent from '@openasist/component-timetable-list';
+import TimetableCodeInput from '@openasist/component-timetable-code-input';
+import CourseDetailDialog from '@openasist/component-course-detail-dialog';
+
+import componentStyles from './styles';
 
 /**
  * Timetable View
@@ -56,6 +57,7 @@ import { ApiProviderNotInitializedError, useCourses, useTimetableCode } from '@o
 function TimetableViewList(props) {
   const theme = useTheme();
   const { t } = useTranslation();
+  const [selectedCourse, setSelectedCourse] = useState(null);
 
   // Get all required constants from props
   const {
@@ -64,7 +66,7 @@ function TimetableViewList(props) {
 
   const { colors, themeStyles, appSettings: { modules: { timetable: { downloadEnabled } } } } = theme;
 
-  const componentName = arguments.callee.name;
+  const componentName = TimetableViewList.name;
   const timetableSettings = theme?.appSettings?.modules?.timetable;
   const disabledWeekdays = timetableSettings?.disabledWeekdays ?? [];
   const weeksToRender = timetableSettings?.weeksToRender ?? 2;
@@ -184,7 +186,7 @@ function TimetableViewList(props) {
             {
               downloadEnabled
                 ? <Appbar.Action
-                  icon={"download"}
+                  icon={'download'}
                   onPress={
                     async () => {
                       const { modules: { timetable: { downloadUrl } } } = props.theme.appSettings;
@@ -197,7 +199,7 @@ function TimetableViewList(props) {
                 : null
             }
             <Appbar.Action
-              icon={showImport ? "table" : "table-plus"}
+              icon={showImport ? 'table' : 'table-plus'}
               color={colors.appbarIconColor}
               onPress={
                 () => setShowImport(currentValue => !currentValue)
@@ -225,30 +227,43 @@ function TimetableViewList(props) {
                     scrollEnabled
                     style={themeStyles.tabs}
                     labelStyle={themeStyles.tab}
+                    activeColor={themeStyles.tabs.activeColor}
+                    inactiveColor={themeStyles.tabs.inactiveColor}
                     indicatorStyle={themeStyles.tabIndicator}
                     tabStyle={{ width: 'auto', paddingHorizontal: 20 }}
-                    getLabelText={
-                      // Generieren das Tab-Textes
-                      ({ route }) => {
-                        // Datumsobject aus dem Tab holen
-                        const date = route.date;
-                        // Kurzbezeichnung des Wochentages bestimmen
-                        const shortWeekDay = t(`common:isoWeekDay:${date.weekday}:short`); // Falls hermes Intl soweit ist, lieber folgende Zeile verwenden: const shortWeekDay = date.weekdayShort;
-                        // Datum, bestehend aus Tag und Monat, bestimmen
-                        const localeDate = date.toLocaleString(
-                          {
-                            day: '2-digit',
-                            month: '2-digit',
-                          }
-                        );
+                    renderTabBarItem={({ route, navigationState, ...rest}) =>
+                      <TabBarItem
+                        {...rest}
+                        key={route.key}
+                        route={route}
+                        navigationState={navigationState}
+                        labelStyle={themeStyles.tab}
+                        activeColor={themeStyles.tabs.activeColor}
+                        inactiveColor={themeStyles.tabs.inactiveColor}
+                        // Die einbindung von moment.js zum Anzeigen des Wochentages sollte langfristig entfernt werden.
+                        // Funktioniert die Luxon funktionalität der Wochenanzeige nicht unter iOS datetime.toFormat('ccc')
+                        labelText={
+                          // Generieren das Tab-Textes
+                          ({ route }) => {
+                            // Datumsobject aus dem Tab holen
+                            const date = route.date;
+                            // Kurzbezeichnung des Wochentages bestimmen
+                            const shortWeekDay = t(`common:isoWeekDay:${date.weekday}:short`); // Falls hermes Intl soweit ist, lieber folgende Zeile verwenden: const shortWeekDay = date.weekdayShort;
+                            // Datum, bestehend aus Tag und Monat, bestimmen
+                            const localeDate = date.toLocaleString(
+                              {
+                                day: '2-digit',
+                                month: '2-digit',
+                              }
+                            );
 
-                        // Tab-Text aus Wochentag und Datum generieren
-                        return `${shortWeekDay}, ${localeDate}`;
-                      }
-                    }
-                    getAccessibilityLabel={
-                      // Volles Datum als Vorlesedatum setzen
-                      ({ route }) => route.date.toLocaleString(DateTime.DATE_FULL)
+                            // Tab-Text aus Wochentag und Datum generieren
+                            return `${shortWeekDay}, ${localeDate}`;
+                          }
+                        }
+                        accessible={true}
+                        accessibilityLabel={({ route }) => route.date.toLocaleString(DateTime.DATE_FULL)}
+                      />
                     }
                   />
               }
@@ -286,6 +301,7 @@ function TimetableViewList(props) {
                                       key={`${course?.title?.data}${course?.type?.data}${courseTime.start}${courseTime.end}`}
                                       course={course}
                                       times={courseTime}
+                                      onCourseSelected={course => setSelectedCourse(course)}
                                     />
                                   )
                                 }
@@ -346,6 +362,15 @@ function TimetableViewList(props) {
                 </TouchableOpacity>
                 : null
             }
+
+
+            <CourseDetailDialog
+              course={selectedCourse}
+              visible={selectedCourse ? true : false}
+              onClose={() => setSelectedCourse(null)}
+              onDismiss={() => setSelectedCourse(null)}
+            />
+
           </View>
           : <TimetableCodeInput
             onImportSuccessfullyFinished={

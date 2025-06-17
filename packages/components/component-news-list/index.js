@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 import {
     AppState,
     ActivityIndicator,
@@ -21,18 +21,22 @@ import {
     View,
     FlatList,
 } from 'react-native';
-import { withTheme } from 'react-native-paper';
-import { withTranslation } from 'react-i18next';
+import { useTheme } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
 import { useFocusEffect } from '@react-navigation/native';
 
-import { feedApi } from '@openasist/core';
 import NewsListItem from '@openasist/component-news-list-item'
+import { useApiProvider } from '@openasist/context-news';
 
 import componentStyles from './styles';
 
-function NewsList(props) {
+export default function NewsList(props) {
+    const theme = useTheme();
+    const { t } = useTranslation()
+    const apiProvider = useApiProvider();
 
-    const { theme, theme: { themeStyles, colors, paddings }, t, navigation, active, newsChannelId } = props;
+    const { navigation, active, newsChannelId } = props;
+    const { themeStyles, colors, paddings } = theme;
 
     const [news, setNews] = useState(null);
 
@@ -43,20 +47,16 @@ function NewsList(props) {
 
     const fetchNewsByNewsChannel = useCallback(
         () => {
-            if (newsChannelId) {
-                feedApi.getFeedById(newsChannelId, (news) => {
-                    const newsWithFeedId = news?.map(
-                        newsItem =>
-                        ({
-                            ...newsItem,
-                            newsChannelId,
-                        })
-                    );
-                    setNews(newsWithFeedId);
-                });
+            if (apiProvider && newsChannelId) {
+                // News von API abrufen
+                apiProvider.getNews(newsChannelId)
+                    // An jede News wird die originale NewsChannel-ID angefügt
+                    .then(newsItems => newsItems.map(news => ({ ...news, newsChannelId })))
+                    // Aktualisieren des States für News
+                    .then(setNews);
             }
         },
-        [newsChannelId, feedApi]
+        [newsChannelId, apiProvider]
     )
 
     // Aktualisieren der News, wenn das Modul gewechselt wurde und wieder zurück ins News-Modul gewechselt wird bzw. generell die Komponente im Fokus der App ist
@@ -71,7 +71,7 @@ function NewsList(props) {
                 fetchNewsByNewsChannel();
             }
         },
-        [active, newsChannelId]
+        [active, fetchNewsByNewsChannel]
     )
 
     // Aktualisieren der News, wenn App im Hintergrund war und wieder vorgeholt wird
@@ -95,9 +95,8 @@ function NewsList(props) {
     return (
         <View style={themeStyles.container}>
             {
-                news === null
-                    ? <ActivityIndicator style={styles.activity} size="large" color={colors.primary} />
-                    : <FlatList
+                Array.isArray(news)
+                    ? <FlatList
                         data={news}
                         keyExtractor={(news, index) => news?.guid ?? news?.title ?? index}
                         renderItem={({ item }) => <NewsListItem news={item} navigation={navigation} />}
@@ -113,9 +112,9 @@ function NewsList(props) {
                             </View>
                         }
                     />
+                    : <ActivityIndicator style={styles.activity} size="large" color={colors.primary} />
+
             }
         </View>
     );
 }
-
-export default withTranslation()(withTheme(NewsList))

@@ -20,7 +20,7 @@ import { useTheme } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 import { LinearGradient } from 'expo-linear-gradient'
 
-import moment from 'moment';
+import { DateTime } from 'luxon';
 
 import MealItemComponent from '@openasist/component-meal-item';
 import { toIsoDateString } from '@openasist/core/helper/date';
@@ -58,7 +58,11 @@ function HorizontalMenu({ canteenId, menuDate }) {
                         <Text
                             style={styles.mensaNameText}
                         >
-                            {index == 0 ? `${canteen.title} ${filteredMealAmount !== mealAmount ? `(${filteredMealAmount}/${mealAmount})` : ''}` : null}
+                            {
+                                index === 0
+                                    ? `${canteen.title} ${filteredMealAmount !== mealAmount ? `(${filteredMealAmount}/${mealAmount})` : ''}`
+                                    : null
+                            }
                         </Text>
                         <MealItemComponent
                             meal={meal}
@@ -112,7 +116,7 @@ function HorizontalCanteens({ menusDate, settings }) {
     } else {
         return null;
     }
-};
+}
 
 function MensaSliderComponent(props) {
     const { settings } = props;
@@ -132,11 +136,16 @@ function MensaSliderComponent(props) {
 
     const todayDateTime = new Date();
     const todayDateString = toIsoDateString(todayDateTime);
+    
+    const formattedDate = DateTime
+        .fromJSDate(todayDateTime)
+        .setLocale(settings.settingsGeneral.language)
+        .toLocaleString(DateTime.DATE_SHORT);
 
     return (
         <View style={styles.container}>
             <Text style={styles.headline}>
-                {t('canteen:news')} - {moment(todayDateTime).locale(settings.settingsGeneral.language).format('l')}
+                {t('canteen:news')} - {formattedDate}
             </Text>
             <View style={styles.innerContainer}>
                 <LinearGradient

@@ -20,17 +20,25 @@ import {
     TouchableOpacity,
     Image,
 } from 'react-native';
-import { connect } from 'react-redux'
-import { withTheme } from 'react-native-paper';
-import { withTranslation } from 'react-i18next';
 
-import moment from 'moment';
+import { useTheme } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
+import { useNavigation } from '@react-navigation/native';
 
+import { DateTime } from 'luxon';
+
+import { useLanguage } from '@openasist/core';
 import IconsOpenasist from '@openasist/icons-openasist';
 
 import componentStyles from './styles';
 
-function NewsListItem({ theme, theme: { themeStyles, colors, fontSizes }, t, news, language, navigation }) {
+export default function NewsListItem({ news }) {
+    const componentName = arguments.callee.name;
+    const language = useLanguage();
+    const { t } = useTranslation();
+    const theme = useTheme()
+    const { themeStyles, colors, fontSizes } = theme;
+    const navigation = useNavigation();
 
     const styles = useMemo(
         () => StyleSheet.create(componentStyles(theme)),
@@ -41,8 +49,9 @@ function NewsListItem({ theme, theme: { themeStyles, colors, fontSizes }, t, new
         .replace(/<(?:.|\n)*?>/gm, '')
         .replace('Weiterlesen ›', '');
 
+    console.debug(componentName, ':', `news ${news?.guid} pub date`, ':', news.pubdate);
     const publicationDate = news?.pubdate
-        ? moment(news.pubdate).locale(language).format('L')
+        ? DateTime.fromISO(news.pubdate, { locale: language }).toLocaleString(DateTime.DATETIME_SHORT)
         : null;
 
     return (
@@ -55,34 +64,26 @@ function NewsListItem({ theme, theme: { themeStyles, colors, fontSizes }, t, new
             <View style={themeStyles.flexRow}>
                 <View style={[themeStyles.cardContent, styles.contentContainer]}>
                     {
-                        news.imageUrl
-                          ? <Image
+                        news?.imageUrl
+                            ? <Image
                                 source={{ uri: news.imageUrl }}
                                 resizeMode="cover"
                                 style={styles.image}>
                             </Image>
-                          : null
+                            : null
                     }
                     <Text style={styles.title}>{news.title}</Text>
                     <Text style={styles.description}>{description}</Text>
                     {
                         publicationDate
-                          ? <View style={[themeStyles.flexRow, { alignItems: 'center', alignContent: 'center' }]}>
+                            ? <View style={[themeStyles.flexRow, { alignItems: 'center', alignContent: 'center' }]}>
                                 <IconsOpenasist icon={'time'} size={fontSizes.l} color={colors.iconSubtitle} />
                                 <Text style={[themeStyles.cardSubTitle, styles.publicationDate]}>{publicationDate}</Text>
                             </View>
-                          : null
+                            : null
                     }
                 </View>
             </View>
         </TouchableOpacity>
     );
-};
-
-const mapStateToProps = state => {
-    return {
-        language: state.settingReducer.settingsGeneral.language,
-    };
-};
-
-export default connect(mapStateToProps, null)(withTranslation()(withTheme(NewsListItem)))
+}

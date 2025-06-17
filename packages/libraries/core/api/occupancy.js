@@ -3,7 +3,7 @@
 // occupancy : Occupancy for specific POI
 // -----------------------------------
 
-import {ApiSettings, GETOptions} from './../constants/api';
+import {ApiSettings, GETOptions} from '../constants/api';
 
 
 export const occupanciesApi = {

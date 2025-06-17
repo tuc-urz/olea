@@ -113,6 +113,8 @@ function SearchView(props) {
                     {...props}
                     scrollEnabled
                     style={themeStyles.tabs}
+                    activeColor={themeStyles.tabs.activeColor}
+                    inactiveColor={themeStyles.tabs.inactiveColor}
                     labelStyle={themeStyles.tab}
                     indicatorStyle={themeStyles.tabIndicator}
                     tabStyle={{ width: 'auto', paddingHorizontal: 20 }}

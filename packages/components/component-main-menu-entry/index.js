@@ -40,7 +40,7 @@ import componentStyles from './styles';
  * @param {string}  [props.url] URL, welche in einer Webview geöffnet werde soll
  * @param {boolean} [props.isLocalized] Soll der URL-String durch die Übersetzung gegeben werden, um die entgültige URL zu bekommen
  * @param {string}  [props.icon] Schlüssel des Icons (siehe {@link IconsOpenasist})
- * @param {string}  [props.iconSvg] siehe {@link IconsOpenasist}
+ * @param {string}  [props.iconSVG] siehe {@link IconsOpenasist}
  * @param {number}  [props.iconSize] Größe des Icons (siehe {@link IconsOpenasist})
  */
 export default function MainMenuEntry({ title, icon, iconSVG, iconSize, view, url, isLocalized }) {

@@ -10,7 +10,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@openasist/core-plugins": "^0.0.1",
-    "@react-native-async-storage/async-storage": "~2.1.0",
+    "@react-native-async-storage/async-storage": "~2.1.2",
     "@openasist/redux-offline": "^2.6.0-expo.0",
     "react-redux": "^7.2.9",
     "redux": "^4.0.5"

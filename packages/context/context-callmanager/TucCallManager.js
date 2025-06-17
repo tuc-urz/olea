@@ -1,7 +1,5 @@
 import HttpApiProvider, { JsonContentType } from '@openasist/base-api-provider';
 
-const EnableMobileConnectFormDataName = 'enableMobileConnect';
-
 /**
  * API-Client for Kollektor
  */
@@ -61,10 +59,11 @@ export default class TucCallManager extends HttpApiProvider {
     }
 
     /**
-     * Creates a CollektorVersion2ApiProvider instance initialised to a list of standard languages, where the mainLanguage parameter specifies the mainLanguage.
-     * @param {string} baseUrl - URL which is used as the basis for the query URLs.
-     * @param {string} mainLanguage - Main language which is prioritised.
-     * @returns {CollektorVersion2ApiProvider} Created CollectorVersion2ApiProvider instance.
+     * Erstellt eine TucCallManager-Instanz
+     * @param {string} baseUrl URL, welche als Basis für die Anfragen verwendet werden soll
+     * @param {string} mainLanguage Die zu prioriserende Hauptsprache
+     * @param {string} accessToken Zugriffstoken, welches der Provider für den Nutzerzugriff verwendet.
+     * @returns {TucCallManager} Erstellelte TucCallManager-Instanz
      */
     static from(baseUrl, mainLanguage = 'de', accessToken) {
         const acceptingLanguages = HttpApiProvider.languagesFromMainLanguages(mainLanguage);

@@ -6,10 +6,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RESET_STATE } from '@openasist/redux-offline/src/constants';
 
-import {store} from './../redux/store';
-import {updateFeeds, updateTopNews} from './../api/feed';
-import {updateAllMeals} from './../api/canteens';
-import {updateCourses} from './../api/courses';
+import {store} from '../redux/store';
+import {updateFeeds, updateTopNews} from '../api/feed';
+import {updateAllMeals} from '../api/canteens';
+import {updateCourses} from '../api/courses';
 import {updateCoronaMenu} from "../api/corona";
 
 

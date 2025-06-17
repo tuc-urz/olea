@@ -26,7 +26,7 @@ import CalendarStrip from 'react-native-calendar-strip';
 import { DateTime } from 'luxon';
 
 function CalendarMonth(props) {
-  const { theme, setMonth, today, locale } = props;
+  const { theme, setMonth, today, locale, onMonthChanged } = props;
   const styles = useMemo(
     () => StyleSheet.create(componentStyles(theme)),
     [theme]

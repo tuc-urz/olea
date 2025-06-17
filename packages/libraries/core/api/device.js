@@ -3,7 +3,7 @@
 // device : Registration service for devices
 // -----------------------------------
 
-import {ApiSettings, POSTOptions} from './../constants/api';
+import {ApiSettings, POSTOptions} from '../constants/api';
 import {action, commitAction, rollbackAction} from "./../constants/actions";
 import {Platform} from 'react-native';
 

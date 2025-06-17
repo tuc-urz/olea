@@ -3,7 +3,7 @@
 // survey : Webservice for Surveys
 // -----------------------------------
 
-import {ApiSettings, GETOptions, POSTOptions} from './../constants/api';
+import {ApiSettings, GETOptions, POSTOptions} from '../constants/api';
 
 
 export const surveyApi = {

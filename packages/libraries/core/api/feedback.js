@@ -3,7 +3,7 @@
 // feedback : Feedback for Courses
 // -----------------------------------
 
-import {ApiSettings, GETOptions, POSTOptions} from './../constants/api';
+import {ApiSettings, GETOptions, POSTOptions} from '../constants/api';
 
 
 export const feedbackApi = {

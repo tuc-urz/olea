@@ -3,7 +3,7 @@
 // poi : Points of Interest for given university
 // -----------------------------------
 
-import {ApiSettings, GETOptions} from './../constants/api';
+import {ApiSettings, GETOptions} from '../constants/api';
 
 
 export const poiApi = {

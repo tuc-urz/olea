@@ -3,7 +3,7 @@
 // officehours : Office Hourse for specific POI
 // -----------------------------------
 
-import {ApiSettings, GETOptions} from './../constants/api';
+import {ApiSettings, GETOptions} from '../constants/api';
 
 
 export const officeHoursApi = {

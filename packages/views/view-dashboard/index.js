@@ -12,30 +12,32 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import { useMemo, useCallback } from 'react';
 import {
     Animated,
     StyleSheet,
     View,
     RefreshControl,
-    Dimensions,
-    SafeAreaView
+    SafeAreaView,
+    useAnimatedValue,
 } from 'react-native';
-import {connect} from 'react-redux'
-import {Appbar, Provider as PaperProvider, withTheme} from "react-native-paper";
-import {withTranslation} from "react-i18next";
 
-import merge from 'lodash/merge';
+import { connect } from 'react-redux';
+import { Appbar, Button, Dialog, Portal, useTheme } from 'react-native-paper';
+import { useTranslation } from 'react-i18next';
+import { useFocusEffect } from '@react-navigation/native';
+import Markdown from 'react-native-markdown-display';
 
-import {onUpdateRefreshing, DataService} from '@openasist/core';
-import TopNewsComponent from "@openasist/component-top-news";
-import QuickLinksComponent from "@openasist/component-quick-links";
-import MensaSliderCompnent from "@openasist/component-mensa-slider";
-import CourseInfoCompnent from "@openasist/component-course-info";
+import { onUpdateRefreshing, DataService } from '@openasist/core';
+import TopNewsComponent from '@openasist/component-top-news';
+import QuickLinksComponent from '@openasist/component-quick-links';
+import MensaSliderCompnent from '@openasist/component-mensa-slider';
+import CourseInfoCompnent from '@openasist/component-course-info';
+import { usePendingInfos } from '@openasist/context-info-dialog';
 
-import componentStyles from "./styles"
+import componentStyles from './styles';
+
 export const scrollRangeForAnimation = 160;
-
 
 /**
  * Dashboard View
@@ -49,149 +51,121 @@ export const scrollRangeForAnimation = 160;
  * Navigation-Parameters:
  *  - none
  */
-class DashboardView extends React.Component {
-    static navigationOptions = {
-        header: null
-    };
+function DashboardView(props) {
+    const componentName = arguments.callee.name;
+    const theme = useTheme();
+    const { t } = useTranslation();
+    const { themeStyles } = theme;
+    const [pendingInfos, setInfoDisplayed, refreshInfos] = usePendingInfos();
+    const pendingInfo = pendingInfos?.[0];
+    const hasNextPendingInfo = (pendingInfos?.length ?? 0) > 1
 
-    // Styles of this component
-    styles;
+    // Generate styles. Will be generated only if not present or the theme property changes.
+    const styles = useMemo(
+        () => StyleSheet.create(componentStyles(theme)),
+        [theme]
+    )
 
-    dataService = null;
-    _scrollView = null;
+    const dataService = useMemo(
+        () => new DataService,
+        []
+    );
 
+    useFocusEffect(
+        useCallback(
+            () => {
+                refreshInfos();
+            },
+            [refreshInfos]
+        )
+    );
 
-    constructor(props) {
-        super(props);
+    const scrollY = useAnimatedValue(0);
 
-        // ------------------------------------------------------------------------
-        // PLUGIN FUNCTIONALITY
-        // ------------------------------------------------------------------------
+    const headerTranslate = scrollY.interpolate({
+        inputRange: [0, scrollRangeForAnimation],
+        outputRange: [0, 1],
+        extrapolate: 'clamp',
+    });
 
-        const { pluginStyles,theme } = this.props;
-        this.styles = componentStyles(theme);
+    console.debug(componentName, ':', 'pending info', ':', pendingInfo);
 
-        if(pluginStyles) {
-            this.styles = merge(this.styles, pluginStyles);
-        }
-
-        this.styles = StyleSheet.create(this.styles);
-
-        // ------------------------------------------------------------------------
-
-        this.dataService = new DataService();
-        this.props.onUpdateRefreshing(false);
-
-        this.state = {
-            scrollY: new Animated.Value(0)
-        };
-    }
-
-    /**
-     * User has dragged down the view to update the informations
-     *
-     * @private
-     */
-    _onRefresh = () => {
-        this.props.onUpdateRefreshing(true);
-        this.dataService.refresh();
-    };
-
-    /**
-     * User has scrolled down. If the header animation isn't fully finished,
-     * scroll up or down (depends on how far the user has scrolled) to finish the animation.
-     * This prevents that the top view looks like its stuck.
-     *
-     * @param event
-     *
-     * @private
-     */
-    _onScrollEndSnapToEdge = event => {
-      /* TODO Disabled at the moment. On smaller devices the user isn't able to
-          use the course component because of the scroll back
-
-      const y = event.nativeEvent.contentOffset.y;
-        if (0 < y && y < this._scrollRangeForAnimation / 2) {
-            if (this._scrollView) {
-                this._scrollView.scrollTo({y: 0});
-            }
-        } else if (this._scrollRangeForAnimation / 2 <= y && y < this._scrollRangeForAnimation) {
-            if (this._scrollView) {
-                this._scrollView.scrollTo({y: this._scrollRangeForAnimation});
-            }
-        }*/
-    };
-
-    render() {
-        // ------------------------------------------------------------------------
-        // PLUGIN FUNCTIONALITY
-        // ------------------------------------------------------------------------
-        const PluginComponent = this.props.pluginComponent;
-        if (PluginComponent) {
-            return <PluginComponent />;
-        }
-        // ------------------------------------------------------------------------
-
-        const { t } =  this.props;
-        const { colors, themeStyles } = this.props.theme;
-
-        const scrollY = Animated.add(
-            this.state.scrollY,
-            0,
-        );
-        const headerTranslate = scrollY.interpolate({
-            inputRange: [0, scrollRangeForAnimation],
-            outputRange: [0, 1],
-            extrapolate: 'clamp',
-        });
-
-        return (
-          <SafeAreaView style={[this.styles.container, themeStyles.appSafeAreaContainer]}>
-            <Appbar.Header style={{elevation: 0}} statusBarHeight={0}>
-                <Appbar.Content title={t('home:title')} titleStyle={this.styles.titleStyle}/>
+    return (
+        <SafeAreaView style={[styles.container, themeStyles.appSafeAreaContainer]}>
+            <Appbar.Header style={{ elevation: 0 }} statusBarHeight={0}>
+                <Appbar.Content title={t('home:title')} titleStyle={styles.titleStyle} />
             </Appbar.Header>
             <Animated.ScrollView
-                ref={scrollView => {
-                    this._scrollView = scrollView ? scrollView._component : null;
-                }}
-                style={this.styles.container}
-                contentContainerStyle={this.styles.contentContainer}
+                style={styles.container}
+                contentContainerStyle={styles.contentContainer}
                 scrollEventThrottle={2}
-                onScrollEndDrag={this._onScrollEndSnapToEdge}
-                onMomentumScrollEnd={this._onScrollEndSnapToEdge}
-                onScroll={Animated.event(
-                    [
+                onScroll={
+                    Animated.event(
+                        [
+                            {
+                                nativeEvent: { contentOffset: { y: scrollY } },
+                            },
+                        ],
                         {
-                            nativeEvent: {contentOffset: {y: this.state.scrollY}},
+                            useNativeDriver: true,
                         },
-                    ],
-                    {
-                        useNativeDriver: true,
-                    }
-                )}
+                    )
+                }
                 refreshControl={
                     <RefreshControl
-                        refreshing={this.props.refreshing}
-                        onRefresh={this._onRefresh}
+                        refreshing={props.refreshing}
+                        onRefresh={() => {
+                            props.onUpdateRefreshing(true);
+                            dataService.refresh();
+                        }}
                     />
                 }>
                 <View>
-                    <TopNewsComponent    {...this.props}  animationRange={headerTranslate}/>
-                    <QuickLinksComponent {...this.props} />
-                    <MensaSliderCompnent {...this.props} />
-                    <CourseInfoCompnent  {...this.props} />
+                    <TopNewsComponent    {...props} animationRange={headerTranslate} />
+                    <QuickLinksComponent {...props} />
+                    <MensaSliderCompnent {...props} />
+                    <CourseInfoCompnent  {...props} />
                 </View>
             </Animated.ScrollView>
-          </SafeAreaView>
-        );
-    }
+            <Portal>
+                <Dialog
+                    visible={
+                        pendingInfo === undefined
+                            ? false
+                            : true
+                    }
+                    dismissable={false}
+                >
+                    <Dialog.Title>{pendingInfo?.title ?? 'Info'}</Dialog.Title>
+                    <Dialog.Content>
+                        {
+                            pendingInfo
+                                ? <Markdown>
+                                    {pendingInfo?.message}
+                                </Markdown>
+                                : null
+                        }
+                    </Dialog.Content>
+                    <Dialog.Actions>
+                        <Button onPress={() => setInfoDisplayed(pendingInfo?.id)}>
+                            {
+                                hasNextPendingInfo
+                                    ? 'Next'
+                                    : 'Ok'
+                            }
+                        </Button>
+                    </Dialog.Actions>
+                </Dialog>
+            </Portal>
+        </SafeAreaView>
+    );
 }
 
 const mapStateToProps = state => {
     return {
         pluginComponent: state.pluginReducer.dashboard.component,
         pluginStyles: state.pluginReducer.dashboard.styles,
-        view : state.stateReducer.view,
+        view: state.stateReducer.view,
         feedItems: state.stateReducer.feedItems,
         feeds: state.stateReducer.feeds,
         refreshing: state.stateReducer.refreshing,
@@ -199,4 +173,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, {onUpdateRefreshing})(withTranslation()(withTheme(DashboardView)))
+export default connect(mapStateToProps, { onUpdateRefreshing })(DashboardView)

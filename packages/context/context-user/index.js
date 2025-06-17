@@ -50,6 +50,7 @@ import { DateTime } from 'luxon';
  * @property {string?} idToken Token für OpenID-Connect
  * @property {Function?} login Login-Funktion, um den Anmeldungprozzess zu starten.
  * @property {Function?} logout Logout-Funktion, um den Nutzer abzumelden.
+ * @property {Number} refreshTokenExpiresAt Unix-Zeitstempel(Sekunden) ab wenn sich neu eingeloogt werden muss.
  */
 
 /**
@@ -461,6 +462,7 @@ function UserContextProvider({ children }) {
                 idToken: idToken,
                 addLogoutListener,
                 removeLogoutListener,
+                refreshTokenExpiresAt,
             }}
         >
             {children}
@@ -478,7 +480,7 @@ function useUserContext() {
 
 /**
  * Gibt den derzeitigen Access-Token des Nutzers zurück. Ist der Nutzer nicht angemeldet wird null zurückgeben.
- * @returns {string?} Access-Token oder null, wenn Nutzer nicht angemeldet.
+ * @returns {string|null} Access-Token oder null, wenn Nutzer nicht angemeldet.
  */
 function useAccessToken() {
     return useUserContext()?.accessToken;
@@ -486,7 +488,7 @@ function useAccessToken() {
 
 /**
  * Gibt den derzeitigen ID-Token des Nutzers zurück. Ist der Nutzer nicht angemeldet wird null zurückgeben.
- * @returns {string?} ID-Token oder null, wenn Nutzer nicht angemeldet.
+ * @returns {string|null} ID-Token oder null, wenn Nutzer nicht angemeldet.
  */
 function useIdToken() {
     return useUserContext()?.idToken;
@@ -515,7 +517,7 @@ function useIdToken() {
  *         {user?.diplayName ?? 'Kein Nutzer verfügbar'}
  *     </Text>
  * );
- * @return {[user: User?, login: () => Promise<void>, logout: () => Promise<void>]}
+ * @return {[user: User|null, login: () => Promise<void>, logout: () => Promise<void>]}
  * @return {User} user - Das Nutzerobjekt oder null wenn kein Nutzer angemeldet ist
  * @return {() => Promise<void>} login - Login-Funktion, die den Login-Prozess startet
  * @return {() => Promise<void>} logout - Logout-Funtion, welche den Nutzer abmeldet

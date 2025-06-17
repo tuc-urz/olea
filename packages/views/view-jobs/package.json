@@ -9,12 +9,12 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@react-navigation/drawer": "^7.0.19",
-    "@react-navigation/native": "^7.0.13",
+    "@react-navigation/drawer": "^7.3.12",
+    "@react-navigation/native": "^7.1.9",
     "react-native-elements": "^3.4.3",
     "react-native-modalbox": "^2.0.2",
-    "react-native-paper": "^4.12.5",
-    "react-native-vector-icons": "^9.2.0",
-    "react-native-webview": "^13.8.2"
+    "react-native-paper": "^5.14.5",
+    "react-native-vector-icons": "^10.2.0",
+    "react-native-webview": "^13.13.5"
   }
 }

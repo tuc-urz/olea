@@ -3,7 +3,7 @@
 // canteen : Canteens of university
 // -----------------------------------
 
-import { ApiSettings, GETOptions, GETOptionsByLanguage } from './../constants/api';
+import { ApiSettings, GETOptions, GETOptionsByLanguage } from '../constants/api';
 import {action, commitAction, rollbackAction} from "./../constants/actions";
 import { store } from '../redux/store';
 

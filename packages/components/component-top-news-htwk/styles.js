@@ -27,7 +27,7 @@ export default function(theme) {
         universityIconWrapper: {
             flex: 1,
             zIndex: 9,
-            backgroundColor: theme.colors.topNewsIconBackground || theme.colors.background,
+            backgroundColor: theme.colors.background
         },
         universityIcon: {
             width: width * .6,

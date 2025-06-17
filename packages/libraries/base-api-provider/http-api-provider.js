@@ -34,7 +34,8 @@ export default class HttpApiProvider {
      * Construct a REST API provder.
      * @param {string} baseUrl - URL which is used as the basis for the query URLs.
      * @param {string[]} acceptingLanguages - List of languages that are queried by the ASiST server. The priority is based on the order of the languages in the array.
-     * @param {string[]} acceptingContentTypes - List of content types that are queried by the ASiST server. The priority is based on the order of the content types in the array. 
+     * @param {string[]} acceptingContentTypes - List of content types that are queried by the ASiST server. The priority is based on the order of the content types in the array.
+     * @param {string} [accessToken=null] OIDC access token which is used for authentication against the API. Default is null
      */
     constructor(baseUrl, acceptingLanguages, acceptingContentTypes, accessToken = null) {
         this.#baseUrl = baseUrl;
@@ -45,7 +46,7 @@ export default class HttpApiProvider {
 
     /**
      * Creates a new URL from the base URL and the transferred path segments.
-     * @param {string[]} pathSegments - Path segments that are added to the base URL. 
+     * @param {string[]} pathSegments - Path segments that are added to the base URL.
      * @returns Base URL extended by segments.
      */
     extendBaseUrl(pathSegments = []) {
@@ -79,7 +80,7 @@ export default class HttpApiProvider {
     patch(url, body, headers = null) {
         const jsonBody = JSON.stringify(body);
 
-        console.debug(this.constructor.name ,':', 'Send PATCH to', url, 'with content', ':', jsonBody);
+        console.debug(this.constructor.name, ':', 'Send PATCH to', url, 'with content', ':', jsonBody);
 
         return fetch(
             url,
@@ -105,6 +106,7 @@ export default class HttpApiProvider {
      * Returns standart headers für asist server requests.
      * @param {string[]} acceptingLanguages - List of languages that are queried by the ASiST server. The priority is based on the order of the languages in the array.
      * @param {string[]} acceptingContentTypes - List of the MIME types to be queried by the HTTP API.
+     * @param {string} [accessToken=null] OIDC access token which is used for authentication against the API. Default is null.
      * @returns {object} object, which contains the name of the header as the key and the value of the key is the value of the header.
      */
     // If available implement as private
@@ -139,28 +141,23 @@ export default class HttpApiProvider {
     /**
      * Creates an array with language codes depending on the passed main language.
      * @param {string} mainLanguage - Main language which is prioritised.
-     * @returns {string[]} List of language codes, with the main language taking priority. 
+     * @returns {string[]} List of language codes, with the main language taking priority.
      */
     static languagesFromMainLanguages(mainLanguage) {
         // Erstellen der Liste an Sprachen anhand der Hauptsprache(mainLanguage)
 
-        // Guten Standartwert festlegen, falls if-Anweisung fehlerhaft
-        let languages = ['de', 'en'];
-
         // Prüfen des Sprachparameters
-        if (mainLanguage == 'de') {
-            // Wenn Deutsch die Hauptsprache ist, wird Deutsch und nachrangig Englisch als Sprachen ausgewählt
-            languages = ['de', 'en'];
-        } else if (mainLanguage == 'en') {
-            // Wenn English die Hauptsprache ist, wird English und nachrangig Deutsch als Sprachen ausgewählt
-            languages = ['en', 'de'];
-        } else {
-            // Wenn Hauptsprache nicht bekannt, wird die Hauptsprache, nachrangig Deutsch und nachrangiger English als Sprachen ausgewählt
-            languages = [mainLanguage, 'de', 'en'];
+        switch (mainLanguage) {
+            case 'de':
+                // Wenn Deutsch die Hauptsprache ist, wird Deutsch und nachrangig Englisch als Sprachen ausgewählt
+                return ['de', 'en'];
+            case 'en':
+                // Wenn English die Hauptsprache ist, wird English und nachrangig Deutsch als Sprachen ausgewählt
+                return ['en', 'de'];
+            default:
+                // Wenn Hauptsprache nicht bekannt, wird die Hauptsprache, nachrangig Deutsch und nachrangiger English als Sprachen ausgewählt
+                return [mainLanguage, 'de', 'en'];
         }
-
-        // Verbinden der Sprachen
-        return languages;
     }
 }
 

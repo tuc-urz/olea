@@ -1,8 +1,3 @@
-import {Dimensions} from "react-native";
-
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
-
 export default function(theme) {
     return {
         courseCard: {
@@ -18,7 +13,6 @@ export default function(theme) {
           height: "15%",
           width: 1,
           backgroundColor: theme.colors.listSeperator,
-
         },
         courseTimeContainer: {
           width:"15%",
@@ -97,18 +91,26 @@ export default function(theme) {
             paddingTop: theme.paddings.small,
         },
         indentedText: {
-          marginLeft: 10, 
+          marginLeft: 10,
         },
         detailContainer: {
           flexDirection: 'row',
           alignItems: 'center',
         },
         detailLabel: {
-          width: '25%', 
+          width: '25%',
         },
         detailValue: {
           flexShrink: 1,
-          width: '70%', 
+          width: '70%',
+        },
+        dismissButton: {
+          color: '#007bff',
+          textAlign: 'right',
+          fontWeight: 'bold',
+          fontSize: 16,
+          marginBottom: 8,
+          marginRight: 10
         },
     }
 };

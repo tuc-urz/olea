@@ -23,7 +23,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DateTime, Duration } from 'luxon';
 import { isEqual } from 'lodash'
 
-import AsistServerApiProvider from './AsistServerApiProvider';
 import CollektorVersion2ApiProvider from './CollektorVersion2ApiProvider';
 import { TimetableNotFoundError } from './ProviderErrors';
 
@@ -63,7 +62,7 @@ const TimetableCodeSecureStoreKey = 'timetable.code';
 const TimetableCoursesStoreKey = 'timetable.courses';
 
 const AsistServerProviderName = 'asist-server';
-const CollectorVersion2ProviderName = 'hs-kollektor-v2';
+const CollectorVersion2ProviderName = 'hs-collector-v2';
 
 const CourseWeekModeWeekly = 'weekly';
 const CourseWeekModeOdd = 'odd';
@@ -105,12 +104,12 @@ const ResetCourses = 'reset_courses';
  * @param {object} action
  * @param {SetCoursesDate|RemoveUnusedCoursesDate|RestoreCourses} action.type
  * @param {Course[]|Object.<string, Course[]>} [action.courses]
- * @returns {Object.<string, Course[]}
+ * @returns {Object.<string, Course[]>}
  */
 function CoursesStateReducer(state, action) {
     switch (action.type) {
 
-        // Hinzufügen eine Tages/Datums mit ensprechenden Vorlesungen
+        // Hinzufügen eines Tages/Datums mit ensprechenden Vorlesungen
         case SetCoursesDate:
             const courses = action.courses;
             const date = action.date
@@ -194,7 +193,13 @@ function CoursesStateReducer(state, action) {
     }
 }
 
-const defaultPrefetchDistance = { months: 1 };
+/**
+ * Ein Monat ist die standart Zeispanne für das Vorladen der Stundenplandaten
+ *
+ * @constant
+ * @type {string} Zeitspanne im ISO Format(https://de.wikipedia.org/wiki/ISO_8601#Zeitspannen)
+ */
+const defaultPrefetchDistance = 'P1M';
 
 /**
  * Selector für Wert, der anzeigt ob die Staging-Server genutzt werden sollen.
@@ -241,6 +246,7 @@ function TimetableContextProvider({ children }) {
 
     [timetableCode, setTimetableCode] = useState(null);
     [courses, dispatchCourses] = useReducer(CoursesStateReducer, null);
+    [synchronizationCompleted, setSynchronizationCompleted] = useState(false);
 
     // Laden des persönlichen Stundenplancodes und speichern in timetableCode-State
     useEffect(
@@ -274,11 +280,9 @@ function TimetableContextProvider({ children }) {
                 case AsistServerProviderName:
                     console.debug(componentName, ': use asist server api');
                     return new AsistServerApiProvider.from(timetableApiBaseUrl, timetableApiUniversity, 'de');
-                    break;
                 case CollectorVersion2ProviderName:
                     console.debug(componentName, ': use collector v2 api');
                     return new CollektorVersion2ApiProvider.from(timetableApiBaseUrl);
-                    break;
                 default:
                     console.log(`${componentName}: Can't build api provider: ${timetableApiProvider}`)
                     return null;
@@ -291,8 +295,9 @@ function TimetableContextProvider({ children }) {
     useEffect(
         () => {
             AsyncStorage.setItem(TimetableCoursesStoreKey, JSON.stringify(courses))
-                .catch(reason => console.error(`${componentName}: Error while safing courses in secure store: ${reason}`));
-        }, [courses]
+                .catch(reason => console.error(componentName, ':', 'Error while safing courses in secure store', ':', reason));
+        },
+        [courses]
     );
 
     // Speichert den neuen Stundenplan-Code im Secure-Store und dann im State
@@ -383,25 +388,32 @@ function TimetableContextProvider({ children }) {
     // Aktualiseren des course-States, wenn Provider oder Stundenplan-Code sich ändern.
     useEffect(
         () => {
-            // Berechnen des Vorladezeitraumes
-            // Jetztige Zeit ermitteln
-            const today = DateTime.now();
-            // Für den Anfang des Vorladezeitraumes das Datum berechnen
-            const prefetchStartDate = today.minus(beginPrefetchDistance).toISODate();
-            // Für das Ende des Vorlesungszeitraumes das Datum berechnen
-            const prefetchEndDate = today.plus(endPrefetchDistance).toISODate();
+            // Stundenplan wird nur einmal geholt, wenn der Stundenplancode geladen ist
+            if ((timetableCode ?? false) && !synchronizationCompleted) {
+                // Berechnen des Vorladezeitraumes
+                // ISO Zeitspannen(string) werden in Luxon Zeitspannen umgewandelt
+                const beginPrefetchDuration = Duration.fromISO(beginPrefetchDistance);
+                const endPrefetchDuration = Duration.fromISO(endPrefetchDistance);
+                // Jetztige Zeit ermitteln
+                const today = DateTime.now();
+                // Für den Anfang des Vorladezeitraumes das Datum berechnen
+                const prefetchStartDate = today.minus(beginPrefetchDuration).toISODate();
+                // Für das Ende des Vorlesungszeitraumes das Datum berechnen
+                const prefetchEndDate = today.plus(endPrefetchDuration).toISODate();
 
-            console.debug(componentName, 'prefetch timetable courses from', prefetchStartDate, 'to', prefetchEndDate);
+                console.debug(componentName, 'prefetch timetable courses from', prefetchStartDate, 'to', prefetchEndDate);
 
-            refreshCourses(prefetchStartDate, prefetchEndDate)
-                .catch(
-                    reason => {
-                        if (!reason instanceof ApiProviderNotInitializedError || !reason instanceof TimetableCodeNotInitializedError) {
-                            console.error(componentName, ': Error while update courses by timetable code: ', reason, 'base url: ', timetableApiBaseUrl);
+                refreshCourses(prefetchStartDate, prefetchEndDate)
+                    .then(() => setSynchronizationCompleted(true))
+                    .catch(
+                        reason => {
+                            if (!reason instanceof ApiProviderNotInitializedError || !reason instanceof TimetableCodeNotInitializedError) {
+                                console.error(componentName, ': Error while update courses by timetable code: ', reason, 'base url: ', timetableApiBaseUrl);
+                            }
                         }
-                    }
-                );
-        }, [apiProvider, timetableCode, beginPrefetchDistance, endPrefetchDistance]
+                    );
+            }
+        }, [apiProvider, beginPrefetchDistance, endPrefetchDistance, timetableCode, synchronizationCompleted]
     );
 
     return (
@@ -461,7 +473,7 @@ function useCourses() {
  *
  *
  * @param {string} date ISO Datum der Vorlesungen
- * @returns {[Course[]|(date : string) => Promise<void>]}
+ * @returns {[Course[], (date : string) => Promise<void>]}
  * @example
  * const [dateCourses, refreshDateCourses] = useDateCourses('2025-01-01');
  *

@@ -27,24 +27,22 @@ export default class AsistServerApiProvider extends HttpApiProvider {
      */
     constructor(baseUrl, university, acceptingLanguages) {
         // ContentTypes wird auf JSON festgesetzt, da der ASiST-Server nur JSON spricht.
-        super(baseUrl, acceptingLanguages, ['application/json']);
+        super(baseUrl, acceptingLanguages, [JsonContentType]);
 
         this.#university = university;
     }
 
     /**
-     * Returns the request URL to get all courses of a personal timetable code from the collektor.
-     * @param {String} personalTimetableCode - Personal timetable code to get.
-     * @returns {URL} URL that can be used to query the personal timetable.
+     * Returns the request URL to get all canteens from the asist server.
+     * @returns {URL} URL that can be used to query canteens.
      */
     getAllUrl() {
         return this.extendBaseUrl(['v3', this.#university, 'canteens', 'all']);
     }
 
     /**
-     * Requests the timetable and its courses from the ASiST server using the personal code.
-     * @param {string} personalTimetableCode - Personal timetable code.
-     * @returns {Object[]} List of lectures that are part of your personal timetable.
+     * Requests the canteens from the ASiST server.
+     * @returns {Object[]} List of canteens.
      */
     getCanteens() {
         const getAllUrl = this.getAllUrl();
@@ -61,7 +59,7 @@ export default class AsistServerApiProvider extends HttpApiProvider {
         return this.get(getAllUrl)
             .then(response => response.json())
             .then(jsonResponse => jsonResponse?.canteens ?? [])
-            .then(canteens => canteens.find(canteen => canteen.id == canteenId))
+            .then(canteens => canteens.find(canteen => canteen.id === canteenId))
             .then(canteen => canteen?.menuItems ?? [])
             .then(meals => meals.filter(meal => meal.date === date))
             .then(menu => AsistServerApiProvider.convertMenu(menu));

@@ -181,7 +181,7 @@ function FavoriteCanteensStateReducer(state, action) {
 }
 
 //const providersInitializers = {
-//    'hs-kollektor-v2': ({appSettings }) => {
+//    'hs-collector-v2': ({appSettings }) => {
 //        const baseUrl = appSettings?.modules?.canteen?.api?.baseUrl;
 //        CollektorVersion2ApiProvider.from(baseUrl,)
 //    },
@@ -332,7 +332,7 @@ function CanteenContextProvider({ children, settings, rootUrl, rootStgUrl, useSt
                 return [
                     ...new Set(
                         activeSelections
-                            .flatMap(availableSelection => availableSelection?.filters)
+                            .flatMap(activeSelection => activeSelection?.filters)
                     )
                 ];
             } else {
@@ -387,11 +387,9 @@ function CanteenContextProvider({ children, settings, rootUrl, rootStgUrl, useSt
                 case AsistServerProviderName:
                     console.debug(componentName, ': use asist server api');
                     return new AsistServerApiProvider.from(canteenApiBaseUrl, canteenApiUniversity, language);
-                    break;
                 case CollectorVersion2ProviderName:
                     console.debug(componentName, ': use collector v2 api');
                     return new CollektorVersion2ApiProvider.from(canteenApiBaseUrl, language);
-                    break;
                 default:
                     console.log(`${componentName}: Can't build api provider: ${canteenApiProvider}`)
                     return null;
@@ -543,7 +541,7 @@ function useCanteenContext() {
         throw new Error('useCanteenContext must be used within a CanteenContextProvider')
     }
     return context;
-};
+}
 
 /**
  * Dieser Hook gibt die Mensen und eine Aktualisierungsfunktion für Tagesangebote zurück.

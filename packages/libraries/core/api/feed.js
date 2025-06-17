@@ -5,7 +5,7 @@
 
 // IMPORTANT: THIS CONTAINS ONLY V2 OF FEEDS
 
-import {ApiSettings, GETOptionsByLanguage} from './../constants/api';
+import {ApiSettings, GETOptionsByLanguage} from '../constants/api';
 import {action, commitAction, rollbackAction} from "../constants/actions";
 import {store} from "../redux/store";
 
