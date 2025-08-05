@@ -24,11 +24,6 @@
         "projectId": "f28ae1d0-7ce7-49f9-bfd4-71b4890031dd"
       }
     },
-    "splash": {
-      "image": "./assets/images/AppIcon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#00646f"
-    },
     "updates": {
       "fallbackToCacheTimeout": 0,
       "enabled": false,
@@ -116,6 +111,14 @@
             "useFrameworks": "static",
             "deploymentTarget": "15.1"
           }
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#00646f",
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 200
         }
       ]
     ]
