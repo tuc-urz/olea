@@ -38,7 +38,7 @@ export default {
                 {title: 'menu:titles.dataPolicy',       icon: 'lock',           url: 'https://www.tu-chemnitz.de/tu/datenschutz.html?content'},
                 {title: 'menu:titles.accessibility',    icon: 'accessibility',  url: 'https://www.tu-chemnitz.de/tu/barrierefreiheit.html?content'},
                 {title: 'menu:titles.version',          icon: 'imprint',        view: 'SettingsAppInfo'},
-
+                {title: 'menu:titles.licenses',         icon: 'imprint',        url: 'https://github.com/tuc-urz/openasist/blob/dependency_licenses/docs/licenses.pdf'},
             ],
         }
     },
