@@ -14,7 +14,7 @@
     },
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/AppIcon.png",
+    "icon": "./assets/images/app-icon.png",
     "packagerOpts": {
       "config": "./rn-cli.config.js",
       "projectRoots": ""
@@ -50,7 +50,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "de.olea.app",
       "buildNumber": "1",
-      "icon": "./assets/images/AppIcon.png",
+      "icon": "./assets/images/app-icon.png",
       "infoPlist": {
         "NSLocationUsageDescription": "Diese App verwendet deinen Standort, um Haltestellen in deiner Nähe und das Wetter an deinem Standort anzuzeigen.",
         "NSLocationAlwaysUsageDescription": "Diese App verwendet deinen Standort, um Haltestellen in deiner Nähe und das Wetter an deinem Standort anzuzeigen.",
@@ -68,7 +68,10 @@
     },
     "android": {
       "package": "de.olea.app",
-      "icon": "./assets/images/AppIcon.png",
+      "adaptiveIcon": {
+        "backgroundColor": "#006d70",
+        "foregroundImage": "./assets/images/app-icon.png"
+      },
       "permissions": [
         "ACCESS_NETWORK_STATE",
         "INTERNET"
