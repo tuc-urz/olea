@@ -64,7 +64,7 @@
     "android": {
       "package": "de.olea.app",
       "adaptiveIcon": {
-        "backgroundColor": "#006d70",
+        "backgroundColor": "#00535c",
         "foregroundImage": "./assets/images/app-icon.png"
       },
       "permissions": [
@@ -116,7 +116,7 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#006d70",
+          "backgroundColor": "#00535c",
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 200
         }
