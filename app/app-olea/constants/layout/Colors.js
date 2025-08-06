@@ -16,7 +16,7 @@ export const colors = {
     yellow: '#f0c808',
     red: '#e53935',
     primary: '#70e0d0',
-    accent: '#006d70',
+    accent: '#00535c',
     background: '#ffffff',
     surface: '#ffffff',
     error: '#e53935',
@@ -158,7 +158,7 @@ export const themeColors = {
     textInputSelection: colors.grayDark3,
     timeTableRoom: colors.primary,
     textLighter: colors.standardDescription,
-    quicklinksBackground: colors.primary,
+    quicklinksBackground: colors.accent,
     eventContainerBackground: colors.primary,
     eventContainerSidebar: colors.primary,
 };
