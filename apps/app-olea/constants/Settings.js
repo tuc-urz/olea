@@ -34,9 +34,9 @@ export default {
                 {title: 'menu:titles.settingsAccessibility',    icon: 'accessibility',      view: 'SettingsAccessibility'},
             ],
             about: [
-                {title: 'menu:titles.imprint',          icon: 'imprint',        url: 'https://www.tu-chemnitz.de/tu/impressum.html?content'},
-                {title: 'menu:titles.dataPolicy',       icon: 'lock',           url: 'https://www.tu-chemnitz.de/tu/datenschutz.html?content'},
-                {title: 'menu:titles.accessibility',    icon: 'accessibility',  url: 'https://www.tu-chemnitz.de/tu/barrierefreiheit.html?content'},
+                {title: 'menu:titles.imprint',          icon: 'imprint',        url: ''},
+                {title: 'menu:titles.dataPolicy',       icon: 'lock',           url: ''},
+                {title: 'menu:titles.accessibility',    icon: 'accessibility',  url: ''},
                 {title: 'menu:titles.version',          icon: 'imprint',        view: 'SettingsAppInfo'},
 
             ],
