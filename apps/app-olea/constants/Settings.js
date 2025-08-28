@@ -22,11 +22,7 @@ export default {
         ],
         items: {
             services: [
-                {
-                    title: 'menu:titles.aboutUs',
-                    url: 'https://tuc.app/mitmachen.html',
-                    icon: 'feedback',
-                },
+                {title: 'menu:titles.aboutUs',                  icon: 'feedback',           url: 'https://olea.community/'},
             ],
             settings: [
                 {title: 'menu:titles.settingsGeneral',          icon: 'settings',           view: 'SettingsGeneral'},
