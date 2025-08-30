@@ -1,13 +1,10 @@
-import React                    from 'react';
-import { createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator } from '@react-navigation/stack';
 
-import TimetableViewCalendar    from '@openasist/view-timetable-calendar';
 import TimetableViewList        from '@openasist/view-timetable-list';
-import TimetableCourseView      from "@openasist/component-course-detail";
+import TimetableCourseView      from '@openasist/component-course-detail';
+import ModalComponent           from '@openasist/component-modal';
 
-import ModalComponent           from "@openasist/component-modal";
-
-import TabBarIcon               from "../tabBarIcon";
+import TabBarIcon               from '../tabBarIcon';
 
 /**
  * Tab Options
@@ -15,7 +12,7 @@ import TabBarIcon               from "../tabBarIcon";
 const options = {
     title: 'Timetable',
     tabBarAccessibilityLabel: 'accessibility:navigation.timetable',
-    tabBarIcon:  (props) => TabBarIcon("timetable", props),
+    tabBarIcon: (props) => TabBarIcon("timetable", props),
     header: () => null
 }
 
@@ -24,11 +21,11 @@ const options = {
  */
 const stack = (props) => {
     const Stack = createStackNavigator()
-    return  (
+    return (
         <Stack.Navigator>
-            <Stack.Screen name="TimetableViewList"     component={TimetableViewList}      options={{headerShown: false}}/>
-            <Stack.Screen name="CourseInfo"            component={TimetableCourseView}    options={{headerShown: false}}/>
-            <Stack.Screen name="Modal"                 component={ModalComponent}         options={{headerShown: false}}/>
+            <Stack.Screen name="TimetableViewList" component={TimetableViewList}   options={{ headerShown: false }} />
+            <Stack.Screen name="CourseInfo"        component={TimetableCourseView} options={{ headerShown: false }} />
+            <Stack.Screen name="Modal"             component={ModalComponent}      options={{ headerShown: false }} />
         </Stack.Navigator>
     );
 }
