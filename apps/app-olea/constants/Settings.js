@@ -112,16 +112,12 @@ export default {
             // Beim Starten der App werden die Stundenplandaten aktualisiet.
             // Hier kann eingestellte werden, welcher Zeitraum geladen wird.
             prefetch: {
-                // Mit welchen Abstand vor "heute" sollen die Stundenplandaten geholt werden
-                // Siehe Luxon minus: https://moment.github.io/luxon/api-docs/index.html#datetimeminus
-                beginDistance: {
-                    months: 1,
-                },
-                // Mit welchen Abstand nach "heute" sollen die Stundenplandaten geholt werden
-                // Siehe Luxon plus: https://moment.github.io/luxon/api-docs/index.html#datetimeplus
-                endDistance: {
-                    month: 1,
-                }
+                // Mit welchen Abstand vor "heute" sollen die Stundenplandaten geholt werden.
+                // Zeitspanne in ISO-Format: https://en.wikipedia.org/wiki/ISO_8601#Durations | https://moment.github.io/luxon/api-docs/index.html#durationfromiso
+                beginDistance: 'P1M',
+                // Mit welchen Abstand nach "heute" sollen die Stundenplandaten geholt werden.
+                // Zeitspanne in ISO-Format: https://en.wikipedia.org/wiki/ISO_8601#Durations | https://moment.github.io/luxon/api-docs/index.html#durationfromiso
+                endDistance: 'P1M',
             },
             showDetails: true,
             // Hier können die Tag/Wochen/Monatstabs im Stundenplan aktiviert werden
