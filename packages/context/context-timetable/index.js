@@ -294,8 +294,11 @@ function TimetableContextProvider({ children }) {
     // Speichert die geänderten Courses in den Secure-Store
     useEffect(
         () => {
-            AsyncStorage.setItem(TimetableCoursesStoreKey, JSON.stringify(courses))
-                .catch(reason => console.error(componentName, ':', 'Error while safing courses in secure store', ':', reason));
+            courses
+                ? AsyncStorage.setItem(TimetableCoursesStoreKey, JSON.stringify(courses))
+                    .catch(reason => console.error(componentName, ':', 'Error while safing courses in store', ':', reason))
+                : AsyncStorage.removeItem(TimetabremovingsesStoreKey)
+                    .catch(reason => console.error(componentName, ':', 'Error while removing courses in store', ':', reason));
         },
         [courses]
     );
