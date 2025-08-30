@@ -51,7 +51,7 @@ function TimetableViewCalendar(props) {
   const [selectedWeekModeISOWeekDate, setSelectedWeekModeISOWeekDate] = useState(() => DateTime.now().startOf('week').toISOWeekDate());
   const [index, setIndex] = useState(0);
   const [formVisible, setFormVisible] = useState(false);
-  const [infoVisible, setInfoVisible] = useState(false);
+  const [infoVisible, setInfoVisible] = useState(timetableCode ? false : true);
   const [loading, setLoading] = useState(false);
   const [today, setToday] = useState(new Date());
   const [selectedEvent, setSelectedEvent] = useState(null);
@@ -214,15 +214,17 @@ function TimetableViewCalendar(props) {
       </View>
       {loading ? <ActivityIndicator size="large" color={colors.primary} /> : null}
       {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
-      {infoMessage ? (
-        <Text
-          style={styles.infoText}
-          dataDetectorType="link"
-          selectable
-        >
-          {infoMessage}
-        </Text>
-      ) : null}
+      {
+        infoMessage
+          ? <Text
+            style={styles.infoText}
+            dataDetectorType="link"
+            selectable
+          >
+            {infoMessage}
+          </Text>
+          : null
+      }
 
       <TouchableOpacity
         style={styles.importButton}
