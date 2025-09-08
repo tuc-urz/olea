@@ -297,7 +297,7 @@ function TimetableContextProvider({ children }) {
             courses
                 ? AsyncStorage.setItem(TimetableCoursesStoreKey, JSON.stringify(courses))
                     .catch(reason => console.error(componentName, ':', 'Error while safing courses in store', ':', reason))
-                : AsyncStorage.removeItem(TimetabremovingsesStoreKey)
+                : AsyncStorage.removeItem(TimetableCoursesStoreKey)
                     .catch(reason => console.error(componentName, ':', 'Error while removing courses in store', ':', reason));
         },
         [courses]
