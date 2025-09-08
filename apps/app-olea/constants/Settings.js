@@ -56,7 +56,7 @@ export default {
         }
     },
     api: {
-        university: 'tuc',
+        university: 'htwkl',
         rootUrl: 'https://asist-app.de/asist/rest/',
         rootStgUrl: 'https://stage.asist-app.de/asist/rest/'
         /*
