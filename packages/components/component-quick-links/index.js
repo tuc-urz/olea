@@ -55,7 +55,16 @@ function QuickLinksComponent({ theme, theme: { colors } }) {
           />
         </View>
 
-        <View style={[styles.innerContainer, { justifyContent: "space-between" }]}>
+        <View style={
+          [
+            styles.innerContainer,
+            {
+              justifyContent: quicklinks.length > 2
+                ? 'space-between'
+                : 'space-around'
+            },
+          ]}
+        >
           {
             quicklinks.map(
               quicklink => {
