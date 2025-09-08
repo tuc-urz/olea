@@ -144,13 +144,7 @@ export default {
                 {
                     title: 'quicklinks:titles:openasist',
                     icon: 'rocket',
-                    url: 'https://tuc.app/mitmachen.html',
-                },
-                {
-                    title: 'quicklinks:titles:library',
-                    accessibilityTitle: 'accessibility:quicklinks.titles.library',
-                    icon: 'book',
-                    url: 'https://katalog.bibliothek.tu-chemnitz.de'
+                    url: 'https://olea.community/',
                 },
                 {
                     title: 'quicklinks:titles:opal',
@@ -165,7 +159,7 @@ export default {
     navigation: {
         newsDetail: {
             screen: 'feedsTab',
-            params: (additionalParams) => ({screen: 'NewsDetail', params: {news: additionalParams}, initial: false})
+            params: (additionalParams) => ({ screen: 'NewsDetail', params: { news: additionalParams }, initial: false })
         }
     }
 }
