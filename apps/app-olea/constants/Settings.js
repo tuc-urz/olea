@@ -1,3 +1,14 @@
+const defaultApiConfig = {
+    production: {
+        provider: 'hs-collector-v2',
+        url: 'https://app.htwk-leipzig.de/api/',
+    },
+    staging: {
+        provider: 'hs-collector-v2',
+        url: 'https://stage.app.htwk-leipzig.de/api/',
+    },
+}
+
 export default {
     name: 'OLEA',
     logo: require('./../assets/images/logo.png'),
@@ -54,11 +65,8 @@ export default {
          */
     },
     modules: {
-        event: {
-            api: {
-                provider: 'asist-server',
-                baseUrl: 'https://asist.hrz.tu-chemnitz.de/asist/rest/app',
-            },
+        news: {
+            api: defaultApiConfig,
         },
         timetable: {
             // Wenn kein API-Provider angegeben wird, wird standartmäßig die generelle API-Einstellung verwendet.
@@ -77,16 +85,7 @@ export default {
             //    }
             //},
             // Es kann ein produktiver Server (production) und eine Testserver (staging) angeben werden
-            api: {
-                production: {
-                    provider: 'hs-kollektor-v2',
-                    url: 'https://hsc-production.hrz.tu-chemnitz.de/hs_collector/api/v1/',
-                },
-                staging: {
-                    provider: 'hs-kollektor-v2',
-                    url: 'https://hsc-staging.hrz.tu-chemnitz.de/hs_collector/api/v1/',
-                }
-            },
+            api: defaultApiConfig,
             downloadEnabled: false,
             weeksToRender: 2,
             /*
@@ -126,16 +125,7 @@ export default {
             enableMonthTab: false,
         },
         canteen: {
-            api: {
-                production: {
-                    provider: 'hs-collector-v2',
-                    url: 'https://hsc-production.hrz.tu-chemnitz.de/hs_collector/api/v1/',
-                },
-                staging: {
-                    provider: 'hs-collector-v2',
-                    url: 'https://hsc-staging.hrz.tu-chemnitz.de/hs_collector/api/v1/',
-                }
-            },
+            api: defaultApiConfig,
             disabledWeekdays: [6, 7],
         },
         search: {
