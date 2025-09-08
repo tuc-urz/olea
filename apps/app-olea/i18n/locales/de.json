@@ -305,7 +305,7 @@
   "timetable": {
     "title": "Stundenplan",
     "moreEvents": "Sonstige Veranstaltungen",
-    "notImportedYet": "Sie haben noch keinen Stundenplan importiert. Dies können Sie wie folgt tun:\n\n 1. Auf der folgenden Webseite können Sie einen individuellen Stundenplan erstellen: https://cal.htwk-leipzig.de\n\n 2. Kopieren Sie den Link oder Token für die App und fügen Sie diesen hier ein.",
+    "notImportedYet": "Es ist kein Stundenplan importiert. Zum Testen der Stundenplanfunktion, können Sie den Code bzw. Token \"Test\" benutzen.",
     "inputTimetableCode": "Sie haben bereits einen Stundenplan hinterlegt.\nBitte geben Sie einen Link oder Token ein, um einen anderen Stundenplan zu importieren. Bitte beachten Sie, dass Ihr aktueller Plan dadurch entfernt wird.\nAuf folgender Webseite können Sie einen neuen individuellen Stundenplan erstellen: https://cal.htwk-leipzig.de",
     "importInProgress": "Ihr Stundenplan wird importiert.\nDies kann einige Minuten dauern.\nDie App kann währenddessen weiter genutzt werden.",
     "inputPlaceholder": "Token oder Code",

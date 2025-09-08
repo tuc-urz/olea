@@ -166,6 +166,7 @@ function TimetableViewCalendar(props) {
       setInfoMessage('');
     }
   }, [infoVisible]);
+
   const tabView = useMemo(() => {
     return (
       <TabView

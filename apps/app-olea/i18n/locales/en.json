@@ -304,7 +304,7 @@
   "timetable": {
     "title": "Timetable",
     "moreEvents": "Other Events",
-    "notImportedYet": "You have not imported a timetable yet. You can do this as follows:\n\n 1. You can create an individual timetable on the following website: https://cal.htwk-leipzig.de\n\n 2. Copy the link or token for the app and paste it here.",
+    "notImportedYet": "No timetable has been imported. To test the timetable function, you can use the code or token \"Test.\"",
     "inputTimetableCode": "You have already saved a timetable.\nPlease enter a link or token to import another timetable. Please note that your current timetable will be removed.\nYou can create a new individual timetable on the following website: https://cal.htwk-leipzig.de",
     "importInProgress": "Your schedule is being imported.\nThis may take a few minutes.\nYou can continue using the app in the meantime.",
     "inputPlaceholder": "Token or Code",
