@@ -33,7 +33,7 @@ export default {
         ],
         items: {
             services: [
-                {title: 'menu:titles.aboutUs',                  icon: 'feedback',           url: 'https://olea.community/'},
+                {title: 'menu:titles.aboutUs',                  icon: 'feedback',           url: 'https://www.bps-system.de/olea/'},
             ],
             settings: [
                 {title: 'menu:titles.settingsGeneral',          icon: 'settings',           view: 'SettingsGeneral'},
