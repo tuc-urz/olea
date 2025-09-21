@@ -1,6 +1,9 @@
-import * as Localization from 'expo-localization';
+import { getLocales } from 'expo-localization';
 
-const lang = Localization.locale.slice(0,2).toLowerCase();
+// Derzeitige Hauptsprache des Handys ermitteln
+// Expo garantiert, dass getLocales mindestens ein Element enthält
+const locale = getLocales()[0];
+const lang = locale.languageCode;
 const supportedLanguages = ['de', 'en'];
 
 
