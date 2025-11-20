@@ -15,4 +15,7 @@ config.resolver.nodeModulesPaths = [
   path.resolve(workspaceRoot, 'node_modules'),
 ];
 
+// Prevents: "Cannot read property '__extends' of undefined"
+config.resolver.unstable_enablePackageExports = false;
+
 module.exports = config;

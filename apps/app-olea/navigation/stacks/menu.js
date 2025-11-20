@@ -12,7 +12,6 @@ import ModalComponent               from "@openasist/component-modal";
 import CourseDetailComponent        from "@openasist/component-course-detail";
 import JobPortalView                from "@openasist/view-jobs";
 import JobFilterComponent           from "@openasist/component-jobs-filter";
-import CoronaDetail                 from "@openasist/view-corona-detail";
 import TabBarIcon                   from "../tabBarIcon";
 import AppInfoSettingsView          from "@openasist/view-settings-app-info";
 import TimetableCalendarView        from "@openasist/view-timetable-calendar";
@@ -50,7 +49,6 @@ const stack = (props) => {
             <Stack.Screen name="Job"                    component={JobPortalView}               options={{headerShown: false}}/>
             <Stack.Screen name="JobFilter"              component={JobFilterComponent}          options={{headerShown: false}}/>
 
-            <Stack.Screen name="CoronaDetail"     component={CoronaDetail}                options={{headerShown: false}}/>
             <Stack.Screen name="TimetableCalendarView"  component={TimetableCalendarView}       options={{headerShown: false}}/>
         </Stack.Navigator>
     );

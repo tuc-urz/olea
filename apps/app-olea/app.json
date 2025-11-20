@@ -8,7 +8,9 @@
       "ios",
       "android"
     ],
-    "scheme": "de.openasist.app",
+    "scheme": [
+      "de.openasist.app"
+    ],
     "notification": {
       "color": "#000000"
     },
@@ -99,7 +101,14 @@
       "expo-font",
       "expo-localization",
       "expo-secure-store",
-      "sentry-expo",
+      [
+        "@sentry/react-native/expo",
+        {
+          "organization": "codeculture",
+          "project": "oa-olea",
+          "url": "https://sentry.codeculture.de/"
+        }
+      ],
       [
         "expo-build-properties",
         {

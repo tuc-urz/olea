@@ -14,13 +14,14 @@ import {store, onSettingAPI} from '@openasist/core'
 import settings from './constants/Settings';
 import i18n from './i18n/i18n';
 
-import * as Sentry from 'sentry-expo';
+import * as Sentry from '@sentry/react-native';
 import Main from './Main';
 
 Sentry.init({
     dsn: 'https://bafbb42d6530512b4834edf5f0752f65@sentry.codeculture.de/17',
     enableInExpoDevelopment: false,
-    debug: false,
+    debug: false, // Set to true for debug logs in development
+    tracesSampleRate: 1.0, // Adjust in production as neede0d
 });
 // Example Plugin
 //import TopNewsPlugin from '@openasist/plugin-top-news';
