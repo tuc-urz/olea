@@ -52,7 +52,7 @@ export const scrollRangeForAnimation = 160;
  *  - none
  */
 function DashboardView(props) {
-    const componentName = arguments.callee.name;
+    const componentName = DashboardView.name;
     const theme = useTheme();
     const { t } = useTranslation();
     const { themeStyles } = theme;

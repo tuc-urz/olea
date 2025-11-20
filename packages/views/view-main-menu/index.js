@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import {
     SafeAreaView,
     ScrollView,
@@ -32,6 +32,7 @@ import { onUpdateRefreshing, useActiveStagingMenuItems } from '@openasist/core';
 import AppbarComponent from '@openasist/component-app-bar';
 import MainMenuEntry from '@openasist/component-main-menu-entry';
 import DevelopmentDialog from '@openasist/component-development-dialog';
+import { useMainMenuEntries } from '@openasist/context-flex-menu';
 
 import componentStyles from './styles'
 
@@ -123,13 +124,36 @@ function MainMenuTabbar(props) {
  */
 function MainMenuScene({ route: { key: mainMenuItemsKey } }) {
     const theme = useTheme();
-    const availableMenuItems = theme?.appSettings?.mainMenu?.items?.[mainMenuItemsKey];
+    const { i18n } = useTranslation();
+    const appSettings = theme?.appSettings;
+    const availableMenuItems = appSettings?.mainMenu?.items?.[mainMenuItemsKey];
     const activeStagingMenuItems = useActiveStagingMenuItems();
+    const [flexMainMenuEntries, refreshFlexMenuEntries] = useMainMenuEntries();
+
+    useEffect(
+        () => {
+            refreshFlexMenuEntries?.();
+        },
+        [refreshFlexMenuEntries]
+    )
+
+    // Verfügbare Sprachen
+    const languages = appSettings?.languages;
+    // Eingestellte Sprache aus der Übersetzung holen
+    const selectedLanguage = i18n.language;
+    // Hinterlegte Sprachen durchgehen und nach dem erweiterten Sprachcode holen
+    const selectedExtLanguageCode = languages
+        // Finde die derzeitige eingestellte Sprache
+        .find(language => language?.code === selectedLanguage)
+        // Erweiterten Sprachcode von der gefundenen Sprache auslesen
+        ?.extCode;
 
     const styles = useMemo(
         () => StyleSheet.create(componentStyles(theme)),
         [theme]
     );
+
+
 
     // Es werden Hauptmenüeintrage herausgefiltert, die nur im Stagingmodus angezeigt werden sollen, aber nicht aktiv sind
     const activeMenuItems = useMemo(
@@ -148,9 +172,33 @@ function MainMenuScene({ route: { key: mainMenuItemsKey } }) {
         [availableMenuItems, activeStagingMenuItems]
     );
 
+    const flexMenuItems = useMemo(
+        () => flexMainMenuEntries
+            .filter(flexMainMenuEntry => flexMainMenuEntry.language === selectedExtLanguageCode)
+            .filter(flexMainMenuEntry => flexMainMenuEntry.type === mainMenuItemsKey)
+            .map(
+                flexMainMenuEntry =>
+                ({
+                    title: flexMainMenuEntry?.title,
+                    icon: flexMainMenuEntry?.icon,
+                    ...(
+                        flexMainMenuEntry?.url
+                            ? { url: flexMainMenuEntry.url }
+                            : { view: flexMainMenuEntry?.id }
+                    )
+                })
+            ),
+        [flexMainMenuEntries, selectedExtLanguageCode, mainMenuItemsKey]
+    )
+
     return (
         <ScrollView style={styles.container}>
-            <MainMenuEntryList menuItems={activeMenuItems} />
+            <MainMenuEntryList
+                menuItems={[
+                    ...activeMenuItems,
+                    ...flexMenuItems,
+                ]}
+            />
         </ScrollView>
     );
 }

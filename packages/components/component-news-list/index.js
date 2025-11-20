@@ -112,7 +112,7 @@ export default function NewsList(props) {
                             </View>
                         }
                     />
-                    : <ActivityIndicator style={styles.activity} size="large" color={colors.primary} />
+                    : <ActivityIndicator style={styles.activity} size="large" color={colors.loadingIndicator} />
 
             }
         </View>

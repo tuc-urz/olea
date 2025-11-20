@@ -74,11 +74,10 @@ class NewsDetailComponent extends React.Component {
 
     urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
 
-    maxHeaderHeight = Dimensions.get('window').height / 2.8;
+    maxHeaderHeight;
     minHeaderHeight = 120;
-    headerScrollDistance = this.maxHeaderHeight - this.minHeaderHeight;
-
-    fontScaling = PixelRatio.getFontScale();
+    headerScrollDistance;
+    fontScaling;
 
     constructor(props) {
         super(props);
@@ -97,10 +96,15 @@ class NewsDetailComponent extends React.Component {
 
         // ------------------------------------------------------------------------
 
+        // Initialize dimension-dependent properties
+        this.maxHeaderHeight = Dimensions.get('window').height / 3.8;
+        this.headerScrollDistance = this.maxHeaderHeight - this.minHeaderHeight;
+        this.fontScaling = PixelRatio.getFontScale();
+
         this._onScroll = this._onScroll.bind(this);
 
         this.state = {
-            imageHeight: Dimensions.get('window').height / 2.8,
+            imageHeight: Dimensions.get('window').height / 3.8,
             scrollY: new Animated.Value(Platform.OS === 'ios' ? -this.maxHeaderHeight :0)
         };
     };

@@ -19,6 +19,7 @@ export default function (theme) {
         },
         titleText: {
             flex: 1,
+            lineHeight: theme.fontSizes.subtitle * 1.4,
             fontSize: theme.fontSizes.subtitle,
             marginTop: 1,
             alignSelf: 'center'

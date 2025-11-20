@@ -166,7 +166,6 @@ function TimetableViewCalendar(props) {
       setInfoMessage('');
     }
   }, [infoVisible]);
-
   const tabView = useMemo(() => {
     return (
       <TabView
@@ -204,7 +203,7 @@ function TimetableViewCalendar(props) {
             setErrorMessage('');
           }}
           autoCapitalize={timetableCodeInputFilterToUpperCase ? 'characters' : 'none'}
-          maxLength={timetableCodeInputLength ? timetableCodeInputLength : null}
+          maxLength={timetableCodeInputLength ? timetableCodeInputLength : undefined}
           contextMenuHidden={false}
         />
         <TouchableOpacity style={styles.infoIcon} onPress={() => {
@@ -213,19 +212,17 @@ function TimetableViewCalendar(props) {
           <Ionicons name="information-circle-outline" size={30} color={colors.icon} />
         </TouchableOpacity>
       </View>
-      {loading ? <ActivityIndicator size="large" color={colors.primary} /> : null}
+      {loading ? <ActivityIndicator size="large" color={colors.loadingIndicator} /> : null}
       {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
-      {
-        infoMessage
-          ? <Text
-            style={styles.infoText}
-            dataDetectorType="link"
-            selectable
-          >
-            {infoMessage}
-          </Text>
-          : null
-      }
+      {infoMessage ? (
+        <Text
+          style={styles.infoText}
+          dataDetectorType="link"
+          selectable
+        >
+          {infoMessage}
+        </Text>
+      ) : null}
 
       <TouchableOpacity
         style={styles.importButton}
@@ -286,15 +283,12 @@ function TimetableViewCalendar(props) {
       />
       {tabView}
       {formVisible && (
-        Platform.OS === 'ios' ? (
-          <KeyboardAvoidingView
-            behavior='position'
-          >
-            {renderForm()}
-          </KeyboardAvoidingView>
-        ) : (
-          renderForm()
-        )
+        <KeyboardAvoidingView
+          behavior='position'
+          keyboardVerticalOffset={Platform.OS === 'android' ? 50 : 0}
+        >
+          {renderForm()}
+        </KeyboardAvoidingView>
       )}
 
       {!formVisible && (

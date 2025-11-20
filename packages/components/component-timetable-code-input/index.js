@@ -60,7 +60,7 @@ function TimetableCodeInput(props) {
     onImportFailed,
   } = props;
 
-  const componentName = arguments.callee.name;
+  const componentName = TimetableCodeInput.name;
 
   // Einstellungen für den Stundenplan-Code
   const timetableCodeInputLength = code?.length ?? 0;
@@ -69,7 +69,7 @@ function TimetableCodeInput(props) {
   const timetableCodeInputFilterToUpperCase = timetableCodeInputFilters?.toUpperCase ?? false;
 
   const [timetableCode, saveTimetableCode] = useTimetableCode();
-  const [courses, refreshCourses] = useCourses();
+  const [, refreshCourses] = useCourses();
 
   const [timetableCodeInput, setTimetableCodeInput] = useState(timetableCode);
   const [importing, setImporting] = useState(false);
@@ -79,11 +79,11 @@ function TimetableCodeInput(props) {
     () => StyleSheet.create(componentStyles(theme)),
     [theme]
   )
-  
+
   const handleLinkPress = (url) => {
     Linking.openURL(url);
   };
-  
+
   const renderTextWithLinks = (text) => {
     const parts = text.split(/(https?:\/\/[^\s]+)/g);
     return parts.map((part, index) => {
@@ -102,7 +102,7 @@ function TimetableCodeInput(props) {
       return part;
     });
   };
-  
+
   const paragraphText = t(timetableCode ? 'timetable:inputTimetableCode' : 'timetable:notImportedYet', { timetableCodeInputLength });
 
   return (

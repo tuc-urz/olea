@@ -33,7 +33,7 @@ import IconsOpenasist from '@openasist/icons-openasist';
 import componentStyles from './styles';
 
 export default function NewsListItem({ news }) {
-    const componentName = arguments.callee.name;
+    const componentName = NewsListItem.name;
     const language = useLanguage();
     const { t } = useTranslation();
     const theme = useTheme()

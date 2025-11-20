@@ -13,7 +13,7 @@
  */
 
 import { useState, useMemo, useCallback } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, useWindowDimensions } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-paper';
 import { withTranslation } from 'react-i18next';
@@ -47,6 +47,8 @@ function CalendarWeek(props) {
     () => StyleSheet.create(componentStyles(theme)),
     [theme]
   );
+
+  const { width } = useWindowDimensions();
 
   const [courses] = useCourses();
 

@@ -86,7 +86,8 @@ export default function(theme) {
             lineHeight: theme.lineHeights.xxl
         },
         dialogContent: {
-            fontSize: theme.fontSizes.m
+            fontSize: theme.fontSizes.m,
+            color: theme.colors.text,
         },
 
     }

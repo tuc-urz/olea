@@ -84,7 +84,7 @@ const RefreshTokenReqiredNotificationIcon = 'notification_icon';
 const UserContext = createContext();
 
 function useSecureStoredState(key, initialState = null, sensitiv = false) {
-    const hookName = arguments.callee.name;
+    const hookName = useSecureStoredState.name;
 
     const [state, setState] = useState(initialState);
 
@@ -165,7 +165,7 @@ function selectLanguage(reduxState) {
 function UserContextProvider({ children }) {
     WebBrowser.maybeCompleteAuthSession();
 
-    const componentName = arguments.callee.name;
+    const componentName = UserContextProvider.name;
 
     const { t } = useTranslation();
     const language = useSelector(selectLanguage);

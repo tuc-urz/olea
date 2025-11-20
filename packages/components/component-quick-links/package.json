@@ -10,7 +10,6 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@openasist/core": "0.0.1",
-    "react-native-lightweight-responsive": "^0.0.6",
     "react-native-paper": "^5.14.5"
   }
 }

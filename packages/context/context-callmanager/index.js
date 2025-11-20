@@ -28,7 +28,7 @@ const CallManagerContext = createContext();
  * Provider for telephone context
  */
 function CallManagerContextProvider({ children }) {
-    const componentName = arguments.callee.name;
+    const componentName = CallManagerContextProvider.name;
     const theme = useTheme();
 
     // Einstellungen für API-Provider

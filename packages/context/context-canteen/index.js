@@ -192,7 +192,7 @@ function FavoriteCanteensStateReducer(state, action) {
 
 // Define a provider component for the canteen context
 function CanteenContextProvider({ children, settings, rootUrl, rootStgUrl, useStaging }) {
-    const componentName = arguments.callee.name;
+    const componentName = CanteenContextProvider.name;
 
     const reduxDispatch = useDispatch();
     const [user] = useUser();

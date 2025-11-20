@@ -41,7 +41,11 @@ export default class ScaledImageComponent extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { source: { uri: this.props.uri } };
+        this.state = {
+            source: { uri: this.props.uri },
+            width: this.props.width || undefined,
+            height: this.props.height || undefined
+        };
     }
 
     componentDidMount() {
@@ -63,6 +67,11 @@ export default class ScaledImageComponent extends React.Component {
     }
 
     render() {
+        // Don't render until dimensions are calculated
+        if (!this.state.width || !this.state.height) {
+            return <View style={this.props.style && this.props.style} />;
+        }
+
         return (
             <View style={this.props.style && this.props.style}>
                 <Image

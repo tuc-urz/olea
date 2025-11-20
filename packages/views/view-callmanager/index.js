@@ -14,12 +14,12 @@
 
 import { useState, useMemo } from 'react';
 import {
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Switch,
-  Alert,
-  RefreshControl,
+    SafeAreaView,
+    StyleSheet,
+    View,
+    Switch,
+    Alert,
+    RefreshControl,
 } from 'react-native';
 
 import { connect } from 'react-redux'
@@ -32,122 +32,117 @@ import AppbarComponent from '@openasist/component-app-bar';
 
 import componentStyles from './styles';
 
-function CallManagerView(props) {
-  const componentName = arguments.callee.name;
-  const theme = useTheme();
-  const themeStyles = theme?.themeStyles;
+export default function CallManagerView(props) {
+    const componentName = CallManagerView.name;
+    const theme = useTheme();
+    const themeStyles = theme?.themeStyles;
 
-  const { t } = useTranslation();
+    const { t } = useTranslation();
 
 
-  const styles = useMemo(
-    () => StyleSheet.create(componentStyles(theme)),
-    [theme]
-  )
+    const styles = useMemo(
+        () => StyleSheet.create(componentStyles(theme)),
+        [theme]
+    )
 
-  const [user, login, logout] = useUser();
-  const [parallelCalls, refreshParallelCalls, changeParallelCall] = useParallelCalls();
+    const [user, login, logout] = useUser();
+    const [parallelCalls, refreshParallelCalls, changeParallelCall] = useParallelCalls();
 
-  const [remoteDestinationProfilesRefreshing, setRemoteDestinationProfilesRefreshing] = useState(false);
+    const [remoteDestinationProfilesRefreshing, setRemoteDestinationProfilesRefreshing] = useState(false);
 
-  return (
-    <SafeAreaView style={themeStyles.appSafeAreaContainer}>
-      <AppbarComponent {...props}
-        title={t('menu:titles.callmanager')}
-      />
-      <View style={themeStyles.container}>
-        {
-          // Wenn ein Nutzer in der App angemeldet ist, werden dessen Parralelrufe angezeigt. Ansonsten wird der Nutzer zum Loggin aufgefordert.
-          user
-            ? <RefreshControl
-              refreshing={remoteDestinationProfilesRefreshing}
-              onRefresh={() => {
-                setRemoteDestinationProfilesRefreshing(true);
-                refreshParallelCalls()
-                  .finally(() => setRemoteDestinationProfilesRefreshing(false));
-              }}
-            >
-              <Text>
-                {t('callmanager:userInfo', { userName: user.name, userPhoneNumber: user.phone_number })}
-              </Text>
-              {
-                parallelCalls?.map?.(
-                  parallelCall => {
-                    const isActive = parallelCall?.enableMobileConnect;
+    return (
+        <SafeAreaView style={themeStyles.appSafeAreaContainer}>
+            <AppbarComponent {...props}
+                title={t('menu:titles.callmanager')}
+            />
+            <View style={themeStyles.container}>
+                {
+                    // Wenn ein Nutzer in der App angemeldet ist, werden dessen Parralelrufe angezeigt. Ansonsten wird der Nutzer zum Loggin aufgefordert.
+                    user
+                        ? <RefreshControl
+                            refreshing={remoteDestinationProfilesRefreshing}
+                            onRefresh={() => {
+                                setRemoteDestinationProfilesRefreshing(true);
+                                refreshParallelCalls()
+                                    .finally(() => setRemoteDestinationProfilesRefreshing(false));
+                            }}
+                        >
+                            <Text>
+                                {t('callmanager:userInfo', { userName: user.name, userPhoneNumber: user.phone_number })}
+                            </Text>
+                            {
+                                parallelCalls?.map?.(
+                                    parallelCall => {
+                                        const isActive = parallelCall?.enableMobileConnect;
 
-                    return (
-                      <View
-                        key={parallelCall?.destination}
-                      >
-                        <Text>
-                          {parallelCall?.destination ?? t('callmanager:numberNotDisplayable')}
-                        </Text>
-                        <Switch
-                          value={isActive}
-                          onValueChange={
-                            value =>
-                              changeParallelCall(parallelCall?.destination, { enableMobileConnect: value })
-                                .then(() => refreshParallelCalls())
-                          }
-                        />
-                      </View >
-                    )
-                  }
-                )
-              }
-              <Button
-                onPress={() => Alert.alert(
-                  t('callmanager:logout'),
-                  t('callmanager:logoutConfirmation'),
-                  [
-                    {
-                      text: t('callmanager:logoutOkButton'),
-                      onPress: () => logout?.(),
-                    },
-                    {
-                      text: t('callmanager:logoutNoButton'),
-                      isPreferred: true,
-                    }
-                  ]
-                )}
-              >
-                {t('callmanager:logout')}
-              </Button>
-            </RefreshControl>
-            : <>
-              <Text>
-                {t('callmanager:notLoggedIn')}
-              </Text>
-              <Button
-                onPress={
-                  () =>
-                    login
-                      ? login()
-                        .catch(
-                          reason => Alert.alert(
-                            t('callmanager:loginFailed'),
-                            t('callmanager:tryLoginAgain'),
-                          )
-                        )
-                      : Alert.alert(
-                        t('callmanager:connectionError'),
-                        t('callmanager:connectionErrorTryLoginAgain'),
-                      )
+                                        return (
+                                            <View
+                                                key={parallelCall?.destination}
+                                            >
+                                                <Text>
+                                                    {parallelCall?.destination ?? t('callmanager:numberNotDisplayable')}
+                                                </Text>
+                                                <Switch
+                                                    value={isActive}
+                                                    onValueChange={
+                                                        value =>
+                                                            changeParallelCall(parallelCall?.destination, { enableMobileConnect: value })
+                                                                .then(() => refreshParallelCalls())
+                                                    }
+                                                />
+                                            </View >
+                                        )
+                                    }
+                                )
+                            }
+                            <Button
+                                onPress={() => Alert.alert(
+                                    t('callmanager:logout'),
+                                    t('callmanager:logoutConfirmation'),
+                                    [
+                                        {
+                                            text: t('callmanager:logoutOkButton'),
+                                            onPress: () => logout?.(),
+                                        },
+                                        {
+                                            text: t('callmanager:logoutNoButton'),
+                                            isPreferred: true,
+                                        }
+                                    ]
+                                )}
+                            >
+                                {t('callmanager:logout')}
+                            </Button>
+                        </RefreshControl>
+                        : <>
+                            <Text>
+                                {t('callmanager:notLoggedIn')}
+                            </Text>
+                            <Button
+                                onPress={
+                                    () =>
+                                        login
+                                            ? login()
+                                                .catch(
+                                                    reason => {
+                                                        Alert.alert(
+                                                            t('callmanager:loginFailed'),
+                                                            t('callmanager:tryLoginAgain'),
+                                                        );
+                                                        console.debug(componentName, ':', 'login failed', ':', reason);
+                                                    }
+                                                )
+                                            : Alert.alert(
+                                                t('callmanager:connectionError'),
+                                                t('callmanager:connectionErrorTryLoginAgain'),
+                                            )
+                                }
+                            >
+                                {t('callmanager:logginButton')}
+                            </Button>
+                        </>
                 }
-              >
-                {t('callmanager:logginButton')}
-              </Button>
-            </>
-        }
-      </View>
-    </SafeAreaView >
-  )
+            </View>
+        </SafeAreaView >
+    )
 }
-
-const mapStateToProps = state => {
-  return {
-    settings: state.settingReducer
-  };
-};
-
-export default connect(mapStateToProps)(CallManagerView)

@@ -94,7 +94,7 @@ class WebviewComponent extends React.Component {
                     source={{uri: url}}
                     ref={ref => this.webView.ref = ref}
                     startInLoadingState={true}
-                    renderLoading={() => <ActivityIndicator style={this.styles.activity} size="large" color={colors.primary}/>}
+                    renderLoading={() => <ActivityIndicator style={this.styles.activity} size="large" color={colors.loadingIndicator}/>}
                 />
         );
     }

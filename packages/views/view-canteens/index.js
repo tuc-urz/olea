@@ -66,7 +66,7 @@ function generateDayRoutes(begin, daysToRender, language, disabledWeekdays = [])
 function CanteensAccordionHeader({ canteenId, menuDate, isExpanded, styles }) {
     const { t } = useTranslation();
     const [canteen] = useCanteen(canteenId);
-    const [menu, refreshMenu, mealAmount, filteredMealAmount, activeSelections] = useFilteredMenu(canteenId, menuDate);
+    const [, refreshMenu, mealAmount, filteredMealAmount, activeSelections] = useFilteredMenu(canteenId, menuDate);
     const { themeStyles, colors } = useTheme();
 
     useEffect(
@@ -357,7 +357,7 @@ export default function CanteensView(props) {
                                     CanteensEmptyComponent={
                                         <View>
                                             <Text>{t('canteen:notAvailable')}</Text>
-                                            <ActivityIndicator style={styles.activity} size='large' color={colors.primary} />
+                                            <ActivityIndicator style={styles.activity} size='large' color={colors.loadingIndicator} />
                                         </View>
                                     }
                                 />

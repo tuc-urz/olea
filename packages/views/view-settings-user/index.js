@@ -32,7 +32,7 @@ import componentStyles from './styles';
  * @param {Object} props - The component props.
  */
 export default function UserSettingsView(props) {
-    const componentName = arguments.callee.name;
+    const componentName = UserSettingsView.name;
     // Get theme from theme context
     const theme = useTheme();
     const { themeStyles } = theme;

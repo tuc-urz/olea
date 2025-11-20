@@ -34,7 +34,7 @@ import IconsOpenasist from '@openasist/icons-openasist';
 import componentStyles from './styles';
 
 function TimetableEventComponent(props) {
-    const componentName = arguments.callee.name;
+    const componentName = TimetableEventComponent.name;
 
     const {
         theme,

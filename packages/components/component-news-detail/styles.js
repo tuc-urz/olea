@@ -1,9 +1,8 @@
 import {Dimensions} from "react-native";
-const height = Dimensions.get('window').height;
-const width = Dimensions.get('window').width;
-
 
 export default function(theme) {
+    const height = Dimensions.get('window').height;
+    const width = Dimensions.get('window').width;
     return {
         overflow: {
             backgroundColor: theme.colors.overlayColor,

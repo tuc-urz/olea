@@ -214,7 +214,7 @@ function selectUseStagingServer(reduxState) {
  * Provider for timetable context
  */
 function TimetableContextProvider({ children }) {
-    const componentName = arguments.callee.name;
+    const componentName = TimetableContextProvider.name;
     const theme = useTheme();
     const useStagingServers = useSelector(selectUseStagingServer);
 
@@ -244,9 +244,9 @@ function TimetableContextProvider({ children }) {
     const timetableApiBaseUrl = timetableApiProviderSettings?.url ?? fallbackApiBaseUrl;
     const timetableApiUniversity = timetableApiProviderSettings?.university ?? fallbbackApiUniversity;
 
-    [timetableCode, setTimetableCode] = useState(null);
-    [courses, dispatchCourses] = useReducer(CoursesStateReducer, null);
-    [synchronizationCompleted, setSynchronizationCompleted] = useState(false);
+    const [timetableCode, setTimetableCode] = useState(null);
+    const [courses, dispatchCourses] = useReducer(CoursesStateReducer, null);
+    const [synchronizationCompleted, setSynchronizationCompleted] = useState(false);
 
     // Laden des persönlichen Stundenplancodes und speichern in timetableCode-State
     useEffect(
@@ -294,11 +294,8 @@ function TimetableContextProvider({ children }) {
     // Speichert die geänderten Courses in den Secure-Store
     useEffect(
         () => {
-            courses
-                ? AsyncStorage.setItem(TimetableCoursesStoreKey, JSON.stringify(courses))
-                    .catch(reason => console.error(componentName, ':', 'Error while safing courses in store', ':', reason))
-                : AsyncStorage.removeItem(TimetableCoursesStoreKey)
-                    .catch(reason => console.error(componentName, ':', 'Error while removing courses in store', ':', reason));
+            AsyncStorage.setItem(TimetableCoursesStoreKey, JSON.stringify(courses))
+                .catch(reason => console.error(componentName, ':', 'Error while safing courses in secure store', ':', reason));
         },
         [courses]
     );

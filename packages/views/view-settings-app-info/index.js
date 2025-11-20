@@ -13,7 +13,7 @@
  */
 
 import React from 'react';
-import {SafeAreaView, View} from 'react-native';
+import {SafeAreaView, View, Image, TouchableOpacity, Linking} from 'react-native';
 
 import {List, withTheme} from 'react-native-paper';
 import {withTranslation} from "react-i18next";
@@ -44,7 +44,7 @@ class AppInfoSettingsView extends React.Component {
     }
 
     render() {
-        const { theme: { themeStyles }, t } = this.props;
+        const { theme: { themeStyles, appSettings }, t } = this.props;
 
         return (
             <SafeAreaView style={[this.styles.container, themeStyles.appSafeAreaContainer]}>
@@ -64,6 +64,19 @@ class AppInfoSettingsView extends React.Component {
                         >
                         </List.Item>
                     </List.Section>
+
+                  {
+                    appSettings.infoBanner &&
+                      <TouchableOpacity
+                        onPress={() => Linking.openURL(appSettings.infoBannerUrl)}
+                        activeOpacity={0.7}
+                      >
+                        <Image
+                          style={this.styles.infoBanner}
+                          source={appSettings.infoBanner}
+                          resizeMode="contain" />
+                      </TouchableOpacity>
+                  }
                 </View>
             </SafeAreaView>
         );

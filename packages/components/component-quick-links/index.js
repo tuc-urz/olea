@@ -12,9 +12,9 @@
  * limitations under the License.
  */
 
-import React, { useMemo } from 'react';
-import { StyleSheet, Text, View, Linking, TouchableOpacity } from 'react-native';
-import { withTheme } from "react-native-paper";
+import { useMemo } from 'react';
+import { StyleSheet, Text, View, Linking, TouchableOpacity, useWindowDimensions } from 'react-native';
+import { withTheme, Badge } from "react-native-paper";
 import { useTranslation } from 'react-i18next';
 
 import componentStyles from "./styles"
@@ -32,16 +32,18 @@ import IconsOpenasist from "@openasist/icons-openasist";
  *  - none
  */
 function QuickLinksComponent({ theme, theme: { colors } }) {
+  const { t, i18n } = useTranslation();
+  const { width, height } = useWindowDimensions();
 
   const quicklinks = theme?.appSettings?.modules?.dashboard?.quicklinks ?? [];
-  const { t, i18n } = useTranslation();
+
   const styles = useMemo(
-    () => StyleSheet.create(componentStyles(theme)),
-    [theme]
+    () => StyleSheet.create(componentStyles(theme, width, height)),
+    [theme, width, height]
   )
 
   return (
-    // If quicklinks are in settings.js defined return content, otherwise return nothing to render 
+    // If quicklinks are in settings.js defined return content, otherwise return nothing to render
     Array.isArray(quicklinks) && quicklinks.length > 0
       ?
       <View style={styles.container}>
@@ -72,6 +74,7 @@ function QuickLinksComponent({ theme, theme: { colors } }) {
                 const accessibilityTitle = i18n.exists(quicklink?.accessibilityTitle) ? t(quicklink?.accessibilityTitle) : title;
                 const icon = quicklink?.icon;
                 const url = i18n.exists(quicklink?.url) ? t(quicklink?.url) : quicklink?.url;
+                const badgeContent = quicklink?.badgeContent?.();
 
                 return (
                   <TouchableOpacity
@@ -97,6 +100,18 @@ function QuickLinksComponent({ theme, theme: { colors } }) {
                           {title}
                         </Text>
                       </View>
+                    </View >
+                    <View style={styles.badgeContainer}>
+                      <Badge
+                        visible={
+                          badgeContent
+                            ? true
+                            : false
+                        }
+                        style={styles.badge}
+                      >
+                        {badgeContent}
+                      </Badge>
                     </View>
                   </TouchableOpacity>
                 )

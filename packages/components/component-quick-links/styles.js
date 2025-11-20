@@ -1,9 +1,7 @@
-import Responsive from 'react-native-lightweight-responsive';
+export default function (theme, width, height) {
 
-const width = Responsive.width(75);
-const height = Responsive.width(75);
+  const roundButtonWidth = width / 5;
 
-export default function (theme) {
   return {
     container: {
       flex: 1,
@@ -23,16 +21,24 @@ export default function (theme) {
       textTransform: 'uppercase'
     },
     roundButtons: {
-      width: width,
-      height: height,
-      borderRadius: width / 2,
+      width: roundButtonWidth,
+      height: roundButtonWidth,
+      borderRadius: roundButtonWidth / 2,
       backgroundColor: theme.colors.quicklinksBackground,
       justifyContent: "center",
       alignItems: "center"
     },
+    badgeContainer: {
+      position: 'absolute',
+      width: roundButtonWidth,
+    },
+    badge: {
+      backgroundColor: 'red',
+    },
     quicklinkLabel: {
       color: theme.colors.primaryText,
       fontSize: theme.fontSizes.s,
+      lineHeight: theme.fontSizes.subtitle * 1.1,
       textAlign: 'center',
     },
   }

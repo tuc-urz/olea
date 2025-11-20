@@ -230,7 +230,7 @@ function Meal({ settings, meal, priceGroupCode, priceGroupName }) {
 }
 
 function MensaMenu(props) {
-    const componentName = arguments.callee.name;
+    const componentName = MensaMenu.name;
 
     const { t } = useTranslation();
     const { canteenId, menuDate, settings } = props;

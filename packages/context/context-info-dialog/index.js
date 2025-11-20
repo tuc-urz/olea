@@ -51,7 +51,7 @@ const InfoContext = createContext();
  * Provider for info dialog context
  */
 export default function InfoContextProvider({ children }) {
-    const componentName = arguments.callee.name;
+    const componentName = InfoContextProvider.name;
     const theme = useTheme();
     const isStagingServerActive = useStagingServer();
     const language = useLanguage();

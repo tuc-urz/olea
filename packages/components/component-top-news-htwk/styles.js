@@ -1,10 +1,9 @@
 import {Platform, Dimensions} from "react-native";
 
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
-const headerImageHeight = height / 2;
-
 export default function(theme) {
+    const width = Dimensions.get('window').width;
+    const height = Dimensions.get('window').height;
+    const headerImageHeight = height / 2;
     return {
         appHeader: {
             flex: 1,

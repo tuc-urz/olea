@@ -73,9 +73,14 @@ export default function NewsTabBarView(props) {
                 title={t('news:feeds')}
             />
             <View style={themeStyles.container}>
-                {
-                    Array.isArray(newsTabRoutes)
-                        ? newsTabRoutes.length
+              {
+                    !Array.isArray(newsTabRoutes)
+                      ?  <ActivityIndicator
+                          style={styles.activity}
+                          size="large"
+                          color={colors.loadingIndicator}
+                        />
+                      : newsTabRoutes.length
                             ? newsTabRoutes.length === 1
                                 ? <View style={styles.screenView} >
                                     <View style={styles.tabHeaderView} >
@@ -152,11 +157,6 @@ export default function NewsTabBarView(props) {
                                     {t('news:noResult')}
                                 </Text>
                             </View>
-                        : <ActivityIndicator
-                            style={styles.activity}
-                            size="large"
-                            color={colors.loadingIndicator}
-                        />
                 }
             </View>
         </SafeAreaView>

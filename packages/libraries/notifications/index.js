@@ -233,13 +233,13 @@ export default class OpenASiSTNotifications {
             }
         }
 
+
         await notifee.displayNotification({
             id,
             title,
 
             // By default notifee supports basic HTML tags and removes unsupported ones, but we need to replace the escaped characters
-            body: desc.replace(/&lt;/g, '<')
-                      .replace(/&gt;/g, '>'),
+            body: desc,
             data: {
                 notificationId: id,
                 payload

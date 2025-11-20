@@ -157,7 +157,7 @@ function EventList({ items: events = [], styles }) {
  * @param props beinhaltet styles, themes und weitere props
  */
 function EventTimeslotList() {
-  const componentName = arguments.callee.name;
+  const componentName = EventTimeslotList.name;
   const theme = useTheme();
   const [events, refreshEvents] = useEvents();
 
@@ -188,7 +188,7 @@ function EventTimeslotList() {
 
   useEffect(
     () => {
-      refreshEvents
+      refreshEvents();
     },
     [refreshEvents]
   );
@@ -211,13 +211,13 @@ function EventTimeslotList() {
       </View>
     : <View style={styles.content}>
       <Text>{t('canteen:notAvailable')}</Text>
-      <ActivityIndicator style={styles.activity} size='large' color={theme.colors.primary} />
+      <ActivityIndicator style={styles.activity} size='large' color={theme.colors.loadingIndicator} />
     </View>
 
 }
 
 function SelectedEventList() {
-  const componentName = arguments.callee.name;
+  const componentName = SelectedEventList.name;
   const theme = useTheme();
 
   const [personalEvents, refreshPersonalEvents] = usePersonalEvents();

@@ -1,0 +1,19 @@
+{
+  "name": "@openasist/context-flex-menu",
+  "version": "0.0.1",
+  "description": "Context for flex menu",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "context",
+    "flex-menu"
+  ],
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@openasist/base-api-provider": "0.0.1"
+  }
+}

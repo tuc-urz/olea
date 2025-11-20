@@ -45,7 +45,7 @@ import componentStyles from './styles';
  *  - none
  */
 export default function CourseInfoComponent(props) {
-    const componentName = arguments.callee.name;
+    const componentName = CourseInfoComponent.name;
     const theme = useTheme();
     const { colors } = theme;
     const { t } = useTranslation();

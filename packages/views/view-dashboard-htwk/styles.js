@@ -1,7 +1,7 @@
 import {Dimensions} from 'react-native';
-const width = Dimensions.get('window').width;
 
 export default function(theme) {
+    const width = Dimensions.get('window').width;
     return {
         container: {
             flex: 1,

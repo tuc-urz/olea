@@ -49,10 +49,10 @@ export function MealItemComponent({ meal, canteenId, menuDate, settings }) {
 
     let title = meal.title.replace(regex, '');
     let isShorted = false;
-    if(title.length > 63 && !this.isBigFont) {
+    if(title.length > 63 && !isBigFont) {
         isShorted = true;
         title = title.slice(0, 60);
-    } else if (title.length > 38 && this.isBigFont) {
+    } else if (title.length > 38 && isBigFont) {
         isShorted = true;
         title = title.slice(0, 35);
     }

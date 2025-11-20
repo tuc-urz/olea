@@ -33,8 +33,6 @@ import PropTypes            from "prop-types";
 import {withTranslation}     from "react-i18next";
 import {handleHtmlEntities} from "@openasist/core/helper/format.helper";
 
-const height = Dimensions.get('window').height;
-
 
 
 /**
@@ -80,6 +78,7 @@ class TopNewsComponent extends React.Component {
         this.styles = StyleSheet.create(this.styles);
         // ------------------------------------------------------------------------
 
+        const height = Dimensions.get('window').height;
 
         this.animateHeader = {
             transform: [{
