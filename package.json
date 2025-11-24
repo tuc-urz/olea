@@ -1,5 +1,5 @@
 {
-  "name": "@openasist/container",
+  "name": "@olea-bps/container",
   "version": "",
   "private": true,
   "author": "codeculture<info@codeculture.de>",
@@ -7,8 +7,8 @@
   "workspaces": [
     "apps/*",
     "packages/libraries/*",
-    "packages/views/*",
-    "packages/components/*",
+    "packages/views",
+    "packages/components",
     "packages/context/*"
   ]
 }

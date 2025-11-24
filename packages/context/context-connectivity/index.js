@@ -57,7 +57,7 @@ export function ConnectivityContextProvider({ children }) {
  * @returns {boolean} Der Connectivity-Kontext.isConnected.
  * @returns {boolean} Der Connectivity-Kontext.isInternetReachable.
  * @example
- * import { useConnectivityContext } from '@openasist/context-connectivity';
+ * import { useConnectivityContext } from '@olea-bps/context-connectivity';
  *
  * function MyComponent() {
  *    const { isConnected, isInternetReachable } = useConnectivityContext();
@@ -73,7 +73,7 @@ export function useConnectivityContext() {
  * @returns {boolean} return[0] - Gibt an, ob das Gerät mit dem Netzwerk verbunden ist.
  * @returns {boolean} return[1] - Gibt an, ob das Internet erreichbar ist.
  * @example
- * import { useNetInfo } from '@openasist/context-connectivity';
+ * import { useNetInfo } from '@olea-bps/context-connectivity';
  *
  * function MyComponent() {
  *    const [isConnected, isInternetReachable] = useNetInfo();

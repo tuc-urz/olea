@@ -2,7 +2,7 @@ import { useContext, createContext, useMemo, useCallback, useEffect } from 'reac
 
 import { useTheme } from 'react-native-paper';
 
-import { useSecureStoredState } from '@openasist/stored-state';
+import { useSecureStoredState } from '@olea-bps/stored-state';
 
 import AsistServerClient from './AsistServerClient';
 
@@ -133,7 +133,11 @@ export default function EventContextProvider({ children }) {
  * @returns {object} Eventkontext
  */
 export function useEventContext() {
-    return useContext(EventContext);
+    const context = useContext(EventContext);
+    if (context === null) {
+        throw new Error('useEventContext must be used within an EventContextProvider');
+    }
+    return context;
 }
 
 /**

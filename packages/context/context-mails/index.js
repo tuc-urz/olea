@@ -17,8 +17,8 @@ import { AppState } from 'react-native';
 
 import { useTheme } from 'react-native-paper';
 
-import { useLanguage, useStagingServer } from '@openasist/core';
-import { useAccessToken } from '@openasist/context-user';
+import { useLanguage, useStagingServer } from '@olea-bps/core';
+import { useAccessToken } from '@olea-bps/context-user';
 
 import MailService, { useUnreadEmailCount as syncUnreadEmailCount } from './MailService';
 

@@ -1,11 +1,11 @@
-declare module '@openasist/redux-offline/lib/defaults' {
-  import { Config } from '@openasist/redux-offline/lib/types';
+declare module '@olea-bps/redux-offline/lib/defaults' {
+  import { Config } from '@olea-bps/redux-offline/lib/types';
 
   const config: Config;
   export default config;
 }
 
-declare module '@openasist/redux-offline/lib/types' {
+declare module '@olea-bps/redux-offline/lib/types' {
   export interface ResultAction {
     meta: {
       completed: boolean;
@@ -113,7 +113,7 @@ declare module '@openasist/redux-offline/lib/types' {
   }
 }
 
-declare module '@openasist/redux-offline/lib/constants' {
+declare module '@olea-bps/redux-offline/lib/constants' {
   export const DEFAULT_ROLLBACK: string;
   export const DEFAULT_COMMIT: string;
   export const JS_ERROR: string;
@@ -126,10 +126,10 @@ declare module '@openasist/redux-offline/lib/constants' {
   export const OFFLINE_STATUS_CHANGED: string;
 }
 
-declare module '@openasist/redux-offline' {
+declare module '@olea-bps/redux-offline' {
   import { createStore as createReduxStore, Store, StoreEnhancer, Dispatch, Middleware } from 'redux';
 
-  import { Config } from '@openasist/redux-offline/lib/types';
+  import { Config } from '@olea-bps/redux-offline/lib/types';
 
   export const offline: (userConfig: Partial<Config>) => (createStore: typeof createReduxStore) =>
     <T extends { [key: string]: any }>(

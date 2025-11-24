@@ -4,7 +4,7 @@
  *
  */
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { RESET_STATE } from '@openasist/redux-offline/src/constants';
+import { RESET_STATE } from '@olea-bps/redux-offline/src/constants';
 
 import {store} from '../redux/store';
 import {updateFeeds, updateTopNews} from '../api/feed';

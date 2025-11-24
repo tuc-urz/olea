@@ -1,11 +1,16 @@
 {
-  "name": "@openasist/context-user",
-  "version": "0.0.1",
+  "name": "@olea-bps/context-user",
+  "version": "1.0.0",
   "description": "Context for user infos",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tuc-urz/olea.git",
+    "directory": "packages/context/context-user"
   },
   "keywords": [
     "context",
@@ -13,10 +18,20 @@
   ],
   "author": "",
   "license": "Apache-2.0",
+  "files": [
+    "index.js",
+    "package.json",
+    "LICENSE",
+    "README.md"
+  ],
   "dependencies": {
     "expo-auth-session": "~6.2.1",
     "expo-crypto": "~14.1.4",
     "jwt-decode": "4.0.0",
     "expo-web-browser": "~14.2.0"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-native": "^0.81.0"
   }
 }

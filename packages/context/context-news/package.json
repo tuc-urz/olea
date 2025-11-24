@@ -1,16 +1,28 @@
 {
-  "name": "@openasist/context-news",
-  "version": "0.0.1",
+  "name": "@olea-bps/context-news",
+  "version": "1.0.2",
   "description": "Context for news",
   "main": "index.js",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tuc-urz/olea.git",
+    "directory": "packages/context/context-news"
+  },
   "keywords": [
     "context",
     "news"
   ],
   "author": "",
   "license": "Apache-2.0",
+  "files": [
+    "index.js",
+    "CollektorVersion2ApiProvider.js",
+    "package.json",
+    "LICENSE",
+    "README.md"
+  ],
   "dependencies": {
-    "@openasist/base-api-provider": "^0.0.1"
+    "@olea-bps/base-api-provider": "^1.0.0"
   }
 }

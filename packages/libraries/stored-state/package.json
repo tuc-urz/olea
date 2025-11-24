@@ -1,12 +1,23 @@
 {
-  "name": "@openasist/stored-state",
-  "version": "0.0.1",
+  "name": "@olea-bps/stored-state",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tuc-urz/olea.git",
+    "directory": "packages/libraries/stored-state"
+  },
   "author": "",
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "files": [
+    "index.js",
+    "package.json",
+    "LICENSE",
+    "README.md"
+  ]
 }

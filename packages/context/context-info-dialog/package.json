@@ -1,11 +1,16 @@
 {
-  "name": "@openasist/context-info-dialog",
-  "version": "0.0.1",
+  "name": "@olea-bps/context-info-dialog",
+  "version": "1.0.2",
   "description": "Context for info dialog",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tuc-urz/olea.git",
+    "directory": "packages/context/context-info-dialog"
   },
   "keywords": [
     "context",
@@ -13,7 +18,15 @@
   ],
   "author": "",
   "license": "Apache-2.0",
+  "files": [
+    "index.js",
+    "CollektorVersion2ApiProvider.js",
+    "ProviderErrors.js",
+    "package.json",
+    "LICENSE",
+    "README.md"
+  ],
   "dependencies": {
-    "@openasist/base-api-provider": "0.0.1"
+    "@olea-bps/base-api-provider": "^1.0.0"
   }
 }

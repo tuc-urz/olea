@@ -16,7 +16,7 @@ import React from 'react';
 import messaging from '@react-native-firebase/messaging';
 
 import notifee, { AndroidStyle, EventType } from '@notifee/react-native';
-import { feedApi, RootNavigation, store, updateFeeds } from "@openasist/core";
+import { feedApi, RootNavigation, store, updateFeeds } from "@olea-bps/core";
 import SubscriberService from './services/subscriber.service'
 
 export default class OpenASiSTNotifications {

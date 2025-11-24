@@ -3,7 +3,7 @@ import { createContext, useState, useEffect, useContext, useMemo, useCallback } 
 import { useTheme } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { useStagingServer } from "@openasist/core";
+import { useStagingServer } from "@olea-bps/core";
 
 import CollectorVersion2ApiProvider from './CollectorVersion2ApiProvider'
 

@@ -1,18 +1,34 @@
 {
-  "name": "@openasist/notifications",
-  "version": "0.0.1",
+  "name": "@olea-bps/notifications",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tuc-urz/olea.git",
+    "directory": "packages/libraries/notifications"
+  },
   "author": "codeculture <development@codeculture.de>",
   "license": "Apache-2.0",
+  "files": [
+    "index.js",
+    "package.json",
+    "LICENSE",
+    "README.md",
+    "services/**/*"
+  ],
   "dependencies": {
     "@notifee/react-native": "^9.1.8",
     "@react-native-firebase/app": "^22.2.0",
     "@react-native-firebase/messaging": "^22.2.0",
     "@novu/client": "^2.6.6",
     "react-native-uuid": "^2.0.3"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-native": "^0.81.0"
   }
 }

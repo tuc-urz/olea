@@ -9,7 +9,7 @@ import { I18nextProvider } from 'react-i18next';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider as ReduxProvider } from 'react-redux'
 
-import {store, onSettingAPI} from '@openasist/core'
+import {store, onSettingAPI} from '@olea-bps/core'
 
 import settings from './constants/Settings';
 import i18n from './i18n/i18n';
@@ -24,7 +24,7 @@ Sentry.init({
     tracesSampleRate: 1.0, // Adjust in production as neede0d
 });
 // Example Plugin
-//import TopNewsPlugin from '@openasist/plugin-top-news';
+//import TopNewsPlugin from '@olea-bps/plugin-top-news';
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();

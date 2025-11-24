@@ -1,11 +1,16 @@
 {
-  "name": "@openasist/context-mails",
-  "version": "0.0.1",
+  "name": "@olea-bps/context-mails",
+  "version": "1.0.2",
   "description": "Context for mails",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tuc-urz/olea.git",
+    "directory": "packages/context/context-mails"
   },
   "keywords": [
     "context",
@@ -13,7 +18,15 @@
   ],
   "author": "",
   "license": "Apache-2.0",
+  "files": [
+    "index.js",
+    "TucUnseenApiProvider.js",
+    "MailService.js",
+    "package.json",
+    "LICENSE",
+    "README.md"
+  ],
   "dependencies": {
-    "@openasist/base-api-provider": "0.0.1"
+    "@olea-bps/base-api-provider": "^1.0.0"
   }
 }
