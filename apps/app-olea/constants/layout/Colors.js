@@ -1,4 +1,15 @@
-import color from "color";
+// Helper function to add alpha to a color
+const addAlpha = (hexColor, alpha) => {
+    // Remove # if present
+    const hex = hexColor.replace('#', '');
+
+    // Parse RGB values
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
 
 export const colors = {
     black: '#000000',
@@ -6,7 +17,7 @@ export const colors = {
     grayLight1: '#d8d8d8',
     grayLight2: '#ddd',
     grayLight3: '#fefefe',
-    grayLight4: color('#BEC3C6').alpha(0.4).rgb().string(),
+    grayLight4: addAlpha('#BEC3C6', 0.4),
     grayLight5: '#F5F5F5',
     grayDark1: '#545454',
     grayDark2: '#3d3d3d',
@@ -33,9 +44,9 @@ export const colors = {
 
 const mensaShadow = [
     colors.grayLight4,
-    color(colors.grayLight4).alpha(0.3).rgb().string(),
-    color(colors.grayLight4).alpha(0.1).rgb().string(),
-    color(colors.grayLight4).alpha(0.05).rgb().string()
+    addAlpha('#BEC3C6', 0.12),  // 0.4 * 0.3 = 0.12
+    addAlpha('#BEC3C6', 0.04),  // 0.4 * 0.1 = 0.04
+    addAlpha('#BEC3C6', 0.02)   // 0.4 * 0.05 = 0.02
 ];
 
 
@@ -55,13 +66,13 @@ export const tabColorsHighContrast = {
 
 };
 export const priceTableColors = {
-    col1Background: color(colors.primary).alpha(1).rgb().string(),
-    col2Background: color(colors.primary).alpha(0.8).rgb().string(),
-    col3Background: color(colors.primary).alpha(0.6).rgb().string(),
+    col1Background: addAlpha(colors.primary, 1),
+    col2Background: addAlpha(colors.primary, 0.8),
+    col3Background: addAlpha(colors.primary, 0.6),
     col1Text: colors.black,
     col2Text: colors.black,
     col3Text: colors.black,
-    disabled: color(colors.primary).alpha(0.2).rgb().string(),
+    disabled: addAlpha(colors.primary, 0.2),
     opacity: .4
 };
 export const priceTableColorsHighContrast = {
@@ -115,23 +126,11 @@ export const themeColors = {
     categoryBadgeColor: colors.grayDark1,
     bookHoldingBackgroundColor: colors.grayLight5,
     bookHoldingColor: colors.primary,
-    disabled: color(colors.black)
-    .alpha(0.26)
-    .rgb()
-    .string(),
-    placeholder: color(colors.black)
-    .alpha(0.54)
-    .rgb()
-    .string(),
-    backdrop: color(colors.black)
-    .alpha(0.5)
-    .rgb()
-    .string(),
+    disabled: addAlpha(colors.black, 0.26),
+    placeholder: addAlpha(colors.black, 0.54),
+    backdrop: addAlpha(colors.black, 0.5),
     notification: colors.accent,
-    overlayColor: color(colors.primary)
-        .alpha(0.47)
-        .rgb()
-        .string(),
+    overlayColor: addAlpha(colors.primary, 0.47),
     tabs: tabColors,
     topNewsIconBackground: colors.accent,
     messages: messageColors,
@@ -150,10 +149,7 @@ export const themeColors = {
     lecturerNameText: colors.grayDark2,
     buttonText: colors.black,
     buttonBackground: colors.primary,
-    tapeColor: color(colors.primary)
-            .alpha(0.7)
-            .rgb()
-            .string(),
+    tapeColor: addAlpha(colors.primary, 0.7),
     jobsTitleColor: colors.black,
     textInput: colors.black,
     textInputSelection: colors.grayDark3,
@@ -173,10 +169,7 @@ export const themeColorsHighContrast = {
     iconSubtitle: colors.grayDark1,
     priceTable: priceTableColorsHighContrast,
     textLighter: colors.accent,
-    overlayColor: color(colors.primary)
-        .alpha(0.65)
-        .rgb()
-        .string(),
+    overlayColor: addAlpha(colors.primary, 0.65),
     appbarSubtitle: colors.accent,
     eventContainerBackground: colors.primary,
     eventContainerSidebar: colors.primary,
