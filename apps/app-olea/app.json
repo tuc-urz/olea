@@ -102,14 +102,6 @@
       "expo-localization",
       "expo-secure-store",
       [
-        "@sentry/react-native/expo",
-        {
-          "organization": "codeculture",
-          "project": "oa-olea",
-          "url": "https://sentry.codeculture.de/"
-        }
-      ],
-      [
         "expo-build-properties",
         {
           "android": {
