@@ -26,7 +26,7 @@ import {withTranslation} from "react-i18next";
 import merge from 'lodash/merge';
 
 
-import { AppBar as AppbarComponent } from '@olea-bps/components';
+import AppbarComponent from '../AppBar';
 import IconsOpenasist from "@olea-bps/icons-openasist";
 
 import componentStyles from "./styles";

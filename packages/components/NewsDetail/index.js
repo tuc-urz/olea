@@ -38,7 +38,7 @@ import WebViewAutoHeight from '@olea-bps/react-native-webview-autoheight';
 
 
 import componentStyles from "./styles"
-import { AppBar as AppbarComponent } from '@olea-bps/components';
+import AppbarComponent from '../AppBar';
 import {selectFeedById} from "@olea-bps/core/redux/reducers/api";
 
 

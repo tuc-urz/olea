@@ -33,7 +33,7 @@ import {withTranslation} from "react-i18next";
 import merge from 'lodash/merge';
 
 import componentStyles from "./styles"
-import { AppBar as AppbarComponent } from '@olea-bps/components';
+import AppbarComponent from '../AppBar';
 
 
 /**

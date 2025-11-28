@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-import { useState, useMemo, useCallback } from 'react';
+import { useMemo, useCallback } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, useWindowDimensions } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-paper';
@@ -23,7 +23,6 @@ import CalendarStrip from 'react-native-calendar-strip';
 import { DateTime, Duration } from 'luxon';
 import { TabView } from 'react-native-tab-view';
 import { onUpdateRefreshing } from '@olea-bps/core';
-import { CourseDetailDialog } from '@olea-bps/components';
 import moment from 'moment';
 import 'moment/locale/de';
 

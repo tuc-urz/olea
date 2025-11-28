@@ -11,7 +11,7 @@ import { Webviews as WebviewsView } from '@olea-bps/views';
 import { Modal as ModalComponent } from '@olea-bps/components';
 import { CourseDetail as CourseDetailComponent } from '@olea-bps/components';
 import { Jobs as JobPortalView } from '@olea-bps/views';
-import { JobsFilter as JobFilterComponent } from '@olea-bps/components';
+import { ComponentJobsFilter as JobFilterComponent } from '@olea-bps/components';
 import TabBarIcon                   from "../tabBarIcon";
 import { SettingsAppInfo as AppInfoSettingsView } from '@olea-bps/views';
 import { TimetableCalendar as TimetableCalendarView } from '@olea-bps/views';

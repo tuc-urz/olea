@@ -27,11 +27,11 @@ import merge from 'lodash/merge';
 import unescape from 'lodash/unescape';
 import uniqBy from 'lodash/uniqBy';
 import {libraryApi} from '@olea-bps/core';
+import {handleHtmlEntities} from "@olea-bps/core/helper/format.helper";
 
 
 import componentStyles from "./styles"
-import { AppBar as AppbarComponent } from '@olea-bps/components';
-import {handleHtmlEntities} from "@olea-bps/core/helper/format.helper";
+import AppbarComponent from '../AppBar';
 
 
 class BookDetailComponent extends React.Component {

@@ -1,6 +1,6 @@
 {
   "name": "@olea-bps/views",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Consolidated views for OLEA",
   "main": "index.js",
   "repository": {
@@ -28,19 +28,18 @@
     "@olea-bps/context-callmanager": "^1.0.0",
     "@olea-bps/context-news": "^1.0.0",
     "@olea-bps/context-flex-menu": "^1.0.0",
-    "react-native-webview": "13.15.0",
+    "@olea-bps/components": "^1.0.0",
+    "@olea-bps/icons-openasist": "^1.0.0",
+    "react-native-webview": "13.16.0",
     "@react-navigation/drawer": "^7.3.12",
     "@react-navigation/native": "^7.1.9",
     "react-native-elements": "^3.4.3",
     "react-native-modalbox": "^2.0.2",
     "react-native-vector-icons": "^10.2.0",
     "react-native-tab-view": "^4.1.3",
-    "@olea-bps/icons-openasist": "^1.0.0",
     "expo-application": "^6.1.5",
     "moment": "^2.29.4",
-    "react-native-swipe-gestures": "^1.0.5",
-    "@olea-bps/views": "^1.0.0",
-    "@olea-bps/components": "^1.0.0"
+    "react-native-swipe-gestures": "^1.0.5"
   },
   "peerDependencies": {
     "react": "^19.0.0",

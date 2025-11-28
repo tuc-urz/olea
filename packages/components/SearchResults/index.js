@@ -29,11 +29,11 @@ import {store} from '@olea-bps/core';
 
 import componentStyles from "./styles"
 import IconsOpenasist from "@olea-bps/icons-openasist";
-import { BookDetail as BookDetailComponent } from '@olea-bps/components';
-import { ContactDetail as ContactDetailComponent } from '@olea-bps/components';
-import { RoomDetail as RoomDetailComponent } from '@olea-bps/components';
-import { NewsDetail as NewsDetailComponent } from '@olea-bps/components';
 import {handleHtmlEntities} from "@olea-bps/core/helper/format.helper";
+import ContactDetailComponent from '../ContactDetail';
+import RoomDetailComponent from '../RoomDetail';
+import NewsDetailComponent from '../NewsDetail';
+import BookDetailComponent from '../BookDetail';
 
 
 
@@ -142,7 +142,7 @@ class SearchResultsComponent extends React.Component {
             key = item.bookId;
             title = unescape(item.title);
             subtitle = `${item.format || ''}${item.format && item.available ? ' | ' : ''}${item.available ? t('books:available') : t('books:notAvailable')}`;
-            
+
 
             // Contacts
         } else if(item.firstName && item.lastName)  {

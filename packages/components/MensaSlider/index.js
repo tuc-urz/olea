@@ -22,7 +22,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 
 import { DateTime } from 'luxon';
 
-import { MealItem as MealItemComponent } from '@olea-bps/components';
+import MealItemComponent from '../MealItem';
 import { toIsoDateString } from '@olea-bps/core/helper/date';
 
 import { useCanteen, useFilteredMenu, useFavoriteCanteens } from '@olea-bps/context-canteen';
@@ -136,7 +136,7 @@ function MensaSliderComponent(props) {
 
     const todayDateTime = new Date();
     const todayDateString = toIsoDateString(todayDateTime);
-    
+
     const formattedDate = DateTime
         .fromJSDate(todayDateTime)
         .setLocale(settings.settingsGeneral.language)

@@ -23,7 +23,7 @@ import concat from "lodash/concat";
 import merge from 'lodash/merge';
 
 import {onSettingPtsStationOverride, store} from "@olea-bps/core";
-import { PtsDeparture as PtsDepartureComponent } from '@olea-bps/components';
+import PtsDepartureComponent from '../PtsDeparture';
 import IconsOpenasist from "@olea-bps/icons-openasist";
 
 import componentStyles from "./styles"
