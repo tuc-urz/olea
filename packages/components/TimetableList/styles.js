@@ -19,7 +19,6 @@ export default function (theme) {
             width: "15%",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: theme.colors.background
         },
         courseTimeContainerBigFont: {
             width: "25%",
@@ -37,7 +36,6 @@ export default function (theme) {
             flexDirection: "column",
             paddingLeft: theme.paddings.small,
             width: "85%",
-            backgroundColor: theme.colors.background,
             paddingTop: theme.paddings.xsmall,
             paddingBottom: theme.paddings.xsmall
         },
@@ -76,7 +74,6 @@ export default function (theme) {
         otherCourseContainer: {
             padding: theme.paddings.xsmall,
             width: "100%",
-            backgroundColor: theme.colors.background
         },
         btnPosition: {
             position: 'absolute',

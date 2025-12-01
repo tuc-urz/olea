@@ -148,7 +148,7 @@ function TimetableViewList(props) {
     [theme]
   )
 
-  const otherCourses = courses?.filter?.(course => course?.times?.some(courseTime => courseTime?.dayOfWeek === 0));
+  const otherCourses = courses[undefined];
   const activeTabDate = daysTabViewRoutes[daysTabViewActiveRouteIndex]?.date;
   const activeTabWeek = activeTabDate.weekNumber;
 
@@ -165,7 +165,8 @@ function TimetableViewList(props) {
             }
           });
       },
-      [])
+      []
+    )
   )
 
   /*

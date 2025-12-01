@@ -4,7 +4,13 @@ import { TimetableNotFoundError } from './ProviderErrors';
 /**
  * API-Client for Kollektor
  */
-export default class CollektorVersion2ApiProvider extends HttpApiProvider {
+export default class CollectorVersion2ApiProvider extends HttpApiProvider {
+
+    /**
+     * Name des Providers
+     * @type {string}
+     */
+    static name = 'hs-collector-v2';
 
     /**
      * @param {string} baseUrl - URL which is used as the basis for the query URLs.
@@ -72,11 +78,25 @@ export default class CollektorVersion2ApiProvider extends HttpApiProvider {
      * Creates a CollektorVersion2ApiProvider instance initialised to a list of standard languages, where the mainLanguage parameter specifies the mainLanguage.
      * @param {string} baseUrl - URL which is used as the basis for the query URLs.
      * @param {string} mainLanguage - Main language which is prioritised.
-     * @returns {CollektorVersion2ApiProvider} Created CollectorVersion2ApiProvider instance.
+     * @returns {CollectorVersion2ApiProvider} Created CollectorVersion2ApiProvider instance.
      */
     static from(baseUrl, mainLanguage = 'de') {
-        const acceptingLanguages = CollektorVersion2ApiProvider.languagesFromMainLanguages(mainLanguage);
+        const acceptingLanguages = CollectorVersion2ApiProvider.languagesFromMainLanguages(mainLanguage);
 
-        return new CollektorVersion2ApiProvider(baseUrl, acceptingLanguages);
+        return new CollectorVersion2ApiProvider(baseUrl, acceptingLanguages);
+    }
+
+    /**
+     * Erstellt eine CollektorVersion2ApiProvider-Instanz, welche Englisch und Deutsch initialisiert wird.
+     * Die priorisierte Hauptsprache kann als Paramter übergeben werden.
+     *
+     * @param {object} settingsObject Objekt mit Providereinstellungen
+     * @param {string} [mainLanguage='de'] Hauptsprache, welche priorisiert wird.
+     * @returns {CollectorVersion2ApiProvider} Erstellte CollektorVersion2ApiProvider-Instanz
+     */
+    static fromSettingsObject(settingsObject, mainLanguage = 'de') {
+        const { url } = settingsObject;
+
+        return CollectorVersion2ApiProvider.from(url, mainLanguage);
     }
 }

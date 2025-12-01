@@ -127,35 +127,44 @@ function TimetableViewCalendar(props) {
   // Unter verwendung von Luxon wird eine Liste der Monatsnamen generiert, dabei wird die eingestellte Sprache berücksichtigt
   const months = moment.months();
 
-  const handleImportButtonPress = async () => {
+  const handleImportButtonPress = () => {
     setLoading(true);
     setErrorMessage('');
     setInfoMessage('');
-    await saveTimetableCode(
+
+    saveTimetableCode(
       // Falls Filter eingestellt sind, werden diese nacheinander auf den Stundenplancode angewendet
       timetableCodeInputPreSaveFilters.reduce(
         (currentTimetableCode, preSaveFilter) => preSaveFilter?.(currentTimetableCode) ?? currentTimetableCode,
         timetableCodeInput
       )
+    )
+        .then(
+            () => {
+              const now = DateTime.now();
+              const startDate = now.startOf('week');
+              const endDate = now.endOf('week');
+              return refreshCourses(startDate.toISODate(), endDate.toISODate())
+                  .then(
+                      () => {
+                        setFormVisible(false);
+                        setLoading(false);
+                      }
+                  );
+            }
+        ).catch(
+        (error) => {
+          if (error instanceof TimetableNotFoundError) {
+            setErrorMessage(t('timetable:codeNotFoundError', { timetableCode: timetableCodeInput }));
+            setLoading(false);
+          } else {
+            console.error(TimetableViewCalendar.name, ':', 'can´t import timetable code', timetableCode, ':', error);
+            setErrorMessage(t('timetable:importError'));
+          }
+        }
+    ).finally(
+        () => setLoading(false)
     );
-    const copyToday = new Date(today);
-    const startDate = new Date(copyToday.setDate(copyToday.getDate() - 30));
-    const endDate = new Date(copyToday.setDate(copyToday.getDate() + 151));
-    await refreshCourses(startDate.toISOString().split('T')[0], endDate.toISOString().split('T')[0])
-      .then(() => {
-        setFormVisible(false);
-        setLoading(false);
-      })
-      .catch((error) => {
-        if (error instanceof TimetableNotFoundError) {
-          setErrorMessage(t('timetable:codeNotFoundError', { timetableCode: timetableCodeInput }));
-          setLoading(false);
-        }
-        else {
-          setErrorMessage(t('timetable:importError'));
-          setLoading(false);
-        }
-      });
   };
 
   useEffect(() => {
@@ -299,18 +308,12 @@ function TimetableViewCalendar(props) {
           <Ionicons name="add-outline" size={40} color="#000" />
         </TouchableOpacity>
       )}
-
-      {
-        selectedEvent
-          ? <CourseDetailDialog
+        <CourseDetailDialog
             course={selectedEvent}
             visible={selectedEvent ? true : false}
             onClose={unsetSelectedEvent}
             onDismiss={unsetSelectedEvent}
-          />
-          : null
-      }
-
+        />
     </SafeAreaView>
   );
 }

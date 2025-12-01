@@ -1,6 +1,6 @@
 {
   "name": "@olea-bps/context-timetable",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Context for timetable",
   "main": "index.js",
   "type": "module",
@@ -21,6 +21,7 @@
   "files": [
     "index.js",
     "CollektorVersion2ApiProvider.js",
+    "TimetableService.js",
     "ProviderErrors.js",
     "package.json",
     "LICENSE",

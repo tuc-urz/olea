@@ -89,12 +89,14 @@ function CalendarWeek(props) {
               course => (
                 {
                   title: course.title.data,
-                  start: course.startDateTime,
-                  end: course.endDateTime,
+                  start: new Date(Date.parse(course.startDateTime)),
+                  end: new Date(Date.parse(course.endDateTime)),
                   color: eventColor,
                   type: course.type?.data,
                   professor: course.lecturer[0]?.data,
                   room: course.room.data,
+                  // Anfügen des Ürsprügnlichen Vorlesungsobjektes, damit es beim Klick zur Verfügung steht
+                  origine: course,
                 }
               )
             ) ?? [];
@@ -170,24 +172,8 @@ function CalendarWeek(props) {
             weekStartsOn={1}
             date={route.weekbeginISODate}
             onPressEvent={
-              (event) => {
-                const eventDateISO = DateTime.fromJSDate(event.start).toISODate();
-
-                const eventStartTime = event.start.getTime();
-                const originalCourse = courses[eventDateISO]
-                  ?.find(
-                    course =>
-                      eventStartTime === course.startDateTime.getTime()
-                      &&
-                      event?.title === course?.title?.data
-                      &&
-                      event?.professor === course?.lecturer[0]?.data
-                      &&
-                      event?.room === course?.room?.data
-                  );
-
-                onCourseSelected(originalCourse);
-              }
+                            // Wenn eine Vorlesung im Kalender angeklickt wird, wird die ursprüngliche Vorlesung ausgelesen und selektiert
+                      (event) => onCourseSelected(event.origine)
             }
             swipeEnabled={false}
             scrollOffsetMinutes={calendarScrollOffsetMinutes}

@@ -15,20 +15,22 @@
 import { useMemo } from 'react';
 import {
     StyleSheet,
+    TouchableOpacity,
     View,
 } from 'react-native';
 
 import { connect } from 'react-redux'
-import { useTheme, Text, Button } from "react-native-paper";
+import {
+    useTheme,
+    Text,
+} from "react-native-paper";
 import { useTranslation } from "react-i18next";
 
 import { onUpdateRefreshing } from "@olea-bps/core";
 
-import IconsOpenasist from "@olea-bps/icons-openasist";
+import { DateTime } from 'luxon';
 
 import componentStyles from "./styles";
-
-
 
 /**
  * Timetable List Component
@@ -47,10 +49,38 @@ import componentStyles from "./styles";
 function TimetableListComponent({ course, times, settings, onCourseSelected }) {
     const { t } = useTranslation();
     const theme = useTheme();
-    const { colors, themeStyles, appSettings } = theme;
+    const { themeStyles, appSettings } = theme;
 
-    const accessibilityStartTime = t('accessibility:timetable:startTime') + times?.start.slice(0, 2) + ' ' + t('accessibility:pts:speechTime') + ' ' + (times?.start.slice(3, 5) !== '00' ? times?.start.slice(3, 5) : '') + ',';
-    const accessibilityEndTime = t('accessibility:timetable:endTime') + times?.end.slice(0, 2) + ' ' + t('accessibility:pts:speechTime') + ' ' + (times?.end.slice(3, 5) !== '00' ? times?.end.slice(3, 5) : '') + ',';
+    const courseTitle = course?.title?.data;
+    const courseType = course?.type?.data;
+    const courseRoom = course?.room?.data;
+    const courseStartDatetime = DateTime.fromISO(course.startDateTime);
+    const courseStarTimeText = courseStartDatetime.isValid
+        ? courseStartDatetime?.toLocaleString(DateTime.TIME_24_SIMPLE)
+        : undefined;
+    const courseEndDatetime = DateTime.fromISO(course.endDateTime);
+    const courseEndTimeText = courseEndDatetime.isValid
+        ? courseEndDatetime?.toLocaleString(DateTime.TIME_24_SIMPLE)
+        : undefined;
+    const courseTimesTextesAvaiable = courseStartDatetime && courseEndTimeText ? true : false;
+    const courseLecturers = course?.lecturer
+        ?.map(lecturer => lecturer.data);
+    const courseLecturersAmount = Array.isArray(courseLecturers)
+        ? courseLecturers.length
+        : 0;
+    const courseInfo = course?.info?.data;
+    const courseUrl = course?.url?.data;
+
+    const courseAccessibilityText = t(
+        'accessibility:timetable:courseSummary',
+        {
+            type: courseType,
+            title: courseTitle,
+            startTime: courseStarTimeText,
+            endTime: courseEndTimeText,
+            room: courseRoom,
+        }
+    );
 
     const isBigFont = settings.settingsAccessibility.increaseFontSize;
     const showDetails = appSettings?.modules?.timetable?.showDetails;
@@ -60,48 +90,82 @@ function TimetableListComponent({ course, times, settings, onCourseSelected }) {
         [theme]
     )
 
-    const renderTimeSlot = (
-        <View style={isBigFont ? [styles.courseTimeContainer, styles.courseTimeContainerBigFont] : styles.courseTimeContainer}>
-            <Text accessibilityLabel={accessibilityStartTime} style={isBigFont ? [styles.timeText, styles.timeTextBig] : styles.timeText}>{times?.start || ''}</Text>
-            <View style={styles.verticalSeperatorSmall} />
-            <Text accessibilityLabel={accessibilityEndTime} style={isBigFont ? [styles.timeText, styles.timeTextBig] : styles.timeText}>{times?.end || ''}</Text>
-        </View>
-    );
-    var renderVerticalSeperator = (
-        <View
-            style={styles.verticalSeperator}
-        />
-    );
-
-    const { type, title, room, lecturer, info, url } = course;
-
     const courseContainerBigFont = isBigFont ? styles.courseContainerBigFont : null;
     const titleStyle = isBigFont ? styles.titleBigFont : styles.title;
-
+    const coursePressable = showDetails &&
+        (
+            courseTitle ||
+            courseType ||
+            courseRoom ||
+            courseLecturersAmount ||
+            courseInfo ||
+            courseUrl ||
+            courseStarTimeText ||
+            courseEndTimeText
+        );
 
     return (
-
-        <View style={isBigFont ? [themeStyles.card, styles.courseCard] : themeStyles.card}>
-            {times ? renderTimeSlot : null}
-            {times ? renderVerticalSeperator : null}
-            <View style={times ? [styles.courseContainer, courseContainerBigFont] : styles.otherCourseContainer}>
-                {(type && type.data) ? <Text style={times ? [styles.type, styles.addLeftRightPadding] : styles.type} >{type.data}</Text> : null}
-                {(title && title.data) ? <Text style={times ? [titleStyle, styles.addLeftRightPadding] : styles.title}>{title.data}</Text> : null}
-                {(room && room.data) ? <Text style={times ? [styles.room, styles.addLeftRightPadding] : styles.room} >{room.data}</Text> : null}
-                {(lecturer && lecturer[0] && lecturer[0].data) ?
-                    <Text style={times ? [styles.professorText, styles.addLeftRightPadding] : styles.professorText}>
-                        Tutor: <Text style={styles.professorName}>{lecturer.map(lecturer => lecturer.data).join(',') || ''}</Text>
-                    </Text> : null
+        <TouchableOpacity
+            style={isBigFont ? [themeStyles.card, styles.courseCard] : themeStyles.card}
+            accessibilityLabel={courseAccessibilityText}
+            onPress={
+                coursePressable
+                    ? () => onCourseSelected?.(course)
+                    : null
+            }
+            disabled={!coursePressable}
+        >
+            {
+                courseTimesTextesAvaiable
+                    ? <View style={isBigFont ? [styles.courseTimeContainer, styles.courseTimeContainerBigFont] : styles.courseTimeContainer}>
+                        <Text style={isBigFont ? [styles.timeText, styles.timeTextBig] : styles.timeText}>
+                            {courseStarTimeText}
+                        </Text>
+                        <View style={styles.verticalSeperatorSmall} />
+                        <Text style={isBigFont ? [styles.timeText, styles.timeTextBig] : styles.timeText}>
+                            {courseEndTimeText}
+                        </Text>
+                    </View>
+                    : null
+            }
+            {
+                courseTimesTextesAvaiable
+                    ? <View style={styles.verticalSeperator} />
+                    : null
+            }
+            <View style={courseTimesTextesAvaiable ? [styles.courseContainer, courseContainerBigFont] : styles.otherCourseContainer}>
+                {
+                    courseType
+                        ? <Text style={courseTimesTextesAvaiable ? [styles.type, styles.addLeftRightPadding] : styles.type} >
+                            {courseType}
+                        </Text>
+                        : null
+                }
+                {
+                    courseTitle
+                        ? <Text style={courseTimesTextesAvaiable ? [titleStyle, styles.addLeftRightPadding] : styles.title}>
+                            {courseTitle}
+                        </Text>
+                        : null}
+                {
+                    courseRoom
+                        ? <Text style={courseTimesTextesAvaiable ? [styles.room, styles.addLeftRightPadding] : styles.room} >
+                            {courseRoom}
+                        </Text>
+                        : null
+                }
+                {
+                    courseLecturersAmount ?
+                        <Text style={courseTimesTextesAvaiable ? [styles.professorText, styles.addLeftRightPadding] : styles.professorText}>
+                            Tutor:
+                            <Text style={styles.professorName}>
+                                {courseLecturers.join(', ')}
+                            </Text>
+                        </Text>
+                        : null
                 }
             </View>
-            {showDetails && (room?.data || info?.data || url?.data) ?
-                <View style={styles.btnPosition}>
-                    <Button style={styles.btnAddionals} onPress={() => onCourseSelected?.(course)}>
-                        <IconsOpenasist icon={"info"} color={colors.secondaryText} size={22} />
-                    </Button>
-                </View>
-                : null}
-        </View>
+        </TouchableOpacity>
     );
 }
 

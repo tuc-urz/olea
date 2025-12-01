@@ -1,6 +1,6 @@
 {
   "name": "@olea-bps/views",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Consolidated views for OLEA",
   "main": "index.js",
   "repository": {
