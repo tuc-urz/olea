@@ -2,7 +2,7 @@ import { useContext, createContext, useMemo, useState, useCallback, useEffect } 
 
 import { useTheme } from 'react-native-paper';
 
-import { useLanguage, useStagingServer } from '@openasist/core';
+import { useLanguage, useStagingServer } from '@olea-bps/core';
 
 import CollektorVersion2ApiProvider from './CollektorVersion2ApiProvider';
 
@@ -43,7 +43,7 @@ function NewsContextProvider({ children }) {
     const language = useLanguage();
     const isStagingServerActive = useStagingServer();
 
-    const componentName = arguments.callee.name;
+    const componentName = NewsContextProvider.name;
     const availableLanguages = theme?.appSettings.languages;
 
     const [newsChannels, setNewsChannels] = useState();

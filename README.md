@@ -23,6 +23,9 @@ HTWK Leipzig\
 Bildungsportal Sachsen\
 codeculture
 
+[![codeculture](docs/cc-banner.png)](https://codeculture.de)
+
+
 ## Mitwirken
 
 Jeder ist herzlichst eingeladen an der Entwicklung der OLEA (Open Learning and Education Application) mitzuwirken.

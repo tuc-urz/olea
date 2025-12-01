@@ -1,13 +1,26 @@
 {
-  "name": "@openasist/core-plugins",
-  "version": "0.0.1",
+  "name": "@olea-bps/core-plugins",
+  "version": "1.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tuc-urz/olea.git",
+    "directory": "packages/libraries/core-plugins"
+  },
   "author": "",
   "license": "Apache-2.0",
+  "files": [
+    "index.js",
+    "package.json",
+    "LICENSE",
+    "README.md",
+    "enums/**/*",
+    "redux/**/*"
+  ],
   "dependencies": {
     "react-redux": "^9.2.0",
     "redux": "^4.0.5"

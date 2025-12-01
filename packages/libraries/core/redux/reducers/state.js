@@ -9,7 +9,7 @@ const initialState = {
         news: []
     },
     modalContent: '',
-    newNewPushMessageShown: false
+    newPushMessageShown: false
 };
 
 export default (state = initialState, action) => {
@@ -97,7 +97,7 @@ export default (state = initialState, action) => {
         case 'UPDATE_PUSH_MESSAGE_SHOWN':
             return {
                 ...state,
-                newNewPushMessageShown: action.newNewPushMessageShown
+                newPushMessageShown: action.newPushMessageShown
             };
 
         default:

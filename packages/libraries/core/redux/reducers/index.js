@@ -18,7 +18,7 @@ import stateReducer from './state'
 import apiReducer from './api'
 import notificationsReducer from './notifications'
 import settingReducer from './setting'
-import { pluginReducer } from '@openasist/core-plugins';
+import { pluginReducer } from '@olea-bps/core-plugins';
 
 
 export default combineReducers({

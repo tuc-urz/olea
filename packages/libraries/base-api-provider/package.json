@@ -1,12 +1,25 @@
 {
-  "name": "@openasist/base-api-provider",
-  "version": "0.0.1",
+  "name": "@olea-bps/base-api-provider",
+  "version": "1.0.2",
   "description": "",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tuc-urz/olea.git",
+    "directory": "packages/libraries/base-api-provider"
+  },
   "author": "",
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "files": [
+    "index.js",
+    "http-api-provider.js",
+    "hooks.js",
+    "package.json",
+    "LICENSE",
+    "README.md"
+  ]
 }

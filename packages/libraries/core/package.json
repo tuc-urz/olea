@@ -1,18 +1,38 @@
 {
-  "name": "@openasist/core",
-  "version": "0.0.1",
+  "name": "@olea-bps/core",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tuc-urz/olea.git",
+    "directory": "packages/libraries/core"
+  },
   "author": "",
   "license": "Apache-2.0",
+  "files": [
+    "index.js",
+    "package.json",
+    "LICENSE",
+    "README.md",
+    "api/**/*",
+    "constants/**/*",
+    "helper/**/*",
+    "redux/**/*",
+    "services/**/*"
+  ],
   "dependencies": {
-    "@openasist/core-plugins": "^0.0.1",
+    "@olea-bps/core-plugins": "^1.0.0",
     "@react-native-async-storage/async-storage": "~2.2.0",
-    "@openasist/redux-offline": "^2.6.0-expo.0",
+    "@olea-bps/redux-offline": "^1.0.0",
     "react-redux": "^9.2.0",
     "redux": "^4.0.5"
+  },
+  "peerDependencies": {
+    "redux": "^4.0.0",
+    "react-redux": "^9.0.0"
   }
 }

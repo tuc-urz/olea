@@ -1,6 +1,6 @@
 {
-  "name": "@openasist/react-native-webview-autoheight",
-  "version": "1.0.6",
+  "name": "@olea-bps/react-native-webview-autoheight",
+  "version": "1.0.1",
   "description": "React Native WebView with AutoHeight",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/scazzy/react-native-webview-autoheight.git"
+    "url": "https://github.com/tuc-urz/olea.git",
+    "directory": "packages/libraries/react-native-webview-autoheight"
   },
   "keywords": [
     "react",
@@ -19,11 +20,18 @@
   ],
   "author": "Elton Jain",
   "license": "ISC",
+  "files": [
+    "index.js",
+    "utils.js",
+    "package.json",
+    "LICENSE",
+    "README.md"
+  ],
   "dependencies": {
-    "react-native-webview": "^13.15.0"
+    "react-native-webview": "13.16.0"
   },
-  "bugs": {
-    "url": "https://github.com/scazzy/react-native-webview-autoheight/issues"
-  },
-  "homepage": "https://github.com/scazzy/react-native-webview-autoheight#readme"
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-native": "^0.81.0"
+  }
 }

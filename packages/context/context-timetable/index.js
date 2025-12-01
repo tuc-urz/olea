@@ -12,75 +12,24 @@
  * limitations under the License.
  */
 
-import { createContext, useState, useReducer, useEffect, useContext, useMemo, useCallback, startTransition } from 'react'
-
-import * as SecureStore from 'expo-secure-store';
+import { createContext, useEffect, useContext, useMemo } from 'react'
 
 import { useSelector } from 'react-redux';
 import { useTheme } from 'react-native-paper';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { DateTime, Duration } from 'luxon';
-import { isEqual } from 'lodash'
 
-import CollektorVersion2ApiProvider from './CollektorVersion2ApiProvider';
 import { TimetableNotFoundError } from './ProviderErrors';
-
-/**
- * @typedef CourseDataField
- * @property {string} data
- * @property {string} displayname
- */
-
-/**
- * @typedef CourseDataField
- * @property {string} data
- * @property {string} displayname
- */
-
-/**
- * @typedef CourseTime
- * @property {number} dayOfWeek
- * @property {string} date ISO Datum
- * @property {string} start ISO Uhrzeit
- * @property {string} end ISO Uhrzeit
- * @property {string} displayname
- * @property {string} weekmode
- * @property {string} mode
- */
-
-/**
- * @typedef Course
- * @property {CourseDataField} title
- * @property {CourseDataField} room
- * @property {CourseDataField} type
- * @property {CourseDataField[]} lecturer
- * @property {CourseTime[]} times
- */
-
-const TimetableCodeSecureStoreKey = 'timetable.code';
-const TimetableCoursesStoreKey = 'timetable.courses';
-
-const AsistServerProviderName = 'asist-server';
-const CollectorVersion2ProviderName = 'hs-collector-v2';
+import TimetableService, {
+    ApiProviderNotInitializedError,
+    TimetableCodeNotInitializedError,
+    useSyncCourses,
+    useSyncTimetableCode
+} from './TimetableService';
 
 const CourseWeekModeWeekly = 'weekly';
 const CourseWeekModeOdd = 'odd';
 const CourseWeekModeEven = 'even';
-
-class ApiProviderNotInitializedError extends Error {
-    constructor(message) {
-        super(message);
-        this.name = this.constructor.name;
-    }
-}
-
-class TimetableCodeNotInitializedError extends Error {
-    constructor(message) {
-        super(message);
-        this.name = this.constructor.name;
-    }
-}
 
 const CourseWeekModes = {
     weekly: CourseWeekModeWeekly,
@@ -92,106 +41,6 @@ const TimetableContext = createContext({
     code: null,
     courses: {},
 });
-
-const SetCoursesDate = 'set_day_courses';
-const RemoveUnusedCoursesDate = 'remove_unused_courses_day';
-const RestoreCourses = 'restore_courses';
-const ResetCourses = 'reset_courses';
-
-/**
- *
- * @param {Object.<string, Course[]>} state
- * @param {object} action
- * @param {SetCoursesDate|RemoveUnusedCoursesDate|RestoreCourses} action.type
- * @param {Course[]|Object.<string, Course[]>} [action.courses]
- * @returns {Object.<string, Course[]>}
- */
-function CoursesStateReducer(state, action) {
-    switch (action.type) {
-
-        // Hinzufügen eines Tages/Datums mit ensprechenden Vorlesungen
-        case SetCoursesDate:
-            const courses = action.courses;
-            const date = action.date
-            // Wir transformieren die Zeiten der Kurse in ein DateTime
-            const transformedCourses = courses.map(
-                course => {
-                    // Erstes Time-Element aus dem times-Array nehmen, da im neuen Format nur noch eine Zeit enthalten ist
-                    const courseTime = course?.times?.[0];
-                    if (courseTime) {
-                        const courseDate = DateTime.fromISO(courseTime?.date, { zone: 'utc' });
-                        // Startzeit und Endzeit der Vorlesung in ein DateTime umwandeln
-                        const courseStartTime = Duration.fromISOTime(courseTime.start);
-                        const courseStartDateTime = courseDate.plus(courseStartTime).toISO({ includeOffset: false });
-                        const courseEndTime = Duration.fromISOTime(courseTime.end);
-                        const courseEndDateTime = courseDate.plus(courseEndTime).toISO({ includeOffset: false });
-
-                        return {
-                            ...course,
-                            startDateTime: new Date(courseStartDateTime),
-                            endDateTime: new Date(courseEndDateTime),
-                        }
-                    } else {
-                        return course;
-                    }
-                }
-            )
-            // Vorlesungstag mit entsprechenden Vorlesungen hinzufügen, falls Daten nicht schon vorhanden
-            return (
-
-                // Sind Daten schon vorhanden und unterschedlich?
-                !isEqual(state?.[date], transformedCourses)
-                    // Wenn unterschiedlich, State mit neuen Vorlesungen am Vorlesungstag erstellen
-                    ? {
-                        // Kopieren der vorherigen Tage und derren Vorlesungen
-                        ...state,
-                        // Hinzufügen bzw. überschreiben der Vorlesungen für einen Datum
-                        [date]: transformedCourses,
-                    }
-                    // Wenn nicht unterschiedlich, alten State beibehalten
-                    : state
-            )
-
-        // Entfernt in einem Bereich zwischen startDate und endDate alle Vorlesungstage ohne Vorlesungen
-        // Dafür werden die Vorlesungstage, welche Vorlesung besitzen als aktive Vorlesungstage übergeben
-        case RemoveUnusedCoursesDate:
-            const startDate = action?.startDate;
-            const endDate = action?.endDate;
-            const activeDates = action?.activeDates;
-
-            // Wenn Vorlesungen vorliegen, werden inaktive Vorlesungstage aussortiert, falls nicht wird ein lerres Objekt zurückgegeben
-            return state
-                // Aussortieren, indem jeder State-Objekt zerlegt, gefiltert und wieder zusammengesetzt wird.
-                ? Object.fromEntries(
-                    // Zerlegen des State-Objektes in einzelne Tage und ihren Vorlesungen
-                    Object.entries(state)
-                        // Filtern der Vorlesungstage anhand des Bereiches und der aktiven Vorlesungstagen
-                        .filter(
-                            ([coursesDate, courses]) =>
-                                // Ist der Vorlesungstag im zu prüfenden Bereich?
-                                startDate >= coursesDate && coursesDate <= endDate
-                                    // Wenn ja, prüfen ob der Vorlesungstag Teil der aktiven Vorlesungstage ist
-                                    ? activeDates.includes(coursesDate)
-                                    // Wenn nein, Vorlesungstag ohne Prüfung in Filterergebniss übernehemen
-                                    : true
-                        )
-                )
-                // Lerres Objekt zurückgeben
-                : {};
-
-        // Vorlesungstage und zugehörige Vorlesungen aus dem Cache wiederherstellen
-        // Wenn Daten schon im State-Objekt zu finden sind, werden diese behalten und die Cache-Daten verworfen
-        case RestoreCourses:
-            const restoredCourses = action.courses;
-
-            // Sind Daten schon im State?
-            return state
-                ? { ...state }
-                : restoredCourses;
-        case ResetCourses:
-            return null;
-    }
-}
 
 /**
  * Ein Monat ist die standart Zeispanne für das Vorladen der Stundenplandaten
@@ -214,9 +63,10 @@ function selectUseStagingServer(reduxState) {
  * Provider for timetable context
  */
 function TimetableContextProvider({ children }) {
-    const componentName = arguments.callee.name;
+    const componentName = TimetableContextProvider.name;
     const theme = useTheme();
     const useStagingServers = useSelector(selectUseStagingServer);
+    const language = 'de';
 
     // Einstellungen für das Stundenplan-Modul
     const timetableSettings = theme?.appSettings?.modules?.timetable
@@ -226,12 +76,6 @@ function TimetableContextProvider({ children }) {
     const beginPrefetchDistance = timetablePrefetchSettings?.beginDistance ?? defaultPrefetchDistance;
     const endPrefetchDistance = timetablePrefetchSettings?.beginDistance ?? defaultPrefetchDistance;
 
-    // Einstellungen für Fallback API-Provider
-    const fallbackApiSettings = theme?.appSettings?.api;
-    const fallbackApiProvider = AsistServerProviderName;
-    const fallbackApiBaseUrl = (useStagingServers ? fallbackApiSettings.rootStgUrl : fallbackApiSettings.rootUrl) + 'app/';
-    const fallbbackApiUniversity = fallbackApiSettings?.university;
-
     // Einstellungen für API-Provider
     const timetableApiSettings = theme?.appSettings?.modules?.timetable?.api
     // Soll der Staging-Provider verwendet werden?
@@ -240,159 +84,29 @@ function TimetableContextProvider({ children }) {
         ? timetableApiSettings?.staging
         // Wenn nein, werden die productiven Provider-Einstellungen geladen
         : timetableApiSettings?.production;
-    const timetableApiProvider = timetableApiProviderSettings?.provider ?? fallbackApiProvider;
-    const timetableApiBaseUrl = timetableApiProviderSettings?.url ?? fallbackApiBaseUrl;
-    const timetableApiUniversity = timetableApiProviderSettings?.university ?? fallbbackApiUniversity;
 
-    [timetableCode, setTimetableCode] = useState(null);
-    [courses, dispatchCourses] = useReducer(CoursesStateReducer, null);
-    [synchronizationCompleted, setSynchronizationCompleted] = useState(false);
-
-    // Laden des persönlichen Stundenplancodes und speichern in timetableCode-State
-    useEffect(
-        () => {
-            SecureStore.getItemAsync(TimetableCodeSecureStoreKey)
-                .then(setTimetableCode);
-        }, []
+    // Erstellen des Stundenplan-Services
+    const timetableService = useMemo(
+        () => TimetableService.fromProviderSettingsObject(
+            timetableApiProviderSettings,
+            language,
+        ),
+        [timetableApiProviderSettings, language]
     );
 
-    // Laden der Vorlesungen aus dem AsyncStorage und speichern in courses-State, wenn course-State leer.
-    useEffect(
-        () => {
-            AsyncStorage.getItem(TimetableCoursesStoreKey)
-                .then(
-                    storedCourses => {
-                        if (!Array.isArray) {
-                            dispatchEvent({ type: RestoreCourses, courses: storedCourses });
-                        } else {
-                            AsyncStorage.removeItem(TimetableCoursesStoreKey);
-                        }
-                    }
-                );
-        },
-        []
-    );
+    // Stundenplan-Code aus dem Stundenplan-Service holen
+    // Es werden noch 2 Funktionen aus dem Stundenplan-Service geladen, um den Code zu speichern und zu löschen
+    const [timetableCode, saveTimetableCode, deleteTimetableCode] = useSyncTimetableCode(timetableService);
 
-    // Estellen des API-Providers bzw. erneuern wenn sich Einstellungen sich ändern.
-    const apiProvider = useMemo(
-        () => {
-            switch (timetableApiProvider?.toLowerCase()) {
-                case AsistServerProviderName:
-                    console.debug(componentName, ': use asist server api');
-                    return new AsistServerApiProvider.from(timetableApiBaseUrl, timetableApiUniversity, 'de');
-                case CollectorVersion2ProviderName:
-                    console.debug(componentName, ': use collector v2 api');
-                    return new CollektorVersion2ApiProvider.from(timetableApiBaseUrl);
-                default:
-                    console.log(`${componentName}: Can't build api provider: ${timetableApiProvider}`)
-                    return null;
-            }
-        },
-        [timetableApiProvider, timetableApiBaseUrl, timetableApiUniversity]
-    );
-
-    // Speichert die geänderten Courses in den Secure-Store
-    useEffect(
-        () => {
-            courses
-                ? AsyncStorage.setItem(TimetableCoursesStoreKey, JSON.stringify(courses))
-                    .catch(reason => console.error(componentName, ':', 'Error while safing courses in store', ':', reason))
-                : AsyncStorage.removeItem(TimetableCoursesStoreKey)
-                    .catch(reason => console.error(componentName, ':', 'Error while removing courses in store', ':', reason));
-        },
-        [courses]
-    );
-
-    // Speichert den neuen Stundenplan-Code im Secure-Store und dann im State
-    /**
-     * Macht den neuen Stundenplancode dem Stundenplan-Kontext bekannt.
-     * Dabei wird der alte Stundenplan-Code überschrieben.
-     * Der Stundenplancode wird zum Abrufen der Vorlesungen benutzt.
-     * @param {string} savingTimetableCode - Stundenplan-Code welcher an dem Stundenplan-Kontext übergeben werden soll.
-     */
-    async function saveTimetableCode(savingTimetableCode) {
-        await SecureStore?.setItemAsync(TimetableCodeSecureStoreKey, savingTimetableCode);
-        setTimetableCode?.(savingTimetableCode);
-    }
-
-    /**
-     * Diese Funktion erneuert den Vorlesung-Status im Stundenplan-Context.
-     * Dabei muss ein Datumsbereich festgelegt werden, welcher über ein Startdatum und ein Enddatum festgelegt wird.
-     * Es werden nur Vorlesungen in diesem Bereich aktualisert.
-     *
-     * Um zu Prüfen, ob der Refresh ausgeführt wurde, kann man sich an dem zurückgebenen Promise anhängen.
-     * Fehler können über eine catch-Anweisung erkannt werden.
-     *
-     * Wir für den Stundenplan-Code kein Stundenplan gefunden, wird eine {@link TimetableNotFoundError}-Ausnahme ausgelöst.
-     * Dafür muss der Provider die Erkennung ungültiger Stundenplan-Codes unterstützen.
-     *
-     * @function
-     * @param {string} startDate Startdatum des abzurufenden Bereiches
-     * @param {string} endDate Enddatum des abzurufenden Bereiches
-     * @returns {Promise<void>} Promise, an die angeschlossen werden kann, um zu prüfen, ob der Refresh ausgeführt wurde.
-     */
-    const refreshCourses = useCallback(
-
-        async (startDate, endDate) => {
-            console.debug(componentName, ': refresh courses');
-
-            if (apiProvider === null) {
-                throw new ApiProviderNotInitializedError('Api Provider is not initilized');
-            }
-
-            if (timetableCode === null) {
-                throw new TimetableCodeNotInitializedError('Timetable code is not initilized');
-            }
-
-            return apiProvider?.getByCode(timetableCode, startDate, endDate)
-                .then(
-                    courses => {
-                        // Auslesen aller Vorlesungstage und Duplikate entfernen
-                        // Es wird das erste Time-Element aus dem times-Array genommen, da im neuen Format nur noch eine Zeit enthalten ist
-                        const coursesDates = new Set(courses.map(course => course?.times?.[0]?.date));
-
-                        // Für jeden Vorlesungstag werden die Vorlesungen in den Courses-State geschrieben
-                        startTransition(() => coursesDates.forEach(
-                            coursesDate =>
-                                dispatchCourses(
-                                    {
-                                        type: SetCoursesDate,
-                                        date: coursesDate,
-                                        // Es werden Vorlesungen, die am Vorlesungstag statfinden, zusammengesucht
-                                        courses: courses.filter(course => course?.times?.[0].date === coursesDate)
-                                    }
-                                )
-                        ));
-
-                        // Es werden alle Vorlesungstage entfernt, die nicht in der Antwort vom Kollektor zu finden sind.
-                        dispatchCourses(
-                            {
-                                type: RemoveUnusedCoursesDate,
-                                activeDates: [...coursesDates],
-                            }
-                        );
-                    }
-                );
-        },
-        [apiProvider, dispatchCourses, timetableCode]
-    );
-
-    // Funktion zum Löschen des Timetable-Codes
-    /**
-     * Setzt den Stundenplancode und die zugehörigen Vorlesungen zurück.
-     */
-    async function deleteTimetableCode() {
-        await SecureStore.deleteItemAsync(TimetableCodeSecureStoreKey);
-        await AsyncStorage.removeItem(TimetableCoursesStoreKey);
-        setTimetableCode(null);
-        dispatchCourses({ action: ResetCourses });
-    }
+    // Vorlesungen gruppiert nach Vorlesungstagen werden aus dem Stundenplan-Service geholt
+    // Es wird zusätzlich eine Funktion zum aktuallisieren der Vorlesungen mit geladen
+    const [courses, refreshCourses] = useSyncCourses(timetableService);
 
     // Aktualiseren des course-States, wenn Provider oder Stundenplan-Code sich ändern.
     useEffect(
         () => {
             // Stundenplan wird nur einmal geholt, wenn der Stundenplancode geladen ist
-            if ((timetableCode ?? false) && !synchronizationCompleted) {
+            if ((timetableCode ?? false)) {
                 // Berechnen des Vorladezeitraumes
                 // ISO Zeitspannen(string) werden in Luxon Zeitspannen umgewandelt
                 const beginPrefetchDuration = Duration.fromISO(beginPrefetchDistance);
@@ -416,7 +130,7 @@ function TimetableContextProvider({ children }) {
                         }
                     );
             }
-        }, [apiProvider, beginPrefetchDistance, endPrefetchDistance, timetableCode, synchronizationCompleted]
+        }, [timetableService, beginPrefetchDistance, endPrefetchDistance, timetableCode]
     );
 
     return (
@@ -425,7 +139,6 @@ function TimetableContextProvider({ children }) {
                 timetableCode: timetableCode,
                 saveTimetableCode: saveTimetableCode,
                 deleteTimetableCode: deleteTimetableCode,
-                provider: apiProvider,
                 courses: courses,
                 refreshCourses: refreshCourses,
             }}
@@ -498,7 +211,5 @@ export {
     useTimetableCode,
     useCourses,
     useDateCourses,
-    ApiProviderNotInitializedError,
-    TimetableCodeNotInitializedError,
     TimetableNotFoundError,
 }

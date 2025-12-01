@@ -13,7 +13,7 @@ export const telephoneApi = {
      */
     getSearchForName: (name, res) => {
         let url = ApiSettings.getApiUrl(ApiSettings.telephone.getSearchForName);
-        url = url.replace('{name}', decodeURI(name).trim().replace(' ','%2B'));
+        url = url.replace('{name}', decodeURI(name).trim());
 
         fetch(url, GETOptions)
             .then((response) => response.json())

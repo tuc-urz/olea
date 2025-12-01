@@ -1,21 +1,20 @@
 import React                    from 'react';
 import { createStackNavigator, CardStyleInterpolators } from "@react-navigation/stack";
 
-import MainMenuView                 from "@openasist/view-main-menu";
-import OpalView                     from "@openasist/view-opal";
-import GeneralSettingsView          from "@openasist/view-settings-general";
-import CanteensSettingsView         from "@openasist/view-settings-canteens";
-import AccessibilitySettingsView    from "@openasist/view-settings-accessibility";
-import SearchView                   from "@openasist/view-search";
-import WebviewsView                 from "@openasist/view-webviews";
-import ModalComponent               from "@openasist/component-modal";
-import CourseDetailComponent        from "@openasist/component-course-detail";
-import JobPortalView                from "@openasist/view-jobs";
-import JobFilterComponent           from "@openasist/component-jobs-filter";
-import CoronaDetail                 from "@openasist/view-corona-detail";
+import { MainMenu as MainMenuView } from '@olea-bps/views';
+import { Opal as OpalView } from '@olea-bps/views';
+import { SettingsGeneral as GeneralSettingsView } from '@olea-bps/views';
+import { SettingsCanteens as CanteensSettingsView } from '@olea-bps/views';
+import { SettingsAccessibility as AccessibilitySettingsView } from '@olea-bps/views';
+import { Search as SearchView } from '@olea-bps/views';
+import { Webviews as WebviewsView } from '@olea-bps/views';
+import { Modal as ModalComponent } from '@olea-bps/components';
+import { CourseDetail as CourseDetailComponent } from '@olea-bps/components';
+import { Jobs as JobPortalView } from '@olea-bps/views';
+import { ComponentJobsFilter as JobFilterComponent } from '@olea-bps/components';
 import TabBarIcon                   from "../tabBarIcon";
-import AppInfoSettingsView          from "@openasist/view-settings-app-info";
-import TimetableCalendarView        from "@openasist/view-timetable-calendar";
+import { SettingsAppInfo as AppInfoSettingsView } from '@olea-bps/views';
+import { TimetableCalendar as TimetableCalendarView } from '@olea-bps/views';
 
 /**
  * Tab Options
@@ -50,7 +49,6 @@ const stack = (props) => {
             <Stack.Screen name="Job"                    component={JobPortalView}               options={{headerShown: false}}/>
             <Stack.Screen name="JobFilter"              component={JobFilterComponent}          options={{headerShown: false}}/>
 
-            <Stack.Screen name="CoronaDetail"     component={CoronaDetail}                options={{headerShown: false}}/>
             <Stack.Screen name="TimetableCalendarView"  component={TimetableCalendarView}       options={{headerShown: false}}/>
         </Stack.Navigator>
     );

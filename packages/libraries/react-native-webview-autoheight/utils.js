@@ -159,8 +159,6 @@ const appendFilesToHead = ({files, script}) =>
     `;
     }, script);
 
-const screenWidth = Dimensions.get('window').width;
-
 const bodyStyle = `
   body {
     margin: 0;
@@ -212,7 +210,7 @@ const getScript = ({
 };
 
 export const getWidth = (style) => {
-    return style && style.width ? style.width : screenWidth;
+    return style && style.width ? style.width : Dimensions.get('window').width;
 };
 
 export const isSizeChanged = ({

@@ -68,7 +68,7 @@ export function asyncStoredState(key, initialState) {
  * @returns {[state, (newState) => void], () => void}
  */
 export function useSecureStoredState(key, initialState = null, sensitiv = false) {
-    const hookName = arguments.callee.name;
+    const hookName = useSecureStoredState.name;
 
     const [state, setState] = useState(
         () => {
@@ -120,7 +120,7 @@ export function useSecureStoredState(key, initialState = null, sensitiv = false)
  * @returns {[state, (newState) => void]}
  */
 export function useSecureStoredReducer(key, reducer, initialState = null, sensitiv = false) {
-    const hookName = arguments.callee.name;
+    const hookName = useSecureStoredReducer.name;
 
     const [state, dispatch] = useReducer(
         reducer,

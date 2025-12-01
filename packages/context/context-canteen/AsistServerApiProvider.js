@@ -1,4 +1,4 @@
-import HttpApiProvider, { JsonContentType } from '@openasist/base-api-provider';
+import HttpApiProvider, { JsonContentType } from '@olea-bps/base-api-provider';
 
 const categories = {
     E: 'employee',

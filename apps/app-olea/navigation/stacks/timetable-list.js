@@ -1,8 +1,8 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
-import TimetableViewList        from '@openasist/view-timetable-list';
-import TimetableCourseView      from '@openasist/component-course-detail';
-import ModalComponent           from '@openasist/component-modal';
+import { TimetableList as TimetableViewList } from '@olea-bps/views';
+import { CourseDetail as TimetableCourseView } from '@olea-bps/components';
+import { Modal as ModalComponent } from '@olea-bps/components';
 
 import TabBarIcon               from '../tabBarIcon';
 

@@ -1,46 +1,39 @@
 {
-  "name": "@openasist/redux-offline",
-  "version": "2.6.0-expo.0",
-  "description": "Redux Offline-First Architecture",
+  "name": "@olea-bps/redux-offline",
+  "version": "1.0.0",
+  "description": "Redux Offline-First Architecture forked from https://github.com/redux-offline/redux-offline",
   "main": "lib/index.js",
-  "types": "./typings.d.ts",
   "scripts": {
     "build": "rm -rf lib && babel src --out-dir lib --ignore '**/__tests__/**'",
     "flow:start": "flow server",
     "flow:stop": "flow stop",
     "flow": "flow; test $? -eq 0 -o $? -eq 2",
     "lint": "eslint src/",
-    "prepublishOnly": "npm run lint && npm run flow && npm run test && npm run build",
+    "_prepublishOnly_disabled": "npm run lint && npm run flow && npm run test && npm run build",
     "eslint": "eslint src --fix",
     "prettier": "--config .prettierrc --write",
     "test": "jest",
     "test:watch": "jest --watch",
     "watch": "npm run build -- --watch"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged && flow"
-    }
-  },
-  "lint-staged": {
-    "*.{js,jsx}": [
-      "prettier --config .prettierrc --write",
-      "eslint src --fix"
-    ]
-  },
-  "jest": {
-    "rootDir": "src"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/redux-offline/redux-offline"
+    "url": "https://github.com/tuc-urz/olea.git",
+    "directory": "packages/libraries/redux-offline"
   },
   "author": "",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/redux-offline/redux-offline/issues"
+  "files": [
+    "package.json",
+    "LICENSE",
+    "README.md",
+    "lib/**/*",
+    "src/**/*"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.27.1",
+    "redux-persist": "^6.0.0"
   },
-  "homepage": "https://github.com/redux-offline/redux-offline#readme",
   "devDependencies": {
     "@babel/cli": "^7.27.2",
     "@babel/core": "^7.27.1",
@@ -69,10 +62,6 @@
     "redux-logger": "^3.0.6",
     "redux-persist-node-storage": "^2.0.0",
     "release": "^6.3.1"
-  },
-  "dependencies": {
-    "@babel/runtime": "^7.27.1",
-    "redux-persist": "^6.0.0"
   },
   "peerDependencies": {
     "redux": ">=3"

@@ -1,16 +1,29 @@
 {
-  "name": "@openasist/context-canteen",
-  "version": "0.0.1",
+  "name": "@olea-bps/context-canteen",
+  "version": "1.0.2",
   "description": "Context for canteen",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tuc-urz/olea.git",
+    "directory": "packages/context/context-canteen"
+  },
   "keywords": [
     "context",
     "canteen"
   ],
   "author": "",
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "files": [
+    "index.js",
+    "AsistServerApiProvider.js",
+    "CollektorVersion2ApiProvider.js",
+    "package.json",
+    "LICENSE",
+    "README.md"
+  ]
 }

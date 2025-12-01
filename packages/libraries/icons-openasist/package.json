@@ -1,18 +1,33 @@
 {
-  "name": "@openasist/icons-openasist",
-  "version": "0.0.1",
+  "name": "@olea-bps/icons-openasist",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tuc-urz/olea.git",
+    "directory": "packages/libraries/icons-openasist"
+  },
   "author": "",
   "license": "Apache-2.0",
+  "files": [
+    "index.js",
+    "package.json",
+    "LICENSE",
+    "README.md"
+  ],
+  "dependencies": {
+    "react-native-vector-icons": "^10.2.0",
+    "react-native-svg": "15.12.1"
+  },
   "devDependencies": {
     "@expo/vector-icons": "^14.1.0"
   },
-  "dependencies": {
-    "react-native-vector-icons": "^10.2.0",
-    "react-native-svg": "^15.12.1"
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-native": "^0.81.0"
   }
 }
