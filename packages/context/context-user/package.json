@@ -26,7 +26,7 @@
   ],
   "dependencies": {
     "expo-auth-session": "~6.2.1",
-    "expo-crypto": "~14.1.4",
+    "expo-crypto": "^15.0.8",
     "jwt-decode": "4.0.0",
     "expo-web-browser": "~14.2.0"
   },

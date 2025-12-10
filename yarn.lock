@@ -5033,7 +5033,14 @@ expo-constants@~18.0.10:
     "@expo/config" "~12.0.10"
     "@expo/env" "~2.0.7"
 
-expo-crypto@~14.1.4, expo-crypto@~14.1.5:
+expo-crypto@^15.0.8:
+  version "15.0.8"
+  resolved "https://registry.yarnpkg.com/expo-crypto/-/expo-crypto-15.0.8.tgz#339198aae149b3ccc0b44f7150d7261a3a1f5287"
+  integrity sha512-aF7A914TB66WIlTJvl5J6/itejfY78O7dq3ibvFltL9vnTALJ/7LYHvLT4fwmx9yUNS6ekLBtDGWivFWnj2Fcw==
+  dependencies:
+    base64-js "^1.3.0"
+
+expo-crypto@~14.1.5:
   version "14.1.5"
   resolved "https://registry.yarnpkg.com/expo-crypto/-/expo-crypto-14.1.5.tgz#1c29ddd4657d96af6358a9ecdc85a0c344c9ae0c"
   integrity sha512-ZXJoUMoUeiMNEoSD4itItFFz3cKrit6YJ/BR0hjuwNC+NczbV9rorvhvmeJmrU9O2cFQHhJQQR1fjQnt45Vu4Q==
