@@ -27,7 +27,7 @@
     "accordion-collapse-react-native": "^1.1.1",
     "dayjs": "^1.11.18",
     "expo": "~54.0.13",
-    "expo-application": "~7.0.7",
+    "expo-application": "^7.0.8",
     "expo-asset": "~12.0.9",
     "expo-auth-session": "^7.0.10",
     "expo-build-properties": "~1.0.9",
