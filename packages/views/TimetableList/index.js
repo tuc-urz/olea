@@ -148,7 +148,7 @@ function TimetableViewList(props) {
     [theme]
   )
 
-  const otherCourses = courses[undefined];
+  const otherCourses = courses?.[undefined] ?? [];
   const activeTabDate = daysTabViewRoutes[daysTabViewActiveRouteIndex]?.date;
   const activeTabWeek = activeTabDate.weekNumber;
 
@@ -232,7 +232,7 @@ function TimetableViewList(props) {
                     inactiveColor={themeStyles.tabs.inactiveColor}
                     indicatorStyle={themeStyles.tabIndicator}
                     tabStyle={{ width: 'auto', paddingHorizontal: 20 }}
-                    renderTabBarItem={({ route, navigationState, ...rest}) =>
+                    renderTabBarItem={({ route, navigationState, ...rest }) =>
                       <TabBarItem
                         {...rest}
                         key={route.key}
@@ -243,7 +243,7 @@ function TimetableViewList(props) {
                         inactiveColor={themeStyles.tabs.inactiveColor}
                         // Die einbindung von moment.js zum Anzeigen des Wochentages sollte langfristig entfernt werden.
                         // Funktioniert die Luxon funktionalität der Wochenanzeige nicht unter iOS datetime.toFormat('ccc')
-                         label={
+                        label={
                           // Generieren das Tab-Textes
                           ({ route }) => {
                             // Datumsobject aus dem Tab holen
