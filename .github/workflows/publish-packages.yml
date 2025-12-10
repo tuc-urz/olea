@@ -1,0 +1,228 @@
+name: Publish Packages to npm
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/**'
+
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Run in dry-run mode (no actual publish)'
+        required: false
+        default: 'false'
+        type: boolean
+      force_publish:
+        description: 'Force publish all packages (ignore version check)'
+        required: false
+        default: 'false'
+        type: boolean
+
+permissions:
+  contents: read
+
+env:
+  NODE_VERSION: '20'
+
+jobs:
+  detect-changes:
+    name: Detect Changed Packages
+    runs-on: ubuntu-latest
+    outputs:
+      changed_packages: ${{ steps.detect.outputs.changed_packages }}
+      has_changes: ${{ steps.detect.outputs.has_changes }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Detect changed packages
+        id: detect
+        run: |
+          # Define all publishable packages in dependency order
+          PACKAGES=(
+            # Phase 1: Leaf packages
+            "packages/libraries/core-plugins"
+            "packages/libraries/stored-state"
+            "packages/libraries/base-api-provider"
+            "packages/libraries/notifications"
+            "packages/libraries/icons-openasist"
+            "packages/libraries/react-native-webview-autoheight"
+            "packages/libraries/redux-offline"
+            "packages/context/context-user"
+            "packages/context/context-event"
+            "packages/context/context-canteen"
+            "packages/context/context-connectivity"
+            # Phase 2: Core and contexts
+            "packages/libraries/core"
+            "packages/context/context-news"
+            "packages/context/context-timetable"
+            "packages/context/context-callmanager"
+            "packages/context/context-flex-menu"
+            "packages/context/context-info-dialog"
+            "packages/context/context-public-transport-ticket"
+            "packages/context/context-mails"
+            # Phase 3: UI
+            "packages/components"
+            "packages/views"
+          )
+
+          CHANGED_PACKAGES=()
+
+          for pkg_path in "${PACKAGES[@]}"; do
+            if [ -f "$pkg_path/package.json" ]; then
+              PKG_NAME=$(jq -r '.name' "$pkg_path/package.json")
+              LOCAL_VERSION=$(jq -r '.version' "$pkg_path/package.json")
+
+              # Check if package exists on npm
+              NPM_VERSION=$(npm view "$PKG_NAME" version 2>/dev/null || echo "0.0.0")
+
+              if [ "${{ inputs.force_publish }}" == "true" ]; then
+                echo "Force publish enabled: $PKG_NAME@$LOCAL_VERSION"
+                CHANGED_PACKAGES+=("$pkg_path")
+              elif [ "$LOCAL_VERSION" != "$NPM_VERSION" ]; then
+                echo "Version changed: $PKG_NAME ($NPM_VERSION -> $LOCAL_VERSION)"
+                CHANGED_PACKAGES+=("$pkg_path")
+              else
+                echo "No change: $PKG_NAME@$LOCAL_VERSION"
+              fi
+            fi
+          done
+
+          # Convert array to JSON
+          if [ ${#CHANGED_PACKAGES[@]} -eq 0 ]; then
+            echo "changed_packages=[]" >> $GITHUB_OUTPUT
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "No packages need publishing"
+          else
+            JSON_ARRAY=$(printf '%s\n' "${CHANGED_PACKAGES[@]}" | jq -R . | jq -s .)
+            echo "changed_packages=$JSON_ARRAY" >> $GITHUB_OUTPUT
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "Packages to publish: ${CHANGED_PACKAGES[*]}"
+          fi
+
+  publish:
+    name: Publish to npm
+    needs: detect-changes
+    if: |
+      needs.detect-changes.outputs.has_changes == 'true' &&
+      github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Publish packages
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          set -e
+
+          DRY_RUN_FLAG=""
+          if [ "${{ inputs.dry_run }}" == "true" ]; then
+            DRY_RUN_FLAG="--dry-run"
+            echo "🔍 Running in DRY RUN mode"
+          fi
+
+          CHANGED_PACKAGES='${{ needs.detect-changes.outputs.changed_packages }}'
+
+          # Define package phases for dependency ordering
+          declare -A PHASES
+          PHASES["packages/libraries/core-plugins"]=1
+          PHASES["packages/libraries/stored-state"]=1
+          PHASES["packages/libraries/base-api-provider"]=1
+          PHASES["packages/libraries/notifications"]=1
+          PHASES["packages/libraries/icons-openasist"]=1
+          PHASES["packages/libraries/react-native-webview-autoheight"]=1
+          PHASES["packages/libraries/redux-offline"]=1
+          PHASES["packages/context/context-user"]=1
+          PHASES["packages/context/context-event"]=1
+          PHASES["packages/context/context-canteen"]=1
+          PHASES["packages/context/context-connectivity"]=1
+          PHASES["packages/libraries/core"]=2
+          PHASES["packages/context/context-news"]=2
+          PHASES["packages/context/context-timetable"]=2
+          PHASES["packages/context/context-callmanager"]=2
+          PHASES["packages/context/context-flex-menu"]=2
+          PHASES["packages/context/context-info-dialog"]=2
+          PHASES["packages/context/context-public-transport-ticket"]=2
+          PHASES["packages/context/context-mails"]=2
+          PHASES["packages/components"]=3
+          PHASES["packages/views"]=3
+
+          publish_package() {
+            local pkg_path=$1
+            local pkg_name=$(jq -r '.name' "$pkg_path/package.json")
+            local pkg_version=$(jq -r '.version' "$pkg_path/package.json")
+
+            echo "📦 Publishing $pkg_name@$pkg_version..."
+
+            # Build redux-offline if needed
+            if [[ "$pkg_path" == *"redux-offline"* ]]; then
+              echo "  🔨 Building $pkg_name..."
+              cd "$pkg_path"
+              npm run build
+              cd - > /dev/null
+            fi
+
+            # Publish
+            cd "$pkg_path"
+            npm publish --access public $DRY_RUN_FLAG
+            cd - > /dev/null
+
+            echo "  ✅ $pkg_name@$pkg_version published"
+          }
+
+          # Publish in phases to respect dependency order
+          for phase in 1 2 3; do
+            echo ""
+            echo "=========================================="
+            echo "Phase $phase"
+            echo "=========================================="
+
+            while read pkg_path; do
+              [ -z "$pkg_path" ] && continue
+              pkg_phase=${PHASES[$pkg_path]}
+              if [ "$pkg_phase" == "$phase" ]; then
+                publish_package "$pkg_path"
+              fi
+            done < <(echo "$CHANGED_PACKAGES" | jq -r '.[]')
+          done
+
+          echo ""
+          echo "🎉 All packages published successfully!"
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## Publish Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ inputs.dry_run }}" == "true" ]; then
+            echo "**Mode:** Dry Run" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "**Mode:** Live Publish" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Changed Packages" >> $GITHUB_STEP_SUMMARY
+          echo '```json' >> $GITHUB_STEP_SUMMARY
+          echo '${{ needs.detect-changes.outputs.changed_packages }}' >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
