@@ -104,7 +104,8 @@ jobs:
             echo "has_changes=false" >> $GITHUB_OUTPUT
             echo "No packages need publishing"
           else
-            JSON_ARRAY=$(printf '%s\n' "${CHANGED_PACKAGES[@]}" | jq -R . | jq -s .)
+            # Use -c flag to output compact single-line JSON (required by GITHUB_OUTPUT)
+            JSON_ARRAY=$(printf '%s\n' "${CHANGED_PACKAGES[@]}" | jq -R . | jq -sc .)
             echo "changed_packages=$JSON_ARRAY" >> $GITHUB_OUTPUT
             echo "has_changes=true" >> $GITHUB_OUTPUT
             echo "Packages to publish: ${CHANGED_PACKAGES[*]}"
