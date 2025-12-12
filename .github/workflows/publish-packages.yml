@@ -22,6 +22,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write  # Required for npm OIDC trusted publishing
 
 env:
   NODE_VERSION: '20'
@@ -129,12 +130,16 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           cache: 'yarn'
 
+      - name: Upgrade npm for OIDC support
+        run: |
+          npm install -g npm@latest
+          echo "npm version: $(npm --version)"
+
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
       - name: Publish packages
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        # OIDC trusted publishing - no token needed, authentication via GitHub's OIDC provider
         run: |
           set -e
 
