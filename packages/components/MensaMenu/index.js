@@ -182,7 +182,11 @@ function Meal({ settings, meal, priceGroupCode, priceGroupName }) {
                     </Text>
                     <Text>
                         <SelectionIcons
-                            selections={meal?.selections ?? []}
+                            selections={
+                                Arrays.isArray(meal?.selections)
+                                    ? meal.selections
+                                    : []
+                            }
                             iconSize={styles.mealItemTitleText.lineHeight}
                         />
                     </Text>
