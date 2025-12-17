@@ -102,7 +102,11 @@ function generateTimeslots(allEvents, start, end, length) {
  * @param {string} props.startTime Startzeit der Liste
  * @param {string} props.endTime Endzeit der Liste
  */
-function TimeslotAccordionHeader({ startTime, endTime, theme: { colors, themeStyles }, styles, isExpanded, t }) {
+function TimeslotAccordionHeader({ startTime, endTime, styles, isExpanded }) {
+  const { t } = useTranslation();
+  const theme = useTheme();
+  const { colors, themeStyles } = theme;
+
   return (
     <View style={styles.header}>
       <View style={[themeStyles.cardLeftIcon, { marginStart: 5 }]}>
