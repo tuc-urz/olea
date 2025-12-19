@@ -30,6 +30,7 @@ import { useTranslation } from 'react-i18next';
 import { handleHtmlEntities } from '@olea-bps/core/helper/format.helper';
 import { useCallback } from 'react';
 import { useNetInfo } from '@react-native-community/netinfo';
+import { useNavigation } from '@react-navigation/native';
 
 /**
  * Top News Component
@@ -44,7 +45,8 @@ import { useNetInfo } from '@react-native-community/netinfo';
  */
 function TopNewsComponent(props) {
     const { t } = useTranslation();
-    const { animationRange, topNews, feeds, theme, navigation } = props;
+    const navigation = useNavigation();
+    const { animationRange, topNews, feeds, theme } = props;
 
     const styles = useMemo(
         () => StyleSheet.create(componentStyles(theme)),
