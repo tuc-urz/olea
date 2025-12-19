@@ -46,17 +46,17 @@ import { useNavigation } from '@react-navigation/native';
 function TopNewsComponent({ animationRange, topNews, feeds }) {
     const { t } = useTranslation();
     const navigation = useNavigation();
+    const { height } = useWindowDimensions();
+    const { isConnected, isInternetReachable } = useNetInfo();
     const theme = useTheme();
+
+    const { appSettings } = theme;
+    const hasConnection = isConnected && isInternetReachable;
 
     const styles = useMemo(
         () => StyleSheet.create(componentStyles(theme)),
         [theme]
     )
-
-    const { isConnected, isInternetReachable } = useNetInfo();
-    const hasConnection = isConnected && isInternetReachable;
-
-    const { height } = useWindowDimensions();
 
     const animateBackground = {
         transform: [{
@@ -67,8 +67,6 @@ function TopNewsComponent({ animationRange, topNews, feeds }) {
             })
         }]
     };
-
-    const { appSettings } = theme;
 
     if (!Array.isArray(topNews)) {
         topNews = [];
