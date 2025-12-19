@@ -58,30 +58,6 @@ function TopNewsComponent({ animationRange, topNews, feeds }) {
 
     const { height } = useWindowDimensions();
 
-    const animateHeader = {
-        transform: [{
-            translateY: animationRange.interpolate({
-                inputRange: [0, 1],
-                outputRange: [0, height / 8],
-            })
-        }]
-    };
-
-    const animateLogo = {
-        transform: [{
-            translateY: animationRange.interpolate({
-                inputRange: [0, 1],
-                outputRange: [30, (height / 50)],
-            })
-        },
-        {
-            scale: animationRange.interpolate({
-                inputRange: [0, 1],
-                outputRange: [1, .4],
-            })
-        }]
-    };
-
     const animateBackground = {
         transform: [{
             translateY: animationRange.interpolate({
@@ -92,7 +68,7 @@ function TopNewsComponent({ animationRange, topNews, feeds }) {
         }]
     };
 
-    const { colors, appSettings } = theme;
+    const { appSettings } = theme;
 
     if (!Array.isArray(topNews)) {
         topNews = [];
