@@ -119,7 +119,7 @@ function NewsContextProvider({ children }) {
     )
 
     return (
-        <NewsContext.Provider
+        <NewsContext
             value={{
                 apiProvider: apiProvider,
                 newsChannels,
@@ -127,7 +127,7 @@ function NewsContextProvider({ children }) {
             }}
         >
             {children}
-        </NewsContext.Provider>
+        </NewsContext>
     );
 }
 
