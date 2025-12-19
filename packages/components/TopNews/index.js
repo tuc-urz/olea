@@ -23,7 +23,7 @@ import {
 } from 'react-native';
 
 import { connect } from 'react-redux';
-import { withTheme } from 'react-native-paper';
+import { useTheme } from 'react-native-paper';
 
 import componentStyles from './styles';
 import { useTranslation } from 'react-i18next';
@@ -46,7 +46,8 @@ import { useNavigation } from '@react-navigation/native';
 function TopNewsComponent(props) {
     const { t } = useTranslation();
     const navigation = useNavigation();
-    const { animationRange, topNews, feeds, theme } = props;
+    const theme = useTheme();
+    const { animationRange, topNews, feeds } = props;
 
     const styles = useMemo(
         () => StyleSheet.create(componentStyles(theme)),
@@ -218,4 +219,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, null)(withTheme(TopNewsComponent));
+export default connect(mapStateToProps, null)(TopNewsComponent);
