@@ -1,8 +1,17 @@
-import { useContext, createContext, useMemo, useState, useCallback, useEffect } from 'react';
+import {
+    createContext,
+    useMemo,
+    useState,
+    useCallback,
+    useEffect
+} from 'react';
 
 import { useTheme } from 'react-native-paper';
 
-import { useLanguage, useStagingServer } from '@olea-bps/core';
+import {
+    useLanguage,
+    useStagingServer
+} from '@olea-bps/core';
 
 import CollektorVersion2ApiProvider from './CollektorVersion2ApiProvider';
 
