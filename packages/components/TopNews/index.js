@@ -26,7 +26,7 @@ import { connect } from 'react-redux';
 import { withTheme } from 'react-native-paper';
 
 import componentStyles from './styles';
-import { withTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { handleHtmlEntities } from '@olea-bps/core/helper/format.helper';
 import { useCallback } from 'react';
 import { useNetInfo } from '@react-native-community/netinfo';
@@ -43,7 +43,8 @@ import { useNetInfo } from '@react-native-community/netinfo';
  *  - none
  */
 function TopNewsComponent(props) {
-    const { animationRange, topNews, feeds, t, theme, navigation } = props;
+    const { t } = useTranslation();
+    const { animationRange, topNews, feeds, theme, navigation } = props;
 
     const styles = useMemo(
         () => StyleSheet.create(componentStyles(theme)),
@@ -215,4 +216,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, null)(withTranslation()(withTheme(TopNewsComponent)));
+export default connect(mapStateToProps, null)(withTheme(TopNewsComponent));
