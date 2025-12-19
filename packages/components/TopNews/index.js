@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-import React                from 'react';
+import React from 'react';
 import {
     Animated,
     Dimensions,
@@ -22,16 +22,16 @@ import {
     View
 } from 'react-native';
 
-import {connect}            from 'react-redux';
-import {withTheme}          from "react-native-paper";
+import { connect } from 'react-redux';
+import { withTheme } from "react-native-paper";
 
-import merge                from 'lodash/merge';
-import NetInfo              from '@react-native-community/netinfo';
+import merge from 'lodash/merge';
+import NetInfo from '@react-native-community/netinfo';
 
-import componentStyles      from "./styles";
-import PropTypes            from "prop-types";
-import {withTranslation}     from "react-i18next";
-import {handleHtmlEntities} from "@olea-bps/core/helper/format.helper";
+import componentStyles from "./styles";
+import PropTypes from "prop-types";
+import { withTranslation } from "react-i18next";
+import { handleHtmlEntities } from "@olea-bps/core/helper/format.helper";
 
 
 
@@ -68,10 +68,10 @@ class TopNewsComponent extends React.Component {
         // PLUGIN FUNCTIONALITY
         // ------------------------------------------------------------------------
 
-        const { pluginStyles,theme } = this.props;
+        const { pluginStyles, theme } = this.props;
         this.styles = componentStyles(theme);
 
-        if(pluginStyles) {
+        if (pluginStyles) {
             this.styles = merge(this.styles, pluginStyles);
         }
 
@@ -115,12 +115,12 @@ class TopNewsComponent extends React.Component {
         };
 
         this.netInfoUnsubscribe = NetInfo.addEventListener(state => {
-             this.hasConnection = state.isInternetReachable && state.isConnected;
+            this.hasConnection = state.isInternetReachable && state.isConnected;
         });
     }
 
     componentWillUnmount() {
-        if(this.netInfoUnsubscribe) {
+        if (this.netInfoUnsubscribe) {
             this.netInfoUnsubscribe();
         }
     }
@@ -137,33 +137,33 @@ class TopNewsComponent extends React.Component {
         // ------------------------------------------------------------------------
 
 
-        const {feeds, t} = this.props;
-        const {colors, appSettings} = this.props.theme;
+        const { feeds, t } = this.props;
+        const { colors, appSettings } = this.props.theme;
         let topNews = this.props.topNews;
 
-        if(!Array.isArray(topNews)) {
+        if (!Array.isArray(topNews)) {
             topNews = [];
         }
 
         let topItem = null;
         let imageSrc = null;
         let feedTitle = null;
-        if(topNews[0]) {
+        if (topNews[0]) {
             topItem = topNews[0];
-            if(topItem.imageUrl) {
-                imageSrc = {uri: topItem.imageUrl};
+            if (topItem.imageUrl) {
+                imageSrc = { uri: topItem.imageUrl };
             }
         }
 
-        if(feeds && topItem && topItem.originFeedId) {
+        if (feeds && topItem && topItem.originFeedId) {
             const feed = feeds.filter(feed => feed.feedid === topItem.originFeedId)[0];
 
-            if(feed && feed.title) {
+            if (feed && feed.title) {
                 feedTitle = feed.title.toUpperCase();
             }
         }
 
-        if(!imageSrc)
+        if (!imageSrc)
             imageSrc = appSettings.header;
 
 
@@ -173,7 +173,7 @@ class TopNewsComponent extends React.Component {
         // Notice about "." in accessibilityLabels: This will set a short break in the sound output, like in a normal sentence.
 
         return (
-            <View style={{overflow:'hidden'}}>
+            <View style={{ overflow: 'hidden' }}>
                 <View stlyle={this.styles.backgroundImageWrapper}>
                     <TouchableOpacity
                         onPress={
@@ -201,8 +201,8 @@ class TopNewsComponent extends React.Component {
                 {
                     (!topItem && !this.hasConnection) ? (
                         <Animated.View style={[this.styles.newsItem]}
-                                       accessible={true}
-                                       accessibilityLabel={t('home:noConnectionTitle')}>
+                            accessible={true}
+                            accessibilityLabel={t('home:noConnectionTitle')}>
                             <Text
                                 style={this.styles.newsItemCategory}>{t('home:noConnectionSubtitle').toUpperCase()}</Text>
                             <Text style={this.styles.newsItemTitle}>{t('home:noConnectionTitle')}</Text>
@@ -213,35 +213,35 @@ class TopNewsComponent extends React.Component {
                         </Animated.View>
                     ) : ((!topItem) ? (
                         <Animated.View style={[this.styles.newsItem]}
-                                       accessible={true}
-                                       accessibilityLabel={t('home:noItemTitle')}>
+                            accessible={true}
+                            accessibilityLabel={t('home:noItemTitle')}>
                             <Text style={this.styles.newsItemCategory}>{t('home:noItemSubtitle').toUpperCase()}</Text>
                             <Text style={this.styles.newsItemTitle}>{t('home:noItemTitle')}</Text>
                             <Text style={this.styles.newsItemText}>{t('home:noItemText')}</Text>
                             <View style={this.styles.newsItemActionbar}>
-                                <Text style={this.styles.newsItemDate}/>
+                                <Text style={this.styles.newsItemDate} />
                             </View>
                         </Animated.View>
                     ) : (topItem?.shortDesc
-                            ? <TouchableOpacity
-                                style={this.styles.newsItem}
-                                onPress={() => {this._handlePressNews(topItem)}}
-                                accessible={true}
-                                accessibilityLabel={handleHtmlEntities(topItem.title)}
-                                accessibilityHint={t('accessibility:topNewsHint')}>
-                                <View>
-                                    {feedTitle && <Text style={this.styles.newsItemCategory}>{feedTitle}</Text>}
-                                    <Text style={this.styles.newsItemTitle}>{handleHtmlEntities(topItem.title)}</Text>
-                                    <Text style={this.styles.newsItemText}>{handleHtmlEntities(topItem.shortDesc)} ... <Text style={this.styles.newsItemReadMore}>{t('home:readMore')}</Text></Text>
-                                    <View style={this.styles.newsItemActionbar}>
-                                        {topItem?.author != null
-                                            ? <Text style={this.styles.newsItemAuthor}>{handleHtmlEntities(topItem.author)}</Text>
-                                            : null
-                                        }
-                                    </View>
+                        ? <TouchableOpacity
+                            style={this.styles.newsItem}
+                            onPress={() => { this._handlePressNews(topItem) }}
+                            accessible={true}
+                            accessibilityLabel={handleHtmlEntities(topItem.title)}
+                            accessibilityHint={t('accessibility:topNewsHint')}>
+                            <View>
+                                {feedTitle && <Text style={this.styles.newsItemCategory}>{feedTitle}</Text>}
+                                <Text style={this.styles.newsItemTitle}>{handleHtmlEntities(topItem.title)}</Text>
+                                <Text style={this.styles.newsItemText}>{handleHtmlEntities(topItem.shortDesc)} ... <Text style={this.styles.newsItemReadMore}>{t('home:readMore')}</Text></Text>
+                                <View style={this.styles.newsItemActionbar}>
+                                    {topItem?.author != null
+                                        ? <Text style={this.styles.newsItemAuthor}>{handleHtmlEntities(topItem.author)}</Text>
+                                        : null
+                                    }
                                 </View>
-                              </TouchableOpacity>
-                            : null
+                            </View>
+                        </TouchableOpacity>
+                        : null
                     ))
                 }
             </View>
@@ -262,7 +262,7 @@ class TopNewsComponent extends React.Component {
             this.props.navigation.navigate(
                 'TopNewsDetail',
                 {
-                    news: {...news, 'feedId': 0},
+                    news: { ...news, 'feedId': 0 },
                     newsType: "Default"
                 });
         }
