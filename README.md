@@ -4,8 +4,6 @@
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftuc-urz%2Fopenasist.svg?type=shield&issueType=license)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftuc-urz%2Fopenasist?ref=badge_shield&issueType=license)
 
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftuc-urz%2Fopenasist.svg?type=shield&issueType=security)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftuc-urz%2Fopenasist?ref=badge_shield&issueType=security)
-
 Die Open-Source-Version der App ist derzeit in Arbeit. Alle notwendigen Informationen werden Schritt für Schritt hinzugefügt und in der Roadmap festgehalten.
 
 ## Roadmap
