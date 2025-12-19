@@ -132,7 +132,7 @@ function NewsContextProvider({ children }) {
 }
 
 function useNewsContext() {
-    return useContext(NewsContext);
+    return use(NewsContext);
 }
 
 function useApiProvider() {
