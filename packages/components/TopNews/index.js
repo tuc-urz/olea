@@ -43,11 +43,10 @@ import { useNavigation } from '@react-navigation/native';
  * Navigation-Parameters:
  *  - none
  */
-function TopNewsComponent(props) {
+function TopNewsComponent({ animationRange, topNews, feeds }) {
     const { t } = useTranslation();
     const navigation = useNavigation();
     const theme = useTheme();
-    const { animationRange, topNews, feeds } = props;
 
     const styles = useMemo(
         () => StyleSheet.create(componentStyles(theme)),
