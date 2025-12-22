@@ -1,6 +1,14 @@
-import { useContext, createContext, useMemo, useCallback, useEffect } from 'react';
+import {
+    useContext,
+    createContext,
+    useMemo,
+    useCallback,
+    useEffect
+} from 'react';
 
 import { useTheme } from 'react-native-paper';
+
+import { DateTime } from 'luxon';
 
 import { useSecureStoredState } from '@olea-bps/stored-state';
 
@@ -34,20 +42,19 @@ export default function EventContextProvider({ children }) {
 
     const sortedEvents = useMemo(
         () => {
+            // Sortiren der Events wenn welche vorhanden sind
             if (Array.isArray(events)) {
+                // Kopieren der vorhanden Events, damit neues Array entsteht und reactivität gewahrt wird
                 const sortingEvents = [...events];
-                sortingEvents
-                    // Berechnen der Sortierung
-                    // Zuerst wird nach Startzeit sortier, ist diese gleich wird nach dem Enddatum sortiert
-                    .sort(
-                        (first, second) => {
-                            const sortOrder = moment(first.begin) - moment(second.begin);
 
-                            return sortOrder === 0
-                                ? moment(first.end) - moment(second.end)
-                                : sortOrder
-                        }
-                    );
+                // Die Events werden zuerst nach der Endzeit sortiert und danach nach der Startzeit
+                // Somit werden dem Nutzer die Events nach Startzeit angezeigt
+                // Haben Events die selbe Startzeit, werden diese sortiert nach Endzeit dargstellt
+                sortingEvents
+                    // Soriterung nach Endzeit
+                    .sort((first, second) => DateTime.fromISO(first.end) - DateTime.fromISO(second.end))
+                    // Sortierung nach Startzeit
+                    .sort((first, second) => DateTime.fromISO(first.begin) - DateTime.fromISO(second.begin));
 
                 return sortingEvents;
             } else {
