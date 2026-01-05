@@ -1,6 +1,6 @@
 {
   "name": "@olea-bps/context-event",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Context for event",
   "main": "index.js",
   "type": "module",
