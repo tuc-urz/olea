@@ -143,6 +143,7 @@ function TimetableViewCalendar(props) {
         return <CalendarDay
           selectedDate={selectedDayModeDate}
           calendarScrollOffsetMinutes={calendarScrollOffsetMinutes}
+          calendarHeight={CALENDAR_HEIGHT}
           onDateChanged={setSelectedDayModeDate}
           onCourseSelected={setSelectedEvent}
         />;
@@ -150,11 +151,12 @@ function TimetableViewCalendar(props) {
         return <CalendarWeek
           selectedISOWeek={selectedWeekModeISOWeekDate}
           calendarScrollOffsetMinutes={calendarScrollOffsetMinutes}
+          calendarHeight={CALENDAR_HEIGHT}
           onWeekChanged={setSelectedWeekModeISOWeekDate}
           onCourseSelected={setSelectedEvent}
         />;
       case 'month':
-        return <CalendarMonth today={today} setToday={setToday} month={month} setMonth={setMonth} calendarScrollOffsetMinutes={calendarScrollOffsetMinutes} />;
+        return <CalendarMonth today={today} setToday={setToday} month={month} setMonth={setMonth} calendarScrollOffsetMinutes={calendarScrollOffsetMinutes} calendarHeight={CALENDAR_HEIGHT} />;
       default:
         return null;
     }
