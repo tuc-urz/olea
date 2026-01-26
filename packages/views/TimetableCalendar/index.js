@@ -59,6 +59,26 @@ function TimetableViewCalendar(props) {
   const [errorMessage, setErrorMessage] = useState('');
   const [infoMessage, setInfoMessage] = useState('');
 
+  /**
+   * Höhe des Kalenders in Pixeln.
+   * Wird an die Calendar-Komponente in TimetableDay/TimetableWeek übergeben.
+   * WICHTIG: Bei Änderung dieses Wertes muss auch die height-Prop in TimetableDay und TimetableWeek angepasst werden!
+   */
+  const CALENDAR_HEIGHT = 800;
+
+  /**
+   * Interne Mindesthöhe der react-native-big-calendar Bibliothek.
+   * Siehe: node_modules/react-native-big-calendar/build/index.es.js (MIN_HEIGHT = 1200)
+   */
+  const CALENDAR_MIN_HEIGHT = 1200;
+
+  /**
+   * Berechnet die Höhe einer Stunden-Zelle in Pixeln.
+   * Verwendet die gleiche Formel wie react-native-big-calendar intern:
+   * cellHeight = Math.max(height - 30, MIN_HEIGHT) / 24
+   */
+  const calculateCellHeight = (height) => Math.max(height - 30, CALENDAR_MIN_HEIGHT) / 24;
+
   // Berechnen der Uhrzeit zu der beim Öffnen des Stundenplan Kalenders hingepsrungen werden soll.
   // Wird in einem State gespeichert, weil später noch beim Focus-Wechsel erneut berechnet werden muss.
   const [calendarScrollOffsetMinutes, setCalendarScrollOffsetMinutes] = useState(
@@ -70,7 +90,25 @@ function TimetableViewCalendar(props) {
         : Duration.fromObject({ hours: DateTime.now().hour });
 
       // Duration wird in Minuten umgewandelt, weil der Kalender ein Minutenoffset erwartet
-      return calendarScrollOffsetDuration.as('minutes');
+      const offsetMinutes = calendarScrollOffsetDuration.as('minutes');
+
+      /**
+       * iOS Workaround für Bug in react-native-big-calendar (v4.0.19)
+       *
+       * Problem: Die Bibliothek behandelt scrollOffsetMinutes auf iOS falsch.
+       * - Android verwendet: scrollTo({ y: (cellHeight * scrollOffsetMinutes) / 60 })
+       * - iOS verwendet: contentOffset.y = scrollOffsetMinutes (direkt als Pixel!)
+       *
+       * Lösung: Auf iOS den Wert vorab in Pixel umrechnen mit der gleichen Formel wie Android.
+       *
+       * Siehe: node_modules/react-native-big-calendar/build/index.es.js (Zeile 799 und 895)
+       */
+      if (Platform.OS === 'ios') {
+        const cellHeight = calculateCellHeight(CALENDAR_HEIGHT);
+        return (cellHeight * offsetMinutes) / 60;
+      }
+
+      return offsetMinutes;
     }
   );
 
