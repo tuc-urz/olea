@@ -180,12 +180,10 @@ function Meal({ settings, meal, priceGroupCode, priceGroupName }) {
                     <Text style={styles.mealItemTitleText}>
                         {meal.category}
                     </Text>
-                    <Text>
-                        <SelectionIcons
-                            selections={meal?.selections ?? []}
-                            iconSize={styles.mealItemTitleText.lineHeight}
-                        />
-                    </Text>
+                    <SelectionIcons
+                        selections={meal?.selections ?? []}
+                        iconSize={styles.mealItemTitleText.lineHeight}
+                    />
                 </View>
                 <Text style={styles.mealItemText}>
                     {meal.title}

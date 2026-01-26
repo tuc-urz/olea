@@ -22,6 +22,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write  # Required for npm OIDC trusted publishing
 
 env:
   NODE_VERSION: '20'
@@ -104,7 +105,8 @@ jobs:
             echo "has_changes=false" >> $GITHUB_OUTPUT
             echo "No packages need publishing"
           else
-            JSON_ARRAY=$(printf '%s\n' "${CHANGED_PACKAGES[@]}" | jq -R . | jq -s .)
+            # Use -c flag to output compact single-line JSON (required by GITHUB_OUTPUT)
+            JSON_ARRAY=$(printf '%s\n' "${CHANGED_PACKAGES[@]}" | jq -R . | jq -sc .)
             echo "changed_packages=$JSON_ARRAY" >> $GITHUB_OUTPUT
             echo "has_changes=true" >> $GITHUB_OUTPUT
             echo "Packages to publish: ${CHANGED_PACKAGES[*]}"
@@ -128,12 +130,16 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           cache: 'yarn'
 
+      - name: Upgrade npm for OIDC support
+        run: |
+          npm install -g npm@latest
+          echo "npm version: $(npm --version)"
+
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
       - name: Publish packages
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        # OIDC trusted publishing - no token needed, authentication via GitHub's OIDC provider
         run: |
           set -e
 

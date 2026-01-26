@@ -1,6 +1,6 @@
 {
   "name": "@olea-bps/views",
-  "version": "1.0.4",
+  "version": "1.0.7",
   "description": "Consolidated views for OLEA",
   "main": "index.js",
   "repository": {
@@ -23,7 +23,7 @@
     "@olea-bps/context-canteen": "^1.0.0",
     "@olea-bps/context-user": "^1.0.0",
     "@olea-bps/context-public-transport-ticket": "^1.0.0",
-    "@olea-bps/context-event": "^1.0.0",
+    "@olea-bps/context-event": "^1.0.4",
     "@olea-bps/context-info-dialog": "^1.0.0",
     "@olea-bps/context-callmanager": "^1.0.0",
     "@olea-bps/context-news": "^1.0.0",
