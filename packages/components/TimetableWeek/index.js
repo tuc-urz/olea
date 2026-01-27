@@ -40,7 +40,7 @@ const daysTabDuration = Duration.fromISO('P6M');
  * @returns
  */
 function CalendarWeek(props) {
-  const { selectedISOWeek, theme, settings, calendarScrollOffsetMinutes, onWeekChanged, onCourseSelected } = props;
+  const { selectedISOWeek, theme, settings, calendarScrollOffsetMinutes, calendarHeight, onWeekChanged, onCourseSelected } = props;
 
   const styles = useMemo(
     () => StyleSheet.create(componentStyles(theme)),
@@ -167,7 +167,7 @@ function CalendarWeek(props) {
             renderEvent={renderEvent}
             renderHeader={() => null}
             mode={'week'}
-            height={800}
+            height={calendarHeight}
             headerContentStyle={{ backgroundColor: 'transparent' }}
             weekStartsOn={1}
             date={route.weekbeginISODate}

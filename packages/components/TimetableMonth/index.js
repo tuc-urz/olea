@@ -26,7 +26,7 @@ import CalendarStrip from 'react-native-calendar-strip';
 import { DateTime } from 'luxon';
 
 function CalendarMonth(props) {
-  const { theme, setMonth, today, locale, onMonthChanged } = props;
+  const { theme, setMonth, today, locale, onMonthChanged, calendarHeight } = props;
   const styles = useMemo(
     () => StyleSheet.create(componentStyles(theme)),
     [theme]
@@ -121,7 +121,7 @@ function CalendarMonth(props) {
         renderEvent={renderEvent}
         renderHeaderForMonthView={renderHeader}
         date={selectedDate.current}
-        height={800}
+        height={calendarHeight}
         mode={'month'}
         headerContentStyle={{ backgroundColor: 'transparent' }}
         weekStartsOn={1}
