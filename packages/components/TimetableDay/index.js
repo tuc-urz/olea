@@ -39,7 +39,7 @@ const daysTabDuration = Duration.fromISO('P6M');
  * @param {(DateTime) => void} props.onDateChanged Callback, welche aufgerufen wird, wenn der Tag in der Ansicht wechselt
  * @returns
  */
-function CalendarDay({ selectedDate, theme, settings, calendarScrollOffsetMinutes, onDateChanged, onCourseSelected }) {
+function CalendarDay({ selectedDate, theme, settings, calendarScrollOffsetMinutes, calendarHeight, onDateChanged, onCourseSelected }) {
     const { appSettings: { modules: { timetable: { showDetails } } } } = theme;
     const today = DateTime.now().toISODate();
 
@@ -169,7 +169,7 @@ function CalendarDay({ selectedDate, theme, settings, calendarScrollOffsetMinute
                         renderHeader={() => null}
                         overlapOffset={95}
                         mode={'day'}
-                        height={800}
+                        height={calendarHeight}
                         headerContentStyle={{ backgroundColor: 'transparent' }}
                         weekStartsOn={1}
                         date={route.key}
