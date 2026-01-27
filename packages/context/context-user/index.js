@@ -21,7 +21,6 @@ import * as SecureStore from 'expo-secure-store';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useTheme } from 'react-native-paper';
-import notifee, { TriggerType } from '@notifee/react-native';
 import { DateTime } from 'luxon';
 
 /**
@@ -317,59 +316,6 @@ function UserContextProvider({ children }) {
         },
         [refreshToken, refreshTokenAt, discovery]
     );
-
-    useEffect(
-        () => {
-            if (refreshToken && refreshTokenAt && refreshTokenExpiresAt) {
-                notifee.requestPermission()
-                    .then(
-                        notificationSettings =>
-                            notifee.createChannel({
-                                id: RefreshTokenReqiredNotificationChannelId,
-                                name: t('authentication:notificationChannelName'),
-                                description: t('authentication:notificationChannelDescription'),
-                                lights: true,
-                                sound: 'default',
-                            })
-                    ).then(
-                        channelId => {
-                            const refreshTokenExpiresAtMillisecond = refreshTokenAt * 1000;
-                            const refreshTokenExpiresAtDateTime = DateTime.fromMillis(refreshTokenExpiresAtMillisecond, { locale: language });
-                            const refreshTokenExpiresAtDateLocaleString = refreshTokenExpiresAtDateTime.toLocaleString(DateTime.DATE_SHORT);
-                            const refreshTokenExpiresAtTimeLocaleString = refreshTokenExpiresAtDateTime.toLocaleString(DateTime.TIME_SIMPLE);
-                            return notifee.createTriggerNotification(
-                                {
-                                    id: RefreshTokenReqiredNotificationId,
-                                    title: t(
-                                        'authentication:tokenInvalidNotification',
-                                        {
-                                            refreshTokenExpiresAtDate: refreshTokenExpiresAtDateLocaleString,
-                                            refreshTokenExpiresAtTime: refreshTokenExpiresAtTimeLocaleString
-
-                                        }
-                                    ),
-                                    android: {
-                                        channelId: channelId,
-                                        showChronometer: true,
-                                        chronometerDirection: 'down',
-                                        timestamp: refreshTokenExpiresAt * 1000,
-                                        smallIcon: RefreshTokenReqiredNotificationIcon,
-                                    },
-                                },
-                                {
-                                    type: TriggerType.TIMESTAMP,
-                                    timestamp: refreshTokenExpiresAtMillisecond,
-                                }
-                            );
-                        }
-                    )
-            } else {
-                notifee.cancelDisplayedNotification(RefreshTokenReqiredNotificationId);
-                notifee.cancelTriggerNotification(RefreshTokenReqiredNotificationId);
-            }
-        },
-        [refreshToken && refreshTokenAt, language, t]
-    )
 
     function login() {
         return promptAsync()
