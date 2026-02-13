@@ -18,10 +18,15 @@ Die Open-Source-Version der App ist derzeit in Arbeit. Alle notwendigen Informat
 ## Mit ❤️ gemacht vom OLEA Team
 TU Chemnitz\
 HTWK Leipzig\
-Bildungsportal Sachsen\
+BPS Bildungsportal Sachsen GmbH\
 codeculture
 
+<!-- Wenn alle Logos der Mitwirkenden verfügbar sind, werden diese hier platziert:
+[Logo TU Chemnitz]
+[Logo HTWK Leipzig]
+[Logo BPS]
 [![codeculture](docs/cc-banner.png)](https://codeculture.de)
+-->
 
 
 ## Mitwirken
