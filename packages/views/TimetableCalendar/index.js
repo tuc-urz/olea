@@ -13,7 +13,7 @@
  */
 
 import { useState, useMemo, useCallback, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Dimensions, SafeAreaView, KeyboardAvoidingView, Platform, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Dimensions, SafeAreaView, KeyboardAvoidingView, Platform, ActivityIndicator, Linking } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme, Headline } from 'react-native-paper';
 import componentStyles from "./styles";
@@ -167,6 +167,25 @@ function TimetableViewCalendar(props) {
   // Unter verwendung von Luxon wird eine Liste der Monatsnamen generiert, dabei wird die eingestellte Sprache berücksichtigt
   const months = moment.months();
 
+  const renderTextWithLinks = (text) => {
+    const parts = text.split(/(https?:\/\/[^\s]+)/g);
+    return parts.map((part, index) => {
+      if (part.match(/https?:\/\/[^\s]+/)) {
+        const displayText = part.replace(/https?:\/\//, '');
+        return (
+          <Text
+            key={index}
+            style={styles.link}
+            onPress={() => Linking.openURL(part)}
+          >
+            {displayText}
+          </Text>
+        );
+      }
+      return part;
+    });
+  };
+
   const handleImportButtonPress = () => {
     setLoading(true);
     setErrorMessage('');
@@ -269,7 +288,7 @@ function TimetableViewCalendar(props) {
           dataDetectorType="link"
           selectable
         >
-          {infoMessage}
+          {renderTextWithLinks(infoMessage)}
         </Text>
       ) : null}
 
