@@ -48,6 +48,7 @@ function AppbarComponent({ settings, title, leftAction, rightAction, subtitle, s
                         icon={(props) => <IconsOpenasist {...props} icon={'back'} color={colors.appbarIconColor} />}
                         onPress={() => navigation.goBack(null)}
                         accessible={true}
+                        accessibilityLabel={t('accessibility:appbar.navigateBack')}
                         accessibilityHint={t('accessibility:appbar.back')}
                     />
             }

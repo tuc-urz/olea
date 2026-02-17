@@ -112,6 +112,10 @@ export default function (theme) {
         infoText: {
             color: 'black',
             marginLeft: 5,
+        },
+        link: {
+            textDecorationLine: 'underline',
+            color: '#007bff',
         }
     };
 };
