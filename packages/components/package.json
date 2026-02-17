@@ -1,6 +1,6 @@
 {
   "name": "@olea-bps/components",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Consolidated components for OLEA",
   "main": "index.js",
   "repository": "https://github.com/tuc-urz/olea.git",
