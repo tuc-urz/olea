@@ -8,6 +8,22 @@
     "url": "https://github.com/tuc-urz/olea.git",
     "directory": "packages/"
   },
-  "author": "codeculture<info@codeculture.de>",
+  "contributors": [
+    {
+      "name": "Universitätsrechenzentrum TU Chemnitz",
+      "email": "support@hrz.tu-chemnitz.de",
+      "url": "https://www.tu-chemnitz.de/urz/"
+    },
+    {
+      "name": "codeculture",
+      "email": "info@codeculture.de",
+      "url": "https://codeculture.de/"
+    },
+    {
+      "name": "BPS Bildungsportal Sachsen GmbH",
+      "email": "info@bps-system.de",
+      "url": "https://www.bps-system.de/"
+    }
+  ],
   "license": "Apache-2.0"
 }
