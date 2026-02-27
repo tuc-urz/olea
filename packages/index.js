@@ -50,3 +50,15 @@ export {
     useCallManagerContext,
     useParallelCalls,
 } from './context/context-callmanager';
+
+export {
+    default as CanteenContext,
+    CanteenContextProvider,
+    useCanteenContext,
+    useCanteens,
+    useCanteen,
+    useMenu,
+    useFilteredMenu,
+    usePriceGroupCode,
+    useFavoriteCanteens,
+} from './context/context-canteen';
