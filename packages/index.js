@@ -79,3 +79,12 @@ export {
     usePersonalEventsCode,
     useEventApiClient,
 } from './context/context-event';
+
+export {
+    default as FlexMenuContext,
+    FlexMenuContextProvider,
+    useFlexMenuContext,
+    useMenuEntries,
+    useChildMenuEntries,
+    useMainMenuEntries,
+} from './context/context-flex-menu';
