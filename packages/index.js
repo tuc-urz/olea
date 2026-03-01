@@ -94,3 +94,11 @@ export {
     MailsContextProvider,
     useUnreadEmailCount,
 } from './context/context-mails';
+
+export {
+    default as NewsContext,
+    NewsContextProvider,
+    useNewsContext,
+    useApiProvider,
+    useNewsChannels,
+} from './context/context-news';
