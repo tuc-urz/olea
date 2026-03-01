@@ -62,3 +62,10 @@ export {
     usePriceGroupCode,
     useFavoriteCanteens,
 } from './context/context-canteen';
+
+export {
+    ConnectivityContext,
+    ConnectivityContextProvider,
+    useConnectivityContext,
+    useNetInfo,
+} from './context/context-connectivity';
