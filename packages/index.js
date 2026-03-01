@@ -109,3 +109,13 @@ export {
     usePublicTransportTicketContext,
     usePublicTransportTicket,
 } from './context/context-public-transport-ticket';
+
+export {
+    default as TimetableContext,
+    TimetableContextProvider,
+    weekModes as CourseWeekModes,
+    useTimetableCode,
+    useCourses,
+    useDateCourses,
+    TimetableNotFoundError,
+} from './context/context-timetable';
