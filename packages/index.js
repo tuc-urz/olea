@@ -88,3 +88,9 @@ export {
     useChildMenuEntries,
     useMainMenuEntries,
 } from './context/context-flex-menu';
+
+export {
+    default as useMailsContext,
+    MailsContextProvider,
+    useUnreadEmailCount,
+} from './context/context-mails';
