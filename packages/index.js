@@ -129,3 +129,10 @@ export {
     useUser,
     useLogoutEffect,
 } from './context/context-user';
+
+// Exports Contexts libraries
+
+export {
+    default as HttpApiProvider,
+    JsonContentType,
+} from './libraries/base-api-provider';
