@@ -69,3 +69,13 @@ export {
     useConnectivityContext,
     useNetInfo,
 } from './context/context-connectivity';
+
+export {
+    EventContext,
+    default as EventContextProvider,
+    useEventContext,
+    usePersonalEvents,
+    useEvents,
+    usePersonalEventsCode,
+    useEventApiClient,
+} from './context/context-event';
