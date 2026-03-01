@@ -102,3 +102,10 @@ export {
     useApiProvider,
     useNewsChannels,
 } from './context/context-news';
+
+export {
+    default as usePublicTransportTicketContext,
+    PublicTransportTicketContextProvider,
+    usePublicTransportTicketContext,
+    usePublicTransportTicket,
+} from './context/context-public-transport-ticket';
