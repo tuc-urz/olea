@@ -144,3 +144,7 @@ export * from './libraries/core-plugins';
 export {
     default as IconsOpenasist,
 } from './libraries/icons-openasist';
+
+export {
+    default as OpenASiSTNotifications,
+} from './libraries/notifications';
