@@ -140,3 +140,7 @@ export {
 export * from './libraries/core';
 
 export * from './libraries/core-plugins';
+
+export {
+    default as IconsOpenasist,
+} from './libraries/icons-openasist';
