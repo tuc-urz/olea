@@ -148,3 +148,5 @@ export {
 export {
     default as OpenASiSTNotifications,
 } from './libraries/notifications';
+
+export * from './libraries/stored-state';
