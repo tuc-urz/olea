@@ -138,3 +138,5 @@ export {
 } from './libraries/base-api-provider';
 
 export * from './libraries/core';
+
+export * from './libraries/core-plugins';
