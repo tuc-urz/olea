@@ -27,7 +27,7 @@ import { useTheme, Text, Button } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
 import { useParallelCalls } from '../../context/context-callmanager';
-import { useUser } from '@olea-bps/context-user';
+import { useUser } from '../../context/context-user';
 import { AppBar as AppbarComponent } from '@olea-bps/components';
 
 import componentStyles from './styles';

@@ -22,7 +22,7 @@ import { DateTime } from 'luxon';
 
 import { useLanguage } from '@olea-bps/core';
 import { AppBar as AppbarComponent } from '@olea-bps/components';
-import { useUser, useUserContext } from '@olea-bps/context-user';
+import { useUser, useUserContext } from '../../context/context-user';
 
 import componentStyles from './styles';
 

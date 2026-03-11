@@ -21,7 +21,7 @@ import { useTranslation } from 'react-i18next';
 import QRCode from 'react-native-qrcode-svg';
 
 import { AppBar as AppbarComponent } from '@olea-bps/components';
-import { useUser } from '@olea-bps/context-user';
+import { useUser } from '../../context/context-user';
 import { usePublicTransportTicket } from '@olea-bps/context-public-transport-ticket';
 
 import componentStyles from './styles';
