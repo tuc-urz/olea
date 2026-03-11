@@ -18,7 +18,7 @@ import { useTheme } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { DateTime } from 'luxon';
 
-import { onSettingCanteenMerge, useStagingServer } from "@olea-bps/core";
+import { onSettingCanteenMerge, useStagingServer } from '../../libraries/core';
 import { useUser } from '../context-user';
 import { intersection } from 'lodash';
 
