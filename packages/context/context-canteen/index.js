@@ -19,7 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { DateTime } from 'luxon';
 
 import { onSettingCanteenMerge, useStagingServer } from "@olea-bps/core";
-import { useUser } from '@olea-bps/context-user';
+import { useUser } from '../context-user';
 import { intersection } from 'lodash';
 
 import CollektorVersion2ApiProvider, { NotModifiedResponse } from './CollektorVersion2ApiProvider.js';
