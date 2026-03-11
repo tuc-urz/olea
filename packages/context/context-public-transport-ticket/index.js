@@ -16,7 +16,7 @@ import { createContext, useEffect, useContext, useMemo, useCallback } from 'reac
 
 import { useTheme } from 'react-native-paper';
 
-import { useSecureStoredState } from '@olea-bps/stored-state';
+import { useSecureStoredState } from '../../libraries/core';
 import { useLanguage, useStagingServer } from '../../libraries/core';
 import { useAccessToken } from '../context-user';
 
