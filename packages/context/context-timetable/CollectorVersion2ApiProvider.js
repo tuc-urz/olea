@@ -1,4 +1,4 @@
-import HttpApiProvider from '@olea-bps/base-api-provider';
+import HttpApiProvider from '../../libraries/base-api-provider';
 import { TimetableNotFoundError } from './ProviderErrors';
 
 /**
