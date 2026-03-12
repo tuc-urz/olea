@@ -24,7 +24,7 @@ import AppbarComponent from '../../components/AppBar';
 import SettingsDialogSelect from '../../components/SettingsDialogSelect';
 import SettingsDialogRadio from '../../components/SettingsDialogRadio';
 import { useCanteens, useFavoriteCanteens, usePriceGroupCode } from '../../context/context-canteen';
-import { SettingSection } from '@olea-bps/components';
+import SettingSection from '../../components/SettingSection';
 
 import componentStyles from './styles';
 
