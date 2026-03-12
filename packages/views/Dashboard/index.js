@@ -30,7 +30,7 @@ import Markdown from 'react-native-markdown-display';
 
 import { onUpdateRefreshing, DataService } from '../../libraries/core';
 import TopNewsComponent from '../../components/TopNews';
-import { QuickLinks as QuickLinksComponent } from '@olea-bps/components';
+import QuickLinksComponent from '../../components/QuickLinks';
 import { MensaSlider as MensaSliderCompnent } from '@olea-bps/components';
 import { CourseInfo as CourseInfoCompnent } from '@olea-bps/components';
 import { usePendingInfos } from '@olea-bps/context-info-dialog';

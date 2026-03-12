@@ -30,7 +30,7 @@ import { onUpdateRefreshing, DataService } from '../../libraries/core';
 import TopNewsComponent from '../../components/TopNewsHtwk';
 import { MensaSlider as MensaSliderCompnent } from '@olea-bps/components';
 import { CourseInfo as CourseInfoCompnent } from '@olea-bps/components';
-import { QuickLinks as QuickLinksComponent } from '@olea-bps/components'
+import QuickLinksComponent from '../../components/QuickLinks';
 
 import componentStyles from "./styles"
 export const scrollRangeForAnimation = 160;
