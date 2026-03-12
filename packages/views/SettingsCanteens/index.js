@@ -23,7 +23,7 @@ import { onSettingCanteenMerge, store } from '@olea-bps/core';
 import AppbarComponent from '../../components/AppBar';
 import { SettingsDialogSelect } from '@olea-bps/components';
 import { SettingsDialogRadio } from '@olea-bps/components';
-import { useCanteens, useFavoriteCanteens, usePriceGroupCode } from '@olea-bps/context-canteen';
+import { useCanteens, useFavoriteCanteens, usePriceGroupCode } from '../../context/context-canteen';
 import { SettingSection } from '@olea-bps/components';
 
 import componentStyles from './styles';
