@@ -28,9 +28,9 @@ import { useTimetableCode } from '@olea-bps/context-timetable';
 import { Ionicons } from '@expo/vector-icons';
 import AppbarComponent from '../../components/AppBar';
 import { TabView, TabBar } from 'react-native-tab-view';
-import { TimetableDay as CalendarDay } from '@olea-bps/components';
-import { TimetableWeek as CalendarWeek } from '@olea-bps/components';
-import { TimetableMonth as CalendarMonth } from '@olea-bps/components';
+import CalendarDay from '../../components/TimetableDay';
+import CalendarWeek from '../../components/TimetableWeek';
+import CalendarMonth from '../../components/TimetableMonth';
 import { useCourses, TimetableNotFoundError } from '@olea-bps/context-timetable';
 import { CourseDetailDialog } from '@olea-bps/components';
 
