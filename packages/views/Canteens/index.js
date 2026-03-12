@@ -34,7 +34,7 @@ import 'moment/locale/de';
 
 import AppbarComponent from '../../components/AppBar';
 import IconsOpenasist from '@olea-bps/icons-openasist';
-import { MensaMenu } from '@olea-bps/components';
+import MensaMenu from '../../components/MensaMenu';
 import { useCanteen, useCanteens, useFilteredMenu } from '@olea-bps/context-canteen';
 import { useLanguage } from '@olea-bps/core';
 
