@@ -28,7 +28,7 @@ import { withTranslation, useTranslation } from 'react-i18next';
 import merge from 'lodash/merge';
 import moment from "moment/moment";
 
-import { onUpdateRefreshing, useActiveStagingMenuItems } from '@olea-bps/core';
+import { onUpdateRefreshing, useActiveStagingMenuItems } from '../../libraries/core';
 import AppbarComponent from '../../components/AppBar';
 import { MainMenuEntry } from '@olea-bps/components';
 import { DevelopmentDialog } from '@olea-bps/components';

@@ -29,7 +29,7 @@ import {withTranslation} from "react-i18next";
 import merge from 'lodash/merge';
 import moment from "moment";
 
-import {feedApi, onUpdateRefreshing} from "@olea-bps/core";
+import {feedApi, onUpdateRefreshing} from '../../libraries/core';
 import AppbarComponent from '../../components/AppBar';
 import IconsOpenasist from '../../libraries/icons-openasist';
 

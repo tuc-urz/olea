@@ -19,7 +19,7 @@ import { connect } from 'react-redux';
 import { useTheme } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
-import { onSettingCanteenMerge, store } from '@olea-bps/core';
+import { onSettingCanteenMerge, store } from '../../libraries/core';
 import AppbarComponent from '../../components/AppBar';
 import { SettingsDialogSelect } from '@olea-bps/components';
 import { SettingsDialogRadio } from '@olea-bps/components';

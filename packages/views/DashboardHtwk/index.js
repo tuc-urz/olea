@@ -26,7 +26,7 @@ import {withTranslation} from "react-i18next";
 
 import merge from 'lodash/merge';
 
-import {onUpdateRefreshing, DataService} from '@olea-bps/core';
+import { onUpdateRefreshing, DataService } from '../../libraries/core';
 import { TopNewsHtwk as TopNewsComponent } from '@olea-bps/components';
 import { MensaSlider as MensaSliderCompnent } from '@olea-bps/components';
 import { CourseInfo as CourseInfoCompnent } from '@olea-bps/components';

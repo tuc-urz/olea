@@ -28,7 +28,7 @@ import { useTranslation } from 'react-i18next';
 import { useFocusEffect } from '@react-navigation/native';
 import Markdown from 'react-native-markdown-display';
 
-import { onUpdateRefreshing, DataService } from '@olea-bps/core';
+import { onUpdateRefreshing, DataService } from '../../libraries/core';
 import { TopNews as TopNewsComponent } from '@olea-bps/components';
 import { QuickLinks as QuickLinksComponent } from '@olea-bps/components';
 import { MensaSlider as MensaSliderCompnent } from '@olea-bps/components';

@@ -32,7 +32,7 @@ import { DateTime } from 'luxon';
 
 import AppbarComponent from '../../components/AppBar';
 import IconsOpenasist from '../../libraries/icons-openasist';
-import { useLanguage, useStagingServer } from '@olea-bps/core';
+import { useLanguage, useStagingServer } from '../../libraries/core';
 
 import componentStyles from './styles';
 

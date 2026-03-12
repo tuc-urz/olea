@@ -28,7 +28,7 @@ import {withTranslation} from "react-i18next";
 
 import merge from 'lodash/merge';
 
-import {onUpdateRefreshing} from "@olea-bps/core";
+import {onUpdateRefreshing} from '../../libraries/core';
 
 
 import componentStyles from "./styles";

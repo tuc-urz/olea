@@ -22,7 +22,7 @@ import {withTranslation} from "react-i18next";
 
 import merge from 'lodash/merge';
 
-import { onSettingAccessibilityOverride, store } from "@olea-bps/core";
+import { onSettingAccessibilityOverride, store } from '../../libraries/core';
 import AppbarComponent from '../../components/AppBar';
 import componentStyles from "./styles";
 

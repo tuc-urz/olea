@@ -23,7 +23,7 @@ import { DateTime, Duration } from 'luxon';
 import moment from 'moment';
 import 'moment/locale/de';
 
-import { onUpdateRefreshing, useLanguage } from '@olea-bps/core';
+import { onUpdateRefreshing, useLanguage } from '../../libraries/core';
 import { useTimetableCode } from '@olea-bps/context-timetable';
 import { Ionicons } from '@expo/vector-icons';
 import AppbarComponent from '../../components/AppBar';
