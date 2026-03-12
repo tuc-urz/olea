@@ -32,7 +32,7 @@ import { onUpdateRefreshing, DataService } from '../../libraries/core';
 import TopNewsComponent from '../../components/TopNews';
 import QuickLinksComponent from '../../components/QuickLinks';
 import MensaSliderComponent from '../../components/MensaSlider';
-import { CourseInfo as CourseInfoCompnent } from '@olea-bps/components';
+import CourseInfoComponent from '../../components/CourseInfo';
 import { usePendingInfos } from '@olea-bps/context-info-dialog';
 
 import componentStyles from './styles';
@@ -124,7 +124,7 @@ function DashboardView(props) {
                     <TopNewsComponent    {...props} animationRange={headerTranslate} />
                     <QuickLinksComponent {...props} />
                     <MensaSliderComponent {...props} />
-                    <CourseInfoCompnent  {...props} />
+                    <CourseInfoComponent  {...props} />
                 </View>
             </Animated.ScrollView>
             <Portal>

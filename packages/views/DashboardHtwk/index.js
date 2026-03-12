@@ -29,7 +29,7 @@ import merge from 'lodash/merge';
 import { onUpdateRefreshing, DataService } from '../../libraries/core';
 import TopNewsComponent from '../../components/TopNewsHtwk';
 import MensaSliderComponent from '../../components/MensaSlider';
-import { CourseInfo as CourseInfoCompnent } from '@olea-bps/components';
+import CourseInfoComponent from '../../components/CourseInfo';
 import QuickLinksComponent from '../../components/QuickLinks';
 
 import componentStyles from "./styles"
@@ -175,7 +175,7 @@ class DashboardView extends React.Component {
                         <TopNewsComponent    {...this.props}  animationRange={headerTranslate}/>
                         <QuickLinksComponent {...this.props} />
                         <MensaSliderComponent {...this.props} />
-                        <CourseInfoCompnent  {...this.props} />
+                        <CourseInfoComponent  {...this.props} />
                     </View>
                 </Animated.ScrollView>
             </SafeAreaView>
