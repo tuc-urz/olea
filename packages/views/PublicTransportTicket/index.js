@@ -22,7 +22,7 @@ import QRCode from 'react-native-qrcode-svg';
 
 import AppbarComponent from '../../components/AppBar';
 import { useUser } from '../../context/context-user';
-import { usePublicTransportTicket } from '@olea-bps/context-public-transport-ticket';
+import { usePublicTransportTicket } from '../../context/context-public-transport-ticket';
 
 import componentStyles from './styles';
 
