@@ -24,14 +24,17 @@ import moment from 'moment';
 import 'moment/locale/de';
 
 import { onUpdateRefreshing, useLanguage } from '../../libraries/core';
-import { useTimetableCode } from '@olea-bps/context-timetable';
+import {
+  useCourses,
+  useTimetableCode,
+  TimetableNotFoundError,
+} from '../../context/context-timetable';
 import { Ionicons } from '@expo/vector-icons';
 import AppbarComponent from '../../components/AppBar';
 import { TabView, TabBar } from 'react-native-tab-view';
 import CalendarDay from '../../components/TimetableDay';
 import CalendarWeek from '../../components/TimetableWeek';
 import CalendarMonth from '../../components/TimetableMonth';
-import { useCourses, TimetableNotFoundError } from '@olea-bps/context-timetable';
 import { CourseDetailDialog } from '@olea-bps/components';
 
 function TimetableViewCalendar(props) {
