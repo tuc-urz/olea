@@ -22,7 +22,7 @@ import { useTranslation } from 'react-i18next';
 import { onSettingCanteenMerge, store } from '../../libraries/core';
 import AppbarComponent from '../../components/AppBar';
 import SettingsDialogSelect from '../../components/SettingsDialogSelect';
-import { SettingsDialogRadio } from '@olea-bps/components';
+import SettingsDialogRadio from '../../components/SettingsDialogRadio';
 import { useCanteens, useFavoriteCanteens, usePriceGroupCode } from '../../context/context-canteen';
 import { SettingSection } from '@olea-bps/components';
 
