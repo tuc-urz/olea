@@ -31,7 +31,7 @@ import Markdown from 'react-native-markdown-display';
 import { onUpdateRefreshing, DataService } from '../../libraries/core';
 import TopNewsComponent from '../../components/TopNews';
 import QuickLinksComponent from '../../components/QuickLinks';
-import { MensaSlider as MensaSliderCompnent } from '@olea-bps/components';
+import MensaSliderComponent from '../../components/MensaSlider';
 import { CourseInfo as CourseInfoCompnent } from '@olea-bps/components';
 import { usePendingInfos } from '@olea-bps/context-info-dialog';
 
@@ -123,7 +123,7 @@ function DashboardView(props) {
                 <View>
                     <TopNewsComponent    {...props} animationRange={headerTranslate} />
                     <QuickLinksComponent {...props} />
-                    <MensaSliderCompnent {...props} />
+                    <MensaSliderComponent {...props} />
                     <CourseInfoCompnent  {...props} />
                 </View>
             </Animated.ScrollView>
