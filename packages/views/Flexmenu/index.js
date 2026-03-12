@@ -28,7 +28,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 
 import AppbarComponent from '../../components/AppBar';
-import IconsOpenasist from '@olea-bps/icons-openasist';
+import IconsOpenasist from '../../libraries/icons-openasist';
 import { FlexMenuEntry } from '@olea-bps/components';
 
 import componentStyles from './styles';

@@ -27,7 +27,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { WebView } from 'react-native-webview';
 
 import AppbarComponent from '../../components/AppBar';
-import IconsOpenasist from '@olea-bps/icons-openasist';
+import IconsOpenasist from '../../libraries/icons-openasist';
 
 import componentStyles from "./styles";
 

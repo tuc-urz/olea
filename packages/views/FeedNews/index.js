@@ -31,7 +31,7 @@ import moment from "moment";
 
 import {feedApi, onUpdateRefreshing} from "@olea-bps/core";
 import AppbarComponent from '../../components/AppBar';
-import IconsOpenasist from "@olea-bps/icons-openasist";
+import IconsOpenasist from '../../libraries/icons-openasist';
 
 import componentStyles from "./styles";
 import { handleHtmlEntities } from '@olea-bps/core/helper/format.helper';
