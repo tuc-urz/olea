@@ -36,7 +36,7 @@ import EventContextProvider, { usePersonalEvents, usePersonalEventsCode, useEven
 import AppbarComponent from '../../components/AppBar';
 import IconsOpenasist from '../../libraries/icons-openasist';
 import EventCodeInputComponent from '../../components/EventCodeInput';
-import { TimetableEvent as TimetableEventComponent } from '@olea-bps/components'
+import TimetableEventComponent from '../../components/TimetableEvent';
 
 import componentStyles from './styles';
 
