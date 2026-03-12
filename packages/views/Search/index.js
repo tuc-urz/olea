@@ -26,7 +26,7 @@ import { SearchService } from '../../libraries/core';
 import componentStyles from "./styles";
 import IconsOpenasist from '../../libraries/icons-openasist';
 import AppbarComponent from '../../components/AppBar';
-import { SearchResults as SearchResultsComponent } from '@olea-bps/components';
+import SearchResultsComponent from '../../components/SearchResults';
 
 
 /**
