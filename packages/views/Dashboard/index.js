@@ -29,7 +29,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import Markdown from 'react-native-markdown-display';
 
 import { onUpdateRefreshing, DataService } from '../../libraries/core';
-import { TopNews as TopNewsComponent } from '@olea-bps/components';
+import TopNewsComponent from '../../components/TopNews';
 import { QuickLinks as QuickLinksComponent } from '@olea-bps/components';
 import { MensaSlider as MensaSliderCompnent } from '@olea-bps/components';
 import { CourseInfo as CourseInfoCompnent } from '@olea-bps/components';
