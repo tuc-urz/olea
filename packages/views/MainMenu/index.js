@@ -32,7 +32,7 @@ import { onUpdateRefreshing, useActiveStagingMenuItems } from '../../libraries/c
 import AppbarComponent from '../../components/AppBar';
 import MainMenuEntry from '../../components/MainMenuEntry';
 import { DevelopmentDialog } from '../../components/DevelopmentDialog';
-import { useMainMenuEntries } from '@olea-bps/context-flex-menu';
+import { useMainMenuEntries } from '../../context/context-flex-menu';
 
 import componentStyles from './styles'
 
