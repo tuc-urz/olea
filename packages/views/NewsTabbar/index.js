@@ -27,7 +27,7 @@ import { useTheme } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
 import AppbarComponent from '../../components/AppBar';
-import { NewsList } from '@olea-bps/components';
+import NewsList from '../../components/NewsList';
 import { useNewsChannels } from '@olea-bps/context-news';
 
 import componentStyles from './styles';
