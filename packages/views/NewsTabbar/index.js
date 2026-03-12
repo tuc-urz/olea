@@ -28,7 +28,7 @@ import { useTranslation } from 'react-i18next';
 
 import AppbarComponent from '../../components/AppBar';
 import NewsList from '../../components/NewsList';
-import { useNewsChannels } from '@olea-bps/context-news';
+import { useNewsChannels } from '../../context/context-news';
 
 import componentStyles from './styles';
 
