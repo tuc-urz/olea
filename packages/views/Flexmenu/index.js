@@ -29,7 +29,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import AppbarComponent from '../../components/AppBar';
 import IconsOpenasist from '../../libraries/icons-openasist';
-import { FlexMenuEntry } from '@olea-bps/components';
+import FlexMenuEntry from '../../components/FlexMenuEntry';
 
 import componentStyles from './styles';
 
