@@ -29,7 +29,7 @@ import merge from 'lodash/merge';
 import moment from "moment/moment";
 
 import { onUpdateRefreshing, useActiveStagingMenuItems } from '@olea-bps/core';
-import { AppBar as AppbarComponent } from '@olea-bps/components';
+import AppbarComponent from '../../components/AppBar';
 import { MainMenuEntry } from '@olea-bps/components';
 import { DevelopmentDialog } from '@olea-bps/components';
 import { useMainMenuEntries } from '@olea-bps/context-flex-menu';

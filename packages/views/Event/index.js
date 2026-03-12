@@ -33,7 +33,7 @@ import moment from 'moment';
 import { DateTime } from 'luxon';
 
 import EventContextProvider, { usePersonalEvents, usePersonalEventsCode, useEvents } from '@olea-bps/context-event';
-import { AppBar as AppbarComponent } from '@olea-bps/components';
+import AppbarComponent from '../../components/AppBar';
 import IconsOpenasist from '@olea-bps/icons-openasist';
 import { EventCodeInput as EventCodeInputComponent } from '@olea-bps/components';
 import { TimetableEvent as TimetableEventComponent } from '@olea-bps/components'

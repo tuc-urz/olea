@@ -32,7 +32,7 @@ import { DateTime, Duration } from 'luxon';
 import moment from 'moment';
 import 'moment/locale/de';
 
-import { AppBar as AppbarComponent } from '@olea-bps/components';
+import AppbarComponent from '../../components/AppBar';
 import IconsOpenasist from '@olea-bps/icons-openasist';
 import { MensaMenu } from '@olea-bps/components';
 import { useCanteen, useCanteens, useFilteredMenu } from '@olea-bps/context-canteen';

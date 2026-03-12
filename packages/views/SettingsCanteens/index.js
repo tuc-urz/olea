@@ -20,7 +20,7 @@ import { useTheme } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
 import { onSettingCanteenMerge, store } from '@olea-bps/core';
-import { AppBar as AppbarComponent } from '@olea-bps/components';
+import AppbarComponent from '../../components/AppBar';
 import { SettingsDialogSelect } from '@olea-bps/components';
 import { SettingsDialogRadio } from '@olea-bps/components';
 import { useCanteens, useFavoriteCanteens, usePriceGroupCode } from '@olea-bps/context-canteen';

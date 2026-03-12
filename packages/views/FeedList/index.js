@@ -32,7 +32,7 @@ import {onUpdateRefreshing} from "@olea-bps/core";
 
 
 import componentStyles from "./styles";
-import { AppBar as AppbarComponent } from '@olea-bps/components';
+import AppbarComponent from '../../components/AppBar';
 import IconsOpenasist from "@olea-bps/icons-openasist";
 
 /**

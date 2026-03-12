@@ -20,7 +20,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import QRCode from 'react-native-qrcode-svg';
 
-import { AppBar as AppbarComponent } from '@olea-bps/components';
+import AppbarComponent from '../../components/AppBar';
 import { useUser } from '../../context/context-user';
 import { usePublicTransportTicket } from '@olea-bps/context-public-transport-ticket';
 

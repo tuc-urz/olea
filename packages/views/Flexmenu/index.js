@@ -27,7 +27,7 @@ import { useTheme } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 
-import { AppBar as AppbarComponent } from '@olea-bps/components';
+import AppbarComponent from '../../components/AppBar';
 import IconsOpenasist from '@olea-bps/icons-openasist';
 import { FlexMenuEntry } from '@olea-bps/components';
 

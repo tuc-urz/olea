@@ -26,7 +26,7 @@ import 'moment/locale/de';
 import { onUpdateRefreshing, useLanguage } from '@olea-bps/core';
 import { useTimetableCode } from '@olea-bps/context-timetable';
 import { Ionicons } from '@expo/vector-icons';
-import { AppBar as AppbarComponent } from '@olea-bps/components';
+import AppbarComponent from '../../components/AppBar';
 import { TabView, TabBar } from 'react-native-tab-view';
 import { TimetableDay as CalendarDay } from '@olea-bps/components';
 import { TimetableWeek as CalendarWeek } from '@olea-bps/components';

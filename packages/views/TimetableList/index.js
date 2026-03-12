@@ -33,7 +33,7 @@ import { DateTime, Duration } from 'luxon';
 
 import { onUpdateRefreshing, store } from '@olea-bps/core';
 import { ApiProviderNotInitializedError, useCourses, useTimetableCode } from '@olea-bps/context-timetable';
-import { AppBar as AppbarComponent } from '@olea-bps/components';
+import AppbarComponent from '../../components/AppBar';
 import { OtherCourses as OtherCoursesComponent } from '@olea-bps/components';
 import { TimetableList as TimetableListComponent } from '@olea-bps/components';
 import { TimetableCodeInput } from '@olea-bps/components';

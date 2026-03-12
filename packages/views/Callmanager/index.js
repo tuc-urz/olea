@@ -28,7 +28,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useParallelCalls } from '../../context/context-callmanager';
 import { useUser } from '../../context/context-user';
-import { AppBar as AppbarComponent } from '@olea-bps/components';
+import AppbarComponent from '../../components/AppBar';
 
 import componentStyles from './styles';
 

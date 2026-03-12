@@ -30,7 +30,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { DateTime } from 'luxon';
 
-import { AppBar as AppbarComponent } from '@olea-bps/components';
+import AppbarComponent from '../../components/AppBar';
 import IconsOpenasist from '@olea-bps/icons-openasist';
 import { useLanguage, useStagingServer } from '@olea-bps/core';
 

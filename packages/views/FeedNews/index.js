@@ -30,7 +30,7 @@ import merge from 'lodash/merge';
 import moment from "moment";
 
 import {feedApi, onUpdateRefreshing} from "@olea-bps/core";
-import { AppBar as AppbarComponent } from '@olea-bps/components';
+import AppbarComponent from '../../components/AppBar';
 import IconsOpenasist from "@olea-bps/icons-openasist";
 
 import componentStyles from "./styles";
