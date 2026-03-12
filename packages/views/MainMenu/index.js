@@ -31,7 +31,7 @@ import moment from "moment/moment";
 import { onUpdateRefreshing, useActiveStagingMenuItems } from '../../libraries/core';
 import AppbarComponent from '../../components/AppBar';
 import MainMenuEntry from '../../components/MainMenuEntry';
-import { DevelopmentDialog } from '@olea-bps/components';
+import { DevelopmentDialog } from '../../components/DevelopmentDialog';
 import { useMainMenuEntries } from '@olea-bps/context-flex-menu';
 
 import componentStyles from './styles'
