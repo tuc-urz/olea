@@ -33,7 +33,7 @@ import TopNewsComponent from '../../components/TopNews';
 import QuickLinksComponent from '../../components/QuickLinks';
 import MensaSliderComponent from '../../components/MensaSlider';
 import CourseInfoComponent from '../../components/CourseInfo';
-import { usePendingInfos } from '@olea-bps/context-info-dialog';
+import { usePendingInfos } from '../../context/context-info-dialog';
 
 import componentStyles from './styles';
 
