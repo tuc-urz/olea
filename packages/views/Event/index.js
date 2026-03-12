@@ -32,7 +32,7 @@ import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import { DateTime } from 'luxon';
 
-import EventContextProvider, { usePersonalEvents, usePersonalEventsCode, useEvents } from '@olea-bps/context-event';
+import EventContextProvider, { usePersonalEvents, usePersonalEventsCode, useEvents } from '../../context/context-event';
 import AppbarComponent from '../../components/AppBar';
 import IconsOpenasist from '../../libraries/icons-openasist';
 import { EventCodeInput as EventCodeInputComponent } from '@olea-bps/components';
