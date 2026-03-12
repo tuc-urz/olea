@@ -34,7 +34,7 @@ import AppbarComponent from '../../components/AppBar';
 import IconsOpenasist from '../../libraries/icons-openasist';
 
 import componentStyles from "./styles";
-import { handleHtmlEntities } from '@olea-bps/core/helper/format.helper';
+import { handleHtmlEntities } from '../../libraries/core/helper/format.helper';
 
 
 /**
