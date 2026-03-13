@@ -22,7 +22,7 @@ import { connect } from 'react-redux'
 import merge from 'lodash/merge';
 
 import componentStyles from "./styles"
-import IconsOpenasist from "@olea-bps/icons-openasist";
+import IconsOpenasist from '../../libraries/icons-openasist';
 
 
 

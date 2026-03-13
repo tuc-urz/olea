@@ -29,7 +29,7 @@ import {
 import { withTranslation } from 'react-i18next';
 
 import { onUpdateRefreshing } from '@olea-bps/core';
-import IconsOpenasist from '@olea-bps/icons-openasist';
+import IconsOpenasist from '../../libraries/icons-openasist';
 
 import componentStyles from './styles';
 

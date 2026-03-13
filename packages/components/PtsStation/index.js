@@ -24,7 +24,7 @@ import merge from 'lodash/merge';
 
 import {onSettingPtsStationOverride, store} from "@olea-bps/core";
 import PtsDepartureComponent from '../PtsDeparture';
-import IconsOpenasist from "@olea-bps/icons-openasist";
+import IconsOpenasist from '../../libraries/icons-openasist';
 
 import componentStyles from "./styles"
 

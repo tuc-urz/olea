@@ -22,7 +22,7 @@ import {
 import { useTheme, Text, Dialog, Portal } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
-import IconsOpenasist from '@olea-bps/icons-openasist';
+import IconsOpenasist from '../../libraries/icons-openasist';
 import { useIncreaseFontSize } from '@olea-bps/core';
 
 import componentStyles from './styles';
