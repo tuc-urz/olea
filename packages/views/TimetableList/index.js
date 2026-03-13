@@ -40,7 +40,7 @@ import {
 import AppbarComponent from '../../components/AppBar';
 import OtherCoursesComponent from '../../components/OtherCourses';
 import TimetableListComponent from '../../components/TimetableList';
-import { TimetableCodeInput } from '@olea-bps/components';
+import TimetableCodeInput from '../../components/TimetableCodeInput';
 import { CourseDetailDialog } from '@olea-bps/components';
 
 import componentStyles from './styles';
