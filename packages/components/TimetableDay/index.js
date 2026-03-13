@@ -20,7 +20,7 @@ import { withTranslation } from 'react-i18next';
 import { onUpdateRefreshing } from '../../libraries/core';
 import componentStyles from "./styles";
 import { Calendar } from 'react-native-big-calendar';
-import { useCourses } from '@olea-bps/context-timetable';
+import { useCourses } from '../../context/context-timetable';
 import CalendarStrip from 'react-native-calendar-strip';
 import CourseDetailDialog from '../CourseDetailDialog';
 import { DateTime, Duration } from 'luxon';

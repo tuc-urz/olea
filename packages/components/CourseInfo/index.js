@@ -28,7 +28,7 @@ import moment from 'moment';
 import { DateTime } from 'luxon';
 
 import IconsOpenasist from '../../libraries/icons-openasist';
-import { useDateCourses } from '@olea-bps/context-timetable';
+import { useDateCourses } from '../../context/context-timetable';
 
 import componentStyles from './styles';
 
