@@ -23,7 +23,7 @@ import { connect } from 'react-redux'
 import { Button, Dialog, Portal, useTheme } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
-import { useFilteredMenu } from '@olea-bps/context-canteen';
+import { useFilteredMenu } from '../../context/context-canteen';
 
 import { onUpdateRefreshing } from '../../libraries/core';
 import IconsOpenasist from '../../libraries/icons-openasist';
