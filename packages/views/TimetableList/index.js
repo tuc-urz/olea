@@ -38,7 +38,7 @@ import {
   ApiProviderNotInitializedError,
 } from '../../context/context-timetable';
 import AppbarComponent from '../../components/AppBar';
-import { OtherCourses as OtherCoursesComponent } from '@olea-bps/components';
+import OtherCoursesComponent from '../../components/OtherCourses';
 import { TimetableList as TimetableListComponent } from '@olea-bps/components';
 import { TimetableCodeInput } from '@olea-bps/components';
 import { CourseDetailDialog } from '@olea-bps/components';
