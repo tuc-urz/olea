@@ -23,7 +23,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { DateTime } from 'luxon';
 
 import MealItemComponent from '../MealItem';
-import { toIsoDateString } from '@olea-bps/core/helper/date';
+import { toIsoDateString } from '../../libraries/core/helper/date';
 
 import { useCanteen, useFilteredMenu, useFavoriteCanteens } from '@olea-bps/context-canteen';
 

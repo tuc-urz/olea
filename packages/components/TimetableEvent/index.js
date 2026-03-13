@@ -28,7 +28,7 @@ import {
 } from 'react-native-paper';
 import { withTranslation } from 'react-i18next';
 
-import { onUpdateRefreshing } from '@olea-bps/core';
+import { onUpdateRefreshing } from '../../libraries/core';
 import IconsOpenasist from '../../libraries/icons-openasist';
 
 import componentStyles from './styles';

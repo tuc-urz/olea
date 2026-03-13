@@ -27,7 +27,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { DateTime } from 'luxon';
 
-import { useLanguage } from '@olea-bps/core';
+import { useLanguage } from '../../libraries/core';
 import IconsOpenasist from '../../libraries/icons-openasist';
 
 import componentStyles from './styles';

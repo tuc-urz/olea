@@ -25,7 +25,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useFilteredMenu } from '@olea-bps/context-canteen';
 
-import { onUpdateRefreshing } from "@olea-bps/core";
+import { onUpdateRefreshing } from '../../libraries/core';
 import IconsOpenasist from '../../libraries/icons-openasist';
 
 import componentStyles from './styles';

@@ -22,7 +22,10 @@ import {connect} from 'react-redux'
 import concat from "lodash/concat";
 import merge from 'lodash/merge';
 
-import {onSettingPtsStationOverride, store} from "@olea-bps/core";
+import {
+    onSettingPtsStationOverride,
+    store,
+} from '../../libraries/core';
 import PtsDepartureComponent from '../PtsDeparture';
 import IconsOpenasist from '../../libraries/icons-openasist';
 

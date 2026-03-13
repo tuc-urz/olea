@@ -17,7 +17,7 @@ import { View, Text, TouchableOpacity, StyleSheet, useWindowDimensions } from 'r
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-paper';
 import { withTranslation } from 'react-i18next';
-import { onUpdateRefreshing } from '@olea-bps/core';
+import { onUpdateRefreshing } from '../../libraries/core';
 import componentStyles from "./styles";
 import { Calendar } from 'react-native-big-calendar';
 import { useCourses } from '@olea-bps/context-timetable';
