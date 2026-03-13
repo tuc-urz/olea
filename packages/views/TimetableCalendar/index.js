@@ -35,7 +35,7 @@ import { TabView, TabBar } from 'react-native-tab-view';
 import CalendarDay from '../../components/TimetableDay';
 import CalendarWeek from '../../components/TimetableWeek';
 import CalendarMonth from '../../components/TimetableMonth';
-import { CourseDetailDialog } from '@olea-bps/components';
+import CourseDetailDialog from '../../components/CourseDetailDialog';
 
 function TimetableViewCalendar(props) {
   const { theme, theme: { themeStyles, colors, appSettings, appSettings: { modules: { timetable: { code, calendarStarttime } } } }, t, settings } = props;

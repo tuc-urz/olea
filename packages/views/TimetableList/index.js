@@ -41,7 +41,7 @@ import AppbarComponent from '../../components/AppBar';
 import OtherCoursesComponent from '../../components/OtherCourses';
 import TimetableListComponent from '../../components/TimetableList';
 import TimetableCodeInput from '../../components/TimetableCodeInput';
-import { CourseDetailDialog } from '@olea-bps/components';
+import CourseDetailDialog from '../../components/CourseDetailDialog';
 
 import componentStyles from './styles';
 
