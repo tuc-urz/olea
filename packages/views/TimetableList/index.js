@@ -39,7 +39,7 @@ import {
 } from '../../context/context-timetable';
 import AppbarComponent from '../../components/AppBar';
 import OtherCoursesComponent from '../../components/OtherCourses';
-import { TimetableList as TimetableListComponent } from '@olea-bps/components';
+import TimetableListComponent from '../../components/TimetableList';
 import { TimetableCodeInput } from '@olea-bps/components';
 import { CourseDetailDialog } from '@olea-bps/components';
 
