@@ -12,13 +12,15 @@
  * limitations under the License.
  */
 
+// @ts-check
+
 import { combineReducers } from 'redux'
 
 import stateReducer from './state'
 import apiReducer from './api'
 import notificationsReducer from './notifications'
 import settingReducer from './setting'
-import { pluginReducer } from '@olea-bps/core-plugins';
+import { pluginReducer } from '../../../core-plugins';
 
 
 export default combineReducers({
