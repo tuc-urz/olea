@@ -104,7 +104,6 @@ export {
 } from './context/context-news';
 
 export {
-    default as usePublicTransportTicketContext,
     PublicTransportTicketContextProvider,
     usePublicTransportTicketContext,
     usePublicTransportTicket,
