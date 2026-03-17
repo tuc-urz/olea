@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { TimetableCalendar as TimetableViewCalendar } from '@olea-bps/views';
+import { TimetableCalendar as TimetableViewCalendar } from '@olea/base';
 
 import TabBarIcon from               '../tabBarIcon';
 

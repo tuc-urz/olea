@@ -1,8 +1,8 @@
 import React                    from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 
-import { Search as SearchView } from '@olea-bps/views';
-import { Modal as ModalComponent } from '@olea-bps/components';
+import { Search as SearchView } from '@olea/base';
+import { Modal as ModalComponent } from '@olea/base';
 
 import TabBarIcon               from "../tabBarIcon";
 
