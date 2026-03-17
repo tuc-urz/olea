@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { TimetableList as TimetableViewList } from '@olea/base';
+import { TimetableListView as TimetableViewList } from '@olea/base';
 import { CourseDetail as TimetableCourseView } from '@olea/base';
 import { Modal as ModalComponent } from '@olea/base';
 

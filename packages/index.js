@@ -33,7 +33,7 @@ export { default as SettingsDialogSelect } from './components/SettingsDialogSele
 export { default as TimetableCodeInput } from './components/TimetableCodeInput';
 export { default as TimetableDay } from './components/TimetableDay';
 export { default as TimetableEvent } from './components/TimetableEvent';
-export { default as TimetableList } from './components/TimetableList';
+export { default as TimetableListComponent } from './components/TimetableList';
 export { default as TimetableMonth } from './components/TimetableMonth';
 export { default as TimetableWeek } from './components/TimetableWeek';
 export { default as TopNews } from './components/TopNews';
@@ -66,7 +66,7 @@ export { default as SettingsGeneral } from './views/SettingsGeneral';
 export { default as SettingsNotifications } from './views/SettingsNotifications';
 export { default as SettingsUser } from './views/SettingsUser';
 export { default as TimetableCalendar } from './views/TimetableCalendar';
-export { default as TimetableList } from './views/TimetableList';
+export { default as TimetableListView } from './views/TimetableList';
 export { default as Webviews } from './views/Webviews';
 
 // Exports Contexts
