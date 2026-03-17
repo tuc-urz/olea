@@ -41,6 +41,33 @@ export { default as TopNewsHtwk } from './components/TopNewsHtwk';
 export { default as WebView } from './components/WebView';
 export { default as ComponentJobsFilter } from './components/ComponentJobsFilter';
 
+// Exports Views
+
+export { default as Callmanager } from './views/Callmanager';
+export { default as Canteens } from './views/Canteens';
+export { default as Dashboard } from './views/Dashboard';
+export { default as DashboardHtwk } from './views/DashboardHtwk';
+export { default as Event } from './views/Event';
+export { default as FeedList } from './views/FeedList';
+export { default as FeedNews } from './views/FeedNews';
+export { default as Flexmenu } from './views/Flexmenu';
+export { default as FlexmenuWebview } from './views/FlexmenuWebview';
+export { default as Howhy } from './views/Howhy';
+export { default as Jobs } from './views/Jobs';
+export { default as MainMenu } from './views/MainMenu';
+export { default as NewsTabbar } from './views/NewsTabbar';
+export { default as Opal } from './views/Opal';
+export { default as PublicTransportTicket } from './views/PublicTransportTicket';
+export { default as Search } from './views/Search';
+export { default as SettingsAccessibility } from './views/SettingsAccessibility';
+export { default as SettingsAppInfo } from './views/SettingsAppInfo';
+export { default as SettingsCanteens } from './views/SettingsCanteens';
+export { default as SettingsGeneral } from './views/SettingsGeneral';
+export { default as SettingsNotifications } from './views/SettingsNotifications';
+export { default as SettingsUser } from './views/SettingsUser';
+export { default as TimetableCalendar } from './views/TimetableCalendar';
+export { default as TimetableList } from './views/TimetableList';
+export { default as Webviews } from './views/Webviews';
 
 // Exports Contexts
 
