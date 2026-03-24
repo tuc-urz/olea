@@ -16,7 +16,7 @@ import { createContext, useEffect, useContext, useMemo, useCallback } from 'reac
 
 import { useTheme } from 'react-native-paper';
 
-import { useSecureStoredReducer, useSecureStoredState } from '../../libraries/core';
+import { useSecureStoredReducer, useSecureStoredState } from '../../libraries/stored-state';
 import { useLanguage, useStagingServer } from '../../libraries/core';
 
 import CollektorVersion2ApiProvider from './CollektorVersion2ApiProvider';
