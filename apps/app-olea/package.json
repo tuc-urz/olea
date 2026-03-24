@@ -1,5 +1,5 @@
 {
-  "name": "@olea-bps/app-oa",
+  "name": "@olea/app-oa",
   "version": "1.0.0",
   "main": "./index.js",
   "scripts": {
