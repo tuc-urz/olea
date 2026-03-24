@@ -267,7 +267,6 @@ export default function MainMenu(props) {
             {
                 mainMenuRoutes
                     ? <TabView
-                        style={styles}
                         navigationState={{ index: index, routes: mainMenuRoutes }}
                         renderTabBar={MainMenuTabbar}
                         renderScene={(props) => <MainMenuScene {...props} />}
