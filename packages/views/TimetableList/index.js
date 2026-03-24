@@ -31,13 +31,17 @@ import { useFocusEffect } from '@react-navigation/native';
 
 import { DateTime, Duration } from 'luxon';
 
-import { onUpdateRefreshing, store } from '@olea-bps/core';
-import { ApiProviderNotInitializedError, useCourses, useTimetableCode } from '@olea-bps/context-timetable';
-import { AppBar as AppbarComponent } from '@olea-bps/components';
-import { OtherCourses as OtherCoursesComponent } from '@olea-bps/components';
-import { TimetableList as TimetableListComponent } from '@olea-bps/components';
-import { TimetableCodeInput } from '@olea-bps/components';
-import { CourseDetailDialog } from '@olea-bps/components';
+import { onUpdateRefreshing, store } from '../../libraries/core';
+import {
+  useCourses,
+  useTimetableCode,
+  ApiProviderNotInitializedError,
+} from '../../context/context-timetable';
+import AppbarComponent from '../../components/AppBar';
+import OtherCoursesComponent from '../../components/OtherCourses';
+import TimetableListComponent from '../../components/TimetableList';
+import TimetableCodeInput from '../../components/TimetableCodeInput';
+import CourseDetailDialog from '../../components/CourseDetailDialog';
 
 import componentStyles from './styles';
 

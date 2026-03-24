@@ -17,7 +17,7 @@ import { useTranslation } from "react-i18next";
 import { View, Text, StyleSheet, Animated } from "react-native";
 import { useTheme } from "react-native-paper";
 
-import { useConnectivityContext } from "@olea-bps/context-connectivity";
+import { useConnectivityContext } from '../../context/context-connectivity';
 
 import componentStyles from "./styles";
 

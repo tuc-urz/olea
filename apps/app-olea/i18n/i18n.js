@@ -5,7 +5,7 @@ import localeEN from './locales/en';
 import localeDE from './locales/de';
 import localeDEAccessibility from './locales/de-accessibility';
 import localeENAccessibility from './locales/en-accessibility';
-import {store} from "@olea-bps/core";
+import { store } from '@olea/base';
 
 const resources = {
     en: {...localeEN, ...localeENAccessibility},

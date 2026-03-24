@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import { offline } from '@olea-bps/redux-offline';
-import offlineConfig from '@olea-bps/redux-offline/lib/defaults';
+import { offline } from '../../redux-offline';
+import offlineConfig from '../..//redux-offline/lib/defaults';
 import { persistStore, persistReducer } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

@@ -16,9 +16,9 @@ import { createContext, useEffect, useContext, useMemo, useCallback } from 'reac
 
 import { useTheme } from 'react-native-paper';
 
-import { useSecureStoredState } from '@olea-bps/stored-state';
-import { useLanguage, useStagingServer } from '@olea-bps/core';
-import { useAccessToken } from '@olea-bps/context-user';
+import { useSecureStoredState } from '../../libraries/stored-state';
+import { useLanguage, useStagingServer } from '../../libraries/core';
+import { useAccessToken } from '../context-user';
 
 import CollektorVersion2ApiProvider from './CollektorVersion2ApiProvider';
 

@@ -26,7 +26,7 @@ import { useTranslation } from 'react-i18next';
 import { useFocusEffect } from '@react-navigation/native';
 
 import NewsListItem from '../NewsListItem'
-import { useApiProvider } from '@olea-bps/context-news';
+import { useApiProvider } from '../../context/context-news';
 
 import componentStyles from './styles';
 

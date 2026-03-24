@@ -535,7 +535,7 @@ function useUser() {
  * @see LogoutEffect
  * @example
  * import { useCallback } from 'react';
- * import { useLogoutEffect } from '@olea-bps/context-user';
+ * import { useLogoutEffect } from '@olea-base';
  *
  * function MyComponent() {
  *

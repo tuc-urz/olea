@@ -26,11 +26,11 @@ import {withTranslation} from "react-i18next";
 
 import merge from 'lodash/merge';
 
-import {onUpdateRefreshing, DataService} from '@olea-bps/core';
-import { TopNewsHtwk as TopNewsComponent } from '@olea-bps/components';
-import { MensaSlider as MensaSliderCompnent } from '@olea-bps/components';
-import { CourseInfo as CourseInfoCompnent } from '@olea-bps/components';
-import { QuickLinks as QuickLinksComponent } from '@olea-bps/components'
+import { onUpdateRefreshing, DataService } from '../../libraries/core';
+import TopNewsComponent from '../../components/TopNewsHtwk';
+import MensaSliderComponent from '../../components/MensaSlider';
+import CourseInfoComponent from '../../components/CourseInfo';
+import QuickLinksComponent from '../../components/QuickLinks';
 
 import componentStyles from "./styles"
 export const scrollRangeForAnimation = 160;
@@ -174,8 +174,8 @@ class DashboardView extends React.Component {
                     <View>
                         <TopNewsComponent    {...this.props}  animationRange={headerTranslate}/>
                         <QuickLinksComponent {...this.props} />
-                        <MensaSliderCompnent {...this.props} />
-                        <CourseInfoCompnent  {...this.props} />
+                        <MensaSliderComponent {...this.props} />
+                        <CourseInfoComponent  {...this.props} />
                     </View>
                 </Animated.ScrollView>
             </SafeAreaView>

@@ -24,12 +24,12 @@ import { connect } from 'react-redux'
 
 import merge from 'lodash/merge';
 import unescape from 'lodash/unescape';
-import {store} from '@olea-bps/core';
+import { store } from '../../libraries/core';
 
 
 import componentStyles from "./styles"
-import IconsOpenasist from "@olea-bps/icons-openasist";
-import {handleHtmlEntities} from "@olea-bps/core/helper/format.helper";
+import IconsOpenasist from '../../libraries/icons-openasist';
+import { handleHtmlEntities } from '../../libraries/core/helper/format.helper';
 import ContactDetailComponent from '../ContactDetail';
 import RoomDetailComponent from '../RoomDetail';
 import NewsDetailComponent from '../NewsDetail';

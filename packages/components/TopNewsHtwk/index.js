@@ -31,7 +31,7 @@ import NetInfo              from '@react-native-community/netinfo';
 import componentStyles      from "./styles";
 import PropTypes            from "prop-types";
 import {withTranslation}     from "react-i18next";
-import {handleHtmlEntities} from "@olea-bps/core/helper/format.helper";
+import { handleHtmlEntities } from '../../libraries/core/helper/format.helper';
 
 
 

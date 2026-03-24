@@ -26,8 +26,8 @@ import { useTranslation } from "react-i18next";
 import { useFocusEffect } from '@react-navigation/native';
 import { WebView } from 'react-native-webview';
 
-import { AppBar as AppbarComponent } from '@olea-bps/components';
-import IconsOpenasist from '@olea-bps/icons-openasist';
+import AppbarComponent from '../../components/AppBar';
+import IconsOpenasist from '../../libraries/icons-openasist';
 
 import componentStyles from "./styles";
 

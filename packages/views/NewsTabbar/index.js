@@ -26,9 +26,9 @@ import { TabView, TabBar, TabBarItem } from "react-native-tab-view";
 import { useTheme } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
-import { AppBar as AppbarComponent } from '@olea-bps/components';
-import { NewsList } from '@olea-bps/components';
-import { useNewsChannels } from '@olea-bps/context-news';
+import AppbarComponent from '../../components/AppBar';
+import NewsList from '../../components/NewsList';
+import { useNewsChannels } from '../../context/context-news';
 
 import componentStyles from './styles';
 
