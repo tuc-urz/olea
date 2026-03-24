@@ -271,7 +271,7 @@ export default function MainMenu(props) {
                         navigationState={{ index: index, routes: mainMenuRoutes }}
                         renderTabBar={MainMenuTabbar}
                         renderScene={(props) => <MainMenuScene {...props} />}
-                        onIndexChange={index => setIndex}
+                        onIndexChange={setIndex}
                     />
                     : null
             }
