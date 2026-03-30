@@ -51,30 +51,7 @@ jobs:
         run: |
           # Define all publishable packages in dependency order
           PACKAGES=(
-            # Phase 1: Leaf packages
-            "packages/libraries/core-plugins"
-            "packages/libraries/stored-state"
-            "packages/libraries/base-api-provider"
-            "packages/libraries/notifications"
-            "packages/libraries/icons-openasist"
-            "packages/libraries/react-native-webview-autoheight"
-            "packages/libraries/redux-offline"
-            "packages/context/context-user"
-            "packages/context/context-event"
-            "packages/context/context-canteen"
-            "packages/context/context-connectivity"
-            # Phase 2: Core and contexts
-            "packages/libraries/core"
-            "packages/context/context-news"
-            "packages/context/context-timetable"
-            "packages/context/context-callmanager"
-            "packages/context/context-flex-menu"
-            "packages/context/context-info-dialog"
-            "packages/context/context-public-transport-ticket"
-            "packages/context/context-mails"
-            # Phase 3: UI
-            "packages/components"
-            "packages/views"
+            "packages"
           )
 
           CHANGED_PACKAGES=()
@@ -153,27 +130,7 @@ jobs:
 
           # Define package phases for dependency ordering
           declare -A PHASES
-          PHASES["packages/libraries/core-plugins"]=1
-          PHASES["packages/libraries/stored-state"]=1
-          PHASES["packages/libraries/base-api-provider"]=1
-          PHASES["packages/libraries/notifications"]=1
-          PHASES["packages/libraries/icons-openasist"]=1
-          PHASES["packages/libraries/react-native-webview-autoheight"]=1
-          PHASES["packages/libraries/redux-offline"]=1
-          PHASES["packages/context/context-user"]=1
-          PHASES["packages/context/context-event"]=1
-          PHASES["packages/context/context-canteen"]=1
-          PHASES["packages/context/context-connectivity"]=1
-          PHASES["packages/libraries/core"]=2
-          PHASES["packages/context/context-news"]=2
-          PHASES["packages/context/context-timetable"]=2
-          PHASES["packages/context/context-callmanager"]=2
-          PHASES["packages/context/context-flex-menu"]=2
-          PHASES["packages/context/context-info-dialog"]=2
-          PHASES["packages/context/context-public-transport-ticket"]=2
-          PHASES["packages/context/context-mails"]=2
-          PHASES["packages/components"]=3
-          PHASES["packages/views"]=3
+          PHASES["packages"]=1
 
           publish_package() {
             local pkg_path=$1
@@ -199,7 +156,7 @@ jobs:
           }
 
           # Publish in phases to respect dependency order
-          for phase in 1 2 3; do
+          for phase in 1; do
             echo ""
             echo "=========================================="
             echo "Phase $phase"
