@@ -1,6 +1,6 @@
 {
   "name": "@olea-bps/context-public-transport-ticket",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Context for public transport ticket",
   "main": "index.js",
   "type": "module",

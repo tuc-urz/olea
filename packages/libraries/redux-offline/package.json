@@ -1,6 +1,6 @@
 {
   "name": "@olea-bps/redux-offline",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Redux Offline-First Architecture forked from https://github.com/redux-offline/redux-offline",
   "main": "lib/index.js",
   "scripts": {
