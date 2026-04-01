@@ -1,6 +1,6 @@
 {
   "name": "@olea-bps/context-mails",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Context for mails",
   "main": "index.js",
   "type": "module",

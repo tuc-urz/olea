@@ -1,6 +1,6 @@
 {
   "name": "@olea-bps/context-callmanager",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Context for callmanager",
   "main": "index.js",
   "type": "module",

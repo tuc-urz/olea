@@ -1,6 +1,6 @@
 {
   "name": "@olea-bps/context-user",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Context for user infos",
   "main": "index.js",
   "type": "module",
