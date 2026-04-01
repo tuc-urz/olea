@@ -4,16 +4,16 @@ import { Alert, AppState, Linking, StatusBar } from 'react-native';
 import { connect } from 'react-redux'
 import { Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from "@react-navigation/native";
-import { DataService, RootNavigation, store } from '@olea/base';
+import { DataService, RootNavigation, store } from '@olea-bps/base';
 
 import i18n from './i18n/i18n';
 import { getTheme } from './constants/Theme';
 import MainTabNavigator from './navigation/MainTabNavigator';
 
-import { CanteenContextProvider } from '@olea/base'
-import { TimetableContextProvider } from '@olea/base';
-import { ConnectivityContextProvider } from '@olea/base';
-import { NewsContextProvider } from '@olea/base';
+import { CanteenContextProvider } from '@olea-bps/base'
+import { TimetableContextProvider } from '@olea-bps/base';
+import { ConnectivityContextProvider } from '@olea-bps/base';
+import { NewsContextProvider } from '@olea-bps/base';
 
 import settings from './constants/Settings';
 import { withTranslation } from 'react-i18next';

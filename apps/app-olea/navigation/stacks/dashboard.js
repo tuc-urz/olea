@@ -1,10 +1,10 @@
 import React                    from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 
-import { DashboardHtwk as DashboardView } from '@olea/base';
-import { NewsDetail as NewsDetailComponent } from '@olea/base';
-import { CourseDetail as CourseDetailComponent } from '@olea/base';
-import { Modal as ModalComponent } from '@olea/base';
+import { DashboardHtwk as DashboardView } from '@olea-bps/base';
+import { NewsDetail as NewsDetailComponent } from '@olea-bps/base';
+import { CourseDetail as CourseDetailComponent } from '@olea-bps/base';
+import { Modal as ModalComponent } from '@olea-bps/base';
 
 import TabBarIcon               from "../tabBarIcon";
 

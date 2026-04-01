@@ -1,7 +1,7 @@
 import React                    from 'react';
 import { View }                 from "react-native";
 
-import { IconsOpenasist }       from '@olea/base';
+import { IconsOpenasist }       from '@olea-bps/base';
 
 /**
  * Create a tab bar icon
