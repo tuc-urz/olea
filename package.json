@@ -1,14 +1,11 @@
 {
-  "name": "@olea-bps/container",
+  "name": "@olea/container",
   "version": "",
   "private": true,
   "author": "codeculture<info@codeculture.de>",
   "license": "Apache-2.0",
   "workspaces": [
     "apps/*",
-    "packages/libraries/*",
-    "packages/views",
-    "packages/components",
-    "packages/context/*"
+    "packages/"
   ]
 }

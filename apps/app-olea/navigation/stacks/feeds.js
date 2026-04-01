@@ -1,10 +1,10 @@
 import React                    from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 
-import { NewsDetail as NewsDetailComponent } from '@olea-bps/components';
-import { NewsTabbar as NewsTabBarView } from '@olea-bps/views';
-import { NewsList } from '@olea-bps/components';
-import { Modal as ModalComponent } from '@olea-bps/components';
+import { NewsDetail as NewsDetailComponent } from '@olea/base';
+import { NewsTabbar as NewsTabBarView } from '@olea/base';
+import { NewsList } from '@olea/base';
+import { Modal as ModalComponent } from '@olea/base';
 
 import TabBarIcon               from "../tabBarIcon";
 

@@ -27,8 +27,8 @@ import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import { DateTime } from 'luxon';
 
-import IconsOpenasist from '@olea-bps/icons-openasist';
-import { useDateCourses } from '@olea-bps/context-timetable';
+import IconsOpenasist from '../../libraries/icons-openasist';
+import { useDateCourses } from '../../context/context-timetable';
 
 import componentStyles from './styles';
 

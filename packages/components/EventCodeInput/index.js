@@ -32,7 +32,10 @@ import {
     useTheme,
 } from 'react-native-paper';
 
-import { usePersonalEvents, usePersonalEventsCode } from '@olea-bps/context-event';
+import {
+    usePersonalEvents,
+    usePersonalEventsCode,
+} from '../../context/context-event';
 
 import componentStyles from './styles';
 

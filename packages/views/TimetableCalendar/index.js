@@ -23,16 +23,19 @@ import { DateTime, Duration } from 'luxon';
 import moment from 'moment';
 import 'moment/locale/de';
 
-import { onUpdateRefreshing, useLanguage } from '@olea-bps/core';
-import { useTimetableCode } from '@olea-bps/context-timetable';
+import { onUpdateRefreshing, useLanguage } from '../../libraries/core';
+import {
+  useCourses,
+  useTimetableCode,
+  TimetableNotFoundError,
+} from '../../context/context-timetable';
 import { Ionicons } from '@expo/vector-icons';
-import { AppBar as AppbarComponent } from '@olea-bps/components';
+import AppbarComponent from '../../components/AppBar';
 import { TabView, TabBar } from 'react-native-tab-view';
-import { TimetableDay as CalendarDay } from '@olea-bps/components';
-import { TimetableWeek as CalendarWeek } from '@olea-bps/components';
-import { TimetableMonth as CalendarMonth } from '@olea-bps/components';
-import { useCourses, TimetableNotFoundError } from '@olea-bps/context-timetable';
-import { CourseDetailDialog } from '@olea-bps/components';
+import CalendarDay from '../../components/TimetableDay';
+import CalendarWeek from '../../components/TimetableWeek';
+import CalendarMonth from '../../components/TimetableMonth';
+import CourseDetailDialog from '../../components/CourseDetailDialog';
 
 function TimetableViewCalendar(props) {
   const { theme, theme: { themeStyles, colors, appSettings, appSettings: { modules: { timetable: { code, calendarStarttime } } } }, t, settings } = props;

@@ -18,11 +18,11 @@ import { connect } from 'react-redux';
 import { withTheme } from 'react-native-paper';
 import { withTranslation } from 'react-i18next';
 import { Calendar } from 'react-native-big-calendar';
-import { useCourses } from '@olea-bps/context-timetable';
+import { useCourses } from '../../context/context-timetable';
 import CalendarStrip from 'react-native-calendar-strip';
 import { DateTime, Duration } from 'luxon';
 import { TabView } from 'react-native-tab-view';
-import { onUpdateRefreshing } from '@olea-bps/core';
+import { onUpdateRefreshing } from '../../libraries/core';
 import moment from 'moment';
 import 'moment/locale/de';
 

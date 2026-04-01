@@ -12,7 +12,12 @@
  * limitations under the License.
  */
 
-import React, { useMemo, useEffect } from 'react';
+import React, {
+    useMemo,
+    useEffect,
+    useState,
+    useCallback,
+} from 'react';
 import {
     SafeAreaView,
     ScrollView,
@@ -20,21 +25,31 @@ import {
     Text,
 } from 'react-native';
 
-import { connect } from 'react-redux'
-import { withTheme, useTheme, Appbar } from 'react-native-paper';
-import { TabView, TabBar, TabBarItem } from "react-native-tab-view";
-import { withTranslation, useTranslation } from 'react-i18next';
 
-import merge from 'lodash/merge';
-import moment from "moment/moment";
+import {
+    useTheme,
+    Appbar,
+} from 'react-native-paper';
+import {
+    TabView,
+    TabBar,
+    TabBarItem,
+} from "react-native-tab-view";
+import { useTranslation } from 'react-i18next';
+import { useFocusEffect } from '@react-navigation/native';
 
-import { onUpdateRefreshing, useActiveStagingMenuItems } from '@olea-bps/core';
-import { AppBar as AppbarComponent } from '@olea-bps/components';
-import { MainMenuEntry } from '@olea-bps/components';
-import { DevelopmentDialog } from '@olea-bps/components';
-import { useMainMenuEntries } from '@olea-bps/context-flex-menu';
 
-import componentStyles from './styles'
+import {
+    useActiveStagingMenuItems,
+    useStagingServer,
+} from '../../libraries/core';
+import AppbarComponent from '../../components/AppBar';
+import MainMenuEntry from '../../components/MainMenuEntry';
+import DevelopmentDialog from '../../components/DevelopmentDialog';
+import { useMainMenuEntries } from '../../context/context-flex-menu';
+
+
+import componentStyles from './styles';
 
 /**
  * Die Daten für einen Menüeintrag, welche für das Rendern eines Menüseintarges in einem Menü verwendet wird.
@@ -95,21 +110,21 @@ function MainMenuTabbar(props) {
             inactiveColor={themeStyles.tabs.inactiveColor}
             indicatorStyle={themeStyles.tabIndicator}
             tabStyle={{ width: 'auto', paddingHorizontal: 20 }}
-            renderTabBarItem={({ route, navigationState, ...rest}) =>
-              <TabBarItem
-                {...rest}
-                key={route.key}
-                route={route}
-                navigationState={navigationState}
-                labelStyle={themeStyles.tab}
-                activeColor={themeStyles.tabs.activeColor}
-                inactiveColor={themeStyles.tabs.inactiveColor}
-                // Die einbindung von moment.js zum Anzeigen des Wochentages sollte langfristig entfernt werden.
-                // Funktioniert die Luxon funktionalität der Wochenanzeige nicht unter iOS datetime.toFormat('ccc')
-                labelText={t(route.title).toUpperCase()}
-                accessible={true}
-                accessibilityLabel={t(route.title)}
-              />
+            renderTabBarItem={({ route, navigationState, ...rest }) =>
+                <TabBarItem
+                    {...rest}
+                    key={route.key}
+                    route={route}
+                    navigationState={navigationState}
+                    labelStyle={themeStyles.tab}
+                    activeColor={themeStyles.tabs.activeColor}
+                    inactiveColor={themeStyles.tabs.inactiveColor}
+                    // Die einbindung von moment.js zum Anzeigen des Wochentages sollte langfristig entfernt werden.
+                    // Funktioniert die Luxon funktionalität der Wochenanzeige nicht unter iOS datetime.toFormat('ccc')
+                    labelText={t(route.title).toUpperCase()}
+                    accessible={true}
+                    accessibilityLabel={t(route.title)}
+                />
             }
         />
     );
@@ -204,126 +219,65 @@ function MainMenuScene({ route: { key: mainMenuItemsKey } }) {
 }
 
 /**
- * Main Menu View
- *
- * Show a menu of views which are not available in
- * the bottom tab bar. The menu split in categories.
- * Each category has its own tab.
- *
- * Parameters:
- *  - none
- *
- * Navigation-Parameters:
- *  - none
+ * Hauptmenü-Ansicht
  */
-class MainMenuView extends React.Component {
-    static navigationOptions = {
-        header: null
-    };
+export default function MainMenu(props) {
+    const theme = useTheme();
+    const themeStyles = theme?.themeStyles;
+    const appSettings = theme?.appSettings;
+    const mainMenuSettings = appSettings?.mainMenu;
+    const mainMenuRoutes = mainMenuSettings?.routes;
+    const { t } = useTranslation();
+    const isStagingServerActive = useStagingServer();
 
     // Styles of this component
-    styles;
+    const styles = useMemo(
+        () => StyleSheet.create(componentStyles(theme)),
+        [theme]
+    );
 
-    state = {
-        index: 0,
-        routes: null,
-        developCounter: 0,
-        isDevelopMenuVisible: false,
-    };
+    const [index, setIndex] = useState(0);
+    const [developCounter, setDevelopCounter] = useState(0);
+    const [isDevelopMenuVisible, setIsDevelopMenuVisible] = useState(false);
 
+    useFocusEffect(
+        useCallback(
+            () => setDevelopCounter(0),
+            []
+        )
+    );
 
-    constructor(props) {
-        super(props);
-
-        // ------------------------------------------------------------------------
-        // PLUGIN FUNCTIONALITY
-        // ------------------------------------------------------------------------
-
-        const { pluginStyles, theme } = this.props;
-        this.styles = componentStyles(theme);
-
-        if (pluginStyles) {
-            this.styles = merge(this.styles, pluginStyles);
-        }
-
-        this.styles = StyleSheet.create(this.styles);
-
-        // ------------------------------------------------------------------------
-
-        const { appSettings } = this.props.theme;
-        const menuRoutes = appSettings.mainMenu.routes;
-        if (menuRoutes) {
-            this.state.routes = menuRoutes;
-        }
-    }
-
-    componentDidMount() {
-        this.props.navigation.addListener('focus', () => {
-            this.setState({ developCounter: 0 });
-        });
-    }
-
-    _hideDevDialog = () => {
-        this.setState({ isDevelopMenuVisible: false });
-    }
-
-    render() {
-        // ------------------------------------------------------------------------
-        // PLUGIN FUNCTIONALITY
-        // ------------------------------------------------------------------------
-        const PluginComponent = this.props.pluginComponent;
-        if (PluginComponent) {
-            return <PluginComponent />;
-        }
-        // ------------------------------------------------------------------------
-
-        const {
-            t,
-            theme: { themeStyles, colors },
-            settings: { settingsDevelop: { useStaging } } } = this.props;
-        const {
-            developCounter
-        } = this.state;
-
-        return (
-            <SafeAreaView style={[this.styles.container, themeStyles.appSafeAreaContainer]}>
-                <AppbarComponent title={t('menu:title')} {...this.props}
-                    rightAction={
-                        <>
-                            {useStaging ? <Text>Server: Staging</Text> : null}
-                            <Appbar.Action icon={developCounter >= 10 ? 'grid' : undefined} onPress={this._handlePressDevelop.bind(this)} />
-                        </>
-                    }
-                />
-                {this.state.routes && <TabView
-                    style={this.props.style}
-                    navigationState={this.state}
-                    renderTabBar={MainMenuTabbar}
-                    renderScene={(props) => <MainMenuScene {...props} />}
-                    onIndexChange={index => this.setState({ index })}
-                />}
-                <DevelopmentDialog
-                    visible={this.state.isDevelopMenuVisible}
-                    onDismiss={this._hideDevDialog}
-                />
-            </SafeAreaView>
-        );
-    }
-
-    _handlePressDevelop = () => {
-        if (this.state.developCounter >= 10) {
-            this.setState({ isDevelopMenuVisible: true });
-        }
-        this.setState({ developCounter: this.state.developCounter + 1 });
-    }
+    return (
+        <SafeAreaView style={[styles.container, themeStyles.appSafeAreaContainer]}>
+            <AppbarComponent title={t('menu:title')} {...props}
+                rightAction={
+                    <>
+                        {isStagingServerActive ? <Text>Server: Staging</Text> : null}
+                        <Appbar.Action
+                            icon={developCounter >= 10 ? 'grid' : undefined}
+                            onPress={
+                                () => developCounter >= 10
+                                    ? setIsDevelopMenuVisible(true)
+                                    : setDevelopCounter((developCounterState) => developCounterState + 1)
+                            }
+                        />
+                    </>
+                }
+            />
+            {
+                mainMenuRoutes
+                    ? <TabView
+                        navigationState={{ index: index, routes: mainMenuRoutes }}
+                        renderTabBar={MainMenuTabbar}
+                        renderScene={(props) => <MainMenuScene {...props} />}
+                        onIndexChange={setIndex}
+                    />
+                    : null
+            }
+            <DevelopmentDialog
+                visible={isDevelopMenuVisible}
+                onDismiss={() => setIsDevelopMenuVisible(false)}
+            />
+        </SafeAreaView>
+    );
 }
-
-const mapStateToProps = state => {
-    return {
-        pluginComponent: state.pluginReducer.mainMenu.component,
-        pluginStyles: state.pluginReducer.mainMenu.styles,
-        settings: state.settingReducer
-    };
-};
-
-export default connect(mapStateToProps, { onUpdateRefreshing })(withTranslation()(withTheme(MainMenuView)))

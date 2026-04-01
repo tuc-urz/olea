@@ -22,7 +22,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { connect } from 'react-redux';
 
-import IconsOpenasist from '@olea-bps/icons-openasist';
+import IconsOpenasist from '../../libraries/icons-openasist';
 
 import componentStyles from './styles';
 

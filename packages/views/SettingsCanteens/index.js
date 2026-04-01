@@ -19,12 +19,12 @@ import { connect } from 'react-redux';
 import { useTheme } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
-import { onSettingCanteenMerge, store } from '@olea-bps/core';
-import { AppBar as AppbarComponent } from '@olea-bps/components';
-import { SettingsDialogSelect } from '@olea-bps/components';
-import { SettingsDialogRadio } from '@olea-bps/components';
-import { useCanteens, useFavoriteCanteens, usePriceGroupCode } from '@olea-bps/context-canteen';
-import { SettingSection } from '@olea-bps/components';
+import { onSettingCanteenMerge, store } from '../../libraries/core';
+import AppbarComponent from '../../components/AppBar';
+import SettingsDialogSelect from '../../components/SettingsDialogSelect';
+import SettingsDialogRadio from '../../components/SettingsDialogRadio';
+import { useCanteens, useFavoriteCanteens, usePriceGroupCode } from '../../context/context-canteen';
+import SettingSection from '../../components/SettingSection';
 
 import componentStyles from './styles';
 
