@@ -1,6 +1,6 @@
 {
   "name": "@olea-bps/react-native-webview-autoheight",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "React Native WebView with AutoHeight",
   "main": "index.js",
   "scripts": {
