@@ -156,6 +156,12 @@ export {
     useLogoutEffect,
 } from './context/context-user';
 
+export {
+    default as InfoContextProvider,
+    useInfoContext,
+    usePendingInfos,
+} from './context/context-info-dialog';
+
 // Exports Contexts libraries
 
 export {
