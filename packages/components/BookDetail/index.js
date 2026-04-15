@@ -26,8 +26,8 @@ import {withTranslation} from "react-i18next";
 import merge from 'lodash/merge';
 import unescape from 'lodash/unescape';
 import uniqBy from 'lodash/uniqBy';
-import {libraryApi} from '@olea-bps/core';
-import {handleHtmlEntities} from "@olea-bps/core/helper/format.helper";
+import { libraryApi } from '../../libraries/core';
+import { handleHtmlEntities } from '../../libraries/core/helper/format.helper';
 
 
 import componentStyles from "./styles"

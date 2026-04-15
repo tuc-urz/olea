@@ -22,7 +22,7 @@ import {
 
 import { useTheme } from 'react-native-paper';
 
-import IconsOpenasist from '@olea-bps/icons-openasist';
+import IconsOpenasist from '../../libraries/icons-openasist';
 
 import componentStyles from './styles';
 

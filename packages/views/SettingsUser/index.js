@@ -20,9 +20,9 @@ import { useTranslation } from 'react-i18next';
 
 import { DateTime } from 'luxon';
 
-import { useLanguage } from '@olea-bps/core';
-import { AppBar as AppbarComponent } from '@olea-bps/components';
-import { useUser, useUserContext } from '@olea-bps/context-user';
+import { useLanguage } from '../../libraries/core';
+import AppbarComponent from '../../components/AppBar';
+import { useUser, useUserContext } from '../../context/context-user';
 
 import componentStyles from './styles';
 

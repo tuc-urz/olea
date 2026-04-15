@@ -10,7 +10,7 @@ import { useTheme } from 'react-native-paper';
 
 import { DateTime } from 'luxon';
 
-import { useSecureStoredState } from '@olea-bps/stored-state';
+import { useSecureStoredState } from '../../libraries/stored-state';
 
 import AsistServerClient from './AsistServerClient';
 

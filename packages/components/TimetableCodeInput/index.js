@@ -27,7 +27,11 @@ import { connect } from 'react-redux'
 import { Paragraph, TextInput, Button, withTheme } from 'react-native-paper';
 import { withTranslation } from 'react-i18next';
 
-import { ApiProviderNotInitializedError, useCourses, useTimetableCode } from '@olea-bps/context-timetable';
+import {
+  ApiProviderNotInitializedError,
+  useCourses,
+  useTimetableCode,
+} from '../../context/context-timetable';
 
 import componentStyles from './styles';
 

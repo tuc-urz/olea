@@ -2,7 +2,7 @@ import { View }                                from 'react-native';
 import { useTranslation }                      from 'react-i18next';
 import { createBottomTabNavigator }            from '@react-navigation/bottom-tabs';
 import { SafeAreaProvider, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ConnectivityWarning } from '@olea-bps/components';
+import { ConnectivityWarning }                 from '@olea-bps/base';
 
 import DashboardStack                          from './stacks/dashboard';
 import FeedsStack                              from './stacks/feeds';

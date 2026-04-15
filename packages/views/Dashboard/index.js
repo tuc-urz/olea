@@ -28,12 +28,12 @@ import { useTranslation } from 'react-i18next';
 import { useFocusEffect } from '@react-navigation/native';
 import Markdown from 'react-native-markdown-display';
 
-import { onUpdateRefreshing, DataService } from '@olea-bps/core';
-import { TopNews as TopNewsComponent } from '@olea-bps/components';
-import { QuickLinks as QuickLinksComponent } from '@olea-bps/components';
-import { MensaSlider as MensaSliderCompnent } from '@olea-bps/components';
-import { CourseInfo as CourseInfoCompnent } from '@olea-bps/components';
-import { usePendingInfos } from '@olea-bps/context-info-dialog';
+import { onUpdateRefreshing, DataService } from '../../libraries/core';
+import TopNewsComponent from '../../components/TopNews';
+import QuickLinksComponent from '../../components/QuickLinks';
+import MensaSliderComponent from '../../components/MensaSlider';
+import CourseInfoComponent from '../../components/CourseInfo';
+import { usePendingInfos } from '../../context/context-info-dialog';
 
 import componentStyles from './styles';
 
@@ -123,8 +123,8 @@ function DashboardView(props) {
                 <View>
                     <TopNewsComponent    {...props} animationRange={headerTranslate} />
                     <QuickLinksComponent {...props} />
-                    <MensaSliderCompnent {...props} />
-                    <CourseInfoCompnent  {...props} />
+                    <MensaSliderComponent {...props} />
+                    <CourseInfoComponent  {...props} />
                 </View>
             </Animated.ScrollView>
             <Portal>

@@ -23,7 +23,13 @@ import { useDispatch } from 'react-redux';
 import { useTheme, Portal, Dialog, Checkbox, Button } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
-import { onSettingDevelopOverride, useActiveStagingMenuItems, useShowDeeplinkAlert, useStagingServer, useSubscriberId } from '@olea-bps/core';
+import {
+    onSettingDevelopOverride,
+    useActiveStagingMenuItems,
+    useShowDeeplinkAlert,
+    useStagingServer,
+    useSubscriberId
+} from '../../libraries/core';
 
 import componentStyles from './styles'
 

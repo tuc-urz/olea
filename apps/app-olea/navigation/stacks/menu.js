@@ -1,20 +1,20 @@
 import React                    from 'react';
 import { createStackNavigator, CardStyleInterpolators } from "@react-navigation/stack";
 
-import { MainMenu as MainMenuView } from '@olea-bps/views';
-import { Opal as OpalView } from '@olea-bps/views';
-import { SettingsGeneral as GeneralSettingsView } from '@olea-bps/views';
-import { SettingsCanteens as CanteensSettingsView } from '@olea-bps/views';
-import { SettingsAccessibility as AccessibilitySettingsView } from '@olea-bps/views';
-import { Search as SearchView } from '@olea-bps/views';
-import { Webviews as WebviewsView } from '@olea-bps/views';
-import { Modal as ModalComponent } from '@olea-bps/components';
-import { CourseDetail as CourseDetailComponent } from '@olea-bps/components';
-import { Jobs as JobPortalView } from '@olea-bps/views';
-import { ComponentJobsFilter as JobFilterComponent } from '@olea-bps/components';
-import TabBarIcon                   from "../tabBarIcon";
-import { SettingsAppInfo as AppInfoSettingsView } from '@olea-bps/views';
-import { TimetableCalendar as TimetableCalendarView } from '@olea-bps/views';
+import { MainMenu as MainMenuView } from '@olea-bps/base';
+import { Opal as OpalView } from '@olea-bps/base';
+import { SettingsGeneral as GeneralSettingsView } from '@olea-bps/base';
+import { SettingsCanteens as CanteensSettingsView } from '@olea-bps/base';
+import { SettingsAccessibility as AccessibilitySettingsView } from '@olea-bps/base';
+import { Search as SearchView } from '@olea-bps/base';
+import { Webviews as WebviewsView } from '@olea-bps/base';
+import { Modal as ModalComponent } from '@olea-bps/base';
+import { CourseDetail as CourseDetailComponent } from '@olea-bps/base';
+import { Jobs as JobPortalView } from '@olea-bps/base';
+import { ComponentJobsFilter as JobFilterComponent } from '@olea-bps/base';
+import TabBarIcon from '../tabBarIcon';
+import { SettingsAppInfo as AppInfoSettingsView } from '@olea-bps/base';
+import { TimetableCalendar as TimetableCalendarView } from '@olea-bps/base';
 
 /**
  * Tab Options

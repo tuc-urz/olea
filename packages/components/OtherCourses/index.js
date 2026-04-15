@@ -30,7 +30,7 @@ import { withTranslation } from 'react-i18next';
 import merge from 'lodash/merge';
 
 import AppbarComponent from '../AppBar';
-import IconsOpenasist from '@olea-bps/icons-openasist';
+import IconsOpenasist from '../../libraries/icons-openasist';
 import TimetableListComponent from '../TimetableList';
 
 import componentStyles from './styles'

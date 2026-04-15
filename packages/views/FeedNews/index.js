@@ -29,12 +29,12 @@ import {withTranslation} from "react-i18next";
 import merge from 'lodash/merge';
 import moment from "moment";
 
-import {feedApi, onUpdateRefreshing} from "@olea-bps/core";
-import { AppBar as AppbarComponent } from '@olea-bps/components';
-import IconsOpenasist from "@olea-bps/icons-openasist";
+import {feedApi, onUpdateRefreshing} from '../../libraries/core';
+import AppbarComponent from '../../components/AppBar';
+import IconsOpenasist from '../../libraries/icons-openasist';
 
 import componentStyles from "./styles";
-import { handleHtmlEntities } from '@olea-bps/core/helper/format.helper';
+import { handleHtmlEntities } from '../../libraries/core/helper/format.helper';
 
 
 /**
