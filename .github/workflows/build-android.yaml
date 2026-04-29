@@ -1,0 +1,29 @@
+name: Build android APK
+
+on:
+  push:
+    branches:
+      - workflow-test
+
+  
+jobs:
+  build-apk:
+    runs-on: ubuntu-last
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Install dependencies
+        run: npx yarn
+      - name: Prebuild android project
+        run: npx expo prebuild -p android
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+        working-directory: ./android
+      - name: Build android app with Gradle
+        run: ./gradlew build
+        working-directory: ./android
+      - name: Build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: OLEA Android APK
+          path: android/app/build/outputs/apk
