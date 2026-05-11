@@ -13,7 +13,17 @@
  */
 
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { AppState, SafeAreaView, View, ScrollView, StyleSheet, Alert, useWindowDimensions, RefreshControl } from 'react-native';
+import {
+    AppState,
+    SafeAreaView,
+    View,
+    ScrollView,
+    StyleSheet,
+    Alert,
+    useWindowDimensions,
+    RefreshControl,
+    Image,
+} from 'react-native';
 
 import { useTheme, Text, Button } from 'react-native-paper';
 import { useFocusEffect } from '@react-navigation/native';
@@ -114,9 +124,8 @@ export default function PublicTransportTicketView() {
                                 ticketBarcode
                                     ? <>
                                         <View>
-                                            <QRCode
-                                                value={ticketBarcode}
-                                                size={width * 0.8}
+                                            <Image
+                                                source={{ uri: ticketBarcode }}
                                             />
                                         </View>
                                         <Text>
