@@ -28,7 +28,6 @@ import {
 import { useTheme, Text, Button } from 'react-native-paper';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import QRCode from 'react-native-qrcode-svg';
 
 import AppbarComponent from '../../components/AppBar';
 import { useUser } from '../../context/context-user';
