@@ -24,7 +24,7 @@ import CollektorVersion2ApiProvider from './CollektorVersion2ApiProvider';
 
 /**
  * @typedef Ticket
- * @property {string} barcode
+ * @property {string} barcode URL oder Data-URI für den Ticketbarcode als Bild
  * @property {string} owner
  * @property {date} valid_from
  * @property {date} valid_to
@@ -32,7 +32,7 @@ import CollektorVersion2ApiProvider from './CollektorVersion2ApiProvider';
 
 /**
  * @typedef PublicTransportTicketContext
- * @property {string} ticketBarcode
+ * @property {string} ticketBarcode Barcode Data-URI/URL
  * @property {string} ticketOwner
  * @property {string} ticketValidFrom
  * @property {string} ticketValidTo
