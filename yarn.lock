@@ -2315,7 +2315,7 @@ __metadata:
     "@babel/core": "npm:^7.28.4"
     "@babel/runtime": "npm:^7.27.1"
     "@notifee/react-native": "npm:^9.1.8"
-    "@olea-bps/base": "npm:^1.0.2"
+    "@olea-bps/base": "npm:^1.0.4"
     "@react-native-async-storage/async-storage": "npm:2.2.0"
     "@react-native-community/netinfo": "npm:^11.4.1"
     "@react-native-masked-view/masked-view": "npm:0.3.2"
@@ -2364,7 +2364,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@olea-bps/base@npm:^1.0.2, @olea-bps/base@workspace:packages":
+"@olea-bps/base@npm:^1.0.4, @olea-bps/base@workspace:packages":
   version: 0.0.0-use.local
   resolution: "@olea-bps/base@workspace:packages"
   dependencies:
