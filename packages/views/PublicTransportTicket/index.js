@@ -12,7 +12,12 @@
  * limitations under the License.
  */
 
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import {
+    useState,
+    useEffect,
+    useMemo,
+    useCallback,
+} from 'react';
 import {
     AppState,
     SafeAreaView,
@@ -20,9 +25,9 @@ import {
     ScrollView,
     StyleSheet,
     Alert,
-    useWindowDimensions,
     RefreshControl,
     Image,
+    useWindowDimensions,
 } from 'react-native';
 
 import { useTheme, Text, Button } from 'react-native-paper';
@@ -40,6 +45,7 @@ import componentStyles from './styles';
  */
 export default function PublicTransportTicketView() {
     const componentName = PublicTransportTicketView.name;
+    const { height: windowHeight } = useWindowDimensions();
     // Get theme from theme context
     const theme = useTheme();
     const { themeStyles } = theme;
@@ -48,7 +54,6 @@ export default function PublicTransportTicketView() {
 
     const [user, login] = useUser();
     const [ticketBarcode, ticketOwner, ticketValidFrom, ticketValidTo, refreshTicket] = usePublicTransportTicket();
-    const { width } = useWindowDimensions();
 
     const [refreshingTicketScrollView, setRefreshingTicketScrollView] = useState(false);
 
@@ -124,7 +129,15 @@ export default function PublicTransportTicketView() {
                                     ? <>
                                         <View>
                                             <Image
+                                                style={{
+                                                    // Der Barcode soll die Hälfte der Bildschirmhöhe ausfüllen.
+                                                    height: windowHeight / 2,
+                                                    width: '100%',
+                                                }}
                                                 source={{ uri: ticketBarcode }}
+                                                // Barcode soll auf die passende Größe angepasst und zentriert werden.
+                                                // Beim anpassen, wird das Seitenverhältnis beibehalten.
+                                                resizeMode='center'
                                             />
                                         </View>
                                         <Text>
