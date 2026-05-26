@@ -83,6 +83,12 @@ const CustomIcon = createIconSet(glyphMap, 'openasist');
  * This component handles the load of the icon font and
  * provides a simple way to include these icons.
  *
+ * Icon lookup precedence:
+ *  1. `iconSVG` prop (explicit React component)
+ *  2. `theme.icons[icon]` (per-app SVG registry)
+ *  3. `theme.AppIcons` (per-app font icon set)
+ *  4. library-default `CustomIcon` font icon set
+ *
  * Parameters:
  *  - icon: Name (slug) of the icon
  *  - size: Size (as Number) of the icon
@@ -94,6 +100,7 @@ const CustomIcon = createIconSet(glyphMap, 'openasist');
 function IconsOpenasist({ icon, iconSVG: IconSVG, size, color, accessibilityLabel, ...props }) {
     const theme = useTheme();
     const { AppIcons } = theme;
+    const ThemeIcon = theme.icons?.[icon];
 
     const iconSize = size ?? 26;
     const iconAriaLabel = props?.['aria-label'] ?? accessibilityLabel ?? null;
@@ -108,6 +115,14 @@ function IconsOpenasist({ icon, iconSVG: IconSVG, size, color, accessibilityLabe
     if (IconSVG) {
         return (
             <IconSVG
+                {...iconProps}
+                width={iconSize}
+                height={iconSize}
+            />
+        );
+    } else if (typeof ThemeIcon === 'function') {
+        return (
+            <ThemeIcon
                 {...iconProps}
                 width={iconSize}
                 height={iconSize}
