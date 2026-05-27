@@ -3,6 +3,7 @@ import settings from './Settings';
 import fonts from './layout/Fonts';
 import { fontSizes, accessibilityFontSizes, lineHeights, accessibilityLineHeights } from './layout/fontSizes';
 import icons from './layout/Icons';
+import iconsSVG from './layout/IconsSVG';
 import { getStyles } from './layout/Styles';
 import paddings from './layout/Paddings';
 import {themeColors, themeColorsHighContrast} from './layout/Colors';
@@ -26,7 +27,8 @@ const theme = {
     animation: {
         scale: 1.0,
     },
-    AppIcons: icons
+    AppIcons: icons, //old icons import from .ttf font file
+    icons: iconsSVG //new icons import from svg file
 };
 
 export const getTheme = (highContrast, increaseFontSize) => {

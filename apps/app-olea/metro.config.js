@@ -14,6 +14,11 @@ config.resolver.nodeModulesPaths = [
   path.resolve(projectRoot, 'node_modules'),
   path.resolve(workspaceRoot, 'node_modules'),
 ];
+// 3. Compile *.svg imports into React components via react-native-svg-transformer.
+// Move 'svg' from assetExts to sourceExts so metro treats it as source, not an asset.
+config.transformer.babelTransformerPath = require.resolve('react-native-svg-transformer/expo');
+config.resolver.assetExts = config.resolver.assetExts.filter((ext) => ext !== 'svg');
+config.resolver.sourceExts = [...config.resolver.sourceExts, 'svg'];
 
 // Prevents: "Cannot read property '__extends' of undefined"
 config.resolver.unstable_enablePackageExports = false;
