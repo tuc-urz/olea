@@ -59,7 +59,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.28.4",
-    "@types/luxon": "^3.7.1"
+    "@types/luxon": "^3.7.1",
+    "react-native-svg-transformer": "^1.5.1"
   },
   "private": true,
   "license": "Apache-2.0"
