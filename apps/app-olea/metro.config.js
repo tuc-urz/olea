@@ -7,8 +7,8 @@ const projectRoot = __dirname;
 
 const config = getDefaultConfig(projectRoot);
 
-// 1. Watch all files within the monorepo
-config.watchFolders = [workspaceRoot];
+// 1. Watch all files within the monorepo (in addition to Expo's defaults)
+config.watchFolders = [...(config.watchFolders || []), workspaceRoot];
 // 2. Let Metro know where to resolve packages, and in what order
 config.resolver.nodeModulesPaths = [
   path.resolve(projectRoot, 'node_modules'),
@@ -19,8 +19,5 @@ config.resolver.nodeModulesPaths = [
 config.transformer.babelTransformerPath = require.resolve('react-native-svg-transformer/expo');
 config.resolver.assetExts = config.resolver.assetExts.filter((ext) => ext !== 'svg');
 config.resolver.sourceExts = [...config.resolver.sourceExts, 'svg'];
-
-// Prevents: "Cannot read property '__extends' of undefined"
-config.resolver.unstable_enablePackageExports = false;
 
 module.exports = config;
