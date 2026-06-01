@@ -44,8 +44,6 @@
         },
         "UIBackgroundModes": [
           "remote-notification",
-          "fetch",
-          "remote-notification",
           "fetch"
         ],
         "ITSAppUsesNonExemptEncryption": false
