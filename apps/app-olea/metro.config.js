@@ -20,4 +20,13 @@ config.transformer.babelTransformerPath = require.resolve('react-native-svg-tran
 config.resolver.assetExts = config.resolver.assetExts.filter((ext) => ext !== 'svg');
 config.resolver.sourceExts = [...config.resolver.sourceExts, 'svg'];
 
+// 4. Shim the Node core module 'punycode' to its userland npm package.
+// markdown-it (via react-native-markdown-display) does `require('punycode')`,
+// which the React Native runtime doesn't provide. Alias it to the installed
+// 'punycode' package so Metro can bundle it.
+config.resolver.extraNodeModules = {
+  ...config.resolver.extraNodeModules,
+  punycode: require.resolve('punycode/'),
+};
+
 module.exports = config;

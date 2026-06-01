@@ -44,8 +44,11 @@
         },
         "UIBackgroundModes": [
           "remote-notification",
+          "fetch",
+          "remote-notification",
           "fetch"
-        ]
+        ],
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
@@ -104,7 +107,7 @@
         {
           "backgroundColor": "#00535c",
           "image": "./assets/images/icon.png",
-          "imageWidth":350
+          "imageWidth": 350
         }
       ],
       [
@@ -112,7 +115,8 @@
         {
           "color": "#000000"
         }
-      ]
+      ],
+      "./plugins/withFirebaseNotificationColorFix"
     ]
   }
 }
