@@ -1,4 +1,8 @@
+import { DateTime } from 'luxon';
+
 import HttpApiProvider, { JsonContentType } from '../../libraries/base-api-provider';
+
+
 
 /**
  * Infos-API-Client für Kollektor
@@ -25,7 +29,23 @@ export default class CollektorVersion2ApiProvider extends HttpApiProvider {
         const getTicketUrl = this.getTicketUrl();
 
         return this.get(getTicketUrl)
-            .then(response => response.json());
+            .then(response => response.json())
+            .then(
+                jsonTicket => {
+                    const ticketValidFromDateTime = ticket?.validFrom
+                        ? DateTime.fromISO(ticket.validFrom)
+                        : null;
+
+                    const ticketValidToDateTime = ticket?.validTo
+                        ? DateTime.fromISO(tickt?.validTo)
+                        : null;
+
+                    setTicketBarcode(ticket?.barcode ?? null);
+                    setTicketOwner(ticket?.owner ?? null);
+                    setTicketValidFrom(ticketValidFromDateTime);
+                    setTicketValidTo(ticketValidToDateTime);
+                }
+            );
     }
 
     /**
