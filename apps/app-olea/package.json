@@ -12,7 +12,7 @@
     "@babel/runtime": "^7.27.1",
     "@expo/vector-icons": "^15.0.2",
     "@notifee/react-native": "^9.1.8",
-    "@olea-bps/base": "^1.0.4",
+    "@olea-bps/base": "^1.1.0",
     "@react-native-async-storage/async-storage": "2.2.0",
     "@react-native-community/netinfo": "12.0.1",
     "@react-native-masked-view/masked-view": "0.3.2",
