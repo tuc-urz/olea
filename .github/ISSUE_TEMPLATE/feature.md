@@ -1,21 +1,18 @@
 ---
 name: Feature
 about: Suggest an idea for this project
-title: ''
+title: Feature // Modul // Titel
 labels: enhancement
 assignees: ''
 type: Feature
 
 ---
 
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+**Was ist Ziel dieses Features?**
 
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
+**Für welche Zielgruppe ist das Feature**
+* [ ] Studenten
+* [ ] Schüler
+* [ ] Mitarbeiter
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
-
-**Additional context**
-Add any other context or screenshots about the feature request here.
+**Muss Barrierefreiheit berücksichtigt werden und wie?**
