@@ -66,15 +66,5 @@
     "react-native-svg-transformer": "^1.5.1"
   },
   "private": true,
-  "license": "Apache-2.0",
-  "expo": {
-    "doctor": {
-      "reactNativeDirectoryCheck": {
-        "exclude": [
-          "@notifee/react-native"
-        ],
-        "listUnknownPackages": false
-      }
-    }
-  }
+  "license": "Apache-2.0"
 }
