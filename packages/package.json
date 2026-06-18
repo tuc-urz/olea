@@ -57,7 +57,7 @@
   },
   "peerDependencies": {
     "react": "^19.0.0",
-    "react-native": "^0.81.0 || ^0.85.0",
+    "react-native": "^0.85.0",
     "react-native-paper": "^5.0.0",
     "react-redux": "^9.2.0",
     "redux": "^4.0.5"
