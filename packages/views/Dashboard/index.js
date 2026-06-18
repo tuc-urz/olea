@@ -26,7 +26,7 @@ import { connect } from 'react-redux';
 import { Appbar, Button, Dialog, Portal, useTheme } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 import { useFocusEffect } from '@react-navigation/native';
-import Markdown from 'react-native-markdown-display';
+import { EnrichedMarkdownText } from 'react-native-enriched-markdown';
 
 import { onUpdateRefreshing, DataService } from '../../libraries/core';
 import TopNewsComponent from '../../components/TopNews';
@@ -140,9 +140,9 @@ function DashboardView(props) {
                     <Dialog.Content>
                         {
                             pendingInfo
-                                ? <Markdown>
-                                    {pendingInfo?.message}
-                                </Markdown>
+                                ? <EnrichedMarkdownText
+                                    markdown={pendingInfo?.message}
+                                />
                                 : null
                         }
                     </Dialog.Content>

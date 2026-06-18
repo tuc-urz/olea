@@ -43,6 +43,7 @@
     "jwt-decode": "4.0.0",
     "moment": "^2.29.4",
     "react-native-elements": "^3.4.3",
+    "react-native-enriched-markdown": "^0.6.0",
     "react-native-modalbox": "^2.0.2",
     "react-native-paper": "^5.15.2",
     "react-native-svg": "15.15.4",
