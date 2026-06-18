@@ -1,5 +1,11 @@
 import uuid from 'react-native-uuid';
-import messaging from '@react-native-firebase/messaging';
+import {
+    getMessaging,
+    isDeviceRegisteredForRemoteMessages,
+    registerDeviceForRemoteMessages,
+    getToken,
+    onTokenRefresh,
+} from '@react-native-firebase/messaging';
 import debounce from 'lodash/debounce';
 
 import { store } from '../../core';
@@ -32,8 +38,9 @@ export default class SubscriberService {
      */
     async initializeSubscriber() {
         this.subscriberId = this.getSubscriberId();
-        if(!messaging().isDeviceRegisteredForRemoteMessages) {
-            await messaging().registerDeviceForRemoteMessages();
+        const messaging = getMessaging();
+        if(!isDeviceRegisteredForRemoteMessages(messaging)) {
+            await registerDeviceForRemoteMessages(messaging);
         }
         const token = await this.getFCMToken();
 
@@ -66,7 +73,7 @@ export default class SubscriberService {
      * @returns {Promise<void>}
      */
     async getFCMToken() {
-        return await messaging().getToken();
+        return await getToken(getMessaging());
     }
 
 
@@ -92,7 +99,7 @@ export default class SubscriberService {
 
         // Listen for Token updates
         if(!skipRefresh) {
-            messaging().onTokenRefresh(newToken => {
+            onTokenRefresh(getMessaging(), newToken => {
                 this.upsertSubscriber(newToken, true);
             });
         }

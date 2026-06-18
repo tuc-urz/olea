@@ -61,7 +61,7 @@ function FlexMenuContextProvider({ children }) {
                 //    return new AsistServerApiProvider.from(timetableApiBaseUrl, timetableApiUniversity, 'de');
                 //    break;
                 case CollectorVersion2ProviderName:
-                    return new CollectorVersion2ApiProvider.from(flexMenuApiBaseUrl);
+                    return CollectorVersion2ApiProvider.from(flexMenuApiBaseUrl);
                     break;
                 default:
                     console.log(`${componentName}: Can't build api provider: ${flexMenuApiProvider}`)

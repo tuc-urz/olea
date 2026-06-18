@@ -46,7 +46,7 @@ function CallManagerContextProvider({ children }) {
             switch (callManagerApiProvider?.toLowerCase()) {
                 case TucCallManagerProviderName:
                     console.debug(componentName, ':', 'use tu chemnitz call manager');
-                    return new TucCallManager.from(callManagerApiBaseUrl, 'de', accessToken);
+                    return TucCallManager.from(callManagerApiBaseUrl, 'de', accessToken);
                 default:
                     console.log(`${componentName}: Can't build api provider: ${callManagerApiProvider}`)
                     return null;

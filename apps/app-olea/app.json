@@ -3,24 +3,14 @@
     "name": "OLEA",
     "description": "",
     "slug": "openasist-openasist",
-    "privacy": "public",
     "platforms": [
       "ios",
       "android"
     ],
-    "scheme": [
-      "de.openasist.app"
-    ],
-    "notification": {
-      "color": "#000000"
-    },
+    "scheme": "de.openasist.app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "packagerOpts": {
-      "config": "./rn-cli.config.js",
-      "projectRoots": ""
-    },
     "extra": {
       "eas": {
         "projectId": "f28ae1d0-7ce7-49f9-bfd4-71b4890031dd"
@@ -29,16 +19,11 @@
     "updates": {
       "fallbackToCacheTimeout": 0,
       "enabled": false,
-      "checkAutomatically": "NEVER",
-      "useClassicUpdates": true,
-      "url": "https://exp.host/@abastian/openasist-openasist"
+      "checkAutomatically": "NEVER"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
-    "facebookAutoInitEnabled": false,
-    "facebookAutoLogAppEventsEnabled": false,
-    "facebookAdvertiserIDCollectionEnabled": false,
     "ios": {
       "usesBroadcastPushNotifications": true,
       "entitlements": {
@@ -60,11 +45,11 @@
         "UIBackgroundModes": [
           "remote-notification",
           "fetch"
-        ]
+        ],
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
-      "edgeToEdgeEnabled": true,
       "package": "de.openasist.app",
       "adaptiveIcon": {
         "backgroundColor": "#00535c",
@@ -111,8 +96,9 @@
           },
           "ios": {
             "useFrameworks": "static",
-            "deploymentTarget": "15.1",
-            "carbonLanguageVersion": "1.3"
+            "deploymentTarget": "16.4",
+            "cocoapodsVersion": "1.15.2",
+            "privacyManifestAggregationEnabled": false
           }
         }
       ],
@@ -121,9 +107,16 @@
         {
           "backgroundColor": "#00535c",
           "image": "./assets/images/icon.png",
-          "imageWidth":350
+          "imageWidth": 350
         }
-      ]
+      ],
+      [
+        "expo-notifications",
+        {
+          "color": "#000000"
+        }
+      ],
+      "./plugins/withFirebaseNotificationColorFix"
     ]
   }
 }

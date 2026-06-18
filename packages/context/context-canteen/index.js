@@ -386,10 +386,10 @@ function CanteenContextProvider({ children, settings, rootUrl, rootStgUrl, useSt
             switch (canteenApiProvider?.toLowerCase()) {
                 case AsistServerProviderName:
                     console.debug(componentName, ': use asist server api');
-                    return new AsistServerApiProvider.from(canteenApiBaseUrl, canteenApiUniversity, language);
+                    return AsistServerApiProvider.from(canteenApiBaseUrl, canteenApiUniversity, language);
                 case CollectorVersion2ProviderName:
                     console.debug(componentName, ': use collector v2 api');
-                    return new CollektorVersion2ApiProvider.from(canteenApiBaseUrl, language);
+                    return CollektorVersion2ApiProvider.from(canteenApiBaseUrl, language);
                 default:
                     console.log(`${componentName}: Can't build api provider: ${canteenApiProvider}`)
                     return null;

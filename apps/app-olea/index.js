@@ -21,13 +21,25 @@ enableScreens();
 
 import App from './App';
 
+// Cap the system font scaling at 3.2x. defaultProps on functional components
+// is deprecated in React 19, so we proxy the underlying forwardRef render.
+const TextRender = Text.render;
+Text.render = function (props, ref) {
+    return TextRender.call(this, {
+        ...props,
+        maxFontSizeMultiplier: props.maxFontSizeMultiplier ?? 3.2,
+    }, ref);
+};
+
+const TextInputRender = TextInput.render;
+TextInput.render = function (props, ref) {
+    return TextInputRender.call(this, {
+        ...props,
+        maxFontSizeMultiplier: props.maxFontSizeMultiplier ?? 3.2,
+    }, ref);
+};
+
 // registerRootComponent calls AppRegistry.registerComponent('main', () => App);
 // It also ensures that whether you load the app in Expo Go or in a native build,
 // the environment is set up appropriately
 registerRootComponent(App);
-
-// Limit the system font scaling to max 3.2.
-Text.defaultProps = Text.defaultProps || {};
-Text.defaultProps.maxFontSizeMultiplier = 3.2;
-TextInput.defaultProps = TextInput.defaultProps || {};
-TextInput.defaultProps.maxFontSizeMultiplier = 3.2;
