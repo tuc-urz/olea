@@ -20,7 +20,7 @@ import {
     Image
 } from 'react-native';
 import { connect } from 'react-redux'
-import { Button, Dialog, Portal, useTheme } from 'react-native-paper';
+import { Button, Dialog, IconButton, Portal, useTheme } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
 import { useFilteredMenu } from '../../context/context-canteen';
@@ -29,6 +29,7 @@ import { onUpdateRefreshing } from '../../libraries/core';
 import IconsOpenasist from '../../libraries/icons-openasist';
 
 import componentStyles from './styles';
+import { addAlpha } from '../../libraries/core/helper/color';
 
 /**
  * Mensa Menu Component
@@ -199,19 +200,21 @@ function Meal({ settings, meal, priceGroupCode, priceGroupName }) {
                     {
                         meal?.additives || meal?.allergens
                             ? <>
-                                <Button
+                                <IconButton
                                     style={styles.btnAddionals}
-                                    color={colors.buttonText}
-                                    labelStyle={styles.buttonLabel}
+                                    iconColor={colors.secondaryText}
+                                    rippleColor={addAlpha(colors.primary, 0.12)}
+                                    size={15}
                                     accessibilityLabel={t('canteen:allergeneTitle')}
                                     onPress={() => setAdditionalDialogVisible(true)}
-                                >
-                                    <IconsOpenasist
-                                        icon={"info"}
-                                        color={colors.secondaryText}
-                                        size={15}
-                                    />
-                                </Button>
+                                    icon={({ size, color }) => (
+                                        <IconsOpenasist
+                                            icon={"info"}
+                                            color={color}
+                                            size={size}
+                                        />
+                                    )}
+                                />
                                 <AdditionalDialog
                                     allergens={meal?.allergens}
                                     additives={meal?.additives}

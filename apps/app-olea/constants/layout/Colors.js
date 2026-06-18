@@ -1,15 +1,4 @@
-// Helper function to add alpha to a color
-const addAlpha = (hexColor, alpha) => {
-    // Remove # if present
-    const hex = hexColor.replace('#', '');
-
-    // Parse RGB values
-    const r = parseInt(hex.substring(0, 2), 16);
-    const g = parseInt(hex.substring(2, 4), 16);
-    const b = parseInt(hex.substring(4, 6), 16);
-
-    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-};
+import { addAlpha } from '@olea-bps/base/libraries/core/helper/color';
 
 export const colors = {
     black: '#000000',

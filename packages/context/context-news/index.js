@@ -72,7 +72,7 @@ function NewsContextProvider({ children }) {
             switch (newsApiProvider?.toLowerCase()) {
                 case CollectorVersion2ProviderName:
                     console.debug(componentName, ': use collector v2 api');
-                    return new CollektorVersion2ApiProvider.from(newsApiBaseUrl, language);
+                    return CollektorVersion2ApiProvider.from(newsApiBaseUrl, language);
                 default:
                     console.log(`${componentName}: Can't build api provider: ${newsApiProvider}`)
                     return null;

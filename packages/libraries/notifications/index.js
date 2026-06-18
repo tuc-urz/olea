@@ -13,7 +13,13 @@
  */
 
 import React from 'react';
-import messaging from '@react-native-firebase/messaging';
+import {
+    getMessaging,
+    setBackgroundMessageHandler,
+    onMessage,
+    unregisterDeviceForRemoteMessages,
+    AuthorizationStatus,
+} from '@react-native-firebase/messaging';
 
 import notifee, { AndroidStyle, EventType } from '@notifee/react-native';
 import { feedApi, RootNavigation, store, updateFeeds } from '../core';
@@ -44,7 +50,7 @@ export default class OpenASiSTNotifications {
      * Important: This function must be called as soon as possible! (Before app initialization)
      */
     initBackgroundHandler() {
-        messaging().setBackgroundMessageHandler(async remoteMessage => {
+        setBackgroundMessageHandler(getMessaging(), async remoteMessage => {
             await this.createNotification(remoteMessage);
         });
 
@@ -61,7 +67,7 @@ export default class OpenASiSTNotifications {
             await this.subscriberService.initializeSubscriber();
 
             // Listen for new Messages while the app is in foreground
-            messaging().onMessage(async remoteMessage => {
+            onMessage(getMessaging(), async remoteMessage => {
                 await this.createNotification(remoteMessage);
             });
 
@@ -73,7 +79,7 @@ export default class OpenASiSTNotifications {
 
     unregister() {
         // Unregister the user device from firebase
-        messaging().unregisterDeviceForRemoteMessages().then(() => {/* Unregistered */});
+        unregisterDeviceForRemoteMessages(getMessaging()).then(() => {/* Unregistered */});
         notifee.cancelAllNotifications().then(() => {/* Cancelled all notifications */});
     }
 
@@ -128,8 +134,8 @@ export default class OpenASiSTNotifications {
         });
 
         const enabled =
-            authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-            authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+            authStatus === AuthorizationStatus.AUTHORIZED ||
+            authStatus === AuthorizationStatus.PROVISIONAL;
 
         await notifee.requestPermission({
             criticalAlert: true

@@ -7,8 +7,8 @@ const projectRoot = __dirname;
 
 const config = getDefaultConfig(projectRoot);
 
-// 1. Watch all files within the monorepo
-config.watchFolders = [workspaceRoot];
+// 1. Watch all files within the monorepo (in addition to Expo's defaults)
+config.watchFolders = [...(config.watchFolders || []), workspaceRoot];
 // 2. Let Metro know where to resolve packages, and in what order
 config.resolver.nodeModulesPaths = [
   path.resolve(projectRoot, 'node_modules'),
@@ -20,7 +20,13 @@ config.transformer.babelTransformerPath = require.resolve('react-native-svg-tran
 config.resolver.assetExts = config.resolver.assetExts.filter((ext) => ext !== 'svg');
 config.resolver.sourceExts = [...config.resolver.sourceExts, 'svg'];
 
-// Prevents: "Cannot read property '__extends' of undefined"
-config.resolver.unstable_enablePackageExports = false;
+// 4. Shim the Node core module 'punycode' to its userland npm package.
+// markdown-it (via react-native-markdown-display) does `require('punycode')`,
+// which the React Native runtime doesn't provide. Alias it to the installed
+// 'punycode' package so Metro can bundle it.
+config.resolver.extraNodeModules = {
+  ...config.resolver.extraNodeModules,
+  punycode: require.resolve('punycode/'),
+};
 
 module.exports = config;
