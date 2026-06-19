@@ -20,6 +20,7 @@ import {
     RefreshControl,
     SafeAreaView,
     useAnimatedValue,
+    Linking,
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -143,6 +144,17 @@ function DashboardView(props) {
                                 ? <EnrichedMarkdownText
                                     markdown={pendingInfo?.message}
                                     selectable={false}
+                                    onLinkPress={
+                                        event =>
+                                            Linking
+                                                .openURL(event.url)
+                                                .catch(
+                                                    reason => {
+                                                        // TODO: Nutzer informieren, dass der Link nicht geöffnet werden konnte
+                                                        console.debug(componentName, ':', 'can´t open url', event.url);
+                                                    }
+                                                )
+                                    }
                                 />
                                 : null
                         }
