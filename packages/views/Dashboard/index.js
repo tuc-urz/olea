@@ -142,6 +142,7 @@ function DashboardView(props) {
                             pendingInfo
                                 ? <EnrichedMarkdownText
                                     markdown={pendingInfo?.message}
+                                    selectable={false}
                                 />
                                 : null
                         }
