@@ -41,7 +41,6 @@
     "install": "^0.13.0",
     "lodash": "^4.17.21",
     "luxon": "^3.7.2",
-    "punycode": "^2.3.1",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-i18next": "^16.0.1",
