@@ -144,6 +144,12 @@ function DashboardView(props) {
                                 ? <EnrichedMarkdownText
                                     markdown={pendingInfo?.message}
                                     selectable={false}
+                                    md4cFlags={{
+                                        // Texte können mit _text_ unterstrichen werden
+                                        underline: true,
+                                        // Texte können mit ==text== hervorgehoben werden
+                                        highlight: true,
+                                    }}
                                     onLinkPress={
                                         event =>
                                             Linking
