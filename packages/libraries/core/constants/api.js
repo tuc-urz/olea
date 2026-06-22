@@ -8,7 +8,7 @@ export const GETOptions = {
         "Accept-Language" : "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7",
         "Cache-Control" : "no-cache",
         'Pragma': 'no-cache',
-        'Expires': 0,
+        'Expires': '0',
     }
 };
 export const GETOptionsByLanguage = (languageCode = null) => {
@@ -28,7 +28,7 @@ export const GETOptionsByLanguage = (languageCode = null) => {
             "Accept-Language": acceptLanguage,
             "Cache-Control": "no-cache",
             'Pragma': 'no-cache',
-            'Expires': 0,
+            'Expires': '0',
         }
     }
 };
