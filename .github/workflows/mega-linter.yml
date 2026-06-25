@@ -96,7 +96,13 @@ jobs:
           #     github.event_name == 'push' &&
           #     github.ref == 'refs/heads/main'
           #   }}
-          VALIDATE_ALL_CODEBASE: true
+          # Full sweep only when pushing to main; otherwise lint only the
+          # git diff against main (i.e. the changes in this PR/commit).
+          VALIDATE_ALL_CODEBASE: >-
+            ${{
+              github.event_name == 'push' &&
+              github.ref == 'refs/heads/main'
+            }}
 
           # Disable LLM Advisor for bot PRs (dependabot, renovate, etc.)
           LLM_ADVISOR_ENABLED: >-
