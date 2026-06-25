@@ -1,0 +1,70 @@
+# Generates a CycloneDX SBOM with Trivy and uploads it to Dependency-Track.
+---
+name: SBOM to Dependency-Track
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  # Dependency-Track host ONLY (no scheme) — the gh-upload-sbom action takes
+  # protocol/port separately. Not a secret. Reachable once the reverse proxy
+  # is live; until then the upload step fails by design.
+  DT_HOST: dependencytrack.prx.dpipe.io
+
+jobs:
+  sbom:
+    name: SBOM → Dependency-Track
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # projectVersion source: app marketing version (repo has no git tags).
+      - name: Read app version
+        id: ver
+        run: echo "version=$(jq -r '.expo.version' apps/app-olea/app.json)" >> "$GITHUB_OUTPUT"
+
+      # `--format cyclonedx` disables vuln scanning and enables --list-all-pkgs
+      # automatically, so this produces a pure SBOM of the yarn.lock dependency
+      # tree across all workspaces. The pinned version controls the emitted
+      # CycloneDX spec version (must stay <= 1.6 for Dependency-Track v5).
+      - name: Generate CycloneDX SBOM (Trivy fs)
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          scan-type: fs
+          scan-ref: .
+          format: cyclonedx
+          output: sbom.cdx.json
+
+      - name: Archive SBOM
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: sbom.cdx.json
+
+      # The action handles base64 encoding + the JSON PUT /api/v1/bom internally.
+      # API key (secret DT_API_KEY) needs BOM_UPLOAD + PROJECT_CREATION_UPLOAD + VIEW_PORTFOLIO.
+      - name: Upload SBOM to Dependency-Track
+        uses: DependencyTrack/gh-upload-sbom@v4.0.0
+        with:
+          serverhostname: ${{ env.DT_HOST }}
+          protocol: https
+          port: '443'
+          apikey: ${{ secrets.DT_API_KEY }}
+          projectname: openasist
+          projectversion: ${{ steps.ver.outputs.version }}
+          autocreate: 'true'
+          bomfilename: sbom.cdx.json
+
+# --- Follow-ups from the spec (deferred) ---------------------------------
+# P1  Validate SBOM before upload (catches rare non-schema-compliant output):
+#       npm exec -y -- @cyclonedx/cyclonedx-cli validate --input-file sbom.cdx.json --fail-on-errors
+# P2  Gate on async processing (200 != processed): poll GET /api/v1/bom/token/{token}
+#       using the action's `token` output.
+# P2  Add a weekly `schedule:` trigger to catch new CVEs in unchanged deps.
