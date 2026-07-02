@@ -333,6 +333,13 @@
   "jobs": {
     "noJobsTitle": "No jobs could be found, please try again later."
   },
+  "infodialog": {
+    "unopenableUrlAlert": {
+      "title": "Unable to Open Link",
+      "message": "Unable to open the link because no compatible app was found on your phone.\n\n Link: {{link}}",
+      "okButton": "OK"
+    }
+  },
   "menu": {
     "title": "Menu",
     "titles": {

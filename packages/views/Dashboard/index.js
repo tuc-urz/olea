@@ -12,7 +12,10 @@
  * limitations under the License.
  */
 
-import { useMemo, useCallback } from 'react';
+import {
+    useMemo,
+    useCallback,
+} from 'react';
 import {
     Animated,
     StyleSheet,
@@ -21,6 +24,7 @@ import {
     SafeAreaView,
     useAnimatedValue,
     Linking,
+    Alert,
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -156,8 +160,16 @@ function DashboardView(props) {
                                                 .openURL(event.url)
                                                 .catch(
                                                     reason => {
-                                                        // TODO: Nutzer informieren, dass der Link nicht geöffnet werden konnte
                                                         console.debug(componentName, ':', 'can´t open url', event.url);
+
+                                                        // Zeige dem Nutzer an, das der Link nicht geöffent werden konnte
+                                                        Alert.alert(
+                                                            t('infodialog:unopenableUrlAlert:title'),
+                                                            t('infodialog:unopenableUrlAlert:message', { link: event.url }),
+                                                            [
+                                                                { text: t('infodialog:unopenableUrlAlert:okButton'), style: 'default', isPreferred: true }
+                                                            ],
+                                                        )
                                                     }
                                                 )
                                     }
