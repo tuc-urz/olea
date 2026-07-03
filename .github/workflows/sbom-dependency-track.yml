@@ -1,4 +1,7 @@
-# Generates a CycloneDX SBOM with Trivy and uploads it to Dependency-Track.
+# Generates a CycloneDX SBOM with Trivy and drops it into the Garage S3
+# bucket. GitHub runners cannot reach Dependency-Track directly (internal
+# network); an hourly uploader imports objects from incoming/ into DT and
+# moves them to processed/.
 ---
 name: SBOM to Dependency-Track
 
@@ -11,15 +14,9 @@ on:
 permissions:
   contents: read
 
-env:
-  # Dependency-Track host ONLY (no scheme) — the gh-upload-sbom action takes
-  # protocol/port separately. Not a secret. Reachable once the reverse proxy
-  # is live; until then the upload step fails by design.
-  DT_HOST: dependencytrack.prx.dpipe.io
-
 jobs:
   sbom:
-    name: SBOM → Dependency-Track
+    name: SBOM → S3 drop → Dependency-Track
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -48,23 +45,24 @@ jobs:
           name: sbom
           path: sbom.cdx.json
 
-      # The action handles base64 encoding + the JSON PUT /api/v1/bom internally.
-      # API key (secret DT_API_KEY) needs BOM_UPLOAD + PROJECT_CREATION_UPLOAD + VIEW_PORTFOLIO.
-      - name: Upload SBOM to Dependency-Track
-        uses: DependencyTrack/gh-upload-sbom@v4.0.0
-        with:
-          serverhostname: ${{ env.DT_HOST }}
-          protocol: https
-          port: '443'
-          apikey: ${{ secrets.DT_API_KEY }}
-          projectname: openasist
-          projectversion: ${{ steps.ver.outputs.version }}
-          autocreate: 'true'
-          bomfilename: sbom.cdx.json
+      # Object key = incoming/<project>/<version>/<build>.cdx.json — the
+      # uploader parses <project>/<version> from this path to pick the DT
+      # project, so the segments are deliberate: project "olea", version from
+      # app.json (github.ref_name would always be "main" here).
+      # SBOM_S3_KEY / SBOM_S3_SECRET = scoped Garage key; SBOM_S3_ENDPOINT /
+      # SBOM_S3_REGION = Garage endpoint URL and region. All stored as CI
+      # secrets. AWS_ENDPOINT_URL is honored by AWS CLI v2 (>= 2.13).
+      - name: Upload SBOM to S3 drop bucket
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.SBOM_S3_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SBOM_S3_SECRET }}
+          AWS_DEFAULT_REGION: ${{ secrets.SBOM_S3_REGION }}
+          AWS_ENDPOINT_URL: ${{ secrets.SBOM_S3_ENDPOINT }}
+        run: |
+          aws s3 cp sbom.cdx.json \
+            "s3://dependency-track-sbom-drop/incoming/olea/${{ steps.ver.outputs.version }}/${{ github.run_id }}.cdx.json"
 
 # --- Follow-ups from the spec (deferred) ---------------------------------
 # P1  Validate SBOM before upload (catches rare non-schema-compliant output):
 #       npm exec -y -- @cyclonedx/cyclonedx-cli validate --input-file sbom.cdx.json --fail-on-errors
-# P2  Gate on async processing (200 != processed): poll GET /api/v1/bom/token/{token}
-#       using the action's `token` output.
 # P2  Add a weekly `schedule:` trigger to catch new CVEs in unchanged deps.
