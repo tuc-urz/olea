@@ -16,6 +16,8 @@ import { createContext, useEffect, useContext, useMemo, useCallback } from 'reac
 
 import { useTheme } from 'react-native-paper';
 
+import { DateTime } from 'luxon';
+
 import { useSecureStoredState } from '../../libraries/stored-state';
 import { useLanguage, useStagingServer } from '../../libraries/core';
 import { useAccessToken } from '../context-user';
@@ -34,8 +36,8 @@ import CollektorVersion2ApiProvider from './CollektorVersion2ApiProvider';
  * @typedef PublicTransportTicketContext
  * @property {string} ticketBarcode Barcode Data-URI/URL
  * @property {string} ticketOwner
- * @property {string} ticketValidFrom
- * @property {string} ticketValidTo
+ * @property {DateTime|null} ticketValidFrom
+ * @property {DateTime|null} ticketValidTo
  * @property {() => Promise<void>} refreshTicket
  */
 
@@ -137,7 +139,13 @@ function usePublicTransportTicketContext() {
  * Liefert alle noch austehenden Infos zurück.
  * Austehende Infos sind noch nicht als angezeigt markiert.
  *
- * @returns {[barcode: string|undefined, owner: string|undefined, validForm: string|undefined, validTo: string|undefined, refreshTicket: () => Promise<void>|undefined]}
+ * @returns {[
+ *     barcode: string|undefined,
+ *     owner: string|undefined,
+ *     validForm: DateTime|null,
+ *     validTo: DateTime|null,
+ *     refreshTicket: () => Promise<void>|undefined,
+ * ]}
  * @example
  * const [
  *     ticketBarcode,
