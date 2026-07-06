@@ -337,6 +337,13 @@
   "jobs": {
     "noJobsTitle": "Es konnten keine Stellenangebote gefunden werden, bitte versuche es später noch einmal."
   },
+  "infodialog": {
+    "unopenableUrlAlert": {
+      "title": "Link kann nicht geöffnet werden",
+      "message": "Der Link konnte nicht geöffnet werden, weil auf Ihrem Handy keine passende App gefunden wurde.\n\n Link: {{link}}",
+      "okButton": "OK"
+    }
+  },
   "menu": {
     "title": "Menü",
     "titles": {
