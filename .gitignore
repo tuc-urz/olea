@@ -76,3 +76,5 @@ node_modules/**/*
 credentials.json
 
 .env
+
+megalinter-reports/
