@@ -54,6 +54,14 @@ export default function PublicTransportTicketView() {
 
     const [user, login] = useUser();
     const [ticketBarcode, ticketOwner, ticketValidFrom, ticketValidTo, refreshTicket] = usePublicTransportTicket();
+    // Gültikeitsangabem in lokaliesierte Strings umwandeln
+    // Es wird immer in deutsche Datumangaben umgewandelt, weil das Deutschlandticket nur in deutschland gültig ist.
+    const localizedTicketValidFrom = ticketValidFrom?.isValid()
+        ? ticketValidFrom?.setLocale('de')?.toLocaleString()
+        : null;
+    const localizedTicketValidTo = ticketValidTo?.isValid()
+        ? ticketValidTo?.setLocale('de')?.toLocaleString()
+        : null;
 
     const [refreshingTicketScrollView, setRefreshingTicketScrollView] = useState(false);
 
@@ -148,14 +156,18 @@ export default function PublicTransportTicketView() {
                                             </Text>
                                             {ticketOwner}
                                         </Text>
-                                        <Text>
-                                            <Text
-                                                style={styles.infoName}
-                                            >
-                                                Gültigkeit:
-                                            </Text>
-                                            {ticketValidFrom} - {ticketValidTo}
-                                        </Text>
+                                        {
+                                            localizedTicketValidFrom && localizedTicketValidTo
+                                                ? <Text>
+                                                    <Text
+                                                        style={styles.infoName}
+                                                    >
+                                                        Gültigkeit:
+                                                    </Text>
+                                                    {localizedTicketValidFrom} - {localizedTicketValidTo}
+                                                </Text>
+                                                : null
+                                        }
                                     </>
                                     : null
                             }
