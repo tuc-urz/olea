@@ -112,8 +112,17 @@ jobs:
           npm install -g npm@latest
           echo "npm version: $(npm --version)"
 
+      # No --frozen-lockfile: unenforced for workspace deps here, and it
+      # suppresses the write the drift check below needs.
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install
+
+      - name: Verify lockfile is up to date
+        run: |
+          if ! git diff --exit-code --stat -- yarn.lock; then
+            echo "::error::yarn.lock is stale or in the wrong format — run 'yarn install' and commit the result."
+            exit 1
+          fi
 
       - name: Publish packages
         # OIDC trusted publishing - no token needed, authentication via GitHub's OIDC provider
