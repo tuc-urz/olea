@@ -109,7 +109,7 @@ jobs:
 
       - name: Upgrade npm for OIDC support
         run: |
-          npm install -g npm@latest
+          npm install -g npm@11
           echo "npm version: $(npm --version)"
 
       # No --frozen-lockfile: unenforced for workspace deps here, and it
