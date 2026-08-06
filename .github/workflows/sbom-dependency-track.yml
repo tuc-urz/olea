@@ -67,6 +67,9 @@ jobs:
           VERSION: ${{ steps.ver.outputs.version }}
         run: |
           set -euo pipefail
+          echo "runner egress IP: $(curl -s --max-time 10 https://api.ipify.org || echo unknown)"
+          echo "anonymous GET on the bucket host: $(curl -s -o /dev/null -w '%{http_code}' --max-time 10 https://dependency-track-sbom-drop.s3.prx.dpipe.io/ || echo failed)"
+          echo "anonymous GET on the shared endpoint: $(curl -s -o /dev/null -w '%{http_code}' --max-time 10 https://s3.prx.dpipe.io/ || echo failed)"
           # Stay single-part: a write-only key has no business needing the
           # multipart APIs, and an SBOM is a few hundred kB.
           aws configure set default.s3.multipart_threshold 512MB
