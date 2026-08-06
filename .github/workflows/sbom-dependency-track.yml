@@ -54,14 +54,15 @@ jobs:
           path: sbom.cdx.json
 
       # The bucket key is write-only: it can PUT, but cannot list or read the
-      # bucket. Path-style addressing is required — the bucket-as-subdomain form
-      # is not routed at the public edge.
+      # bucket. Virtual-host addressing is required — the bucket is reached as
+      # its own hostname, and only that hostname is published; the shared S3
+      # endpoint stays behind an IP allowlist.
       - name: Drop SBOM in the Dependency-Track ingest bucket
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.SBOM_S3_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SBOM_S3_SECRET }}
           AWS_REGION: ${{ secrets.SBOM_S3_REGION }}
-          AWS_S3_ADDRESSING_STYLE: path
+          AWS_S3_ADDRESSING_STYLE: virtual
           S3_ENDPOINT: ${{ secrets.SBOM_S3_ENDPOINT }}
           VERSION: ${{ steps.ver.outputs.version }}
         run: |
