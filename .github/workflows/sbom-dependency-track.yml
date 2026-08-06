@@ -1,4 +1,6 @@
-# Generates a CycloneDX SBOM with Trivy and uploads it to Dependency-Track.
+# Generates a CycloneDX SBOM with Trivy and drops it in the Dependency-Track
+# ingest bucket. An hourly in-cluster CronJob picks it up and imports it into
+# Dependency-Track, whose API is not reachable from the public internet.
 ---
 name: SBOM to Dependency-Track
 
@@ -12,10 +14,13 @@ permissions:
   contents: read
 
 env:
-  # Dependency-Track host ONLY (no scheme) — the gh-upload-sbom action takes
-  # protocol/port separately. Not a secret. Reachable once the reverse proxy
-  # is live; until then the upload step fails by design.
-  DT_HOST: dependencytrack.prx.dpipe.io
+  # Dependency-Track's own API stays internal-only, so the runner never talks to
+  # it. It writes to a Garage S3 bucket instead; a CronJob inside the cluster is
+  # the only client of the DT API. The bucket takes SBOMs and nothing else.
+  SBOM_BUCKET: dependency-track-sbom-drop
+  # DT derives projectName/projectVersion from the object key, so the layout
+  # below is load-bearing: incoming/<project>/<version>/<build>.cdx.json
+  SBOM_PROJECT: olea
 
 jobs:
   sbom:
@@ -48,23 +53,30 @@ jobs:
           name: sbom
           path: sbom.cdx.json
 
-      # The action handles base64 encoding + the JSON PUT /api/v1/bom internally.
-      # API key (secret DT_API_KEY) needs BOM_UPLOAD + PROJECT_CREATION_UPLOAD + VIEW_PORTFOLIO.
-      - name: Upload SBOM to Dependency-Track
-        uses: DependencyTrack/gh-upload-sbom@v4.0.0
-        with:
-          serverhostname: ${{ env.DT_HOST }}
-          protocol: https
-          port: '443'
-          apikey: ${{ secrets.DT_API_KEY }}
-          projectname: openasist
-          projectversion: ${{ steps.ver.outputs.version }}
-          autocreate: 'true'
-          bomfilename: sbom.cdx.json
+      # The bucket key is write-only: it can PUT, but cannot list or read the
+      # bucket. Path-style addressing is required — the bucket-as-subdomain form
+      # is not routed at the public edge.
+      - name: Drop SBOM in the Dependency-Track ingest bucket
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.SBOM_S3_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SBOM_S3_SECRET }}
+          AWS_REGION: ${{ secrets.SBOM_S3_REGION }}
+          AWS_S3_ADDRESSING_STYLE: path
+          S3_ENDPOINT: ${{ secrets.SBOM_S3_ENDPOINT }}
+          VERSION: ${{ steps.ver.outputs.version }}
+        run: |
+          set -euo pipefail
+          # Stay single-part: a write-only key has no business needing the
+          # multipart APIs, and an SBOM is a few hundred kB.
+          aws configure set default.s3.multipart_threshold 512MB
+          aws --endpoint-url "$S3_ENDPOINT" s3 cp sbom.cdx.json \
+            "s3://${SBOM_BUCKET}/incoming/${SBOM_PROJECT}/${VERSION}/${GITHUB_RUN_ID}.cdx.json"
+          echo "Dropped as incoming/${SBOM_PROJECT}/${VERSION}/${GITHUB_RUN_ID}.cdx.json — imported within the hour."
 
 # --- Follow-ups from the spec (deferred) ---------------------------------
 # P1  Validate SBOM before upload (catches rare non-schema-compliant output):
 #       npm exec -y -- @cyclonedx/cyclonedx-cli validate --input-file sbom.cdx.json --fail-on-errors
-# P2  Gate on async processing (200 != processed): poll GET /api/v1/bom/token/{token}
-#       using the action's `token` output.
 # P2  Add a weekly `schedule:` trigger to catch new CVEs in unchanged deps.
+# Note: import is asynchronous and happens in-cluster, so a green run means
+# "SBOM dropped", not "SBOM imported". The uploader dead-letters an object to
+# failed/ after 5 rejected attempts.
