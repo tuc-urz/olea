@@ -56,10 +56,10 @@ export default function PublicTransportTicketView() {
     const [ticketBarcode, ticketOwner, ticketValidFrom, ticketValidTo, refreshTicket] = usePublicTransportTicket();
     // Gültikeitsangabem in lokaliesierte Strings umwandeln
     // Es wird immer in deutsche Datumangaben umgewandelt, weil das Deutschlandticket nur in deutschland gültig ist.
-    const localizedTicketValidFrom = ticketValidFrom?.isValid()
+    const localizedTicketValidFrom = ticketValidFrom?.isValid
         ? ticketValidFrom?.setLocale('de')?.toLocaleString()
         : null;
-    const localizedTicketValidTo = ticketValidTo?.isValid()
+    const localizedTicketValidTo = ticketValidTo?.isValid
         ? ticketValidTo?.setLocale('de')?.toLocaleString()
         : null;
 
