@@ -102,7 +102,7 @@ function IconsOpenasist({ icon, iconSVG: IconSVG, size, color, accessibilityLabe
     const { AppIcons } = theme;
     const ThemeIcon = theme.icons?.[icon];
 
-    const iconSize = size ?? 26;
+    const iconSize = size ?? 24;
     const iconAriaLabel = props?.['aria-label'] ?? accessibilityLabel ?? null;
     const iconAriaHidden = iconAriaLabel ? false : true;
 
