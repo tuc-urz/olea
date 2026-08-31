@@ -17,7 +17,7 @@ import React from 'react';
 import { useTheme } from "react-native-paper";
 import createIconSet from '@expo/vector-icons/createIconSet';
 import PropTypes from "prop-types";
-import { SvgCssUri } from 'react-native-svg';
+
 const glyphMap = {
     "bus":                      "a",
     "train":                    "b",
