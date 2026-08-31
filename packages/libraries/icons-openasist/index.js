@@ -12,70 +12,69 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React from 'react'
 
-import { useTheme } from "react-native-paper";
-import createIconSet from '@expo/vector-icons/createIconSet';
-import PropTypes from "prop-types";
+import { useTheme } from 'react-native-paper'
+import createIconSet from '@expo/vector-icons/createIconSet'
+import PropTypes from 'prop-types'
 
 const glyphMap = {
-    "bus":                      "a",
-    "train":                    "b",
-    "close":                    "c",
-    "messages":                 "d",
-    "menu":                     "e",
-    "grid":                     "f",
-    "more-horizontal":          "g",
-    "more-vertical":            "h",
-    "paperplane-outline":       "i",
-    "partlysunny":              "j",
-    "partlysunny-outline":      "k",
-    "rainy":                    "l",
-    "rainy-outline":            "m",
-    "thunderstorm":             "n",
-    "thunderstorm-outline":     "o",
-    "sunny":                    "p",
-    "sunny-outline":            "q",
-    "down":                     "r",
-    "download":                 "s",
-    "print":                    "t",
-    "hilfe":                    "u",
-    "back":                     "v",
-    "lock":                     "w",
-    "lock-open":                "x",
-    "navigation":               "y",
-    "forward":                  "z",
-    "profile":                  "A",
-    "opal":                     "B",
-    "mensa":                    "C",
-    "location":                 "D",
-    "inbox":                    "E",
-    "imprint":                  "F",
-    "pts":                      "G",
-    "feedback":                 "H",
-    "book":                     "I",
-    "news":                     "J",
-    "up":                       "K",
-    "tram":                     "L",
-    "rss":                      "M",
-    "map-search":               "N",
-    "m-start1":                 "O",
-    "dashboard":                "P",
-    "timetable":                "Q",
-    "search":                   "R",
-    "settings":                 "S",
-    "coffee":                   "T",
-    "check":                    "V",
-    "star":                     "W",
-    "star-selected":            "X",
-    "edit":                     "Y",
-    "time":                     "A1",
-    "open-external":            "A2",
-    "share":                    "1",
-    "accessibility":            "A3",
-};
-const CustomIcon = createIconSet(glyphMap, 'openasist');
-
+  bus: 'a',
+  train: 'b',
+  close: 'c',
+  messages: 'd',
+  menu: 'e',
+  grid: 'f',
+  'more-horizontal': 'g',
+  'more-vertical': 'h',
+  'paperplane-outline': 'i',
+  partlysunny: 'j',
+  'partlysunny-outline': 'k',
+  rainy: 'l',
+  'rainy-outline': 'm',
+  thunderstorm: 'n',
+  'thunderstorm-outline': 'o',
+  sunny: 'p',
+  'sunny-outline': 'q',
+  down: 'r',
+  download: 's',
+  print: 't',
+  hilfe: 'u',
+  back: 'v',
+  lock: 'w',
+  'lock-open': 'x',
+  navigation: 'y',
+  forward: 'z',
+  profile: 'A',
+  opal: 'B',
+  mensa: 'C',
+  location: 'D',
+  inbox: 'E',
+  imprint: 'F',
+  pts: 'G',
+  feedback: 'H',
+  book: 'I',
+  news: 'J',
+  up: 'K',
+  tram: 'L',
+  rss: 'M',
+  'map-search': 'N',
+  'm-start1': 'O',
+  dashboard: 'P',
+  timetable: 'Q',
+  search: 'R',
+  settings: 'S',
+  coffee: 'T',
+  check: 'V',
+  star: 'W',
+  'star-selected': 'X',
+  edit: 'Y',
+  time: 'A1',
+  'open-external': 'A2',
+  share: '1',
+  accessibility: 'A3'
+}
+const CustomIcon = createIconSet(glyphMap, 'openasist')
 
 /**
  * Icons of the Openasist app
@@ -97,62 +96,62 @@ const CustomIcon = createIconSet(glyphMap, 'openasist');
  * Navigation-Parameters:
  *  - none
  */
-function IconsOpenasist({ icon, iconSVG: IconSVG, size, color, accessibilityLabel, ...props }) {
-    const theme = useTheme();
-    const { AppIcons } = theme;
-    const ThemeIcon = theme.icons?.[icon];
+function IconsOpenasist ({ icon, iconSVG: IconSVG, size, color, accessibilityLabel, ...props }) {
+  const theme = useTheme()
+  const { AppIcons } = theme
+  const ThemeIcon = theme.icons?.[icon]
 
-    const iconSize = size ?? 24;
-    const iconAriaLabel = props?.['aria-label'] ?? accessibilityLabel ?? null;
-    const iconAriaHidden = iconAriaLabel ? false : true;
+  const iconSize = size ?? 24
+  const iconAriaLabel = props?.['aria-label'] ?? accessibilityLabel ?? null
+  const iconAriaHidden = !iconAriaLabel
 
-    const iconProps = {
-        color: color ?? 'black',
-        'aria-hidden': iconAriaHidden,
-        'aria-label': iconAriaLabel,
-    }
+  const iconProps = {
+    color: color ?? 'black',
+    'aria-hidden': iconAriaHidden,
+    'aria-label': iconAriaLabel
+  }
 
-    if (IconSVG) {
-        return (
-            <IconSVG
-                {...iconProps}
-                width={iconSize}
-                height={iconSize}
-            />
-        );
-    } else if (typeof ThemeIcon === 'function') {
-        return (
-            <ThemeIcon
-                {...iconProps}
-                width={iconSize}
-                height={iconSize}
-            />
-        );
-    } else if (AppIcons) {
-        return (
-            <AppIcons
-                {...iconProps}
-                name={icon}
-                size={iconSize}
-            />
-        );
-    } else {
-        return (
-            <CustomIcon
-                {...iconProps}
-                name={icon}
-                size={iconSize}
-            />
-        );
-    }
+  if (IconSVG) {
+    return (
+      <IconSVG
+        {...iconProps}
+        width={iconSize}
+        height={iconSize}
+      />
+    )
+  } else if (typeof ThemeIcon === 'function') {
+    return (
+      <ThemeIcon
+        {...iconProps}
+        width={iconSize}
+        height={iconSize}
+      />
+    )
+  } else if (AppIcons) {
+    return (
+      <AppIcons
+        {...iconProps}
+        name={icon}
+        size={iconSize}
+      />
+    )
+  } else {
+    return (
+      <CustomIcon
+        {...iconProps}
+        name={icon}
+        size={iconSize}
+      />
+    )
+  }
 }
 
 // propTypes für Funktionen wird in react.js 19 entfernt
 IconsOpenasist.propTypes = {
-    icon: PropTypes.string,
-    iconSVG: PropTypes.func,
-    size: PropTypes.number,
-    color: PropTypes.string
-};
+  icon: PropTypes.string,
+  iconSVG: PropTypes.func,
+  size: PropTypes.number,
+  color: PropTypes.string
+}
 
-export default IconsOpenasist;
+export default IconsOpenasist
