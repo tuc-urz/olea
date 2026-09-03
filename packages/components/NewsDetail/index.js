@@ -357,7 +357,7 @@ class NewsDetailComponent extends React.Component {
                     rightAction={
                         newsType
                             ? null
-                            : <Appbar.Action icon='share' onPress={this._onShare.bind(this)} />
+                            : <AppbarAction icon='share' onPress={this._onShare.bind(this)} />
                     }
                 />
                 {newsType === NewsDetailComponent.newsTypes.topNews ? this._renderTopNewsContent(news) : this._renderContent(news)}
