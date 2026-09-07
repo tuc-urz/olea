@@ -24,12 +24,17 @@ import {
     Linking,
     TouchableOpacity,
     Platform,
-    ScrollView
+    ScrollView,
 } from 'react-native';
-import {Appbar, Headline, List, withTheme} from "react-native-paper";
+import {
+    Appbar,
+    Headline,
+    List,
+    withTheme,
+} from "react-native-paper";
 
 import { connect } from 'react-redux'
-import {withTranslation} from "react-i18next";
+import { withTranslation } from "react-i18next";
 import merge from 'lodash/merge';
 
 import componentStyles from './styles';
@@ -49,34 +54,22 @@ import AppbarAction from '../AppbarAction';
  * Navigation-Parameters:
  *  - none
  */
-class ContactDetailComponent extends React.Component {
-    static propTypes = {
-        contact: PropTypes.object.isRequired
-    };
-
-    // Styles of this component
-    styles;
-
-    contact = null;
+function ContactDetailComponent(props) {
 
 
-    constructor(props) {
-        super(props);
-        // ------------------------------------------------------------------------
-        // PLUGIN FUNCTIONALITY
-        // ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
+    // PLUGIN FUNCTIONALITY
+    // ------------------------------------------------------------------------
 
-        const { pluginStyles,theme } = this.props;
-        this.styles = componentStyles(theme);
+    const { pluginStyles, theme } = props;
+    let styles = componentStyles(theme);
 
-        if(pluginStyles) {
-            this.styles = merge(this.styles, pluginStyles);
-        }
+    if (pluginStyles) {
+        styles = merge(this.styles, pluginStyles);
+    }
 
-        this.styles = StyleSheet.create(this.styles);
+    styles = StyleSheet.create(styles);
 
-        // ------------------------------------------------------------------------
-    };
 
     /**
      * Share function for contact
@@ -84,23 +77,23 @@ class ContactDetailComponent extends React.Component {
      * @returns {Promise<void>}
      * @private
      */
-    async _onShare() {
+    const _onShare = async () => {
         try {
-            const { t } = this.props;
+            const { t } = props;
 
             let phone = "";
-            if(this.contact.telephone.length > 0) {
-                phone += "\n"+ t('contact:phone') +": ";
-                this.contact.telephone.forEach((phoneNumber) => {
+            if (props.contact.telephone.length > 0) {
+                phone += "\n" + t('contact:phone') + ": ";
+                props.contact.telephone.forEach((phoneNumber) => {
                     phone += phoneNumber.number + '\n';
                 });
             }
 
-            let message = t('contact:title') + ' - ' + this.contact.firstName + ' ' + this.contact.lastName +
-                ((this.contact.building)                        ? "\n" + t('contact:building') + ": " + this.contact.building       : '') +
-                ((this.contact.department)                      ? "\n" + t('contact:department') + ": " + this.contact.department   : '') +
-                ((this.contact.room && this.contact.room.title) ? "\n" + t('contact:room') + ": " + this.contact.room.title         : '') +
-                ((this.contact.email)                           ? "\n" + t('contact:email') + ": " + this.contact.email             : '') +
+            let message = t('contact:title') + ' - ' + props.contact.firstName + ' ' + props.contact.lastName +
+                ((props.contact.building) ? "\n" + t('contact:building') + ": " + props.contact.building : '') +
+                ((props.contact.department) ? "\n" + t('contact:department') + ": " + props.contact.department : '') +
+                ((props.contact.room && props.contact.room.title) ? "\n" + t('contact:room') + ": " + props.contact.room.title : '') +
+                ((props.contact.email) ? "\n" + t('contact:email') + ": " + props.contact.email : '') +
                 phone;
 
             const result = await Share.share({
@@ -117,7 +110,7 @@ class ContactDetailComponent extends React.Component {
                 // dismissed
             }
         } catch (error) {
-                alert(error.message);
+            alert(error.message);
         }
     };
 
@@ -127,9 +120,9 @@ class ContactDetailComponent extends React.Component {
      * @returns {*}
      * @private
      */
-    _renderContent = () => {
-        const { contact, t } = this.props;
-        const { themeStyles } = this.props.theme;
+    const _renderContent = () => {
+        const { contact, t } = props;
+        const { themeStyles } = props.theme;
 
         let output = [];
         let index = 1;
@@ -137,36 +130,36 @@ class ContactDetailComponent extends React.Component {
 
 
 
-        if(contact.building)
-            output.push(<List.Item key="building" title={t('contact:building')}   description={contact.building}
-                                   descriptionStyle={themeStyles.textLighter} titleStyle={themeStyles.searchDetailTitle}
-                                   descriptionNumberOfLines={200}/>);
+        if (contact.building)
+            output.push(<List.Item key="building" title={t('contact:building')} description={contact.building}
+                descriptionStyle={themeStyles.textLighter} titleStyle={themeStyles.searchDetailTitle}
+                descriptionNumberOfLines={200} />);
 
-        if(contact.department)
+        if (contact.department)
             output.push(<List.Item key="department" title={t('contact:department')} description={contact.department}
-                                   descriptionStyle={themeStyles.textLighter} titleStyle={themeStyles.searchDetailTitle}
-                                   descriptionNumberOfLines={200}/>);
+                descriptionStyle={themeStyles.textLighter} titleStyle={themeStyles.searchDetailTitle}
+                descriptionNumberOfLines={200} />);
 
-        if(contact.room && contact.room.title)
+        if (contact.room && contact.room.title)
             output.push(<List.Item key="room" title={t('contact:room')} description={contact.room.title}
-                                   descriptionStyle={themeStyles.textLighter} titleStyle={themeStyles.searchDetailTitle}
-                                   descriptionNumberOfLines={200}/>);
+                descriptionStyle={themeStyles.textLighter} titleStyle={themeStyles.searchDetailTitle}
+                descriptionNumberOfLines={200} />);
 
-        if(contact.email)
+        if (contact.email)
             output.push(<TouchableOpacity key="email" onPress={() => Linking.openURL('mailto:' + contact.email)}>
-                            <List.Item title={t('contact:email')} description={contact.email}
-                                descriptionStyle={themeStyles.textLighter} titleStyle={themeStyles.searchDetailTitle}
-                                right={props => <List.Icon {...props} icon="email"/>}/>
-                        </TouchableOpacity>
+                <List.Item title={t('contact:email')} description={contact.email}
+                    descriptionStyle={themeStyles.textLighter} titleStyle={themeStyles.searchDetailTitle}
+                    right={props => <List.Icon {...props} icon="email" />} />
+            </TouchableOpacity>
             );
 
-        if(contact.telephone.length > 0) {
+        if (contact.telephone.length > 0) {
             contact.telephone.forEach((phoneNumber) => {
                 output.push(
-                    <TouchableOpacity key={'phone_'+ index} onPress={() => {
+                    <TouchableOpacity key={'phone_' + index} onPress={() => {
                         const formattedPhoneNumber = phoneNumber.number.replace(/\s/g, '');
                         Linking.openURL('tel:' + formattedPhoneNumber).catch(error => console.error(`ContactDetailComponent - Fehler beim öffnen des Telefons ${Platform.OS}`, error));
-                        }}>
+                    }}>
                         <List.Item
                             title={t('contact:phone') + ' ' + index}
                             description={phoneNumber.number}
@@ -174,9 +167,9 @@ class ContactDetailComponent extends React.Component {
                             titleStyle={themeStyles.searchDetailTitle}
                             right={props =>
                                 <List.Icon {...props}
-                                           icon="phone"/>}
+                                    icon="phone" />}
                         />
-                  </TouchableOpacity>
+                    </TouchableOpacity>
                 );
                 index++;
             });
@@ -187,41 +180,37 @@ class ContactDetailComponent extends React.Component {
             <ScrollView style={this.styles.containerInner}>
                 <Headline style={this.styles.name}>{contact.firstName} {contact.lastName}</Headline>
                 {output}
-                <View style={this.styles.space}/>
+                <View style={this.styles.space} />
             </ScrollView>
         );
     };
 
-    render() {
-        // ------------------------------------------------------------------------
-        // PLUGIN FUNCTIONALITY
-        // ------------------------------------------------------------------------
-        const PluginComponent = this.props.pluginComponent;
-        if (PluginComponent) {
-            return <PluginComponent />;
-        }
-        // ------------------------------------------------------------------------
-
-        const {themeStyles} = this.props.theme;
-        const { contact, t } = this.props;
-
-        if(!contact){
-            return (<Text>{t('contact:couldNotLoad')}</Text>);
-        }
-
-        this.contact = contact;
-
-        return (
-            <SafeAreaView style={[this.styles.container, themeStyles.safeAreaContainer]}>
-                <AppbarComponent
-                    {...this.props}
-                    title={t('contact:contactInformation')}
-                    rightAction={<AppbarAction icon='share' onPress={this._onShare.bind(this)} />}
-                />
-                {this._renderContent()}
-            </SafeAreaView>
-        );
+    // ------------------------------------------------------------------------
+    // PLUGIN FUNCTIONALITY
+    // ------------------------------------------------------------------------
+    const PluginComponent = props.pluginComponent;
+    if (PluginComponent) {
+        return <PluginComponent />;
     }
+    // ------------------------------------------------------------------------
+
+    const { themeStyles } = props.theme;
+    const { contact, t } = props;
+
+    if (!contact) {
+        return (<Text>{t('contact:couldNotLoad')}</Text>);
+    }
+
+    return (
+        <SafeAreaView style={[this.styles.container, themeStyles.safeAreaContainer]}>
+            <AppbarComponent
+                {...this.props}
+                title={t('contact:contactInformation')}
+                rightAction={<AppbarAction icon='share' onPress={this._onShare.bind(this)} />}
+            />
+            {this._renderContent()}
+        </SafeAreaView>
+    );
 }
 
 
