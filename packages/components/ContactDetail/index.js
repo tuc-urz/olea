@@ -34,7 +34,7 @@ import {
 } from "react-native-paper";
 
 import { connect } from 'react-redux'
-import { withTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import merge from 'lodash/merge';
 
 import componentStyles from './styles';
@@ -58,9 +58,9 @@ function ContactDetailComponent(props) {
     const {
         theme,
         contact,
-        t,
     } = props;
     const { themeStyles } = theme;
+    const { t } = useTranslation();
 
     const styles = useMemo(
         () => StyleSheet.create(componentStyles(theme)),
@@ -196,4 +196,4 @@ function ContactDetailComponent(props) {
         </Text>;
 }
 
-export default withTranslation()(withTheme(ContactDetailComponent));
+export default withTheme(ContactDetailComponent);
