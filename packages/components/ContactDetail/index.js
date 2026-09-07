@@ -194,12 +194,4 @@ function ContactDetailComponent(props) {
         </Text>;
 }
 
-
-const mapStateToProps = state => {
-    return {
-        pluginComponent: state.pluginReducer.contactDetail.component,
-        pluginStyles: state.pluginReducer.contactDetail.styles
-    };
-};
-
-export default connect(mapStateToProps, null)(withTranslation()(withTheme(ContactDetailComponent)))
+export default withTranslation()(withTheme(ContactDetailComponent));
