@@ -55,7 +55,12 @@ import AppbarAction from '../AppbarAction';
  *  - none
  */
 function ContactDetailComponent(props) {
-    const { theme } = props;
+    const {
+        theme,
+        contact,
+        t,
+    } = props;
+    const { themeStyles } = theme;
 
     const styles = useMemo(
         () => StyleSheet.create(componentStyles(theme)),
@@ -175,9 +180,6 @@ function ContactDetailComponent(props) {
             </ScrollView>
         );
     };
-
-    const { themeStyles } = props.theme;
-    const { contact, t } = props;
 
     return contact
         ? <SafeAreaView style={[this.styles.container, themeStyles.safeAreaContainer]}>
