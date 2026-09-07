@@ -30,7 +30,7 @@ import {
     Appbar,
     Headline,
     List,
-    withTheme,
+    useTheme,
 } from "react-native-paper";
 
 import { connect } from 'react-redux'
@@ -54,11 +54,11 @@ import AppbarAction from '../AppbarAction';
  * Navigation-Parameters:
  *  - none
  */
-function ContactDetailComponent(props) {
+export default function ContactDetailComponent(props) {
     const {
-        theme,
         contact,
     } = props;
+    const theme = useTheme();
     const { themeStyles } = theme;
     const { t } = useTranslation();
 
@@ -195,5 +195,3 @@ function ContactDetailComponent(props) {
             {t('contact:couldNotLoad')}
         </Text>;
 }
-
-export default withTheme(ContactDetailComponent);
