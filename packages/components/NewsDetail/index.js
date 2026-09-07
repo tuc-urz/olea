@@ -37,8 +37,9 @@ import moment from "moment";
 import WebViewAutoHeight from '../../libraries/react-native-webview-autoheight';
 
 
-import componentStyles from "./styles"
+import componentStyles from './styles';
 import AppbarComponent from '../AppBar';
+import AppbarAction from '../AppbarAction';
 import { selectFeedById } from '../../libraries/core/redux/reducers/api';
 
 
@@ -350,9 +351,15 @@ class NewsDetailComponent extends React.Component {
 
         return (
             <SafeAreaView style={[this.styles.container, themeStyles.appSafeAreaContainer]}>
-                <AppbarComponent {...this.props}
-                                 title={title}
-                                 rightAction={newsType ? null : <Appbar.Action icon="share-variant" onPress={this._onShare.bind(this)}/>}/>
+                <AppbarComponent
+                    {...this.props}
+                    title={title}
+                    rightAction={
+                        newsType
+                            ? null
+                            : <AppbarAction icon='share' onPress={this._onShare.bind(this)} />
+                    }
+                />
                 {newsType === NewsDetailComponent.newsTypes.topNews ? this._renderTopNewsContent(news) : this._renderContent(news)}
             </SafeAreaView>
         );

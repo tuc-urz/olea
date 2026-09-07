@@ -16,11 +16,16 @@ When authoring or sourcing an SVG for this folder:
 - **viewBox**: `0 0 24 24` (a 24×24 unit grid).
 - **Fill**: `fill="currentColor"` on the visible paths. Do **not** hardcode hex
   colors — the runtime `color` prop is forwarded via `currentColor`.
+- **Stroke / outline icons**: use `stroke="currentColor"` and `fill="none"`. Keep visual stroke attributes such as `stroke
+  width`, `stroke-linecap`, and `stroke-linejoin` when they are required for the icon style.
 - **No padding or border**: the icon's drawing should fill the viewBox edge to
   edge. Whitespace is the caller's job (set via `size` and surrounding layout).
+  **Transparent background**: do not add a white or otherwise colored background shape. The SVG background must remain
+transparent
 - **Single color**: prefer a single path (or multiple paths all using
   `currentColor`). Multi-color icons are fine in theory, but the `color` prop
   will only tint the `currentColor` parts.
+- **No embedded raster images**: icons must be real vector geometry (`<path>`, `<circle>`, `<rect>`, etc.). Do not commit SVGs that wrap PNG/JPG assets, Base64 data, or `<image href="data:image/...">`.
 - **No inline `width` / `height` attributes**: leave sizing to the runtime
   `size` prop (forwarded as `width` and `height` to the rendered SVG).
 - **Strip metadata**: remove editor cruft (`<title>`, `<desc>`, `xmlns:sketch`,

@@ -24,10 +24,11 @@ import {Appbar, Headline, List, withTheme} from "react-native-paper";
 import { connect } from 'react-redux'
 import merge from 'lodash/merge';
 
-import componentStyles from "./styles"
+import componentStyles from './styles';
 import AppbarComponent from '../AppBar';
+import AppbarAction from '../AppbarAction';
 import IconsOpenasist from '../../libraries/icons-openasist';
-import {withTranslation} from "react-i18next";
+import { withTranslation } from 'react-i18next';
 
 
 /**
@@ -339,9 +340,11 @@ class CourseDetailComponent extends React.Component {
 
         return (
             <SafeAreaView style={[this.styles.container, themeStyles.appSafeAreaContainer]}>
-                <AppbarComponent {...this.props}
-                                 title={t('course:lectureInformation')}
-                                 rightAction={<Appbar.Action icon="share-variant" onPress={this._onShare.bind(this)}/>}/>
+                <AppbarComponent
+                    {...this.props}
+                    title={t('course:lectureInformation')}
+                    rightAction={<AppbarAction icon='share' onPress={this._onShare.bind(this)} />}
+                />
                 {this._renderContent()}
             </SafeAreaView>
         );

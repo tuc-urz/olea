@@ -30,8 +30,9 @@ import { libraryApi } from '../../libraries/core';
 import { handleHtmlEntities } from '../../libraries/core/helper/format.helper';
 
 
-import componentStyles from "./styles"
+import componentStyles from './styles';
 import AppbarComponent from '../AppBar';
+import AppbarAction from '../AppbarAction';
 
 
 class BookDetailComponent extends React.Component {
@@ -248,9 +249,11 @@ class BookDetailComponent extends React.Component {
 
         return (
             <SafeAreaView style={[this.styles.container, themeStyles.safeAreaContainer]}>
-                <AppbarComponent {...this.props}
-                                 title={t('search:title')}
-                                 rightAction={<Appbar.Action icon="share-variant" onPress={this._onShare.bind(this)}/>}/>
+                <AppbarComponent
+                    {...this.props}
+                    title={t('search:title')}
+                    rightAction={<AppbarAction icon='share' onPress={this._onShare.bind(this)} />}
+                />
                 {this._renderContent()}
             </SafeAreaView>
         );
