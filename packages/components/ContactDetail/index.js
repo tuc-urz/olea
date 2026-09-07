@@ -176,15 +176,6 @@ function ContactDetailComponent(props) {
         );
     };
 
-    // ------------------------------------------------------------------------
-    // PLUGIN FUNCTIONALITY
-    // ------------------------------------------------------------------------
-    const PluginComponent = props.pluginComponent;
-    if (PluginComponent) {
-        return <PluginComponent />;
-    }
-    // ------------------------------------------------------------------------
-
     const { themeStyles } = props.theme;
     const { contact, t } = props;
 
