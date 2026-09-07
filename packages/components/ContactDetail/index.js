@@ -54,10 +54,7 @@ import AppbarAction from '../AppbarAction';
  * Navigation-Parameters:
  *  - none
  */
-export default function ContactDetailComponent(props) {
-    const {
-        contact,
-    } = props;
+export default function ContactDetailComponent({contact}) {
     const theme = useTheme();
     const { themeStyles } = theme;
     const { t } = useTranslation();
