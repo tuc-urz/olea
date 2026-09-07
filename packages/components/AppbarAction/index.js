@@ -1,7 +1,10 @@
 import { useCallback } from 'react';
 import { ColorValue } from 'react-native';
 
-import { Appbar } from 'react-native-paper';
+import {
+    Appbar,
+    useTheme,
+} from 'react-native-paper';
 
 import IconsOpenasist from '../../libraries/icons-openasist';
 
