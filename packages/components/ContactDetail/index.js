@@ -179,12 +179,8 @@ function ContactDetailComponent(props) {
     const { themeStyles } = props.theme;
     const { contact, t } = props;
 
-    if (!contact) {
-        return (<Text>{t('contact:couldNotLoad')}</Text>);
-    }
-
-    return (
-        <SafeAreaView style={[this.styles.container, themeStyles.safeAreaContainer]}>
+    return contact
+        ? <SafeAreaView style={[this.styles.container, themeStyles.safeAreaContainer]}>
             <AppbarComponent
                 {...this.props}
                 title={t('contact:contactInformation')}
@@ -192,7 +188,10 @@ function ContactDetailComponent(props) {
             />
             {this._renderContent()}
         </SafeAreaView>
-    );
+
+        : <Text>
+            {t('contact:couldNotLoad')}
+        </Text>;
 }
 
 
