@@ -12,19 +12,19 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import {
+    Linking,
+    Platform,
+    SafeAreaView,
+    ScrollView,
+    Share,
     StyleSheet,
     Text,
-    View,
-    SafeAreaView,
-    Share,
-    Linking,
     TouchableOpacity,
-    Platform,
-    ScrollView,
+    View,
 } from 'react-native';
 import {
     Appbar,
@@ -55,21 +55,12 @@ import AppbarAction from '../AppbarAction';
  *  - none
  */
 function ContactDetailComponent(props) {
+    const { theme } = props;
 
-
-    // ------------------------------------------------------------------------
-    // PLUGIN FUNCTIONALITY
-    // ------------------------------------------------------------------------
-
-    const { pluginStyles, theme } = props;
-    let styles = componentStyles(theme);
-
-    if (pluginStyles) {
-        styles = merge(this.styles, pluginStyles);
-    }
-
-    styles = StyleSheet.create(styles);
-
+    const styles = useMemo(
+        () => StyleSheet.create(componentStyles(theme)),
+        [theme, componentStyles]
+    );
 
     /**
      * Share function for contact
