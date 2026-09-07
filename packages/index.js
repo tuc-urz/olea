@@ -2,7 +2,9 @@
 // Exports Components
 
 export { default as AppBar } from './components/AppBar';
+export { default as AppbarAction } from './components/AppbarAction';
 export { default as BookDetail } from './components/BookDetail';
+export { default as ComponentJobsFilter } from './components/ComponentJobsFilter';
 export { default as ConnectivityWarning } from './components/ConnectivityWarning';
 export { default as ContactDetail } from './components/ContactDetail';
 export { default as CourseDetail } from './components/CourseDetail';
@@ -26,10 +28,10 @@ export { default as QuickLinks } from './components/QuickLinks';
 export { default as RoomDetail } from './components/RoomDetail';
 export { default as ScaledImage } from './components/ScaledImage';
 export { default as SearchResults } from './components/SearchResults';
-export { default as SettingSection } from './components/SettingSection';
 export { default as SettingsDialog } from './components/SettingsDialog';
 export { default as SettingsDialogRadio } from './components/SettingsDialogRadio';
 export { default as SettingsDialogSelect } from './components/SettingsDialogSelect';
+export { default as SettingSection } from './components/SettingSection';
 export { default as TimetableCodeInput } from './components/TimetableCodeInput';
 export { default as TimetableDay } from './components/TimetableDay';
 export { default as TimetableEvent } from './components/TimetableEvent';
@@ -39,7 +41,6 @@ export { default as TimetableWeek } from './components/TimetableWeek';
 export { default as TopNews } from './components/TopNews';
 export { default as TopNewsHtwk } from './components/TopNewsHtwk';
 export { default as WebView } from './components/WebView';
-export { default as ComponentJobsFilter } from './components/ComponentJobsFilter';
 
 // Exports Views
 

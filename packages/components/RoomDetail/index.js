@@ -20,17 +20,22 @@ import {
     Share,
     TouchableOpacity, ActivityIndicator
 } from 'react-native';
-import {connect} from 'react-redux'
-import {Appbar, Headline, List, withTheme} from "react-native-paper";
-import {withTranslation} from "react-i18next";
+import { connect } from 'react-redux'
+import {
+    Appbar,
+    Headline,
+    List,
+    withTheme,
+} from "react-native-paper";
+import { withTranslation } from "react-i18next";
+import { WebView } from "react-native-webview";
 import merge from 'lodash/merge';
 
-
 import AppbarComponent from '../AppBar';
+import AppbarAction from '../AppbarAction';
 import IconsOpenasist from '../../libraries/icons-openasist';
 
-import componentStyles from "./styles";
-import {WebView} from "react-native-webview";
+import componentStyles from './styles';
 
 /**
  * Room Detail Component
@@ -262,9 +267,11 @@ class RoomDetailComponent extends React.Component {
 
         return (
             <SafeAreaView style={[this.styles.container, themeStyles.safeAreaContainer]}>
-                <AppbarComponent {...this.props}
-                             title={t('room:directory')}
-                             rightAction={<Appbar.Action icon="share-variant" onPress={this._onShare.bind(this)}/>}/>
+                <AppbarComponent
+                    {...this.props}
+                    title={t('room:directory')}
+                    rightAction={<AppbarAction icon='share' onPress={this._onShare.bind(this)} />}
+                />
                 {this._renderContent()}
             </SafeAreaView>
         );

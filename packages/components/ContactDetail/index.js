@@ -32,8 +32,9 @@ import { connect } from 'react-redux'
 import {withTranslation} from "react-i18next";
 import merge from 'lodash/merge';
 
-import componentStyles from "./styles"
+import componentStyles from './styles';
 import AppbarComponent from '../AppBar';
+import AppbarAction from '../AppbarAction';
 
 
 /**
@@ -212,9 +213,11 @@ class ContactDetailComponent extends React.Component {
 
         return (
             <SafeAreaView style={[this.styles.container, themeStyles.safeAreaContainer]}>
-                <AppbarComponent {...this.props}
-                                 title={t('contact:contactInformation')}
-                                 rightAction={<Appbar.Action icon="share-variant" onPress={this._onShare.bind(this)}/>}/>
+                <AppbarComponent
+                    {...this.props}
+                    title={t('contact:contactInformation')}
+                    rightAction={<AppbarAction icon='share' onPress={this._onShare.bind(this)} />}
+                />
                 {this._renderContent()}
             </SafeAreaView>
         );
