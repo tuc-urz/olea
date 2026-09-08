@@ -64,55 +64,50 @@ export default function ContactDetailComponent({ contact }) {
         [theme, componentStyles]
     );
 
-    /**
-     * Share function for contact
-     *
-     * @returns {Promise<void>}
-     * @private
-     */
-    const _onShare = async () => {
-        try {
-            const { t } = props;
-
-            let phone = "";
-            if (props.contact.telephone.length > 0) {
-                phone += "\n" + t('contact:phone') + ": ";
-                props.contact.telephone.forEach((phoneNumber) => {
-                    phone += phoneNumber.number + '\n';
-                });
-            }
-
-            let message = t('contact:title') + ' - ' + props.contact.firstName + ' ' + props.contact.lastName +
-                ((props.contact.building) ? "\n" + t('contact:building') + ": " + props.contact.building : '') +
-                ((props.contact.department) ? "\n" + t('contact:department') + ": " + props.contact.department : '') +
-                ((props.contact.room && props.contact.room.title) ? "\n" + t('contact:room') + ": " + props.contact.room.title : '') +
-                ((props.contact.email) ? "\n" + t('contact:email') + ": " + props.contact.email : '') +
-                phone;
-
-            const result = await Share.share({
-                message: message
-            });
-
-            if (result.action === Share.sharedAction) {
-                if (result.activityType) {
-                    // shared with activity type of result.activityType
-                } else {
-                    // shared
+    const onShare = useCallback(
+        async () => {
+            try {
+                let phone = "";
+                if (contact.telephone.length > 0) {
+                    phone += "\n" + t('contact:phone') + ": ";
+                    contact.telephone.forEach((phoneNumber) => {
+                        phone += phoneNumber.number + '\n';
+                    });
                 }
-            } else if (result.action === Share.dismissedAction) {
-                // dismissed
+
+                let message = t('contact:title') + ' - ' + contact.firstName + ' ' + contact.lastName +
+                    ((contact.building) ? "\n" + t('contact:building') + ": " + contact.building : '') +
+                    ((contact.department) ? "\n" + t('contact:department') + ": " + contact.department : '') +
+                    ((contact.room && contact.room.title) ? "\n" + t('contact:room') + ": " + contact.room.title : '') +
+                    ((contact.email) ? "\n" + t('contact:email') + ": " + contact.email : '') +
+                    phone;
+
+                const result = await Share.share({
+                    message: message
+                });
+
+                if (result.action === Share.sharedAction) {
+                    if (result.activityType) {
+                        // shared with activity type of result.activityType
+                    } else {
+                        // shared
+                    }
+                } else if (result.action === Share.dismissedAction) {
+                    // dismissed
+                }
+            } catch (error) {
+                alert(error.message);
             }
-        } catch (error) {
-            alert(error.message);
-        }
-    };
+        },
+        [contact, t]
+    );
 
     return contact
         ? <SafeAreaView style={[this.styles.container, themeStyles.safeAreaContainer]}>
             <AppbarComponent
                 {...this.props}
                 title={t('contact:contactInformation')}
-                rightAction={<AppbarAction icon='share' onPress={this._onShare.bind(this)} />}
+                rightAction={<AppbarAction icon='share' onPress={onShare} />}
             />
             <ScrollView style={this.styles.containerInner}>
                 <Headline style={this.styles.name}>{contact.firstName} {contact.lastName}</Headline>
