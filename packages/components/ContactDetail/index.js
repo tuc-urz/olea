@@ -107,15 +107,13 @@ export default function ContactDetailComponent({ contact }) {
         }
     };
 
-    /**
-     * Render contact details content
-     *
-     * @returns {*}
-     * @private
-     */
-    const _renderContent = () => {
-
-        return (
+    return contact
+        ? <SafeAreaView style={[this.styles.container, themeStyles.safeAreaContainer]}>
+            <AppbarComponent
+                {...this.props}
+                title={t('contact:contactInformation')}
+                rightAction={<AppbarAction icon='share' onPress={this._onShare.bind(this)} />}
+            />
             <ScrollView style={this.styles.containerInner}>
                 <Headline style={this.styles.name}>{contact.firstName} {contact.lastName}</Headline>
                 {
@@ -209,17 +207,6 @@ export default function ContactDetailComponent({ contact }) {
                 }
                 <View style={this.styles.space} />
             </ScrollView>
-        );
-    };
-
-    return contact
-        ? <SafeAreaView style={[this.styles.container, themeStyles.safeAreaContainer]}>
-            <AppbarComponent
-                {...this.props}
-                title={t('contact:contactInformation')}
-                rightAction={<AppbarAction icon='share' onPress={this._onShare.bind(this)} />}
-            />
-            {this._renderContent()}
         </SafeAreaView>
 
         : <Text>
