@@ -68,31 +68,42 @@ export default function ContactDetailComponent({ contact }) {
         async () => {
             try {
                 const contactTelephones = contact.telephone;
-                const contactTelephoneNumbersShareText = contactTelephones
+                const shareMessageTelephoneNumbers = contactTelephones
                     .map(telephone => telephone.number)
                     .map(number => `${t('contact:phone')}: ${number}`)
                     .join('\n');
 
-                let message = t('contact:title') + ' - ' + contact.firstName + ' ' + contact.lastName +
-                    ((contact.building) ? "\n" + t('contact:building') + ": " + contact.building : '') +
-                    ((contact.department) ? "\n" + t('contact:department') + ": " + contact.department : '') +
-                    ((contact.room && contact.room.title) ? "\n" + t('contact:room') + ": " + contact.room.title : '') +
-                    ((contact.email) ? "\n" + t('contact:email') + ": " + contact.email : '') +
-                    contactTelephoneNumbersShareText;
+                const shareMessage = `${t('contact:title')} - ${contact.firstName} ${contact.lastName}`
+                    +
+                    (
+                        contact?.building
+                            ? `\n${t('contact:building')}: ${contact.building}`
+                            : ''
+                    )
+                    +
+                    (
+                        contact?.department
+                            ? `\n${t('contact:department')}: ${contact.department}`
+                            : ''
+                    )
+                    +
+                    (
+                        contact?.room?.title
+                            ? `\n${t('contact:room')}: ${contact.room.title}`
+                            : ''
+                    )
+                    +
+                    (
+                        contact?.email
+                            ? `\n${t('contact:email')}: ${contact.email}`
+                            : ''
+                    )
+                    +
+                    shareMessageTelephoneNumbers;
 
-                const result = await Share.share({
-                    message: message
+                await Share.share({
+                    message: shareMessage,
                 });
-
-                if (result.action === Share.sharedAction) {
-                    if (result.activityType) {
-                        // shared with activity type of result.activityType
-                    } else {
-                        // shared
-                    }
-                } else if (result.action === Share.dismissedAction) {
-                    // dismissed
-                }
             } catch (error) {
                 alert(error.message);
             }
