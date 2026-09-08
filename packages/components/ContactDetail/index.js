@@ -54,7 +54,7 @@ import AppbarAction from '../AppbarAction';
  * Navigation-Parameters:
  *  - none
  */
-export default function ContactDetailComponent({contact}) {
+export default function ContactDetailComponent({ contact }) {
     const theme = useTheme();
     const { themeStyles } = theme;
     const { t } = useTranslation();
@@ -114,65 +114,99 @@ export default function ContactDetailComponent({contact}) {
      * @private
      */
     const _renderContent = () => {
-        const { contact, t } = props;
-        const { themeStyles } = props.theme;
-
-        let output = [];
-        let index = 1;
-
-
-
-
-        if (contact.building)
-            output.push(<List.Item key="building" title={t('contact:building')} description={contact.building}
-                descriptionStyle={themeStyles.textLighter} titleStyle={themeStyles.searchDetailTitle}
-                descriptionNumberOfLines={200} />);
-
-        if (contact.department)
-            output.push(<List.Item key="department" title={t('contact:department')} description={contact.department}
-                descriptionStyle={themeStyles.textLighter} titleStyle={themeStyles.searchDetailTitle}
-                descriptionNumberOfLines={200} />);
-
-        if (contact.room && contact.room.title)
-            output.push(<List.Item key="room" title={t('contact:room')} description={contact.room.title}
-                descriptionStyle={themeStyles.textLighter} titleStyle={themeStyles.searchDetailTitle}
-                descriptionNumberOfLines={200} />);
-
-        if (contact.email)
-            output.push(<TouchableOpacity key="email" onPress={() => Linking.openURL('mailto:' + contact.email)}>
-                <List.Item title={t('contact:email')} description={contact.email}
-                    descriptionStyle={themeStyles.textLighter} titleStyle={themeStyles.searchDetailTitle}
-                    right={props => <List.Icon {...props} icon="email" />} />
-            </TouchableOpacity>
-            );
-
-        if (contact.telephone.length > 0) {
-            contact.telephone.forEach((phoneNumber) => {
-                output.push(
-                    <TouchableOpacity key={'phone_' + index} onPress={() => {
-                        const formattedPhoneNumber = phoneNumber.number.replace(/\s/g, '');
-                        Linking.openURL('tel:' + formattedPhoneNumber).catch(error => console.error(`ContactDetailComponent - Fehler beim öffnen des Telefons ${Platform.OS}`, error));
-                    }}>
-                        <List.Item
-                            title={t('contact:phone') + ' ' + index}
-                            description={phoneNumber.number}
-                            descriptionStyle={themeStyles.textLighter}
-                            titleStyle={themeStyles.searchDetailTitle}
-                            right={props =>
-                                <List.Icon {...props}
-                                    icon="phone" />}
-                        />
-                    </TouchableOpacity>
-                );
-                index++;
-            });
-        }
-
 
         return (
             <ScrollView style={this.styles.containerInner}>
                 <Headline style={this.styles.name}>{contact.firstName} {contact.lastName}</Headline>
-                {output}
+                {
+                    contact?.building
+                        ? <List.Item
+                            key="building"
+                            title={t('contact:building')}
+                            description={contact.building}
+                            descriptionStyle={themeStyles.textLighter}
+                            titleStyle={themeStyles.searchDetailTitle}
+                            descriptionNumberOfLines={200} />
+                        : null
+                }
+                {
+                    contact?.department
+                        ? <List.Item
+                            key="department"
+                            title={t('contact:department')}
+                            description={contact.department}
+                            descriptionStyle={themeStyles.textLighter}
+                            titleStyle={themeStyles.searchDetailTitle}
+                            descriptionNumberOfLines={200} />
+                        : null
+                }
+                {
+                    contact?.room && contact?.room?.title
+                        ? <List.Item
+                            key="room"
+                            title={t('contact:room')}
+                            description={contact.room.title}
+                            descriptionStyle={themeStyles.textLighter}
+                            titleStyle={themeStyles.searchDetailTitle}
+                            descriptionNumberOfLines={200} />
+                        : null
+                }
+                {
+                    contact?.email
+                        ? <TouchableOpacity
+                            key="email"
+                            onPress={() => Linking.openURL('mailto:' + contact.email)}
+                        >
+                            <List.Item
+                                title={t('contact:email')}
+                                description={contact.email}
+                                descriptionStyle={themeStyles.textLighter}
+                                titleStyle={themeStyles.searchDetailTitle}
+                                right={props => <List.Icon {...props} icon="email" />}
+                            />
+                        </TouchableOpacity>
+                        : null
+                }
+                {
+                    contact?.telephone?.length > 0
+                        ? contact.telephone.map(
+                            (telephone, index, telephones) => {
+
+                                const title = telephones.length > 0
+                                    ? t('contact:phone')
+                                    : t('contact:phone') + ' ' + index;
+
+                                const telephoneNumber = telephone.number
+
+                                return (
+                                    <TouchableOpacity
+                                        key={telephoneNumber}
+                                        onPress={
+                                            () => {
+                                                const formattedPhoneNumber = telephone.number.replace(/\s/g, '');
+                                                Linking.openURL('tel:' + formattedPhoneNumber).catch(error => console.error(`ContactDetailComponent - Fehler beim öffnen des Telefons ${Platform.OS}`, error));
+                                            }
+                                        }
+                                    >
+                                        <List.Item
+                                            title={title}
+                                            description={telephoneNumber}
+                                            descriptionStyle={themeStyles.textLighter}
+                                            titleStyle={themeStyles.searchDetailTitle}
+                                            right={
+                                                props =>
+                                                    <List.Icon
+                                                        {...props}
+                                                        icon="phone"
+                                                    />
+                                            }
+                                        />
+                                    </TouchableOpacity>
+                                )
+                            }
+                        )
+                        : null
+                }
                 <View style={this.styles.space} />
             </ScrollView>
         );
