@@ -54,7 +54,7 @@ import AppbarAction from '../AppbarAction';
  * Navigation-Parameters:
  *  - none
  */
-export default function ContactDetailComponent({ contact }) {
+export default function ContactDetailComponent({ contact, ...restProps }) {
     const theme = useTheme();
     const { themeStyles } = theme;
     const { t } = useTranslation();
@@ -114,7 +114,7 @@ export default function ContactDetailComponent({ contact }) {
     return contact
         ? <SafeAreaView style={[styles.container, themeStyles.safeAreaContainer]}>
             <AppbarComponent
-                {...props}
+                {...restProps}
                 title={t('contact:contactInformation')}
                 rightAction={<AppbarAction icon='share' onPress={onShare} />}
             />
