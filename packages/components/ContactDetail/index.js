@@ -12,8 +12,7 @@
  * limitations under the License.
  */
 
-import React, { useMemo } from 'react';
-import PropTypes from 'prop-types';
+import { useMemo } from 'react';
 
 import {
     Linking,
@@ -27,27 +26,23 @@ import {
     View,
 } from 'react-native';
 import {
-    Appbar,
     Headline,
     List,
     useTheme,
 } from "react-native-paper";
 
-import { connect } from 'react-redux'
 import { useTranslation } from "react-i18next";
-import merge from 'lodash/merge';
 
 import componentStyles from './styles';
 import AppbarComponent from '../AppBar';
 import AppbarAction from '../AppbarAction';
-
 
 /**
  * Contact Detail Component
  *
  * Shows the detailed information of a contact with name and contact details.
  * Provides a share functionality.
- * 
+ *
  * @param {object} props
  * @param {object} props.contact - Der anzuzeigende Kontakt
  */
