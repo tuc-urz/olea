@@ -170,7 +170,7 @@ export default function ContactDetailComponent({ contact }) {
                         : null
                 }
                 {
-                    contact?.telephone?.length > 0
+                    Array.isArray(contact?.telephone)
                         ? contact.telephone.map(
                             (telephone, index, telephones) => {
 
