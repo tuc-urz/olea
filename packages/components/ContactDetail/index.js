@@ -67,20 +67,18 @@ export default function ContactDetailComponent({ contact }) {
     const onShare = useCallback(
         async () => {
             try {
-                let phone = "";
-                if (contact.telephone.length > 0) {
-                    phone += "\n" + t('contact:phone') + ": ";
-                    contact.telephone.forEach((phoneNumber) => {
-                        phone += phoneNumber.number + '\n';
-                    });
-                }
+                const contactTelephones = contact.telephone;
+                const contactTelephoneNumbersShareText = contactTelephones
+                    .map(telephone => telephone.number)
+                    .map(number => `${t('contact:phone')}: ${number}`)
+                    .join('\n');
 
                 let message = t('contact:title') + ' - ' + contact.firstName + ' ' + contact.lastName +
                     ((contact.building) ? "\n" + t('contact:building') + ": " + contact.building : '') +
                     ((contact.department) ? "\n" + t('contact:department') + ": " + contact.department : '') +
                     ((contact.room && contact.room.title) ? "\n" + t('contact:room') + ": " + contact.room.title : '') +
                     ((contact.email) ? "\n" + t('contact:email') + ": " + contact.email : '') +
-                    phone;
+                    contactTelephoneNumbersShareText;
 
                 const result = await Share.share({
                     message: message
