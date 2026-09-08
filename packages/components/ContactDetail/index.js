@@ -112,14 +112,14 @@ export default function ContactDetailComponent({ contact }) {
     );
 
     return contact
-        ? <SafeAreaView style={[this.styles.container, themeStyles.safeAreaContainer]}>
+        ? <SafeAreaView style={[styles.container, themeStyles.safeAreaContainer]}>
             <AppbarComponent
-                {...this.props}
+                {...props}
                 title={t('contact:contactInformation')}
                 rightAction={<AppbarAction icon='share' onPress={onShare} />}
             />
-            <ScrollView style={this.styles.containerInner}>
-                <Headline style={this.styles.name}>{contact.firstName} {contact.lastName}</Headline>
+            <ScrollView style={styles.containerInner}>
+                <Headline style={styles.name}>{contact.firstName} {contact.lastName}</Headline>
                 {
                     contact?.building
                         ? <List.Item
@@ -209,7 +209,7 @@ export default function ContactDetailComponent({ contact }) {
                         )
                         : null
                 }
-                <View style={this.styles.space} />
+                <View style={styles.space} />
             </ScrollView>
         </SafeAreaView>
 
