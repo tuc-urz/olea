@@ -47,12 +47,9 @@ import AppbarAction from '../AppbarAction';
  *
  * Shows the detailed information of a contact with name and contact details.
  * Provides a share functionality.
- *
- * Parameters:
- *  - contact: Contact object with all information about the contact
- *
- * Navigation-Parameters:
- *  - none
+ * 
+ * @param {object} props
+ * @param {object} props.contact - Der anzuzeigende Kontakt
  */
 export default function ContactDetailComponent({ contact, ...restProps }) {
     const theme = useTheme();
