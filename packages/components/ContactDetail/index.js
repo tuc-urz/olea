@@ -12,7 +12,10 @@
  * limitations under the License.
  */
 
-import { useMemo } from 'react';
+import {
+    useCallback,
+    useMemo
+} from 'react';
 
 import {
     Linking,
