@@ -12,30 +12,34 @@
  * limitations under the License.
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import {
+    useCallback,
+    useMemo
+} from 'react';
 
 import {
+    Linking,
+    Platform,
+    SafeAreaView,
+    ScrollView,
+    Share,
     StyleSheet,
     Text,
-    View,
-    SafeAreaView,
-    Share,
-    Linking,
     TouchableOpacity,
-    Platform,
-    ScrollView
+    View,
 } from 'react-native';
-import {Appbar, Headline, List, withTheme} from "react-native-paper";
+import {
+    Headline,
+    List,
+    useTheme,
+} from "react-native-paper";
 
-import { connect } from 'react-redux'
-import {withTranslation} from "react-i18next";
-import merge from 'lodash/merge';
+import { useTranslation } from "react-i18next";
 
 import componentStyles from './styles';
 import AppbarComponent from '../AppBar';
 import AppbarAction from '../AppbarAction';
-
+import { default as Icon } from '../../libraries/icons-openasist';
 
 /**
  * Contact Detail Component
@@ -43,193 +47,168 @@ import AppbarAction from '../AppbarAction';
  * Shows the detailed information of a contact with name and contact details.
  * Provides a share functionality.
  *
- * Parameters:
- *  - contact: Contact object with all information about the contact
- *
- * Navigation-Parameters:
- *  - none
+ * @param {object} props
+ * @param {object} props.contact - Der anzuzeigende Kontakt
  */
-class ContactDetailComponent extends React.Component {
-    static propTypes = {
-        contact: PropTypes.object.isRequired
-    };
+export default function ContactDetailComponent({ contact, ...restProps }) {
+    const theme = useTheme();
+    const { themeStyles } = theme;
+    const { t } = useTranslation();
 
-    // Styles of this component
-    styles;
+    const styles = useMemo(
+        () => StyleSheet.create(componentStyles(theme)),
+        [theme, componentStyles]
+    );
 
-    contact = null;
+    const onShare = useCallback(
+        async () => {
+            try {
+                // Telephone-Objekte aus dem Kontakt auslesen. Falls diese nicht vorhanden sind, mit einem leeren Array initialisieren
+                const contactTelephones = contact?.telephone ?? [];
+                const shareMessageTelephoneNumbers = contactTelephones
+                    .map(telephone => telephone.number)
+                    .map(number => `${t('contact:phone')}: ${number}`)
+                    .join('\n');
 
+                const shareMessage = `${t('contact:title')} - ${contact.firstName} ${contact.lastName}`
+                    +
+                    (
+                        contact?.building
+                            ? `\n${t('contact:building')}: ${contact.building}`
+                            : ''
+                    )
+                    +
+                    (
+                        contact?.department
+                            ? `\n${t('contact:department')}: ${contact.department}`
+                            : ''
+                    )
+                    +
+                    (
+                        contact?.room?.title
+                            ? `\n${t('contact:room')}: ${contact.room.title}`
+                            : ''
+                    )
+                    +
+                    (
+                        contact?.email
+                            ? `\n${t('contact:email')}: ${contact.email}`
+                            : ''
+                    )
+                    +
+                    (
+                        shareMessageTelephoneNumbers
+                            ? '\n' + shareMessageTelephoneNumbers
+                            : ''
+                    );
 
-    constructor(props) {
-        super(props);
-        // ------------------------------------------------------------------------
-        // PLUGIN FUNCTIONALITY
-        // ------------------------------------------------------------------------
-
-        const { pluginStyles,theme } = this.props;
-        this.styles = componentStyles(theme);
-
-        if(pluginStyles) {
-            this.styles = merge(this.styles, pluginStyles);
-        }
-
-        this.styles = StyleSheet.create(this.styles);
-
-        // ------------------------------------------------------------------------
-    };
-
-    /**
-     * Share function for contact
-     *
-     * @returns {Promise<void>}
-     * @private
-     */
-    async _onShare() {
-        try {
-            const { t } = this.props;
-
-            let phone = "";
-            if(this.contact.telephone.length > 0) {
-                phone += "\n"+ t('contact:phone') +": ";
-                this.contact.telephone.forEach((phoneNumber) => {
-                    phone += phoneNumber.number + '\n';
+                await Share.share({
+                    message: shareMessage,
                 });
-            }
-
-            let message = t('contact:title') + ' - ' + this.contact.firstName + ' ' + this.contact.lastName +
-                ((this.contact.building)                        ? "\n" + t('contact:building') + ": " + this.contact.building       : '') +
-                ((this.contact.department)                      ? "\n" + t('contact:department') + ": " + this.contact.department   : '') +
-                ((this.contact.room && this.contact.room.title) ? "\n" + t('contact:room') + ": " + this.contact.room.title         : '') +
-                ((this.contact.email)                           ? "\n" + t('contact:email') + ": " + this.contact.email             : '') +
-                phone;
-
-            const result = await Share.share({
-                message: message
-            });
-
-            if (result.action === Share.sharedAction) {
-                if (result.activityType) {
-                    // shared with activity type of result.activityType
-                } else {
-                    // shared
-                }
-            } else if (result.action === Share.dismissedAction) {
-                // dismissed
-            }
-        } catch (error) {
+            } catch (error) {
                 alert(error.message);
-        }
-    };
+            }
+        },
+        [contact, t]
+    );
 
-    /**
-     * Render contact details content
-     *
-     * @returns {*}
-     * @private
-     */
-    _renderContent = () => {
-        const { contact, t } = this.props;
-        const { themeStyles } = this.props.theme;
-
-        let output = [];
-        let index = 1;
-
-
-
-
-        if(contact.building)
-            output.push(<List.Item key="building" title={t('contact:building')}   description={contact.building}
-                                   descriptionStyle={themeStyles.textLighter} titleStyle={themeStyles.searchDetailTitle}
-                                   descriptionNumberOfLines={200}/>);
-
-        if(contact.department)
-            output.push(<List.Item key="department" title={t('contact:department')} description={contact.department}
-                                   descriptionStyle={themeStyles.textLighter} titleStyle={themeStyles.searchDetailTitle}
-                                   descriptionNumberOfLines={200}/>);
-
-        if(contact.room && contact.room.title)
-            output.push(<List.Item key="room" title={t('contact:room')} description={contact.room.title}
-                                   descriptionStyle={themeStyles.textLighter} titleStyle={themeStyles.searchDetailTitle}
-                                   descriptionNumberOfLines={200}/>);
-
-        if(contact.email)
-            output.push(<TouchableOpacity key="email" onPress={() => Linking.openURL('mailto:' + contact.email)}>
-                            <List.Item title={t('contact:email')} description={contact.email}
-                                descriptionStyle={themeStyles.textLighter} titleStyle={themeStyles.searchDetailTitle}
-                                right={props => <List.Icon {...props} icon="email"/>}/>
-                        </TouchableOpacity>
-            );
-
-        if(contact.telephone.length > 0) {
-            contact.telephone.forEach((phoneNumber) => {
-                output.push(
-                    <TouchableOpacity key={'phone_'+ index} onPress={() => {
-                        const formattedPhoneNumber = phoneNumber.number.replace(/\s/g, '');
-                        Linking.openURL('tel:' + formattedPhoneNumber).catch(error => console.error(`ContactDetailComponent - Fehler beim öffnen des Telefons ${Platform.OS}`, error));
-                        }}>
-                        <List.Item
-                            title={t('contact:phone') + ' ' + index}
-                            description={phoneNumber.number}
+    return contact
+        ? <SafeAreaView style={[styles.container, themeStyles.safeAreaContainer]}>
+            <AppbarComponent
+                {...restProps}
+                title={t('contact:contactInformation')}
+                rightAction={<AppbarAction icon='share' onPress={onShare} />}
+            />
+            <ScrollView style={styles.containerInner}>
+                <Headline style={styles.name}>{contact.firstName} {contact.lastName}</Headline>
+                {
+                    contact?.building
+                        ? <List.Item
+                            key="building"
+                            title={t('contact:building')}
+                            description={contact.building}
                             descriptionStyle={themeStyles.textLighter}
                             titleStyle={themeStyles.searchDetailTitle}
-                            right={props =>
-                                <List.Icon {...props}
-                                           icon="phone"/>}
-                        />
-                  </TouchableOpacity>
-                );
-                index++;
-            });
-        }
+                            descriptionNumberOfLines={200} />
+                        : null
+                }
+                {
+                    contact?.department
+                        ? <List.Item
+                            key="department"
+                            title={t('contact:department')}
+                            description={contact.department}
+                            descriptionStyle={themeStyles.textLighter}
+                            titleStyle={themeStyles.searchDetailTitle}
+                            descriptionNumberOfLines={200} />
+                        : null
+                }
+                {
+                    contact?.room && contact?.room?.title
+                        ? <List.Item
+                            key="room"
+                            title={t('contact:room')}
+                            description={contact.room.title}
+                            descriptionStyle={themeStyles.textLighter}
+                            titleStyle={themeStyles.searchDetailTitle}
+                            descriptionNumberOfLines={200} />
+                        : null
+                }
+                {
+                    contact?.email
+                        ? <TouchableOpacity
+                            key="email"
+                            onPress={() => Linking.openURL('mailto:' + contact.email)}
+                        >
+                            <List.Item
+                                title={t('contact:email')}
+                                description={contact.email}
+                                descriptionStyle={themeStyles.textLighter}
+                                titleStyle={themeStyles.searchDetailTitle}
+                                right={props => <List.Icon {...props} icon="email" />}
+                            />
+                        </TouchableOpacity>
+                        : null
+                }
+                {
+                    Array.isArray(contact?.telephone)
+                        ? contact.telephone.map(
+                            (telephone, index, telephones) => {
 
+                                const title = telephones.length == 1
+                                    ? t('contact:phone')
+                                    : t('contact:phone') + ' ' + index;
 
-        return (
-            <ScrollView style={this.styles.containerInner}>
-                <Headline style={this.styles.name}>{contact.firstName} {contact.lastName}</Headline>
-                {output}
-                <View style={this.styles.space}/>
+                                const telephoneNumber = telephone.number
+
+                                return (
+                                    <TouchableOpacity
+                                        key={telephoneNumber}
+                                        onPress={
+                                            () => {
+                                                const formattedPhoneNumber = telephone.number.replace(/\s/g, '');
+                                                Linking.openURL('tel:' + formattedPhoneNumber).catch(error => console.error(`ContactDetailComponent - Fehler beim öffnen des Telefons ${Platform.OS}`, error));
+                                            }
+                                        }
+                                    >
+                                        <List.Item
+                                            title={title}
+                                            description={telephoneNumber}
+                                            descriptionStyle={themeStyles.textLighter}
+                                            titleStyle={themeStyles.searchDetailTitle}
+                                            right={props => <Icon {...props} icon={'call'} />}
+                                        />
+                                    </TouchableOpacity>
+                                )
+                            }
+                        )
+                        : null
+                }
+                <View style={styles.space} />
             </ScrollView>
-        );
-    };
+        </SafeAreaView>
 
-    render() {
-        // ------------------------------------------------------------------------
-        // PLUGIN FUNCTIONALITY
-        // ------------------------------------------------------------------------
-        const PluginComponent = this.props.pluginComponent;
-        if (PluginComponent) {
-            return <PluginComponent />;
-        }
-        // ------------------------------------------------------------------------
-
-        const {themeStyles} = this.props.theme;
-        const { contact, t } = this.props;
-
-        if(!contact){
-            return (<Text>{t('contact:couldNotLoad')}</Text>);
-        }
-
-        this.contact = contact;
-
-        return (
-            <SafeAreaView style={[this.styles.container, themeStyles.safeAreaContainer]}>
-                <AppbarComponent
-                    {...this.props}
-                    title={t('contact:contactInformation')}
-                    rightAction={<AppbarAction icon='share' onPress={this._onShare.bind(this)} />}
-                />
-                {this._renderContent()}
-            </SafeAreaView>
-        );
-    }
+        : <Text>
+            {t('contact:couldNotLoad')}
+        </Text>;
 }
-
-
-const mapStateToProps = state => {
-    return {
-        pluginComponent: state.pluginReducer.contactDetail.component,
-        pluginStyles: state.pluginReducer.contactDetail.styles
-    };
-};
-
-export default connect(mapStateToProps, null)(withTranslation()(withTheme(ContactDetailComponent)))
