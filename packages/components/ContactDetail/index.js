@@ -175,7 +175,7 @@ export default function ContactDetailComponent({ contact, ...restProps }) {
                         ? contact.telephone.map(
                             (telephone, index, telephones) => {
 
-                                const title = telephones.length > 0
+                                const title = telephones.length == 1
                                     ? t('contact:phone')
                                     : t('contact:phone') + ' ' + index;
 
