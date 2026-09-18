@@ -63,7 +63,8 @@ export default function ContactDetailComponent({ contact, ...restProps }) {
     const onShare = useCallback(
         async () => {
             try {
-                const contactTelephones = contact.telephone;
+                // Telephone-Objekte aus dem Kontakt auslesen. Falls diese nicht vorhanden sind, mit einem leeren Array initialisieren
+                const contactTelephones = contact?.telephone ?? [];
                 const shareMessageTelephoneNumbers = contactTelephones
                     .map(telephone => telephone.number)
                     .map(number => `${t('contact:phone')}: ${number}`)
