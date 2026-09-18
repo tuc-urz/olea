@@ -96,7 +96,11 @@ export default function ContactDetailComponent({ contact, ...restProps }) {
                             : ''
                     )
                     +
-                    shareMessageTelephoneNumbers;
+                    (
+                        shareMessageTelephoneNumbers
+                            ? '\n' + shareMessageTelephoneNumbers
+                            : ''
+                    );
 
                 await Share.share({
                     message: shareMessage,
