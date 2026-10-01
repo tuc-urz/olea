@@ -31,28 +31,20 @@ export default function IconListItem({ icon, ...listItemProps }) {
         [theme, componentStyles]
     );
 
-    const themeIconColor = theme?.colors?.icon;
-
     const listItemIcon = useCallback(
-        listIconProps => {
-
-            const iconColor = themeIconColor ?? iconProps.color;
-
-            return (
-                <List.Icon
-                    {...listIconProps}
-                    color={iconColor}
-                    icon={
-                        props =>
-                            <Icon
-                                {...props}
-                                icon={icon}
-                            />
-                    }
-                />
-            )
-        },
-        [icon, themeIconColor]
+        listIconProps =>
+            <List.Icon
+                {...listIconProps}
+                icon={
+                    props =>
+                        <Icon
+                            {...props}
+                            icon={icon}
+                        />
+                }
+            />
+        ,
+        [icon]
     );
 
     return (
