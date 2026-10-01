@@ -2,14 +2,16 @@ import {
     useCallback,
     useMemo,
 } from 'react';
-import { StyleSheet } from 'react-native';
+import {
+    StyleSheet,
+} from 'react-native';
 
 import {
     List,
     useTheme,
 } from 'react-native-paper';
 
-import ListItemIcon from '../ListItemIcon';
+import { default as Icon } from '../../libraries/icons-openasist';
 
 import componentStyles from './styles';
 
@@ -29,23 +31,28 @@ export default function IconListItem({ icon, ...listItemProps }) {
         [theme, componentStyles]
     );
 
-    const primaryColor = theme?.color?.primary;
+    const themeIconColor = theme?.colors?.icon;
 
     const listItemIcon = useCallback(
-        iconProps => {
+        listIconProps => {
 
-            const iconColor = primaryColor ?? iconProps.color;
+            const iconColor = themeIconColor ?? iconProps.color;
 
             return (
-                <ListItemIcon
-                    icon={icon}
+                <List.Icon
+                    {...listIconProps}
                     color={iconColor}
-                    size={24}
-                    style={iconProps?.style}
+                    icon={
+                        props =>
+                            <Icon
+                                {...props}
+                                icon={icon}
+                            />
+                    }
                 />
-            );
+            )
         },
-        [icon, primaryColor]
+        [icon, themeIconColor]
     );
 
     return (
