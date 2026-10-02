@@ -32,14 +32,15 @@ import {
     Headline,
     List,
     useTheme,
-} from "react-native-paper";
+} from 'react-native-paper';
 
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
-import componentStyles from './styles';
 import AppbarComponent from '../AppBar';
 import AppbarAction from '../AppbarAction';
-import { default as Icon } from '../../libraries/icons-openasist';
+import IconListItem from '../IconListItem';
+
+import componentStyles from './styles';
 
 /**
  * Contact Detail Component
@@ -191,12 +192,12 @@ export default function ContactDetailComponent({ contact, ...restProps }) {
                                             }
                                         }
                                     >
-                                        <List.Item
+                                        <IconListItem
                                             title={title}
                                             description={telephoneNumber}
                                             descriptionStyle={themeStyles.textLighter}
                                             titleStyle={themeStyles.searchDetailTitle}
-                                            right={props => <Icon {...props} icon={'call'} />}
+                                            icon={'call'}
                                         />
                                     </TouchableOpacity>
                                 )
