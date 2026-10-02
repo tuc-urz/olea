@@ -1,0 +1,44 @@
+name: Bump @olea-bps/base
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: 'Version bump'
+        required: true
+        default: patch
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: develop
+
+      - name: Bump and push branch
+        env:
+          ACTOR: ${{ github.actor }}
+          ACTOR_ID: ${{ github.actor_id }}
+          BUMP: ${{ inputs.bump }}
+        run: |
+          git config user.name "$ACTOR"
+          git config user.email "$ACTOR_ID+$ACTOR@users.noreply.github.com"
+          git switch -c chore/bump-base-${{ github.run_id }}
+          ./scripts/bump-base.sh "$BUMP"
+          git push -u origin HEAD
+
+      - name: Open PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ACTOR: ${{ github.actor }}
+        run: gh pr create --base develop --fill --label dependencies --assignee "$ACTOR"
