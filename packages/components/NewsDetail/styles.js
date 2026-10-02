@@ -27,7 +27,7 @@ export default function(theme) {
             flex: 1,
             paddingHorizontal: 5,
             paddingVertical: 20,
-            minHeight: height * 1.25 // To make sure the animation won't break / stop
+            minHeight: height // enough space for short news without excessive whitespace
         },
         activity: {
             marginTop: 20
