@@ -123,9 +123,7 @@ function SearchView(props) {
                     onSubmitEditing={() => _onPressButton()}
                     onIconPress={() => _onPressButton()}
                     onChangeText={setSearchString}
-                    icon={(props) =>
-                        <IconsOpenasist icon={"search"} size={32} color={colors.icon} />
-                    }
+                    icon={props => <IconsOpenasist {...props} icon={'search'} color={colors.icon} />}
                     style={styles.searchBar}
                     inputStyle={styles.searchBarInput}
                     value={searchString}
