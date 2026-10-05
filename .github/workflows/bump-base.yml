@@ -33,8 +33,8 @@ jobs:
         run: |
           git config user.name "$ACTOR"
           git config user.email "$ACTOR_ID+$ACTOR@users.noreply.github.com"
-          git switch -c chore/bump-base-${{ github.run_id }}
           ./scripts/bump-base.sh "$BUMP"
+          git switch -c "chore/bump-base-$(jq -r .version packages/package.json)"
           git push -u origin HEAD
 
       - name: Open PR
