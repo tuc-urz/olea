@@ -28,7 +28,7 @@
     "README.md"
   ],
   "dependencies": {
-    "react-native-webview": "13.16.0"
+    "react-native-webview": "13.16.1"
   },
   "peerDependencies": {
     "react": "^19.0.0",
