@@ -81,8 +81,9 @@ class JobFilterComponent extends React.Component {
     }
 
     goBack() {
-        const { navigation, route } = this.props;
-        navigation.navigate('Job', {
+        const { navigation } = this.props;
+
+        navigation.popTo('Job', {
           selectedIds: this.state.selectedIds,
           checked: this.state.checked
         });
