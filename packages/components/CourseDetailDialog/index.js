@@ -62,7 +62,7 @@ export default function CourseDetailDialog({ course, visible, onClose, onDismiss
         [theme]
     );
 
-    const { room, url, info, title, times, type, lecturer, ...extraCourseData } = course ?? {};
+    const { room, url, info, title, times, type, lecturer, addon, ...extraCourseData } = course ?? {};
     const courseDetails = [
         { ...room, key: 'room', displayName: t('timetable:detail.room'), icon: 'map-search' },
         { key: 'startTimes', data: times?.[0]?.start, displayName: t('timetable:detail.start') },
@@ -71,6 +71,7 @@ export default function CourseDetailDialog({ course, visible, onClose, onDismiss
         { ...lecturer?.[0], key: 'lecturer', displayName: t('timetable:detail.lecturer') },
         { ...url, key: 'url', displayName: t('timetable:detail.url'), icon: 'forward' },
         { ...info, key: 'info', displayName: t('timetable:detail.info') },
+        { ...addon, key: 'addon', displayName: t('timetable:detail.addon') },
 
         // Restliche Daten werden in Format gebracht und angefügt
         ...Object.entries(extraCourseData)
