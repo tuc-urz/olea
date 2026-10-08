@@ -17,6 +17,7 @@ import { createContext, useState, useEffect, useContext, useMemo, useReducer, us
 import { useAutoDiscovery, makeRedirectUri, useAuthRequest, exchangeCodeAsync, refreshAsync } from 'expo-auth-session';
 import * as WebBrowser from 'expo-web-browser';
 import * as SecureStore from 'expo-secure-store';
+import { secureStoreOptions } from '../../libraries/stored-state';
 
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -89,7 +90,7 @@ function useSecureStoredState(key, initialState = null, sensitiv = false) {
 
     function setSecureStoredState(value) {
         SecureStore
-            .setItemAsync(key, JSON.stringify(value ?? null))
+            .setItemAsync(key, JSON.stringify(value ?? null), secureStoreOptions)
             .then(() => setState(value ?? null))
             .catch(reason => console.error(hookName, ': can`t store secure state: ', reason, 'key:', key, 'value:', sensitiv ? '***sensitiv value***' : value));
     }

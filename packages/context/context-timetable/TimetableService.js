@@ -1,6 +1,7 @@
 import { useSyncExternalStore } from 'react';
 
 import * as SecureStore from 'expo-secure-store';
+import { getSecureItem, secureStoreOptions } from '../../libraries/stored-state';
 
 import { groupBy } from 'lodash';
 import { DateTime, Duration } from 'luxon';
@@ -95,8 +96,8 @@ export default class TimetableService {
     constructor(provider) {
         this.#provider = provider;
 
-        this.#code = SecureStore.getItem(TimetableCodeStoreKey);
-        this.#courses = JSON.parse(SecureStore.getItem(TimetableCoursesStoreKey));
+        this.#code = getSecureItem(TimetableCodeStoreKey);
+        this.#courses = JSON.parse(getSecureItem(TimetableCoursesStoreKey));
     }
 
 
@@ -114,7 +115,7 @@ export default class TimetableService {
         this.#codeSubscribers.forEach(subscriber => subscriber(code));
     }
     async setCode(code) {
-        await SecureStore.setItemAsync(TimetableCodeStoreKey, code);
+        await SecureStore.setItemAsync(TimetableCodeStoreKey, code, secureStoreOptions);
         this.#setCode(code);
     }
     setCodeCallback = async (code) => this.setCode(code);
@@ -236,7 +237,7 @@ export default class TimetableService {
         };
 
         // Neue Vorlesungsdaten in den Cache ablegen
-        SecureStore.setItem(TimetableCoursesStoreKey, JSON.stringify(newCourses));
+        SecureStore.setItem(TimetableCoursesStoreKey, JSON.stringify(newCourses), secureStoreOptions);
 
         // Neue Vorlesungen hin Service hinterlegen und Äanderun bekannt geben
         this.#setCourses(newCourses);

@@ -17,6 +17,18 @@ import { useState, useReducer, useEffect, useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as SecureStore from 'expo-secure-store';
 
+export const secureStoreOptions = { keychainAccessible: SecureStore.AFTER_FIRST_UNLOCK };
+
+// Keychain ist bei gesperrtem Gerät nicht lesbar (Start im Hintergrund per Push).
+export function getSecureItem(key) {
+    try {
+        return SecureStore.getItem(key);
+    } catch (error) {
+        console.warn('getSecureItem: can`t read secure state', key, ':', error);
+        return null;
+    }
+}
+
 /**
  * Erstellt einen State, der über async-storage persistiert wird und eine Update- bzw. Reset-Funktion.
  * Dieser Hook kann wie der useState-Hook von React benutzt werden.
@@ -72,7 +84,7 @@ export function useSecureStoredState(key, initialState = null, sensitiv = false)
 
     const [state, setState] = useState(
         () => {
-            const stringValue = SecureStore.getItem(key);
+            const stringValue = getSecureItem(key);
             if (stringValue) {
                 return JSON.parse(stringValue);
             } else {
@@ -84,7 +96,7 @@ export function useSecureStoredState(key, initialState = null, sensitiv = false)
     const setSecureStoredState = useCallback(
         value => {
             SecureStore
-                .setItemAsync(key, JSON.stringify(value))
+                .setItemAsync(key, JSON.stringify(value), secureStoreOptions)
                 .then(() => setState(value))
                 .catch(reason => console.error(hookName, ': can`t store secure state: ', reason, 'key:', key, 'value:', sensitiv ? '***sensitiv value***' : value));
         },
@@ -126,7 +138,7 @@ export function useSecureStoredReducer(key, reducer, initialState = null, sensit
         reducer,
         undefined,
         () => {
-            const stringValue = SecureStore.getItem(key);
+            const stringValue = getSecureItem(key);
             if (stringValue) {
                 return JSON.parse(stringValue);
             } else {
@@ -139,7 +151,7 @@ export function useSecureStoredReducer(key, reducer, initialState = null, sensit
         () => {
             if (state !== undefined) {
                 SecureStore
-                    .setItemAsync(key, JSON.stringify(state))
+                    .setItemAsync(key, JSON.stringify(state), secureStoreOptions)
                     .catch(reason => console.error(hookName, ': can`t store secure state: ', reason, 'key:', key, 'value:', sensitiv ? '***sensitiv value***' : state));
             }
         },
