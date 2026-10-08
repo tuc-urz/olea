@@ -12,8 +12,10 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
+    BackHandler,
+    Platform,
     SafeAreaView,
     StyleSheet,
     View,
@@ -29,6 +31,7 @@ import {
 } from "react-native-paper";
 import { withTranslation } from "react-i18next";
 import { WebView } from "react-native-webview";
+import { useFocusEffect } from '@react-navigation/native';
 import merge from 'lodash/merge';
 
 import AppbarComponent from '../AppBar';
@@ -36,6 +39,24 @@ import AppbarAction from '../AppbarAction';
 import IconsOpenasist from '../../libraries/icons-openasist';
 
 import componentStyles from './styles';
+
+// Use the current screen's navigation context, not the search screen's props.
+function RoomWebViewBackHandler({ onBack }) {
+    useFocusEffect(useCallback(() => {
+        if (Platform.OS !== 'android') {
+            return;
+        }
+
+        const subscription = BackHandler.addEventListener('hardwareBackPress', () => {
+            onBack();
+            return true;
+        });
+
+        return () => subscription.remove();
+    }, [onBack]));
+
+    return null;
+}
 
 /**
  * Room Detail Component
@@ -88,6 +109,10 @@ class RoomDetailComponent extends React.Component {
 
         // ------------------------------------------------------------------------
     }
+
+    _closeWebView = () => {
+        this.setState({ webview: { title: '', url: '' } });
+    };
 
     /**
      * Share function for room
@@ -247,11 +272,12 @@ class RoomDetailComponent extends React.Component {
         if(title && url) {
             return (
                 <SafeAreaView style={[this.styles.container, themeStyles.safeAreaContainer]}>
+                    <RoomWebViewBackHandler onBack={this._closeWebView} />
                     <AppbarComponent {...this.props}
                                     title={title}
                                     leftAction={<Appbar.Action
                                         icon={props => <IconsOpenasist {...props} icon={'back'} color={colors.primaryText} /> }
-                                        onPress={() => this.setState({webview: {title: '', url: ''}})} />}/>
+                                        onPress={this._closeWebView} />}/>
                     <WebView
                         ref={ref => this.webView.ref = ref}
                         source={{uri: url}}
