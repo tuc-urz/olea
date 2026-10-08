@@ -12,10 +12,22 @@
  * limitations under the License.
  */
 
-import { useState, useReducer, useEffect, useCallback } from 'react';
+import { useState, useReducer, useEffect, useCallback } from 'react'
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as SecureStore from 'expo-secure-store';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import * as SecureStore from 'expo-secure-store'
+
+export const secureStoreOptions = { keychainAccessible: SecureStore.AFTER_FIRST_UNLOCK }
+
+// Keychain ist bei gesperrtem Gerät nicht lesbar (Start im Hintergrund per Push).
+export function getSecureItem (key) {
+  try {
+    return SecureStore.getItem(key)
+  } catch (error) {
+    console.warn('getSecureItem: can`t read secure state', key, ':', error)
+    return null
+  }
+}
 
 /**
  * Erstellt einen State, der über async-storage persistiert wird und eine Update- bzw. Reset-Funktion.
@@ -26,35 +38,34 @@ import * as SecureStore from 'expo-secure-store';
  * @param {any | (() => any)} initialState Initialer Wert des States
  * @return {[]} Array, welches den Wert des States, eine Update-Funktion und eine Reset-Funktion beinhaltet
  */
-export function asyncStoredState(key, initialState) {
-    const [value, setValue] = useState(initialState);
+export function asyncStoredState (key, initialState) {
+  const [value, setValue] = useState(initialState)
 
-    const clearValue = useCallback(
-        () => {
-            AsyncStorage.removeItem(key)
-                .then(() => setValue(initialState))
+  const clearValue = useCallback(
+    () => {
+      AsyncStorage.removeItem(key)
+        .then(() => setValue(initialState))
+    },
+    [setValue, AsyncStorage.removeItem]
+  )
 
-        },
-        [setValue, AsyncStorage.removeItem]
-    )
+  useEffect(
+    () => {
+      AsyncStorage.getItem(key)
+        .then(JSON.parse)
+        .then(setValue)
+    },
+    []
+  )
 
-    useEffect(
-        () => {
-            AsyncStorage.getItem(key)
-                .then(JSON.parse)
-                .then(setValue);
-        },
-        []
-    )
+  useEffect(
+    () => {
+      AsyncStorage.setItem(key, JSON.stringify(value))
+    },
+    [value]
+  )
 
-    useEffect(
-        () => {
-            AsyncStorage.setItem(key, JSON.stringify(value));
-        },
-        [value]
-    )
-
-    return [value, setValue, clearValue];
+  return [value, setValue, clearValue]
 }
 
 /**
@@ -67,45 +78,45 @@ export function asyncStoredState(key, initialState) {
  * @param {boolean} [sensitiv=true] Ist der gespeicherte Wert nicht in den Logs auszugeben?
  * @returns {[state, (newState) => void], () => void}
  */
-export function useSecureStoredState(key, initialState = null, sensitiv = false) {
-    const hookName = useSecureStoredState.name;
+export function useSecureStoredState (key, initialState = null, sensitiv = false) {
+  const hookName = useSecureStoredState.name
 
-    const [state, setState] = useState(
-        () => {
-            const stringValue = SecureStore.getItem(key);
-            if (stringValue) {
-                return JSON.parse(stringValue);
-            } else {
-                return undefined;
-            }
-        }
-    );
-
-    const setSecureStoredState = useCallback(
-        value => {
-            SecureStore
-                .setItemAsync(key, JSON.stringify(value))
-                .then(() => setState(value))
-                .catch(reason => console.error(hookName, ': can`t store secure state: ', reason, 'key:', key, 'value:', sensitiv ? '***sensitiv value***' : value));
-        },
-        [key, setState, SecureStore]
-    )
-
-    function deleteSecureStoredState() {
-        SecureStore
-            .deleteItemAsync(key)
-            .then(() => setState(undefined))
-            .then(() => console.debug(hookName, ':', 'remove secure state', key))
-            .catch((reason) => console.debug(hookName, ':', 'can`t remove secure state', key, ':', reason));
+  const [state, setState] = useState(
+    () => {
+      const stringValue = getSecureItem(key)
+      if (stringValue) {
+        return JSON.parse(stringValue)
+      } else {
+        return undefined
+      }
     }
+  )
 
-    return [
-        state !== undefined
-            ? state
-            : initialState,
-        setSecureStoredState,
-        deleteSecureStoredState,
-    ];
+  const setSecureStoredState = useCallback(
+    value => {
+      SecureStore
+        .setItemAsync(key, JSON.stringify(value), secureStoreOptions)
+        .then(() => setState(value))
+        .catch(reason => console.error(hookName, ': can`t store secure state: ', reason, 'key:', key, 'value:', sensitiv ? '***sensitiv value***' : value))
+    },
+    [key, setState, SecureStore]
+  )
+
+  function deleteSecureStoredState () {
+    SecureStore
+      .deleteItemAsync(key)
+      .then(() => setState(undefined))
+      .then(() => console.debug(hookName, ':', 'remove secure state', key))
+      .catch((reason) => console.debug(hookName, ':', 'can`t remove secure state', key, ':', reason))
+  }
+
+  return [
+    state !== undefined
+      ? state
+      : initialState,
+    setSecureStoredState,
+    deleteSecureStoredState
+  ]
 }
 
 /**
@@ -119,37 +130,37 @@ export function useSecureStoredState(key, initialState = null, sensitiv = false)
  * @param {boolean} [sensitiv=true] Ist der gespeicherte Wert nicht in den Logs auszugeben?
  * @returns {[state, (newState) => void]}
  */
-export function useSecureStoredReducer(key, reducer, initialState = null, sensitiv = false) {
-    const hookName = useSecureStoredReducer.name;
+export function useSecureStoredReducer (key, reducer, initialState = null, sensitiv = false) {
+  const hookName = useSecureStoredReducer.name
 
-    const [state, dispatch] = useReducer(
-        reducer,
-        undefined,
-        () => {
-            const stringValue = SecureStore.getItem(key);
-            if (stringValue) {
-                return JSON.parse(stringValue);
-            } else {
-                return undefined;
-            }
-        },
-    );
+  const [state, dispatch] = useReducer(
+    reducer,
+    undefined,
+    () => {
+      const stringValue = getSecureItem(key)
+      if (stringValue) {
+        return JSON.parse(stringValue)
+      } else {
+        return undefined
+      }
+    }
+  )
 
-    useEffect(
-        () => {
-            if (state !== undefined) {
-                SecureStore
-                    .setItemAsync(key, JSON.stringify(state))
-                    .catch(reason => console.error(hookName, ': can`t store secure state: ', reason, 'key:', key, 'value:', sensitiv ? '***sensitiv value***' : state));
-            }
-        },
-        [state]
-    )
+  useEffect(
+    () => {
+      if (state !== undefined) {
+        SecureStore
+          .setItemAsync(key, JSON.stringify(state), secureStoreOptions)
+          .catch(reason => console.error(hookName, ': can`t store secure state: ', reason, 'key:', key, 'value:', sensitiv ? '***sensitiv value***' : state))
+      }
+    },
+    [state]
+  )
 
-    return [
-        state !== undefined
-            ? state
-            : initialState,
-        dispatch,
-    ];
+  return [
+    state !== undefined
+      ? state
+      : initialState,
+    dispatch
+  ]
 }
