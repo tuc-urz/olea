@@ -1,12 +1,12 @@
-import { useSyncExternalStore } from 'react';
+import { useSyncExternalStore } from 'react'
 
-import * as SecureStore from 'expo-secure-store';
-import { getSecureItem, secureStoreOptions } from '../../libraries/stored-state';
+import * as SecureStore from 'expo-secure-store'
+import { getSecureItem, secureStoreOptions } from '../../libraries/stored-state'
 
-import { groupBy } from 'lodash';
-import { DateTime, Duration } from 'luxon';
+import { groupBy } from 'lodash'
+import { DateTime, Duration } from 'luxon'
 
-import CollectorVersion2ApiProvider from './CollectorVersion2ApiProvider';
+import CollectorVersion2ApiProvider from './CollectorVersion2ApiProvider'
 
 /**
  * @typedef TimetableProvider
@@ -45,21 +45,21 @@ import CollectorVersion2ApiProvider from './CollectorVersion2ApiProvider';
  * @property {CourseTime[]} times
  */
 
-const TimetableCodeStoreKey = 'timetable.code';
-const TimetableCoursesStoreKey = 'timetable.courses';
+const TimetableCodeStoreKey = 'timetable.code'
+const TimetableCoursesStoreKey = 'timetable.courses'
 
 export class ApiProviderNotInitializedError extends Error {
-    constructor(message) {
-        super(message);
-        this.name = this.constructor.name;
-    }
+  constructor (message) {
+    super(message)
+    this.name = this.constructor.name
+  }
 }
 
 export class TimetableCodeNotInitializedError extends Error {
-    constructor(message) {
-        super(message);
-        this.name = this.constructor.name;
-    }
+  constructor (message) {
+    super(message)
+    this.name = this.constructor.name
+  }
 }
 
 /**
@@ -72,13 +72,12 @@ export class TimetableCodeNotInitializedError extends Error {
  * Der Service sollte über {@linkcode TimetableService.fromProviderSettingsObject} initialisert werden.
  */
 export default class TimetableService {
-
-    /**
+  /**
      * @type {TimetableProvider}
      */
-    #provider;
+  #provider
 
-    /**
+  /**
      * Konstruktor des Stundenplan-Services.
      * Es muss ein Provider Übergeben werden, damit der Stundenplan-Service Daten über den Provider abrufen kann.
      * Es wird empfohlen {@linkcode TimetableService.fromProviderSettingsObject} zu verwenden.
@@ -93,199 +92,194 @@ export default class TimetableService {
      *
      * const timetableService = TimetableService.fromProviderSettingsObject(providerSettings, language);
      */
-    constructor(provider) {
-        this.#provider = provider;
+  constructor (provider) {
+    this.#provider = provider
 
-        this.#code = getSecureItem(TimetableCodeStoreKey);
-        this.#courses = JSON.parse(getSecureItem(TimetableCoursesStoreKey));
-    }
+    this.#code = getSecureItem(TimetableCodeStoreKey)
+    this.#courses = JSON.parse(getSecureItem(TimetableCoursesStoreKey))
+  }
 
+  #code = undefined
+  #codeSubscribers = new Set()
 
+  code () {
+    return this.#code
+  }
 
-    #code = undefined;
-    #codeSubscribers = new Set();
+  codeCallback = () => this.code()
 
-    code() {
-        return this.#code;
-    }
-    codeCallback = () => this.code();
+  #setCode (code) {
+    this.#code = code
+    this.#codeSubscribers.forEach(subscriber => subscriber(code))
+  }
 
-    #setCode(code) {
-        this.#code = code;
-        this.#codeSubscribers.forEach(subscriber => subscriber(code));
-    }
-    async setCode(code) {
-        await SecureStore.setItemAsync(TimetableCodeStoreKey, code, secureStoreOptions);
-        this.#setCode(code);
-    }
-    setCodeCallback = async (code) => this.setCode(code);
+  async setCode (code) {
+    await SecureStore.setItemAsync(TimetableCodeStoreKey, code, secureStoreOptions)
+    this.#setCode(code)
+  }
 
-    async deleteCode() {
+  setCodeCallback = async (code) => this.setCode(code)
 
-        await Promise.all([
-            SecureStore.deleteItemAsync(TimetableCodeStoreKey),
-            SecureStore.deleteItemAsync(TimetableCoursesStoreKey),
-        ]);
+  async deleteCode () {
+    await Promise.all([
+      SecureStore.deleteItemAsync(TimetableCodeStoreKey),
+      SecureStore.deleteItemAsync(TimetableCoursesStoreKey)
+    ])
 
-        this.#setCode(null);
-        this.#setCourses(null);
-    }
-    deleteCodeCallback = () => this.deleteCode();
+    this.#setCode(null)
+    this.#setCourses(null)
+  }
 
-    codeSubscribe(subscriber) {
-        this.#codeSubscribers.add(subscriber);
+  deleteCodeCallback = () => this.deleteCode()
 
-        return () => this.codeUnsubscribe(subscriber);
-    }
-    codeSubscribeCallback = (subscriber) => this.codeSubscribe(subscriber);
+  codeSubscribe (subscriber) {
+    this.#codeSubscribers.add(subscriber)
 
-    codeUnsubscribe(subscriber) {
-        return this.#codeSubscribers.delete(subscriber);
-    }
+    return () => this.codeUnsubscribe(subscriber)
+  }
 
+  codeSubscribeCallback = (subscriber) => this.codeSubscribe(subscriber)
 
+  codeUnsubscribe (subscriber) {
+    return this.#codeSubscribers.delete(subscriber)
+  }
 
-    /**
+  /**
      * @type {Object.<string, Course[]>}
      */
-    #courses = undefined;
-    #coursesSubscribers = new Set();
+  #courses = undefined
+  #coursesSubscribers = new Set()
 
-    /**
+  /**
      * Liefert die Vorlesungen, die von dem Service respeichert werden zurück.
      * Dabei werden die Vorlesungen nach Vorlesungstagen gruppiert.
      * Somit wird ein Object zurückgegeben, bei dem die Schlüssel ISO-Datums der Vorlesungstage sind und die Werte sind Listen mit Vorlesungen
      *
      * @returns {Object.<string, Course[]>} Vorlesungen gruppiert nach Vorlesungstagen
      */
-    courses() {
-        return this.#courses;
+  courses () {
+    return this.#courses
+  }
+
+  #setCourses (courses) {
+    // Neue Vorlesungsdaten im Service hinterlegen
+    this.#courses = courses
+
+    // Jedem Subscriber werden die neuen Vorlesungstage bekannt gemacht
+    this.#coursesSubscribers.forEach(subscriber => subscriber(this.#courses))
+  }
+
+  coursesCallback = () => this.courses()
+
+  async refreshCourses (startDate, endDate) {
+    if (this.#provider === null) {
+      throw new ApiProviderNotInitializedError('Api Provider is not initilized')
     }
 
-    #setCourses(courses) {
-        // Neue Vorlesungsdaten im Service hinterlegen
-        this.#courses = courses;
-
-        // Jedem Subscriber werden die neuen Vorlesungstage bekannt gemacht
-        this.#coursesSubscribers.forEach(subscriber => subscriber(this.#courses));
+    if (this.#code === null) {
+      throw new TimetableCodeNotInitializedError('Timetable code is not initilized')
     }
 
-    coursesCallback = () => this.courses();
+    const courses = await this.#provider.getByCode(this.#code, startDate, endDate)
+    const transformedCourses = courses.map(
+      course => {
+        // Erstes Time-Element aus dem times-Array nehmen, da im neuen Format nur noch eine Zeit enthalten ist
+        const courseTime = course?.times?.[0]
+        if (courseTime) {
+          const courseDate = DateTime.fromISO(courseTime?.date)
+          // Startzeit und Endzeit der Vorlesung in ein DateTime umwandeln
+          const courseStartTime = Duration.fromISOTime(courseTime.start)
+          const courseStartDateTime = courseDate.plus(courseStartTime)
+          const courseEndTime = Duration.fromISOTime(courseTime.end)
+          const courseEndDateTime = courseDate.plus(courseEndTime)
 
-    async refreshCourses(startDate, endDate) {
-
-        if (this.#provider === null) {
-            throw new ApiProviderNotInitializedError('Api Provider is not initilized');
+          return {
+            ...course,
+            startDateTime: courseStartDateTime.toISO(),
+            endDateTime: courseEndDateTime.toISO()
+          }
+        } else {
+          return course
         }
+      }
+    )
 
-        if (this.#code === null) {
-            throw new TimetableCodeNotInitializedError('Timetable code is not initilized');
-        }
+    // Gruppieren der vom Provider abgeholten Vorlesungen
+    // Es wird nach dem Datum der Vorlesungen gruppiert
+    // Vorlesungen, die keinem Tag zugeordnet werden können, werden untder dem Schlüssel `undefined` zusammengefasst
+    const addingCourses = groupBy(
+      transformedCourses,
+      course => {
+        // Datum der Vorlesung aus der Vorlesung holen
+        const courseDate = course?.times?.[0]?.date
 
-        const courses = await this.#provider.getByCode(this.#code, startDate, endDate);
-        const transformedCourses = courses.map(
-            course => {
-                // Erstes Time-Element aus dem times-Array nehmen, da im neuen Format nur noch eine Zeit enthalten ist
-                const courseTime = course?.times?.[0];
-                if (courseTime) {
-                    const courseDate = DateTime.fromISO(courseTime?.date);
-                    // Startzeit und Endzeit der Vorlesung in ein DateTime umwandeln
-                    const courseStartTime = Duration.fromISOTime(courseTime.start);
-                    const courseStartDateTime = courseDate.plus(courseStartTime);
-                    const courseEndTime = Duration.fromISOTime(courseTime.end);
-                    const courseEndDateTime = courseDate.plus(courseEndTime);
+        // Prüfen ob die Vorlesung einen Wert als Datum vorweist
+        return courseDate || undefined
+      }
+    )
 
-                    return {
-                        ...course,
-                        startDateTime: courseStartDateTime.toISO(),
-                        endDateTime: courseEndDateTime.toISO(),
-                    }
-                } else {
-                    return course;
-                }
-            }
-        )
+    // Entfernen der Vorlesungstage zwischen Startdatum und Enddatum
+    const rangeRemovedCourses = Object.fromEntries(
+      Object.entries(this.#courses ?? {})
+        .filter(([coursesDate]) => startDate >= coursesDate && coursesDate <= endDate)
+    )
 
-        // Gruppieren der vom Provider abgeholten Vorlesungen
-        // Es wird nach dem Datum der Vorlesungen gruppiert
-        // Vorlesungen, die keinem Tag zugeordnet werden können, werden untder dem Schlüssel `undefined` zusammengefasst
-        const addingCourses = groupBy(
-            transformedCourses,
-            course => {
-                // Datum der Vorlesung aus der Vorlesung holen
-                const courseDate = course?.times?.[0]?.date;
-
-                // Prüfen ob die Vorlesung einen Wert als Datum vorweist
-                return courseDate
-                    // Ist ein Wert vorhanden, wird dieser für die Gruppierung verwendet
-                    ? courseDate
-                    // Ansonsten wird undefined zurückgeben (lerrer String, null, undefined, ...)
-                    : undefined;
-            }
-        );
-
-        //Entfernen der Vorlesungstage zwischen Startdatum und Enddatum
-        const rangeRemovedCourses = Object.fromEntries(
-            Object.entries(this.#courses ?? {})
-                .filter(([coursesDate,]) => startDate >= coursesDate && coursesDate <= endDate)
-        );
-
-        // Zusammenführen der neuen Vorlesungstagen der Vorlesungen des Providers und der schon vorhandenen Vorlesungstagen
-        const newCourses = {
-            ...rangeRemovedCourses,
-            ...addingCourses,
-        };
-
-        // Neue Vorlesungsdaten in den Cache ablegen
-        SecureStore.setItem(TimetableCoursesStoreKey, JSON.stringify(newCourses), secureStoreOptions);
-
-        // Neue Vorlesungen hin Service hinterlegen und Äanderun bekannt geben
-        this.#setCourses(newCourses);
-    }
-    refreshCoursesCallback = (startDate, endDate) => this.refreshCourses(startDate, endDate);
-
-    coursesSubscribe(subscriber) {
-        this.#coursesSubscribers.add(subscriber);
-
-        return () => this.coursesUnsubscribe(subscriber);
-    }
-    coursesSubscribeCallback = (subscriber) => this.coursesSubscribe(subscriber);
-
-    coursesUnsubscribe(subscriber) {
-        return this.#coursesSubscribers.delete(subscriber);
+    // Zusammenführen der neuen Vorlesungstagen der Vorlesungen des Providers und der schon vorhandenen Vorlesungstagen
+    const newCourses = {
+      ...rangeRemovedCourses,
+      ...addingCourses
     }
 
+    // Neue Vorlesungsdaten in den Cache ablegen
+    SecureStore.setItem(TimetableCoursesStoreKey, JSON.stringify(newCourses), secureStoreOptions)
 
+    // Neue Vorlesungen hin Service hinterlegen und Äanderun bekannt geben
+    this.#setCourses(newCourses)
+  }
 
-    /**
+  refreshCoursesCallback = (startDate, endDate) => this.refreshCourses(startDate, endDate)
+
+  coursesSubscribe (subscriber) {
+    this.#coursesSubscribers.add(subscriber)
+
+    return () => this.coursesUnsubscribe(subscriber)
+  }
+
+  coursesSubscribeCallback = (subscriber) => this.coursesSubscribe(subscriber)
+
+  coursesUnsubscribe (subscriber) {
+    return this.#coursesSubscribers.delete(subscriber)
+  }
+
+  /**
      * Erstellen eines Stundenplanservices mit Hilfe der Provider-Einstellungen und Sprache
      *
      * @param {ProviderSetting} providerSettingsObject
      * @param {string} language
      * @returns
      */
-    static fromProviderSettingsObject(providerSettingsObject, language) {
-        const provider = TimetableService.#createProvider(providerSettingsObject, language);
+  static fromProviderSettingsObject (providerSettingsObject, language) {
+    const provider = TimetableService.#createProvider(providerSettingsObject, language)
 
-        return new TimetableService(provider);
-    }
+    return new TimetableService(provider)
+  }
 
-    /**
+  /**
      * Erstellen des Providers mit Hilfe eines Provider-Einstellungen-Objektes und einer Sprache
      *
      * @param {ProviderSetting} providerSettingsObject Einstellungen welche zum auswählen und Initialisieren des Provider verwendet werden
      * @param {string} language Sprachcode welcher für den Datenabruf verwendet werden soll
      */
-    static #createProvider(providerSettingsObject, language) {
-        const { provider } = providerSettingsObject;
+  static #createProvider (providerSettingsObject, language) {
+    const { provider } = providerSettingsObject
 
-        switch (provider) {
-            case CollectorVersion2ApiProvider.name:
-                return CollectorVersion2ApiProvider.fromSettingsObject(providerSettingsObject, language);
-            default:
-                return null;
-        }
+    switch (provider) {
+      case CollectorVersion2ApiProvider.name:
+        return CollectorVersion2ApiProvider.fromSettingsObject(providerSettingsObject, language)
+      default:
+        return null
     }
+  }
 }
 
 /**
@@ -312,13 +306,13 @@ export default class TimetableService {
  *     </Text>
  * );
  */
-export function useSyncTimetableCode(timetableService) {
-    const timetableCode = useSyncExternalStore(
-        timetableService.codeSubscribeCallback,
-        timetableService.codeCallback,
-    );
+export function useSyncTimetableCode (timetableService) {
+  const timetableCode = useSyncExternalStore(
+    timetableService.codeSubscribeCallback,
+    timetableService.codeCallback
+  )
 
-    return [timetableCode, timetableService.setCodeCallback, timetableService.deleteCodeCallback];
+  return [timetableCode, timetableService.setCodeCallback, timetableService.deleteCodeCallback]
 }
 
 /**
@@ -348,11 +342,11 @@ export function useSyncTimetableCode(timetableService) {
  * return (
  * );
  */
-export function useSyncCourses(timetableService) {
-    const courses = useSyncExternalStore(
-        timetableService.coursesSubscribeCallback,
-        timetableService.coursesCallback,
-    );
+export function useSyncCourses (timetableService) {
+  const courses = useSyncExternalStore(
+    timetableService.coursesSubscribeCallback,
+    timetableService.coursesCallback
+  )
 
-    return [courses, timetableService.refreshCoursesCallback];
+  return [courses, timetableService.refreshCoursesCallback]
 }
