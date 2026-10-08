@@ -1,7 +1,6 @@
 import { Dimensions } from 'react-native'
 
 export default function (theme) {
-  const height = Dimensions.get('window').height
   const width = Dimensions.get('window').width
   return {
     overflow: {
@@ -17,7 +16,8 @@ export default function (theme) {
     },
     container: {
       flex: 1,
-      overflow: 'hidden'
+      overflow: 'hidden',
+      backgroundColor: theme.colors.contentBackground,
     },
     containerInner: {
       flex: 1
@@ -27,7 +27,6 @@ export default function (theme) {
       flex: 1,
       paddingHorizontal: 5,
       paddingVertical: 20,
-      minHeight: height // enough space for short news without excessive whitespace
     },
     activity: {
       marginTop: 20

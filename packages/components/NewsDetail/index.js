@@ -305,11 +305,13 @@ class NewsDetailComponent extends React.Component {
                             ]}/>}
                 </Animated.View>
                 {news.contentImageDesc ? (<Text style={this.styles.imageDesc}>{news.contentImageDesc}</Text>) : null}
-                <View style={[this.styles.containerContent, Platform.OS === 'android' && {paddingBottom: this.maxHeaderHeight + this.styles.containerContent.paddingVertical}]}>
+                <View style={this.styles.containerContent}>
                     <Headline style={this.styles.title}>{news.title}</Headline>
                     <WebViewAutoHeight source={this._getNewsContent(news, css)}
                                        style={{...themeStyles.webview, ...this.styles.newsContent}}
                                        scrollEnabled={false}
+                                       overScrollMode="never"
+                                       customStyle={'html, body { overflow: hidden; }'}
                                        contentInset={{top: 0, left: 0, right: 0, bottom: 0}}
                                        onNavigationStateChange={this.startLoadingRequest}
                                        ref={el => {this.webView = el}}/>
