@@ -8,5 +8,10 @@
   "workspaces": [
     "apps/*",
     "packages/"
-  ]
+  ],
+  "resolutions": {
+    "node-fetch": "2.7.0",
+    "uuid": "11.1.1",
+    "@grpc/grpc-js": "1.14.5"
+  }
 }
