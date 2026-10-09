@@ -21,11 +21,8 @@ import {
     Linking,
 } from 'react-native';
 
-import { connect } from 'react-redux'
-import {
-    withTheme,
-    Text
-} from 'react-native-paper';
+import { connect } from 'react-redux';
+import { withTheme, Text } from 'react-native-paper';
 import { withTranslation } from 'react-i18next';
 
 import { onUpdateRefreshing } from '../../libraries/core';
@@ -38,7 +35,6 @@ function TimetableEventComponent(props) {
 
     const {
         theme,
-        t,
         settings,
         times,
         type,
@@ -47,117 +43,130 @@ function TimetableEventComponent(props) {
         locationUrl,
         description,
         starrable,
-        onSelectionChange
+        onSelectionChange,
     } = props;
 
-    const isBigFont = settings?.settingsAccessibility?.increaseFontSize ?? false;
+    const isBigFont =
+        settings?.settingsAccessibility?.increaseFontSize ?? false;
+
     const [isSelected, setIsSelected] = useState(false);
 
     const styles = useMemo(
         () => StyleSheet.create(componentStyles(theme)),
         [theme]
-    )
+    );
 
     const handleSelectionChange = () => {
-        setIsSelected(isSelected => !isSelected);
-
-        onSelectionChange?.(!isSelected)
+        const nextIsSelected = !isSelected;
+        setIsSelected(nextIsSelected);
+        onSelectionChange?.(nextIsSelected);
     };
 
-    const accessibilityStartTime = t('accessibility:timetable:startTime') + times?.start.slice(0, 2) + ' ' + t('accessibility:pts:speechTime') + ' ' + (times?.start.slice(3, 5) !== '00' ? times?.start.slice(3, 5) : '') + ',';
-    const accessibilityEndTime = t('accessibility:timetable:endTime') + times?.end.slice(0, 2) + ' ' + t('accessibility:pts:speechTime') + ' ' + (times?.end.slice(3, 5) !== '00' ? times?.end.slice(3, 5) : '') + ',';
-    const courseContainerBigFont = isBigFont ? styles.courseContainerBigFont : null;
-    const titleStyle = isBigFont ? styles.titleBigFont : styles.title;
+    const titleStyle = isBigFont
+        ? styles.titleBigFont
+        : styles.title;
 
     return (
-        <View style={[isBigFont ? [styles.card, styles.courseCard] : styles.card, { backgroundColor: 'rgba(0, 95, 80, 0.25)', elevation: 0 }]} onPress={() => { console.log("Clicking is currently not working. Don't try it!") }}>
-            {
-                //times
-                //    ? <View style={[isBigFont ? [styles.courseTimeContainer, styles.courseTimeContainerBigFont] : styles.courseTimeContainer, { backgroundColor: 'rgba(0, 95, 80, 0)' }]}>
-                //        <Text accessibilityLabel={accessibilityStartTime} style={isBigFont ? [styles.timeText, styles.timeTextBig] : styles.timeText}>{times?.start || ''}</Text>
-                //        <View style={styles.verticalSeperatorSmall} />
-                //        <Text accessibilityLabel={accessibilityEndTime} style={isBigFont ? [styles.timeText, styles.timeTextBig] : styles.timeText}>{times?.end || ''}</Text>
-                //    </View>
-                //    : null
-            }
-            {
-                //times ? <View style={styles.verticalSeperator} /> : null
-            }
-            <View style={[styles.otherCourseContainer, { backgroundColor: 'rgba(0, 95, 80, 0)' }]}>
-                {
-                    type || times
-                        ? <Text style={styles.type}>
-                            {
-                                type
-                                    ? <Text style={{ fontWeight: 'bold' }}>
-                                        {type}
-                                    </Text>
-                                    : null
-                            }
-                            {
-                                type && times
-                                    ? ' | '
-                                    : null
-                            }
-                            {
-                                times
-                                    ? `${times?.start} - ${times?.end} `
-                                    : null
-                            }
-                        </Text>
-                        : null
-                }
-                {title ? <Text style={styles.title}>{title}</Text> : null}
-                {
-                    description
-                        ? <Text style={styles.professorText}>
-                            <Text style={styles.professorName}>{description}</Text>
-                        </Text>
-                        : null
-                }
-                {
-                    location
-                        ? <Pressable
-                            onPress={
-                                locationUrl
-                                    ? () => Linking.openURL(locationUrl)
-                                        .catch(
-                                            reason => {
-                                                console.debug(componentName, ':', 'can`t open link', ':', reason);
-                                                alert('Link konnte nicht geöffnet werden.');
-                                            }
-                                        )
-                                    : null
-                            }
-                        >
-                            <Text
-                                style={[styles.location, locationUrl ? styles.locationLink : null]}
-                            >
-                                {location}
+        <View
+            style={[
+                styles.card,
+                isBigFont ? styles.courseCard : null,
+                { elevation: 0 },
+            ]}
+        >
+            <View style={styles.otherCourseContainer}>
+                {type || times ? (
+                    <Text style={styles.type}>
+                        {type ? (
+                            <Text style={{ fontWeight: 'bold' }}>
+                                {type}
                             </Text>
-                        </Pressable>
-                        : null
-                }
+                        ) : null}
+
+                        {type && times ? ' | ' : null}
+
+                        {times
+                            ? `${times?.start} - ${times?.end} `
+                            : null}
+                    </Text>
+                ) : null}
+
+                {title ? (
+                    <Text style={titleStyle}>
+                        {title}
+                    </Text>
+                ) : null}
+
+                {description ? (
+                    <Text style={styles.professorText}>
+                        <Text style={styles.professorName}>
+                            {description}
+                        </Text>
+                    </Text>
+                ) : null}
+
+                {location ? (
+                    <Pressable
+                        onPress={
+                            locationUrl
+                                ? () =>
+                                    Linking.openURL(locationUrl).catch(
+                                        reason => {
+                                            console.debug(
+                                                componentName,
+                                                ':',
+                                                'can`t open link',
+                                                ':',
+                                                reason
+                                            );
+                                            alert(
+                                                'Link konnte nicht geöffnet werden.'
+                                            );
+                                        }
+                                    )
+                                : null
+                        }
+                    >
+                        <Text
+                            style={[
+                                styles.location,
+                                locationUrl
+                                    ? styles.locationLink
+                                    : null,
+                            ]}
+                        >
+                            {location}
+                        </Text>
+                    </Pressable>
+                ) : null}
             </View>
-            {
-                starrable
-                    ? <View style={styles.starPosition}>
-                        <TouchableOpacity onPress={handleSelectionChange}>
-                            <IconsOpenasist icon={isSelected ? 'star-selected' : 'star'} size={25} color='#005F50' />
-                        </TouchableOpacity>
-                    </View>
-                    : null
-            }
+
+            {starrable ? (
+                <View style={styles.starPosition}>
+                    <TouchableOpacity onPress={handleSelectionChange}>
+                        <IconsOpenasist
+                            icon={
+                                isSelected
+                                    ? 'star-selected'
+                                    : 'star'
+                            }
+                            size={25}
+                            color={theme.colors.eventContainerSidebar}
+                        />
+                    </TouchableOpacity>
+                </View>
+            ) : null}
         </View>
     );
 }
 
-const mapStateToProps = state => {
-    return {
-        pluginComponent: state.pluginReducer.timetable.component,
-        pluginStyles: state.pluginReducer.timetable.styles,
-        settings: state.settingReducer
-    };
-};
+const mapStateToProps = state => ({
+    pluginComponent: state.pluginReducer.timetable.component,
+    pluginStyles: state.pluginReducer.timetable.styles,
+    settings: state.settingReducer,
+});
 
-export default connect(mapStateToProps, { onUpdateRefreshing })(withTranslation()(withTheme(TimetableEventComponent)))
+export default connect(
+    mapStateToProps,
+    { onUpdateRefreshing }
+)(withTranslation()(withTheme(TimetableEventComponent)));

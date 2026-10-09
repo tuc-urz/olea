@@ -177,7 +177,11 @@ class TopNewsComponent extends React.Component {
                 <Animated.View
                     style={[this.styles.universityIconWrapper, this.animateBackground]}>
                     <Animated.Image
-                        source={appSettings.logo}
+                        source={
+                            this.props.theme.dark
+                                ? (appSettings.logoDark ?? appSettings.logo)
+                                : appSettings.logo
+                        }
                         resizeMode="contain"
                         fadeDuration={1000}
                         style={[this.styles.universityIcon]}/>

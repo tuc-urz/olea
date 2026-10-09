@@ -240,7 +240,7 @@ function TimetableViewCalendar(props) {
   const tabView = useMemo(() => {
     return (
       <TabView
-        style={{ backgroundColor: '#fff' }}
+        style={{ backgroundColor: colors.calendarBackground }}
         navigationState={{ index, routes }}
         renderScene={renderScene}
         onIndexChange={setIndex}
@@ -260,13 +260,16 @@ function TimetableViewCalendar(props) {
         )}
       />
     )
-  }, [renderScene, index, routes, setIndex, themeStyles.tab, themeStyles.tabIndicator]);
+  }, [renderScene, index, routes, setIndex, themeStyles.tab, colors.calendarBackground, themeStyles.tabIndicator]);
 
   const renderForm = () => (
     <View style={styles.formContainer}>
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.codeInput}
+          placeholderTextColor={colors.textLighter}
+          selectionColor={colors.textInputSelection}
+          keyboardAppearance={theme.dark ? 'dark' : 'light'}
           placeholder={t('timetable:inputPlaceholder')}
           value={timetableCodeInput}
           onChangeText={(code) => {
@@ -288,7 +291,6 @@ function TimetableViewCalendar(props) {
       {infoMessage ? (
         <Text
           style={styles.infoText}
-          dataDetectorType="link"
           selectable
         >
           {renderTextWithLinks(infoMessage)}
@@ -316,7 +318,7 @@ function TimetableViewCalendar(props) {
           }}
         >
           <Text style={styles.deleteButton}>{t('timetable:deleteCode')}</Text>
-          <Ionicons name="trash-outline" size={20} color="red" />
+          <Ionicons name="trash-outline" size={20} color={colors.error} />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
@@ -367,7 +369,7 @@ function TimetableViewCalendar(props) {
           style={styles.floatingButton}
           onPress={() => setFormVisible(true)}
         >
-          <Ionicons name="add-outline" size={40} color="#000" />
+          <Ionicons name="add-outline" size={40} color={colors.icon} />
         </TouchableOpacity>
       )}
         <CourseDetailDialog

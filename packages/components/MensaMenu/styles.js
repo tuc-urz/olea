@@ -39,6 +39,7 @@ export default function(theme) {
         },
         mealItemTitleText: {
             ...theme.fonts.bold,
+            color: theme.colors.text,
             fontSize: theme.fontSizes.l,
             lineHeight: theme.lineHeights.l,
         },
@@ -55,6 +56,7 @@ export default function(theme) {
         },
         mealItemText: {
             ...theme.fonts.regular,
+            color: theme.colors.text,
             fontSize: theme.fontSizes.l,
             lineHeight: theme.lineHeights.l,
             marginBottom: theme.paddings.default,

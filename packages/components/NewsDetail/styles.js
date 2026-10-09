@@ -64,11 +64,12 @@ export default function (theme) {
       width: width - (2 * theme.paddings.small)
     },
     newsContentText: {
+      color: theme.colors.text,
       fontSize: theme.fontSizes.m
     },
     imageDesc: {
-      backgroundColor: theme.colors.overlayColor,
-      color: theme.colors.primaryText,
+      backgroundColor: theme.colors.contentBackground,
+      color: theme.colors.text,
       paddingVertical: 2,
       paddingHorizontal: theme.paddings.small,
       fontSize: theme.fontSizes.xs

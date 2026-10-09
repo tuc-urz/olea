@@ -21,18 +21,18 @@ export default function (theme) {
             marginBottom: 0,
         },
         eventTitle: {
-            color: theme.colors.text,
+            color: theme.colors.eventTitleText,
             fontSize: 14,
             fontWeight: 'bold',
             flex: 1,
             paddingRight: 10,
         },
         eventType: {
-            color: theme.colors.text,
+            color: theme.colors.eventRoomText,
             fontSize: 13,
         },
         eventProfessor: {
-            color: theme.colors.text,
+            color: theme.colors.eventRoomText,
             fontSize: 13,
             paddingTop: 4,
         },
@@ -44,12 +44,12 @@ export default function (theme) {
         },
         eventTime: {
             fontSize: 13,
-            color: theme.colors.text,
+            color: theme.colors.eventRoomText,
             flex: 1,
         },
         eventRoom: {
             fontSize: 13,
-            color: theme.colors.text,
+            color: theme.colors.eventRoomText,
             textAlign: 'right',
             flex: 1,
         },
@@ -87,7 +87,7 @@ export default function (theme) {
             paddingTop: 5,
             paddingBottom: 5,
             elevation: 5,
-            backgroundColor: '#fff',
+            backgroundColor: theme.colors.calendarHeaderBackground,
         },
         stripShadow: {
             shadowColor: '#000',

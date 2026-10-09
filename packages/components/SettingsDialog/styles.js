@@ -6,7 +6,7 @@ export default function (theme) {
     },
     okButton: {
       fontSize: theme.fontSizes.m,
-      color: theme.colors.buttonText,
+      color: theme.colors.text,
     },
   }
 };

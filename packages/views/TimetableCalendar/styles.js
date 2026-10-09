@@ -1,11 +1,11 @@
 export default function (theme) {
     return {
         formContainer: {
-            backgroundColor: '#F6F7F7',
+            backgroundColor: theme.colors.background,
             borderRadius: 10,
             padding: 20,
             elevation: 5,
-            shadowColor: '#000',
+            shadowColor: theme.colors.shadow,
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.3,
             shadowRadius: 3,
@@ -29,7 +29,9 @@ export default function (theme) {
         codeInput: {
             height: 50,
             width: '87%',
-            borderColor: '#ddd',
+            borderColor: theme.colors.accent,
+            backgroundColor: theme.colors.contentBackground,
+            color: theme.colors.text,
             borderWidth: 1,
             borderRadius: 8,
             paddingLeft: 10,
@@ -50,7 +52,7 @@ export default function (theme) {
             flexDirection: 'row',
         },
         dismissButton: {
-            color: '#007bff',
+            color: theme.colors.textAccent,
             textAlign: 'right',
             fontWeight: 'bold',
             fontSize: 16,
@@ -59,7 +61,7 @@ export default function (theme) {
             flexDirection: 'row',
         },
         deleteButton: {
-            color: 'red',
+            color: theme.colors.error,
             fontWeight: 'bold',
             textAlign: 'left',
             fontSize: 16,
@@ -72,10 +74,10 @@ export default function (theme) {
             width: 60,
             height: 60,
             borderRadius: 40,
-            backgroundColor: '#fff',
+            backgroundColor: theme.colors.background,
             justifyContent: 'center',
             alignItems: 'center',
-            shadowColor: '#000',
+            shadowColor: theme.colors.shadow,
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.3,
             shadowRadius: 3,
@@ -98,24 +100,24 @@ export default function (theme) {
 
         },
         importButtonLabel: {
-            color: theme.colors.messages.noticeText,
+            color: theme.colors.buttonText,
             ...theme.fonts.medium,
             fontSize: theme.fontSizes.xl,
             lineHeight: theme.lineHeights.l,
             marginLeft: theme.paddings.small
         },
         errorText: {
-            color: 'red',
+            color: theme.colors.error,
             marginLeft: 5,
             marginBottom: 10,
         },
         infoText: {
-            color: 'black',
+            color: theme.colors.text,
             marginLeft: 5,
         },
         link: {
             textDecorationLine: 'underline',
-            color: '#007bff',
+            color: theme.colors.textAccent,
         }
     };
 };

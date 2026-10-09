@@ -106,7 +106,7 @@ function CalendarDay({ selectedDate, theme, settings, calendarScrollOffsetMinute
 
             return dateRoutes;
         },
-        [today, courses, language]
+        [today, courses, language, theme.colors.eventContainerSidebar]
     );
 
     const daysTabViewIndexes = useMemo(
@@ -135,7 +135,7 @@ function CalendarDay({ selectedDate, theme, settings, calendarScrollOffsetMinute
     const renderEvent = useCallback((event, touchableOpacityProps) => {
         const { style, ...restTouchableOpacityProps } = touchableOpacityProps;
         return (
-            <TouchableOpacity {...restTouchableOpacityProps} style={[style, styles.eventContainer, { borderLeftColor: event.color || '#000' }]} >
+            <TouchableOpacity {...restTouchableOpacityProps} style={[style, styles.eventContainer, { borderLeftColor: event.color ?? theme.colors.eventContainerSidebar,}]} >
                 <View style={styles.eventHeader}>
                     <Text style={styles.eventTitle} numberOfLines={1} ellipsizeMode="tail">
                         {event.title}
@@ -157,36 +157,59 @@ function CalendarDay({ selectedDate, theme, settings, calendarScrollOffsetMinute
                 </View>
             </TouchableOpacity>
         );
-    }, [styles]);
+    }, [styles, theme.colors.eventContainerSidebar]);
 
     const renderScene = useCallback(
-        ({ route }) => {
-            return (
-                <View style={{ flex: 1, width: width }}>
-                    <Calendar
-                        events={route.events}
-                        renderEvent={renderEvent}
-                        renderHeader={() => null}
-                        overlapOffset={95}
-                        mode={'day'}
-                        height={calendarHeight}
-                        headerContentStyle={{ backgroundColor: 'transparent' }}
-                        weekStartsOn={1}
-                        date={route.key}
-                        swipeEnabled={false}
-                        onPressEvent={
-                            showDetails
-                                // Wenn eine Vorlesung im Kalender angeklickt wird, wird die ursprüngliche Vorlesung ausgelesen und selektiert
-                                ? (event) => onCourseSelected(event.origine)
-                                : null
-                        }
-                        scrollOffsetMinutes={calendarScrollOffsetMinutes}
-                        hourStyle={styles.hourStyle}
-                    />
-                </View>
-            );
-        },
-        [styles, calendarScrollOffsetMinutes, courses, width, renderEvent]
+        ({ route }) => (
+            <View
+                style={{
+                    flex: 1,
+                    width: width,
+                    backgroundColor: theme.colors.calendarBackground,
+                }}
+            >
+                <Calendar
+                    events={route.events}
+                    renderEvent={renderEvent}
+                    renderHeader={() => null}
+                    overlapOffset={95}
+                    mode={'day'}
+                    height={calendarHeight}
+                    headerContentStyle={{ backgroundColor: 'transparent' }}
+                    bodyContainerStyle={{
+                        backgroundColor: theme.colors.calendarBackground,
+                    }}
+                    theme={{
+                        palette: {
+                            gray: {
+                                '100': theme.colors.calendarGridMinor,
+                                '200': theme.colors.calendarGrid,
+                            },
+                        },
+                    }}
+                    weekStartsOn={1}
+                    date={route.key}
+                    swipeEnabled={false}
+                    onPressEvent={
+                        showDetails
+                            ? (event) => onCourseSelected(event.origine)
+                            : null
+                    }
+                    scrollOffsetMinutes={calendarScrollOffsetMinutes}
+                    hourStyle={styles.hourStyle}
+                />
+            </View>
+        ),
+        [
+            styles,
+            width,
+            renderEvent,
+            theme,
+            calendarHeight,
+            calendarScrollOffsetMinutes,
+            showDetails,
+            onCourseSelected,
+        ]
     );
 
     return (
@@ -194,6 +217,11 @@ function CalendarDay({ selectedDate, theme, settings, calendarScrollOffsetMinute
             <View style={styles.stripShadow}>
                 <CalendarStrip
                     style={styles.strip}
+                    calendarColor={theme.colors.calendarHeaderBackground}
+                    dateNameStyle={{ color: theme.colors.text }}
+                    dateNumberStyle={{ color: theme.colors.text }}
+                    highlightDateNameStyle={{ color: theme.colors.text }}
+                    highlightDateNumberStyle={{ color: theme.colors.text }}
                     locale={{
                         name: language,
                         config: moment.localeData(language)

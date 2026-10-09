@@ -21,12 +21,14 @@ export default function(theme) {
             lineHeight: theme.lineHeights.titleSmall,
             marginTop: theme.paddings.default,
             marginBottom: theme.paddings.small,
+            color: theme.colors.text,
         },
         description: {
             ...theme.fonts.regular,
             fontSize: theme.fontSizes.itemText,
             lineHeight: theme.lineHeights.s,
             marginBottom: theme.paddings.small,
+            color: theme.colors.text,
        }
     }
 };

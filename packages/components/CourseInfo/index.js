@@ -198,7 +198,7 @@ export default function CourseInfoComponent(props) {
                     </View>
                     <View style={styles.innerContainer}>
                         <View style={styles.iconContainer}>
-                            <IconsOpenasist icon={"timetable"} color={colors.black} size={40} />
+                            <IconsOpenasist icon={"timetable"} color={colors.icon} size={40} />
                         </View>
                         {
                             nextOrigineCourse

@@ -86,10 +86,12 @@ function CanteensAccordionHeader({ canteenId, menuDate, isExpanded, styles }) {
                 }
             </View>
             <View>
-                <Text style={styles.headerText}>{canteen?.title ?? `Fehler: Mensa mit ID ${canteenId} kann nicht angezeigt werden. Bitte melden!`}</Text>
+            <Text style={[styles.headerText, { color: colors.text }]}>
+                {canteen?.title ?? `Fehler: Mensa mit ID ${canteenId} kann nicht angezeigt werden. Bitte melden!`}
+            </Text>
                 {
                     Array.isArray(activeSelections) && activeSelections.length > 0
-                        ? <Text>
+                        ? <Text style={{ color: colors.text }}>
                             {
                                 t(
                                     'canteen:amountOfFilteredMeals',
@@ -101,7 +103,7 @@ function CanteensAccordionHeader({ canteenId, menuDate, isExpanded, styles }) {
                 }
             </View>
             <View style={styles.arrowIcon}>
-                <IconsOpenasist icon={isExpanded ? 'up' : 'down'} size={20} color={colors.grayLight5} />
+                <IconsOpenasist icon={isExpanded ? 'up' : 'down'} size={20} color={colors.icon} />
             </View>
         </View>
     );

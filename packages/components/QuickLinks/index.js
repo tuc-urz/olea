@@ -51,7 +51,7 @@ function QuickLinksComponent({ theme, theme: { colors } }) {
           <Text style={[styles.headline, { marginRight: 5 }]}>{t('quicklinks:title')}</Text>
           <IconsOpenasist
             icon={"open-external"}
-            color={colors.secondaryText}
+            color={colors.icon}
             size={10}
             accessibilityLabel={t('accessibility:quicklinks.externalLinkSymbol')}
           />

@@ -59,6 +59,7 @@ export default function(theme) {
             flex: 1
         },
         headerText: {
+            color: theme.colors.text,
             fontSize: theme.fontSizes.l,
             ...theme.fonts.light,
             marginTop: 10,

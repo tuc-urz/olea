@@ -120,7 +120,14 @@ function TimetableCodeInput(props) {
         </View>
         <View style={styles.importTextInputContainer}>
           <TextInput
-            theme={{ colors: { primary: colors.textInput, placeholder: colors.textLighter } }}
+            theme={{
+              colors: {
+                primary: colors.textInput,
+                placeholder: colors.textLighter,
+                text: colors.text,
+                background: colors.background,
+              },
+            }}
             style={styles.paragraphText}
             selectionColor={colors.textInputSelection}
             label={t('timetable:inputPlaceholder')}
@@ -178,18 +185,26 @@ function TimetableCodeInput(props) {
             }
           }}
           labelStyle={styles.importButtonLabel}
-          color={colors.buttonText}
+          color={colors.text}
         >
           {t('timetable:importButton')}
         </Button>
         {
           // Es wird ein Ladesymbol angezeigt, wenn der Stundenplan importiert wird.
-          importing
-            ? <>
-              <ActivityIndicator style={styles.activity} size="large" color={colors.loadingIndicator} />
-              <View style={styles.paragraph}><Paragraph>{t('timetable:importInProgress', '')}</Paragraph></View>
+          importing ? (
+            <>
+              <ActivityIndicator
+                style={styles.activity}
+                size="large"
+                color={colors.loadingIndicator}
+              />
+              <View style={styles.paragraph}>
+                <Paragraph style={styles.paragraphText}>
+                  {t('timetable:importInProgress', '')}
+                </Paragraph>
+              </View>
             </>
-            : null
+          ) : null
         }
       </KeyboardAvoidingView>
     </ScrollView>

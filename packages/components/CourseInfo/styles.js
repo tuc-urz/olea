@@ -27,11 +27,13 @@ export default function(theme) {
         headline: {
             ...theme.fonts.regular,
             fontSize: theme.fontSizes.m,
-            textTransform: 'uppercase'
+            textTransform: 'uppercase',
+            color: theme.colors.text,
         },
         title: {
             ...theme.fonts.regular,
             fontSize: theme.fontSizes.m,
+            color: theme.colors.text,
         },
         modalContainer: {
             flex: 1

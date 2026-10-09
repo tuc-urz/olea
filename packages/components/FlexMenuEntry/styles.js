@@ -9,6 +9,7 @@ export default function (theme) {
             justifyContent: 'center',
             fontSize: theme.fontSizes.l,
             ...theme.fonts.light,
+            color: theme.colors.text,
         },
         leftIconImage: {
             justifyContent: 'center',
@@ -20,7 +21,7 @@ export default function (theme) {
             fontSize: theme.fontSizes.s,
             ...theme.fonts.regular,
             lineHeight: theme.lineHeights.xxs,
-            color: theme.colors.subtitle,
+            color: theme.colors.text,
             marginTop: theme.paddings.xsmall
         },
     }

@@ -161,7 +161,11 @@ function CalendarWeek(props) {
   const renderScene = useCallback(
     ({ route }) => {
       return (
-        <View style={{ flex: 1, width: width }}>
+        <View style={{
+          flex: 1,
+          width: width,
+          backgroundColor: theme.colors.calendarBackground,
+        }}>
           <Calendar
             events={route.events}
             renderEvent={renderEvent}
@@ -171,18 +175,34 @@ function CalendarWeek(props) {
             headerContentStyle={{ backgroundColor: 'transparent' }}
             weekStartsOn={1}
             date={route.weekbeginISODate}
-            onPressEvent={
-                            // Wenn eine Vorlesung im Kalender angeklickt wird, wird die ursprüngliche Vorlesung ausgelesen und selektiert
-                      (event) => onCourseSelected(event.origine)
-            }
+            onPressEvent={(event) => onCourseSelected(event.origine)}
             swipeEnabled={false}
             scrollOffsetMinutes={calendarScrollOffsetMinutes}
             hourStyle={styles.hourStyle}
+            bodyContainerStyle={{
+              backgroundColor: theme.colors.calendarBackground,
+            }}
+            theme={{
+              palette: {
+                  gray: {
+                      '100': theme.colors.calendarGridMinor,
+                      '200': theme.colors.calendarGrid,
+                  },
+              },
+          }}
           />
         </View>
       );
     },
-    [styles, width, courses, renderEvent]
+    [
+      styles,
+      width,
+      renderEvent,
+      theme,
+      calendarHeight,
+      calendarScrollOffsetMinutes,
+      onCourseSelected,
+    ]
   );
 
   return (
@@ -191,6 +211,11 @@ function CalendarWeek(props) {
         <View pointerEvents="none">
           <CalendarStrip
             style={styles.strip}
+            calendarColor={theme.colors.calendarHeaderBackground}
+            dateNameStyle={{ color: theme.colors.text }}
+            dateNumberStyle={{ color: theme.colors.text }}
+            highlightDateNameStyle={{ color: theme.colors.text }}
+            highlightDateNumberStyle={{ color: theme.colors.text }}
             locale={{
               name: language,
               config: moment.localeData(language)

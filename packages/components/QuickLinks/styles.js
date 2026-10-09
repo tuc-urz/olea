@@ -18,8 +18,9 @@ export default function (theme, width, height) {
     headline: {
       ...theme.fonts.regular,
       fontSize: theme.fontSizes.m,
-      textTransform: 'uppercase'
-    },
+      textTransform: 'uppercase',
+      color: theme.colors.text,
+  },
     roundButtons: {
       width: roundButtonWidth,
       height: roundButtonWidth,

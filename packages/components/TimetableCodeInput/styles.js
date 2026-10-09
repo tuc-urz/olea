@@ -11,11 +11,13 @@ export default function (theme) {
     },
     paragraphText: {
       fontSize: theme.fontSizes.l,
-      lineHeight: theme.lineHeights.l
+      lineHeight: theme.lineHeights.l,
+      color: theme.colors.text,
     },
     importButtonLabel: {
       fontSize: theme.fontSizes.l,
-      lineHeight: theme.lineHeights.l
+      lineHeight: theme.lineHeights.l,
+      color: theme.colors.text,
     },
     importTextInputContainer: {
       paddingLeft: theme.paddings.default,
@@ -23,6 +25,7 @@ export default function (theme) {
     },
     link: {
       textDecorationLine: 'underline',
+      color: theme.colors.textAccent,
     },
   }
 };

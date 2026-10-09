@@ -77,7 +77,7 @@ export default function MainMenuEntry({ title, icon, iconSVG, iconSize, view, ur
             }>
             <View style={styles.textContainer} accessiblity={true} accessibilityLabel={translatedTitle}>
                 <View style={styles.iconContainer}>
-                    <IconsOpenasist icon={icon} iconSVG={iconSVG} color={colors.iconDefault} size={iconSize ?? 34} />
+                    <IconsOpenasist icon={icon} iconSVG={iconSVG} color={colors.icon} size={iconSize ?? 34} />
                 </View>
                 <Text style={styles.titleText}>
                     {translatedTitle}

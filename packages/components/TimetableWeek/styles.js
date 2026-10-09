@@ -16,10 +16,12 @@ export default function (theme) {
 			overflow: 'visible'
 		},
 		eventTitle: {
+			color: theme.colors.eventTitleText,
 			fontSize: 12,
 			fontWeight: 'bold',
 		},
 		eventRoom: {
+			color: theme.colors.eventRoomText,
 			fontSize: 11,
 			color: '#757575',
 		},
@@ -38,12 +40,12 @@ export default function (theme) {
 			width: '89%',
 			paddingTop: 5,
 			paddingBottom: 5,
-			backgroundColor: '#fff',
+			backgroundColor: theme.colors.calendarHeaderBackground,
 			alignSelf: 'flex-end'
 		},
 		viewStrip: {
 			height: 65,
-			backgroundColor: '#fff',
+			backgroundColor: theme.colors.calendarHeaderBackground,
 			elevation: 4,
 			shadowColor: '#000',
 			shadowOffset: { width: 0, height: 3 },

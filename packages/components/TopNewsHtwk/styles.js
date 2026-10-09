@@ -68,18 +68,21 @@ export default function(theme) {
         },
         newsItemCategory: {
             marginBottom: 5,
-            fontSize: theme.fontSizes.s
+            fontSize: theme.fontSizes.s,
+            color: theme.colors.text,
         },
         newsItemTitle: {
             ...theme.fonts.thin,
             fontSize: theme.fontSizes.title,
             lineHeight: theme.lineHeights.titleBig,
             marginBottom: theme.paddings.small,
+            color: theme.colors.text,
         },
         newsItemText: {
             ...theme.fonts.thin,
             fontSize: theme.fontSizes.l,
-            lineHeight: theme.lineHeights.l
+            lineHeight: theme.lineHeights.l,
+            color: theme.colors.text,
         },
         newsItemReadMore: {
             textDecorationLine: 'underline'

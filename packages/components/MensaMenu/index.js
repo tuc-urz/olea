@@ -62,7 +62,7 @@ function SelectionIcons({ selections, iconSize }) {
                 selections.map(
                     selection =>
                         <View key={selection} style={{ marginLeft: 2, lineHeight: 20 }}>
-                            <IconsOpenasist icon={"mensa-" + selection} color={colors.secondaryText} size={iconSize} />
+                            <IconsOpenasist icon={"mensa-" + selection} color={colors.icon} size={iconSize} />
                         </View>
                 )
             }
@@ -202,7 +202,7 @@ function Meal({ settings, meal, priceGroupCode, priceGroupName }) {
                             ? <>
                                 <IconButton
                                     style={styles.btnAddionals}
-                                    iconColor={colors.secondaryText}
+                                    iconColor={colors.icon}
                                     rippleColor={addAlpha(colors.primary, 0.12)}
                                     size={15}
                                     accessibilityLabel={t('canteen:allergeneTitle')}
