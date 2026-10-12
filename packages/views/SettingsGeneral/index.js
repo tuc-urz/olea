@@ -65,6 +65,7 @@ class GeneralSettingsView extends React.Component {
      */
     _updateGeneralSettings = () => {
         const generalSettings = {
+            ...this.props.settings.settingsGeneral,
             language: this.state.language
         };
         this.setState({ isChangeMessageVisible: false });
@@ -102,7 +103,56 @@ class GeneralSettingsView extends React.Component {
             </RadioButton.Group>
         );
     };
+    _getColorScheme = () => {
+        const value = this.props.settings.settingsGeneral.colorScheme;
+        return ['system', 'light', 'dark'].includes(value) ? value : 'light';
+    };
 
+    _renderColorScheme = () => {
+        const { theme, t } = this.props;
+        const { colors } = theme;
+        const options = [
+            ['system', 'System', 'System'],
+            ['light', 'Hell', 'Light'],
+            ['dark', 'Dunkel', 'Dark'],
+        ];
+        const isGerman = this.getLanguageByKey().code === 'de';
+
+        return (
+            <List.Section>
+                <List.Subheader style={this.styles.listItemTitle}>
+                    {t('settings:common.colorScheme', {
+                        defaultValue: isGerman ? 'Darstellung' : 'Appearance',
+                    })}
+                </List.Subheader>
+                <RadioButton.Group
+                    value={this._getColorScheme()}
+                    onValueChange={colorScheme => {
+                        const generalSettings = {
+                            ...this.props.settings.settingsGeneral,
+                            colorScheme,
+                        };
+                        store.dispatch(
+                            onSettingGeneralOverride('generalSettings', generalSettings)
+                        );
+                    }}
+                >
+                    {options.map(([value, german, english]) => (
+                        <RadioButton.Item
+                            key={value}
+                            value={value}
+                            label={t(`settings:common.colorSchemeOptions.${value}`, {
+                                defaultValue: isGerman ? german : english,
+                            })}
+                            labelStyle={this.styles.dialogContent}
+                            color={colors.checkboxChecked}
+                            uncheckedColor={colors.checkboxUnchecked}
+                        />
+                    ))}
+                </RadioButton.Group>
+            </List.Section>
+        );
+    };
     _showDialog = () => this.setState({ visible: true });
 
     _hideDialog = () => this.setState({ visible: false });
@@ -119,6 +169,11 @@ class GeneralSettingsView extends React.Component {
 
 
         const { theme: { themeStyles, colors }, t } = this.props;
+        this.styles = componentStyles(this.props.theme);
+
+        if (this.props.pluginStyles) {
+            this.styles = merge(this.styles, this.props.pluginStyles);
+        }
 
         return (
             <SafeAreaView style={[this.styles.container, themeStyles.appSafeAreaContainer]}>
@@ -131,6 +186,7 @@ class GeneralSettingsView extends React.Component {
                             }>
                         </List.Item>
                     </List.Section>
+                    {this._renderColorScheme()}
                     <Portal>
                         <Dialog visible={this.state.visible}
                             onDismiss={this._hideDialog}>

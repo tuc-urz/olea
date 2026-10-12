@@ -147,7 +147,8 @@ function MensaSliderComponent(props) {
         .toLocaleString(DateTime.DATE_SHORT);
 
     return (
-        <View style={styles.container}>
+        <View style={{ backgroundColor: colors.background }}>
+            <View style={styles.container}>
             <Text style={styles.headline}>
                 {t('canteen:news')} - {formattedDate}
             </Text>
@@ -173,6 +174,7 @@ function MensaSliderComponent(props) {
                     colors={mensaShadow}
                     style={styles.shadowRight}
                 />
+                </View>
             </View>
         </View>
     );

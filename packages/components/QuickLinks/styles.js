@@ -6,6 +6,7 @@ export default function (theme, width, height) {
     container: {
       flex: 1,
       flexDirection: 'column',
+      backgroundColor: theme.colors.background,
       paddingHorizontal: theme.paddings.default,
       paddingVertical: theme.paddings.small,
       paddingTop: theme.paddings.xsmall,

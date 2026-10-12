@@ -169,6 +169,8 @@ function CalendarDay({ selectedDate, theme, settings, calendarScrollOffsetMinute
                 }}
             >
                 <Calendar
+                    key={theme.dark ? 'dark' : 'light'}
+                    events={route.events}
                     events={route.events}
                     renderEvent={renderEvent}
                     renderHeader={() => null}

@@ -177,6 +177,7 @@ export default function CourseInfoComponent(props) {
 
             return (
                 <TouchableOpacity
+                    style={{ backgroundColor: colors.background }}
                     onPress={
                         () => navigation.navigate(
                             'timetableModule',

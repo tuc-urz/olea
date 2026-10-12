@@ -139,6 +139,16 @@ class TopNewsComponent extends React.Component {
 
         const {feeds, t} = this.props;
         const {appSettings} = this.props.theme;
+        const { theme, pluginStyles } = this.props;
+
+        this.styles = componentStyles(theme);
+
+        if (pluginStyles) {
+            this.styles = merge(this.styles, pluginStyles);
+        }
+
+        this.styles = StyleSheet.create(this.styles);
+
         let topNews = this.props.topNews;
 
         if(!Array.isArray(topNews)) {

@@ -6,7 +6,8 @@ export default function(theme) {
             justifyContent: 'space-between'
         },
         listItemTitle: {
-            fontSize: theme.fontSizes.l
+            fontSize: theme.fontSizes.l,
+            color: theme.colors.text,
         },
         listItemDescription: {
             fontSize: theme.fontSizes.m,
@@ -18,7 +19,8 @@ export default function(theme) {
         },
         dialogTitle: {
             fontSize: theme.fontSizes.l,
-            lineHeight: theme.lineHeights.xxl
+            lineHeight: theme.lineHeights.xxl,
+            color: theme.colors.text,
         },
         dialogContent: {
             fontSize: theme.fontSizes.m,
