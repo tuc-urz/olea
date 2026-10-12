@@ -133,9 +133,9 @@ function CalendarDay({ selectedDate, theme, settings, calendarScrollOffsetMinute
     )
 
     const renderEvent = useCallback((event, touchableOpacityProps) => {
-        const { style, ...restTouchableOpacityProps } = touchableOpacityProps;
+        const { key, style, ...restTouchableOpacityProps } = touchableOpacityProps;
         return (
-            <TouchableOpacity {...restTouchableOpacityProps} style={[style, styles.eventContainer, { borderLeftColor: event.color ?? theme.colors.eventContainerSidebar,}]} >
+            <TouchableOpacity key={key} {...restTouchableOpacityProps} style={[style, styles.eventContainer, { borderLeftColor: event.color ?? theme.colors.eventContainerSidebar,}]} >
                 <View style={styles.eventHeader}>
                     <Text style={styles.eventTitle} numberOfLines={1} ellipsizeMode="tail">
                         {event.title}

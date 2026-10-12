@@ -83,10 +83,10 @@ function CalendarMonth(props) {
   }, [today, setMonth]);
 
   const renderEvent = useCallback((event, touchableOpacityProps) => {
-    const { style, ...restTouchableOpacityProps } = touchableOpacityProps;
+    const { key, style, ...restTouchableOpacityProps } = touchableOpacityProps;
 
     return (
-      <TouchableOpacity {...restTouchableOpacityProps}
+      <TouchableOpacity key={key} {...restTouchableOpacityProps}
         style={[style, styles.event]}
       >
         <Text style={styles.eventTitle} numberOfLines={1}>

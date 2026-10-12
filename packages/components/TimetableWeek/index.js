@@ -142,10 +142,11 @@ function CalendarWeek(props) {
   const weeksTabViewIndex = weeksTabViewIndexes[selectedISOWeek];
 
   const renderEvent = useCallback((event, touchableOpacityProps) => {
-    const { style, ...restTouchableOpacityProps } = touchableOpacityProps;
+    const { key, style, ...restTouchableOpacityProps } = touchableOpacityProps;
     return (
       <>
         <TouchableOpacity
+          key={key}
           {...restTouchableOpacityProps}
           style={[style, styles.eventContainer, { borderTopColor: event.color || '#000' }]}
         >
