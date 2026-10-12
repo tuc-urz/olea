@@ -5,7 +5,7 @@ export default function(theme) {
           marginRight: theme.paddings.default,
           marginTop:   10,
           marginBottom: 10,
-          backgroundColor: theme.colors.background,
+          backgroundColor: theme.colors.eventContainerBackground,
           paddingVertical: theme.paddings.small,
           paddingHorizontal: theme.paddings.default,
           flex: 1,
@@ -63,24 +63,26 @@ export default function(theme) {
         },
         type: {
           fontSize: theme.fontSizes.l,
-          color: theme.colors.lecturerNameText
+          color: theme.colors.eventRoomText
         },
         title: {
           fontSize: theme.fontSizes.xl,
           paddingTop: theme.paddings.xsmall,
+          color: theme.colors.eventTitleText,
         },
         titleBigFont: {
             fontSize: theme.fontSizes.xl,
             paddingTop: theme.paddings.xsmall,
+            color: theme.colors.eventTitleText,
         },
         location: {
           fontSize: theme.fontSizes.subtitle,
           paddingTop: theme.paddings.xsmall,
-          color: theme.colors.secondaryText,
+          color: theme.colors.eventRoomText,
         },
         locationLink: {
           textDecorationLine: 'underline',
-          color: 'blue'
+          color: theme.colors.eventContainerSidebar,
         },
         addLeftRightPadding: {
           paddingLeft: theme.paddings.xsmall,
@@ -89,15 +91,15 @@ export default function(theme) {
         professorText: {
           fontSize: theme.fontSizes.m,
           paddingTop: theme.paddings.xsmall,
-          color: theme.colors.subtitle
+          color: theme.colors.eventRoomText
         },
         professorName: {
-          color: theme.colors.lecturerNameText
+          color: theme.colors.eventRoomText
         },
         otherCourseContainer:{
           padding: theme.paddings.xsmall,
           width: "100%",
-          backgroundColor: theme.colors.background
+          backgroundColor: 'transparent'
         },
         starPosition:{
           position: 'absolute',
