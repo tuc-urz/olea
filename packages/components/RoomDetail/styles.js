@@ -2,6 +2,7 @@ export default function(theme) {
     return {
         titleHeadline : {
             ...theme.fonts.medium,
+            color: theme.colors.text,
             fontSize: theme.fontSizes.xl,
             lineHeight: theme.lineHeights.l,
             marginBottom: theme.paddings.small

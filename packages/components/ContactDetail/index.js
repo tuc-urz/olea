@@ -128,7 +128,10 @@ export default function ContactDetailComponent({ contact, ...restProps }) {
                             key="building"
                             title={t('contact:building')}
                             description={contact.building}
-                            descriptionStyle={themeStyles.textLighter}
+                            descriptionStyle={[
+                                themeStyles.textLighter,
+                                { color: theme.colors.text }
+                            ]}
                             titleStyle={themeStyles.searchDetailTitle}
                             descriptionNumberOfLines={200} />
                         : null
@@ -139,7 +142,10 @@ export default function ContactDetailComponent({ contact, ...restProps }) {
                             key="department"
                             title={t('contact:department')}
                             description={contact.department}
-                            descriptionStyle={themeStyles.textLighter}
+                            descriptionStyle={[
+                                themeStyles.textLighter,
+                                { color: theme.colors.text }
+                            ]}
                             titleStyle={themeStyles.searchDetailTitle}
                             descriptionNumberOfLines={200} />
                         : null
@@ -150,7 +156,10 @@ export default function ContactDetailComponent({ contact, ...restProps }) {
                             key="room"
                             title={t('contact:room')}
                             description={contact.room.title}
-                            descriptionStyle={themeStyles.textLighter}
+                            descriptionStyle={[
+                                themeStyles.textLighter,
+                                { color: theme.colors.text }
+                            ]}
                             titleStyle={themeStyles.searchDetailTitle}
                             descriptionNumberOfLines={200} />
                         : null
@@ -164,9 +173,14 @@ export default function ContactDetailComponent({ contact, ...restProps }) {
                             <List.Item
                                 title={t('contact:email')}
                                 description={contact.email}
-                                descriptionStyle={themeStyles.textLighter}
+                                descriptionStyle={[
+                                    themeStyles.textLighter,
+                                    { color: theme.colors.text }
+                                ]}
                                 titleStyle={themeStyles.searchDetailTitle}
-                                right={props => <List.Icon {...props} icon="email" />}
+                                right={props => (
+                                    <List.Icon {...props} icon="email" color={theme.colors.icon} />
+                                )}
                             />
                         </TouchableOpacity>
                         : null
@@ -195,9 +209,13 @@ export default function ContactDetailComponent({ contact, ...restProps }) {
                                         <IconListItem
                                             title={title}
                                             description={telephoneNumber}
-                                            descriptionStyle={themeStyles.textLighter}
+                                            descriptionStyle={[
+                                                themeStyles.textLighter,
+                                                { color: theme.colors.text }
+                                            ]}
                                             titleStyle={themeStyles.searchDetailTitle}
                                             icon={'call'}
+                                            iconColor={theme.colors.icon}
                                         />
                                     </TouchableOpacity>
                                 )

@@ -23,7 +23,7 @@ import componentStyles from './styles';
  * @param {object} props
  * @param {string} props.icon Iconname des anzuzeigenen Icons. Für mögliche Werte siehe {@link Icon}
  */
-export default function IconListItem({ icon, ...listItemProps }) {
+export default function IconListItem({ icon, iconColor, ...listItemProps }) {
     const theme = useTheme();
 
     const styles = useMemo(
@@ -35,6 +35,7 @@ export default function IconListItem({ icon, ...listItemProps }) {
         listIconProps =>
             <List.Icon
                 {...listIconProps}
+                color={iconColor ?? listIconProps.color}
                 icon={
                     props =>
                         <Icon
@@ -44,7 +45,7 @@ export default function IconListItem({ icon, ...listItemProps }) {
                 }
             />
         ,
-        [icon]
+        [icon, iconColor]
     );
 
     return (

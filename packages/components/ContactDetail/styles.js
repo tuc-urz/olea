@@ -22,6 +22,7 @@ export default function(theme) {
         },
         name: {
             paddingLeft: theme.paddings.xsmall + theme.paddings.small,
+            color: theme.colors.text,
             fontSize: theme.fontSizes.title,
             lineHeight: theme.lineHeights.contactName
         },

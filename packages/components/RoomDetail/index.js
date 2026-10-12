@@ -150,7 +150,10 @@ class RoomDetailComponent extends React.Component {
                                 key="building"
                                 title={t('room:building')}
                                 description={room.building.name}
-                                descriptionStyle={themeStyles.textLighter}
+                                descriptionStyle={[
+                                    themeStyles.textLighter,
+                                    { color: colors.text }
+                                ]}
                                 titleStyle={themeStyles.searchDetailTitle}
                             />
                             <List.Item
@@ -163,7 +166,10 @@ class RoomDetailComponent extends React.Component {
                                             : ''
                                     )
                                 }
-                                descriptionStyle={themeStyles.textLighter} titleStyle={themeStyles.searchDetailTitle}
+                                descriptionStyle={[
+                                    themeStyles.textLighter,
+                                    { color: colors.text }
+                                ]}
                             />
                         </>
                         : null

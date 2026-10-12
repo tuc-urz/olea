@@ -187,11 +187,15 @@ class SearchResultsComponent extends React.Component {
                   onPress={() => this._onCardPress(type, item)}
             >
                 <View style={themeStyles.cardLeftIcon}>
-                    <IconsOpenasist icon={icon} size={35} color={colors.messages.iconDefault} />
+                    <IconsOpenasist icon={icon} size={35} color={colors.icon} />
                 </View>
                 <View style={themeStyles.cardContent}>
-                    <Text style={themeStyles.cardTitle}>{this._getShortTitle(title)}</Text>
-                    <Text style={themeStyles.cardSubTitle}>{subtitle}</Text>
+                <Text style={[themeStyles.cardTitle, { color: colors.text }]}>
+                    {this._getShortTitle(title)}
+                </Text>
+                    <Text style={[themeStyles.cardSubTitle, { color: colors.text }]}>
+                        {subtitle}
+                    </Text>
                 </View>
                 <View style={themeStyles.cardRightIcon}>
                     <IconsOpenasist icon={"forward"} size={25} color={colors.icon} />
