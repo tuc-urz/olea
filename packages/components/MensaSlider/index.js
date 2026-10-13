@@ -149,31 +149,31 @@ function MensaSliderComponent(props) {
     return (
         <View style={{ backgroundColor: colors.background }}>
             <View style={styles.container}>
-            <Text style={styles.headline}>
-                {t('canteen:news')} - {formattedDate}
-            </Text>
-            <View style={styles.innerContainer}>
-                <LinearGradient
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    colors={mensaShadow}
-                    style={styles.shadowLeft}
-                />
-                <ScrollView
-                    horizontal={true}
-                    contentContainerStyle={styles.slider}
-                >
-                    <HorizontalCanteens
-                        {...props}
-                        menusDate={todayDateString}
+                <Text style={styles.headline}>
+                    {t('canteen:news')} - {formattedDate}
+                </Text>
+                <View style={styles.innerContainer}>
+                    <LinearGradient
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 0 }}
+                        colors={mensaShadow}
+                        style={styles.shadowLeft}
                     />
-                </ScrollView>
-                <LinearGradient
-                    start={{ x: 1, y: 0 }}
-                    end={{ x: 0, y: 0 }}
-                    colors={mensaShadow}
-                    style={styles.shadowRight}
-                />
+                    <ScrollView
+                        horizontal={true}
+                        contentContainerStyle={styles.slider}
+                    >
+                        <HorizontalCanteens
+                            {...props}
+                            menusDate={todayDateString}
+                        />
+                    </ScrollView>
+                    <LinearGradient
+                        start={{ x: 1, y: 0 }}
+                        end={{ x: 0, y: 0 }}
+                        colors={mensaShadow}
+                        style={styles.shadowRight}
+                    />
                 </View>
             </View>
         </View>
