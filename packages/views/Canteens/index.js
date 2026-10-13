@@ -86,9 +86,9 @@ function CanteensAccordionHeader({ canteenId, menuDate, isExpanded, styles }) {
                 }
             </View>
             <View>
-            <Text style={[styles.headerText, { color: colors.text }]}>
-                {canteen?.title ?? `Fehler: Mensa mit ID ${canteenId} kann nicht angezeigt werden. Bitte melden!`}
-            </Text>
+                <Text style={[styles.headerText, { color: colors.text }]}>
+                    {canteen?.title ?? `Fehler: Mensa mit ID ${canteenId} kann nicht angezeigt werden. Bitte melden!`}
+                </Text>
                 {
                     Array.isArray(activeSelections) && activeSelections.length > 0
                         ? <Text style={{ color: colors.text }}>
