@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, useWindowDimensions } from 'react-native';
 import { connect } from 'react-redux';
 import { withTheme } from 'react-native-paper';
@@ -22,7 +22,6 @@ import componentStyles from "./styles";
 import { Calendar } from 'react-native-big-calendar';
 import { useCourses } from '../../context/context-timetable';
 import CalendarStrip from 'react-native-calendar-strip';
-import CourseDetailDialog from '../CourseDetailDialog';
 import { DateTime, Duration } from 'luxon';
 import { TabView } from 'react-native-tab-view';
 import moment from 'moment';
@@ -170,7 +169,6 @@ function CalendarDay({ selectedDate, theme, settings, calendarScrollOffsetMinute
             >
                 <Calendar
                     key={theme.dark ? 'dark' : 'light'}
-                    events={route.events}
                     events={route.events}
                     renderEvent={renderEvent}
                     renderHeader={() => null}
