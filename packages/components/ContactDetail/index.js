@@ -178,9 +178,7 @@ export default function ContactDetailComponent({ contact, ...restProps }) {
                                     { color: theme.colors.text }
                                 ]}
                                 titleStyle={themeStyles.searchDetailTitle}
-                                right={props => (
-                                    <List.Icon {...props} icon="email" color={theme.colors.icon} />
-                                )}
+                                right={props => <List.Icon {...props} icon="email" color={theme.colors.icon} />}
                             />
                         </TouchableOpacity>
                         : null
