@@ -190,9 +190,9 @@ class SearchResultsComponent extends React.Component {
                     <IconsOpenasist icon={icon} size={35} color={colors.icon} />
                 </View>
                 <View style={themeStyles.cardContent}>
-                <Text style={[themeStyles.cardTitle, { color: colors.text }]}>
-                    {this._getShortTitle(title)}
-                </Text>
+                    <Text style={[themeStyles.cardTitle, { color: colors.text }]}>
+                        {this._getShortTitle(title)}
+                    </Text>
                     <Text style={[themeStyles.cardSubTitle, { color: colors.text }]}>
                         {subtitle}
                     </Text>
