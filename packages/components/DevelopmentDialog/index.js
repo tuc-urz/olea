@@ -84,7 +84,7 @@ export default function DevelopmentDialog({ visible, onDismiss }) {
 
     output.push(
         <View key={'item_use_stg'} style={styles.selectOption}>
-            <Text>{t('settings:develop.useStagingServer')}</Text>
+            <Text style={styles.text}>{t('settings:develop.useStagingServer')}</Text>
             <Checkbox.Android status={isStagingServerActive ? 'checked' : 'unchecked'}
                 onPress={() => setDevelopmentSettings({ useStaging: !isStagingServerActive })}
                 color={colors.checkboxChecked}
@@ -95,13 +95,13 @@ export default function DevelopmentDialog({ visible, onDismiss }) {
 
     output.push(
         <View key={'item_notification_subscriber'} style={[{ marginBottom: 30 }]}>
-            <Text>{t('settings:develop.notificationSubscriberId')}</Text>
-            <Text>{subscriberId}</Text>
+            <Text style={styles.text}>{t('settings:develop.notificationSubscriberId')}</Text>
+            <Text style={styles.text}>{subscriberId}</Text>
         </View>
     );
     output.push(
         <View key={'item_notification_push_message'} style={[{ marginBottom: 30 }]}>
-            <Text>{t('settings:develop.resetPushMessage')}</Text>
+            <Text style={styles.text}>{t('settings:develop.resetPushMessage')}</Text>
             <Button
                 buttonColor={colors.primary}
                 textColor={colors.buttonText}
@@ -113,7 +113,7 @@ export default function DevelopmentDialog({ visible, onDismiss }) {
     );
     output.push(
         <View key={'item_deeplink_show_url'} style={[{ marginBottom: 30 }, styles.selectOption]}>
-            <Text>{t('settings:develop.showDeepLink')}</Text>
+            <Text style={styles.text}>{t('settings:develop.showDeepLink')}</Text>
             <Checkbox
                 status={showDeeplinkAlert ? 'checked' : 'unchecked'}
                 onPress={() => setDevelopmentSettings({ showDeeplinkAlert: !showDeeplinkAlert })}
@@ -150,7 +150,7 @@ export default function DevelopmentDialog({ visible, onDismiss }) {
 
                 return (
                     < View key={`item_menuitems_${menuItemKey}`} >
-                        <Text>{t(mainMenuRouteTitleKey)}-Tab</Text>
+                        <Text style={styles.text}>{t(mainMenuRouteTitleKey)}-Tab</Text>
                         {
                             // Rendern der Menüpunkte eines Menü-Tabs
                             stagingMenuItemEntries.map(
@@ -164,6 +164,7 @@ export default function DevelopmentDialog({ visible, onDismiss }) {
                                         <Checkbox.Item
                                             key={stagingMenuItemEntryKey}
                                             label={t(stagingMenuItemEntry?.title)}
+                                            labelStyle={styles.text}
                                             status={isActive ? 'checked' : 'unchecked'}
                                             color={colors.checkboxChecked}
                                             uncheckedColor={colors.checkboxUnchecked}
@@ -191,7 +192,9 @@ export default function DevelopmentDialog({ visible, onDismiss }) {
     return (
         <Portal>
             <Dialog visible={visible} onDismiss={onDismiss}>
-                <Dialog.Title>{t('settings:develop.dialog')}</Dialog.Title>
+            <Dialog.Title style={styles.text}>
+                {t('settings:develop.dialog')}
+            </Dialog.Title>
                 <Dialog.Content>
                     {
                         [
@@ -203,7 +206,7 @@ export default function DevelopmentDialog({ visible, onDismiss }) {
                 <Dialog.Actions>
                     <Button
                         onPress={onDismiss}
-                        textColor={colors.buttonText}
+                        textColor={colors.text}
                     >
                         {t('common:okLabel')}
                     </Button>

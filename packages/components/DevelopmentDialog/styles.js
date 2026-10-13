@@ -5,6 +5,9 @@ export default function (theme) {
             flexDirection: 'row',
             justifyContent: 'space-between'
         },
+        text: {
+            color: theme.colors.text,
+        },
     }
 };
 

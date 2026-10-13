@@ -44,7 +44,8 @@ export default function (theme) {
     title: {
       paddingLeft: 10,
       fontSize: theme.fontSizes.title,
-      lineHeight: theme.lineHeights.titleBig
+      lineHeight: theme.lineHeights.titleBig,
+      color: theme.colors.text,
     },
     bar: {
       alignItems: 'flex-start',
