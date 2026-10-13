@@ -19,6 +19,7 @@ import {
     TouchableOpacity,
     Pressable,
     Linking,
+    Alert,
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -78,9 +79,7 @@ function TimetableEventComponent(props) {
                 {type || times ? (
                     <Text style={styles.type}>
                         {type ? (
-                            <Text style={{ fontWeight: 'bold' }}>
-                                {type}
-                            </Text>
+                            <Text style={{ fontWeight: 'bold' }}>{type}</Text>
                         ) : null}
 
                         {type && times ? ' | ' : null}
@@ -119,7 +118,8 @@ function TimetableEventComponent(props) {
                                                 ':',
                                                 reason
                                             );
-                                            alert(
+                                            Alert.alert(
+                                                '',
                                                 'Link konnte nicht geöffnet werden.'
                                             );
                                         }
