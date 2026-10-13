@@ -1,6 +1,6 @@
 {
   "name": "@olea-bps/base",
-  "version": "1.1.9",
+  "version": "1.1.10",
   "description": "OLEA base library",
   "main": "index.js",
   "repository": {
@@ -41,27 +41,24 @@
     "expo-linear-gradient": "~56.0.4",
     "expo-web-browser": "~56.0.6",
     "jwt-decode": "4.0.0",
-    "moment": "^2.31.0",
     "react-native-elements": "^3.4.3",
     "react-native-enriched-markdown": "^0.7.4",
     "react-native-modalbox": "^2.0.2",
-    "react-native-paper": "^5.15.3",
     "react-native-svg": "15.15.4",
     "react-native-swipe-gestures": "^1.0.5",
     "react-native-tab-view": "^4.3.3",
     "react-native-uuid": "^2.0.4",
     "react-native-vector-icons": "^10.3.0",
     "react-native-webview": "13.16.1",
-    "react-redux": "^9.3.0",
-    "redux": "^4.2.1",
     "redux-persist": "^6.0.0"
   },
   "peerDependencies": {
+    "moment": "^2.31.0",
     "react": "^19.0.0",
     "react-native": "^0.85.0",
-    "react-native-paper": "^5.0.0",
-    "react-redux": "^9.2.0",
-    "redux": "^4.0.5"
+    "react-native-paper": "^5.15.3",
+    "react-redux": "^9.3.0",
+    "redux": "^4.2.1"
   },
   "devDependencies": {
     "@expo/vector-icons": "^15.1.1"
