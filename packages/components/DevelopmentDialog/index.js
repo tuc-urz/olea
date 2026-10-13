@@ -192,9 +192,9 @@ export default function DevelopmentDialog({ visible, onDismiss }) {
     return (
         <Portal>
             <Dialog visible={visible} onDismiss={onDismiss}>
-            <Dialog.Title style={styles.text}>
-                {t('settings:develop.dialog')}
-            </Dialog.Title>
+                <Dialog.Title style={styles.text}>
+                    {t('settings:develop.dialog')}
+                </Dialog.Title>
                 <Dialog.Content>
                     {
                         [
