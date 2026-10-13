@@ -121,7 +121,7 @@ function CalendarWeek(props) {
 
       return weekYearRoutes;
     },
-    [todayWeekNumber, todayWeekYearNumber, courses]
+    [todayWeekNumber, todayWeekYearNumber, courses, theme.colors.eventContainerSidebar]
   );
 
   const weeksTabViewIndexes = useMemo(
@@ -168,6 +168,7 @@ function CalendarWeek(props) {
           backgroundColor: theme.colors.calendarBackground,
         }}>
           <Calendar
+            key={theme.dark ? 'dark' : 'light'}
             events={route.events}
             renderEvent={renderEvent}
             renderHeader={() => null}
@@ -211,6 +212,7 @@ function CalendarWeek(props) {
       <View style={styles.viewStrip}>
         <View pointerEvents="none">
           <CalendarStrip
+            key={theme.dark ? 'dark' : 'light'}
             style={styles.strip}
             calendarColor={theme.colors.calendarHeaderBackground}
             dateNameStyle={{ color: theme.colors.text }}
