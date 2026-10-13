@@ -170,6 +170,7 @@ class RoomDetailComponent extends React.Component {
                                     themeStyles.textLighter,
                                     { color: colors.text }
                                 ]}
+                                titleStyle={themeStyles.searchDetailTitle}
                             />
                         </>
                         : null
