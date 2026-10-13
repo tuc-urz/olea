@@ -38,7 +38,7 @@ import CalendarMonth from '../../components/TimetableMonth';
 import CourseDetailDialog from '../../components/CourseDetailDialog';
 
 function TimetableViewCalendar(props) {
-  const { theme, theme: { themeStyles, colors, appSettings, appSettings: { modules: { timetable: { code, calendarStarttime } } } }, t, settings } = props;
+  const { theme, theme: { themeStyles, colors, appSettings, appSettings: { modules: { timetable: { code, calendarStarttime } } } }, t } = props;
   const language = useLanguage();
 
   const styles = useMemo(
@@ -84,7 +84,7 @@ function TimetableViewCalendar(props) {
 
   // Berechnen der Uhrzeit zu der beim Öffnen des Stundenplan Kalenders hingepsrungen werden soll.
   // Wird in einem State gespeichert, weil später noch beim Focus-Wechsel erneut berechnet werden muss.
-  const [calendarScrollOffsetMinutes, setCalendarScrollOffsetMinutes] = useState(
+  const [calendarScrollOffsetMinutes] = useState(
     () => {
       // Berechnen der Uhrzeit, falls im Custemizing eine angegeben ist, ansonsten wird die jetzige Stunde verwendet.
       // Speichern als Duration.
@@ -115,7 +115,7 @@ function TimetableViewCalendar(props) {
     }
   );
 
-  const [courses, refreshCourses] = useCourses();
+  const [, refreshCourses] = useCourses();
 
   // Einstellungen für den Stundenplan-Code
   const timetableCodeInputLength = code?.length ?? 0;
@@ -159,12 +159,23 @@ function TimetableViewCalendar(props) {
           onCourseSelected={setSelectedEvent}
         />;
       case 'month':
-        return <CalendarMonth today={today} setToday={setToday} month={month} setMonth={setMonth} calendarScrollOffsetMinutes={calendarScrollOffsetMinutes} calendarHeight={CALENDAR_HEIGHT} />;
+        return <CalendarMonth
+          today={today}
+          setToday={setToday}
+          calendarScrollOffsetMinutes={calendarScrollOffsetMinutes}
+          calendarHeight={CALENDAR_HEIGHT}
+        />;
       default:
         return null;
     }
   },
-    [language, selectedDayModeDate, calendarScrollOffsetMinutes, selectedDayModeDate, setSelectedDayModeDate, selectedWeekModeISOWeekDate, setSelectedWeekModeISOWeekDate]
+    [
+      language,
+      selectedDayModeDate,
+      selectedWeekModeISOWeekDate,
+      calendarScrollOffsetMinutes,
+      today,
+    ]
   );
 
   // Unter verwendung von Luxon wird eine Liste der Monatsnamen generiert, dabei wird die eingestellte Sprache berücksichtigt
