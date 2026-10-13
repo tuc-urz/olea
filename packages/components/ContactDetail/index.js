@@ -158,15 +158,15 @@ export default function ContactDetailComponent({ contact, ...restProps }) {
                 {
                     contact?.email
                         ? <TouchableOpacity
-                            key="email"
+                            key='mail'
                             onPress={() => Linking.openURL('mailto:' + contact.email)}
                         >
-                            <List.Item
+                            <IconListItem
                                 title={t('contact:email')}
                                 description={contact.email}
                                 descriptionStyle={themeStyles.textLighter}
                                 titleStyle={themeStyles.searchDetailTitle}
-                                right={props => <List.Icon {...props} icon="email" />}
+                                icon={'mail'}
                             />
                         </TouchableOpacity>
                         : null
