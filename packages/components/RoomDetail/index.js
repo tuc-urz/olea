@@ -171,8 +171,8 @@ class RoomDetailComponent extends React.Component {
             <View style={this.styles.containerInner}>
                 <Headline style={this.styles.titleHeadline}>{roomTitle}</Headline>
                 {
-                    room?.building ?? null
-                        ? <>
+                    (room?.building ?? null) ? (
+                        <>
                             <List.Item
                                 key="building"
                                 title={t('room:building')}
@@ -185,71 +185,64 @@ class RoomDetailComponent extends React.Component {
                                 title={t('room:address')}
                                 description={
                                     room.building.postaladdress + (
-                                        room?.building?.postalcode ?? false
+                                        (room?.building?.postalcode ?? false)
                                             ? "\n" + room.building.postalcode + ' ' + theme.appSettings.defaultCity
                                             : ''
                                     )
                                 }
-                                descriptionStyle={themeStyles.textLighter} titleStyle={themeStyles.searchDetailTitle}
+                                descriptionStyle={themeStyles.textLighter}
+                                titleStyle={themeStyles.searchDetailTitle}
                             />
                         </>
-                        : null
+                    ) : null
                 }
                 <View style={this.styles.buttonContainer} key={'buttonContainer'}>
-                    {
-                        room?.url ?? null
-                            ? <TouchableOpacity
-                                style={{ ...this.styles.button, ...this.styles.campusFinderUrl }}
-                                key={'campusFinderUrl'}
-                                onPress={() => {
-                                    this.setState({
-                                        webview: {
-                                            url: room.url,
-                                            title: t('room:campusFinder')
-                                        }
-                                    })
-                                }}
-                            >
-                                <IconsOpenasist
-                                    icon={'map-search'}
-                                    size={25}
-                                    color={colors.messages.noticeText}
-                                />
-                                <Headline
-                                    style={this.styles.buttonText}
-                                >
-                                    {t('room:campusFinderLink')}
-                                </Headline>
-                            </TouchableOpacity>
-                            : null
-                    }
-                    {
-                        room?.building?.coordinates ?? null
-                            ? <TouchableOpacity
-                                style={this.styles.button}
-                                key={'googleMapsUrl'}
-                                onPress={() => {
-                                    this.setState({
-                                        webview: {
-                                            url: theme.appSettings.googleMapsUrl + room.building.coordinates,
-                                            title: t('room:googleMaps')
-                                        }
-                                    })
-                                }}
-                            >
-                                <IconsOpenasist
-                                    icon={'location'}
-                                    size={25}
-                                    color={colors.messages.noticeText}
-                                />
-                                <Headline
-                                    style={this.styles.buttonText}
-                                >
-                                    {t('room:googleMapsLink')}
-                                </Headline>
-                            </TouchableOpacity>
-                            : null
-                    }
+                    {(room?.url ?? null) ? (
+                        <TouchableOpacity
+                            style={{ ...this.styles.button, ...this.styles.campusFinderUrl }}
+                            key={'campusFinderUrl'}
+                            onPress={() => {
+                                this.setState({
+                                    webview: {
+                                        url: room.url,
+                                        title: t('room:campusFinder')
+                                    }
+                                });
+                            }}
+                        >
+                            <IconsOpenasist
+                                icon={'map-search'}
+                                size={25}
+                                color={colors.messages.noticeText}
+                            />
+                            <Headline style={this.styles.buttonText}>
+                                {t('room:campusFinderLink')}
+                            </Headline>
+                        </TouchableOpacity>
+                    ) : null}
+                    {(room?.building?.coordinates ?? null) ? (
+                        <TouchableOpacity
+                            style={this.styles.button}
+                            key={'googleMapsUrl'}
+                            onPress={() => {
+                                this.setState({
+                                    webview: {
+                                        url: theme.appSettings.googleMapsUrl + room.building.coordinates,
+                                        title: t('room:googleMaps')
+                                    }
+                                });
+                            }}
+                        >
+                            <IconsOpenasist
+                                icon={'location'}
+                                size={25}
+                                color={colors.messages.noticeText}
+                            />
+                            <Headline style={this.styles.buttonText}>
+                                {t('room:googleMapsLink')}
+                            </Headline>
+                        </TouchableOpacity>
+                    ) : null}
                 </View>
             </View>
         );
