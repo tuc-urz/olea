@@ -93,22 +93,21 @@ export default function CourseDetailDialog({ course, visible, onClose, onDismiss
             <Dialog visible={visible} onDismiss={onDismiss}>
                 <Dialog.Title>{title?.data ?? 'Keine weiteren Informationen'}</Dialog.Title>
                 <Dialog.Content>
-                    {
-                        courseDetails
-                            ? courseDetails.map(
-                                courseDetail =>
-                                    <CourseDetailDialogText
-                                        key={courseDetail?.displayName}
-                                        title={courseDetail?.displayName}
-                                        content={courseDetail?.data}
-                                        url={courseDetail?.url}
-                                        icon={courseDetail?.icon}
-                                    />
-                            )
-                            : <Text>
-                                Keine Informationen verfügbar
-                            </Text>
-                    }
+                    {courseDetails ? (
+                        courseDetails.map(courseDetail => (
+                            <CourseDetailDialogText
+                                key={courseDetail?.displayName}
+                                title={courseDetail?.displayName}
+                                content={courseDetail?.data}
+                                url={courseDetail?.url}
+                                icon={courseDetail?.icon}
+                            />
+                        ))
+                    ) : (
+                        <Text>
+                            Keine Informationen verfügbar
+                        </Text>
+                    )}
                 </Dialog.Content>
                 <Dialog.Actions>
                     <TouchableOpacity onPress={onClose}>
