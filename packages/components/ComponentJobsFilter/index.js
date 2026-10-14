@@ -12,19 +12,17 @@
  * limitations under the License.
  */
 
-import React from 'react';
-import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
-import {connect} from 'react-redux'
-import {withTranslation} from "react-i18next";
-import {Appbar, withTheme} from "react-native-paper";
+import React from 'react'
+import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native'
+import { connect } from 'react-redux'
+import { withTranslation } from 'react-i18next'
+import { Appbar, withTheme } from 'react-native-paper'
 import { CheckBox } from 'react-native-elements'
 
-import merge from 'lodash/merge';
-import componentStyles from "./styles";
-import AppbarComponent from '../AppBar';
-import IconsOpenasist from '../../libraries/icons-openasist';
-
-
+import merge from 'lodash/merge'
+import componentStyles from './styles'
+import AppbarComponent from '../AppBar'
+import IconsOpenasist from '../../libraries/icons-openasist'
 
 /**
  * JobPortalFilter View
@@ -38,156 +36,154 @@ import IconsOpenasist from '../../libraries/icons-openasist';
  *  - none
  */
 class JobFilterComponent extends React.Component {
-    static navigationOptions = {
-        header: null
-    };
+  static navigationOptions = {
+    header: null
+  }
 
-    state = {
-        data: null,
-        selectedIds: [],
-        checked: []
-    };
+  state = {
+    data: null,
+    selectedIds: [],
+    checked: []
+  }
 
-    // Styles of this component
-    styles;
+  // Styles of this component
+  styles
 
-    checked;
+  checked
 
-    selectedIds;
+  selectedIds
 
-    catData;
+  catData
 
-    constructor(props) {
-      super(props);
-      // ------------------------------------------------------------------------
-      // PLUGIN FUNCTIONALITY
-      // ------------------------------------------------------------------------
-      const {pluginStyles, theme} = this.props;
-      this.styles = componentStyles(theme);
-      if (pluginStyles) {
-          this.styles = merge(this.styles, pluginStyles);
-      }
-      this.styles = StyleSheet.create(this.styles);
-      // ------------------------------------------------------------------------
-
+  constructor (props) {
+    super(props)
+    // ------------------------------------------------------------------------
+    // PLUGIN FUNCTIONALITY
+    // ------------------------------------------------------------------------
+    const { pluginStyles, theme } = this.props
+    this.styles = componentStyles(theme)
+    if (pluginStyles) {
+      this.styles = merge(this.styles, pluginStyles)
     }
+    this.styles = StyleSheet.create(this.styles)
+    // ------------------------------------------------------------------------
+  }
 
-    componentDidMount(){
-      this.setState((_prevState, props) => ({
-        checked: props.route.params.checked,
-        selectedIds: props.route.params.selectedIds,
-        data: props.route.params.catData
-      }));
-    }
+  componentDidMount () {
+    this.setState((_prevState, props) => ({
+      checked: props.route.params.checked,
+      selectedIds: props.route.params.selectedIds,
+      data: props.route.params.catData
+    }))
+  }
 
-    goBack() {
-        const { navigation } = this.props;
+  goBack () {
+    const { navigation } = this.props
 
-        navigation.popTo('Job', {
-          selectedIds: this.state.selectedIds,
-          checked: this.state.checked
-        });
-    }
+    navigation.popTo('Job', {
+      selectedIds: this.state.selectedIds,
+      checked: this.state.checked
+    })
+  }
 
-    handleChange = (index) => {
-      this.setState(prevState => {
-        const checked = [...prevState.checked];
-        const selectedIds = this.addOrRemSelectedIds(
-          prevState.data,
-          index,
-          [...prevState.selectedIds]
-        );
-
-        checked[index] = !checked[index];
-
-        return { checked, selectedIds };
-      });
-    }
-
-    addOrRemSelectedIds = (data, index, selectedIds) => {
-      for(var i = 0; i < data[index].id.length; i++){
-        let value = data[index].id[i];
-        if(selectedIds.indexOf(value) === -1){
-          selectedIds.push(value);
-        }else{
-          selectedIds.splice(selectedIds.indexOf(value), 1);
-        }
-      }
-      return selectedIds;
-    }
-
-    _keyExtractor = (item, index) => {
-      return item?.name ?? index.toString();
-    };
-
-    _renderListView = () => {
-      const { colors } = this.props.theme;
-      let { data, checked } = this.state;
-
-      return(
-        <FlatList
-            data={data}
-            extraData={this.state}
-            renderItem={({item, index}) =>
-              <CheckBox
-                checked={checked[index]}
-                title={item.name}
-                textStyle={this.styles.title}
-                onPress={() => this.handleChange(index)}
-                checkedColor={colors.primary}
-              />
-            }
-            keyExtractor={this._keyExtractor}
-        />
+  handleChange = (index) => {
+    this.setState(prevState => {
+      const checked = [...prevState.checked]
+      const selectedIds = this.addOrRemSelectedIds(
+        prevState.data,
+        index,
+        [...prevState.selectedIds]
       )
-    }
 
-    /**
+      checked[index] = !checked[index]
+
+      return { checked, selectedIds }
+    })
+  }
+
+  addOrRemSelectedIds = (data, index, selectedIds) => {
+    for (let i = 0; i < data[index].id.length; i++) {
+      const value = data[index].id[i]
+      if (selectedIds.indexOf(value) === -1) {
+        selectedIds.push(value)
+      } else {
+        selectedIds.splice(selectedIds.indexOf(value), 1)
+      }
+    }
+    return selectedIds
+  }
+
+  _keyExtractor = (item, index) => {
+    return item?.name ?? index.toString()
+  }
+
+  _renderListView = () => {
+    const { colors } = this.props.theme
+    const { data, checked } = this.state
+
+    return (
+      <FlatList
+        data={data}
+        extraData={this.state}
+        renderItem={({ item, index }) =>
+          <CheckBox
+            checked={checked[index]}
+            title={item.name}
+            textStyle={this.styles.title}
+            onPress={() => this.handleChange(index)}
+            checkedColor={colors.primary}
+          />}
+        keyExtractor={this._keyExtractor}
+      />
+    )
+  }
+
+  /**
      * Tab for services
      * @returns {*}
      * @constructor
      */
 
-  render() {
+  render () {
+    // ------------------------------------------------------------------------
+    // PLUGIN FUNCTIONALITY
+    // ------------------------------------------------------------------------
+    const PluginComponent = this.props.pluginComponent
+    if (PluginComponent) {
+      return <PluginComponent />
+    }
+    // ------------------------------------------------------------------------
+    const { colors, themeStyles } = this.props.theme
 
-      // ------------------------------------------------------------------------
-      // PLUGIN FUNCTIONALITY
-      // ------------------------------------------------------------------------
-      const PluginComponent = this.props.pluginComponent;
-      if (PluginComponent) {
-          return <PluginComponent />;
-      }
-      // ------------------------------------------------------------------------
-      const {colors, themeStyles} = this.props.theme;
-
-      return (
-          <SafeAreaView style={[this.styles.container, themeStyles.appSafeAreaContainer]}>
-              <View>
-                  <AppbarComponent {...this.props}
-                      title="Filter"
-                      leftAction={
-                          <Appbar.Action
-                              icon={props => <IconsOpenasist {...props} icon={'back'} color={colors.primaryText} /> }
-                              onPress={() => {
-                                  this.goBack();
-                              }} />
+    return (
+      <SafeAreaView style={[this.styles.container, themeStyles.appSafeAreaContainer]}>
+        <View>
+          <AppbarComponent
+            {...this.props}
+            title='Filter'
+            leftAction={
+              <Appbar.Action
+                icon={props => <IconsOpenasist {...props} icon='back' color={colors.primaryText} />}
+                onPress={() => {
+                  this.goBack()
+                }}
+              />
                        }
-                  />
-              </View>
-              <View style={themeStyles.container}>
-                  {this._renderListView()}
-              </View>
-          </SafeAreaView>
-    );
+          />
+        </View>
+        <View style={themeStyles.container}>
+          {this._renderListView()}
+        </View>
+      </SafeAreaView>
+    )
   }
 }
 
-
 const mapStateToProps = state => {
-    return {
-        pluginComponent: state.pluginReducer.jobFilter.component,
-        pluginStyles: state.pluginReducer.jobFilter.styles,
-    };
-};
+  return {
+    pluginComponent: state.pluginReducer.jobFilter.component,
+    pluginStyles: state.pluginReducer.jobFilter.styles
+  }
+}
 
 export default connect(mapStateToProps, null)(withTranslation()(withTheme(JobFilterComponent)))
