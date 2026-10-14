@@ -20,7 +20,9 @@ import {
     StyleSheet,
     View,
     Share,
-    TouchableOpacity, ActivityIndicator
+    TouchableOpacity,
+    ActivityIndicator,
+    Alert,
 } from 'react-native';
 import { connect } from 'react-redux'
 import {
@@ -110,7 +112,7 @@ class RoomDetailComponent extends React.Component {
         // ------------------------------------------------------------------------
     }
 
-    _closeWebView = () => {
+    handleCloseWebView = () => {
         this.setState({ webview: { title: '', url: '' } });
     };
 
@@ -146,7 +148,7 @@ class RoomDetailComponent extends React.Component {
                 // dismissed
             }
         } catch (error) {
-            alert(error.message);
+            Alert.alert('', error.message);
         }
     };
 
@@ -170,7 +172,7 @@ class RoomDetailComponent extends React.Component {
                 <Headline style={this.styles.titleHeadline}>{roomTitle}</Headline>
                 {
                     room?.building ?? null
-                      ? <>
+                        ? <>
                             <List.Item
                                 key="building"
                                 title={t('room:building')}
@@ -196,7 +198,7 @@ class RoomDetailComponent extends React.Component {
                 <View style={this.styles.buttonContainer} key={'buttonContainer'}>
                     {
                         room?.url ?? null
-                          ? <TouchableOpacity
+                            ? <TouchableOpacity
                                 style={{ ...this.styles.button, ...this.styles.campusFinderUrl }}
                                 key={'campusFinderUrl'}
                                 onPress={() => {
@@ -223,7 +225,7 @@ class RoomDetailComponent extends React.Component {
                     }
                     {
                         room?.building?.coordinates ?? null
-                          ? <TouchableOpacity
+                            ? <TouchableOpacity
                                 style={this.styles.button}
                                 key={'googleMapsUrl'}
                                 onPress={() => {
@@ -272,14 +274,16 @@ class RoomDetailComponent extends React.Component {
         if(title && url) {
             return (
                 <SafeAreaView style={[this.styles.container, themeStyles.safeAreaContainer]}>
-                    <RoomWebViewBackHandler onBack={this._closeWebView} />
+                    <RoomWebViewBackHandler onBack={this.handleCloseWebView} />
                     <AppbarComponent {...this.props}
                                     title={title}
                                     leftAction={<Appbar.Action
                                         icon={props => <IconsOpenasist {...props} icon={'back'} color={colors.primaryText} /> }
-                                        onPress={this._closeWebView} />}/>
+                                        onPress={this.handleCloseWebView} />}/>
                     <WebView
-                        ref={ref => this.webView.ref = ref}
+                        ref={ref => {
+                            this.webView.ref = ref;
+                        }}
                         source={{uri: url}}
                         injectedJavaScript={customScript}
                         startInLoadingState={true}
