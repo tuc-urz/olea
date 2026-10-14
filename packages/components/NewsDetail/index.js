@@ -25,9 +25,10 @@ import {
     Animated,
     Platform,
     Linking,
-    PixelRatio
+    PixelRatio,
+    Alert,
 } from 'react-native';
-import {Appbar, Headline, withTheme} from "react-native-paper";
+import { Headline, withTheme } from "react-native-paper";
 import { WebView } from 'react-native-webview';
 import {withTranslation} from "react-i18next";
 import { connect } from 'react-redux'
@@ -73,7 +74,7 @@ class NewsDetailComponent extends React.Component {
 
     currentURL = null;
 
-    urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
+    urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/;
 
     maxHeaderHeight;
     minHeaderHeight = 120;
@@ -133,7 +134,7 @@ class NewsDetailComponent extends React.Component {
                 // dismissed
             }
         } catch (error) {
-                alert(error.message);
+            Alert.alert('', error.message);
         }
     };
 
@@ -172,7 +173,7 @@ class NewsDetailComponent extends React.Component {
     * @param url
     * @returns {boolean}
     */
-    startLoadingRequest = ({url}) => {
+    handleNavigationStateChange = ({url}) => {
         if (!url.match(this.urlRegex)) {
             return true;
         } else if (url.match(this.urlRegex) && Linking.canOpenURL(url)){
@@ -210,77 +211,15 @@ class NewsDetailComponent extends React.Component {
         const {appSettings, css, themeStyles} = this.props.theme;
         this.currentURL = news.link;
 
-
-
         let imageSrc = null;
-        if(news?.contentImageUrl) {
-            imageSrc = {uri: news.contentImageUrl}
+        if (news?.contentImageUrl) {
+            imageSrc = { uri: news.contentImageUrl };
         }
-        const scrollY = Animated.add(
-            this.state.scrollY,
-            Platform.OS === 'ios' ? this.maxHeaderHeight : 0,
-        );
-
-        const headerTranslate = scrollY.interpolate({
-            inputRange: [0, this.headerScrollDistance],
-            outputRange: [0, -this.headerScrollDistance],
-            extrapolate: 'clamp',
-        });
-        const imageTranslate = scrollY.interpolate({
-            inputRange: [0, this.headerScrollDistance],
-            outputRange: [0, 1],
-            extrapolate: 'clamp',
-        });
-
-        const titleOpacity = scrollY.interpolate({
-            inputRange: [0, this.headerScrollDistance / 2, this.headerScrollDistance],
-            outputRange: [0, 1, 1],
-            extrapolate: 'clamp',
-        });
-
-        const titleScale = scrollY.interpolate({
-            inputRange: [0, this.headerScrollDistance / 2, this.headerScrollDistance],
-            outputRange: [1, 1, 0.8],
-            extrapolate: 'clamp',
-        });
-        let titleTranslate = scrollY.interpolate({
-            inputRange: [0, this.headerScrollDistance / 2, this.headerScrollDistance],
-            outputRange: [0, 0, -8],
-            extrapolate: 'clamp',
-        });
 
         // No image
-        if(imageSrc == null) {
+        if (imageSrc == null) {
             imageSrc = appSettings.header;
         }
-
-
-        let barTitle = news.title.replace(/<(?:.|\n)*?>/gm, '');
-        let barTitleFontSize = 22;
-        let barTitleLineHeight = 22;
-        let barTitleHeight = 120;
-        if(barTitle.length > 80)
-            barTitleFontSize = 18;
-
-        if(barTitle.length > 120)
-            barTitleFontSize = 16;
-
-        if(this.fontScaling > 2) {
-            barTitleFontSize = 15;
-            barTitleLineHeight = 14;
-            barTitleHeight = 140;
-        }
-        if(this.fontScaling > 2.3) {
-            barTitleFontSize = 12;
-            barTitleLineHeight = 14;
-            barTitleHeight = 160;
-            titleTranslate = scrollY.interpolate({
-                inputRange: [0, this.headerScrollDistance / 2, this.headerScrollDistance],
-                outputRange: [0, 0, -25],
-                extrapolate: 'clamp',
-            });
-        }
-        barTitleFontSize = Math.round(barTitleFontSize * 10000) / 10000;
 
         let pubDate = news ? news.pubdate : null ;
         let date = news ? moment(news.pubdate) : moment();
@@ -313,7 +252,7 @@ class NewsDetailComponent extends React.Component {
                                        overScrollMode="never"
                                        customStyle={'html, body { overflow: hidden; }'}
                                        contentInset={{top: 0, left: 0, right: 0, bottom: 0}}
-                                       onNavigationStateChange={this.startLoadingRequest}
+                                       onNavigationStateChange={this.handleNavigationStateChange}
                                        ref={el => {this.webView = el}}/>
                    <Text style={[this.styles.newsContent, this.styles.newsContentText]}>{pubDate}</Text>
                 </View>
@@ -372,7 +311,7 @@ class NewsDetailComponent extends React.Component {
 const mapStateToProps = (state, ownProps) => {
     let {news, route} = ownProps;
     if (!news) {
-        news = route.params && route.params.news || null;
+        news = (route.params && route.params.news) || null;
     }
 
     return {
