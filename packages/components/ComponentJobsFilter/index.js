@@ -122,7 +122,7 @@ class JobFilterComponent extends React.Component {
 
       return(
         <FlatList
-            data={this.state.data}
+            data={data}
             extraData={this.state}
             renderItem={({item, index}) =>
               <CheckBox
