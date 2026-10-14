@@ -26,7 +26,7 @@ import CalendarStrip from 'react-native-calendar-strip';
 import { DateTime } from 'luxon';
 
 function CalendarMonth(props) {
-  const { theme, setMonth, today, locale, onMonthChanged, calendarHeight } = props;
+  const { theme, setMonth, today, locale, calendarHeight } = props;
   const styles = useMemo(
     () => StyleSheet.create(componentStyles(theme)),
     [theme]
@@ -34,7 +34,7 @@ function CalendarMonth(props) {
 
   const [courses, refreshCourses] = useCourses();
   const selectedDate = useRef(new Date());
-  const [selectedDateState, setSelectedDateState] = useState(selectedDate.current);
+  const [, setSelectedDateState] = useState(selectedDate.current);
   const [dialogVisible, setDialogVisible] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
 
