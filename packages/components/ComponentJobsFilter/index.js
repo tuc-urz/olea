@@ -73,11 +73,11 @@ class JobFilterComponent extends React.Component {
     }
 
     componentDidMount(){
-      this.setState({
-        checked: this.props.route.params.checked,
-        selectedIds: this.props.route.params.selectedIds,
-        data: this.props.route.params.catData
-      });
+      this.setState((_prevState, props) => ({
+        checked: props.route.params.checked,
+        selectedIds: props.route.params.selectedIds,
+        data: props.route.params.catData
+      }));
     }
 
     goBack() {
@@ -89,15 +89,19 @@ class JobFilterComponent extends React.Component {
         });
     }
 
-
-
     handleChange = (index) => {
-      let checked = [...this.state.checked];
-        let selectedIds = [...this.state.selectedIds];
-        var data = this.state.data;
-        selectedIds = this.addOrRemSelectedIds(data, index, selectedIds);
+      this.setState(prevState => {
+        const checked = [...prevState.checked];
+        const selectedIds = this.addOrRemSelectedIds(
+          prevState.data,
+          index,
+          [...prevState.selectedIds]
+        );
+
         checked[index] = !checked[index];
-        this.setState({ checked, selectedIds });
+
+        return { checked, selectedIds };
+      });
     }
 
     addOrRemSelectedIds = (data, index, selectedIds) => {
