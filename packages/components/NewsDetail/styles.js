@@ -17,7 +17,7 @@ export default function (theme) {
     container: {
       flex: 1,
       overflow: 'hidden',
-      backgroundColor: theme.colors.contentBackground,
+      backgroundColor: theme.colors.contentBackground
     },
     containerInner: {
       flex: 1
@@ -26,7 +26,7 @@ export default function (theme) {
       backgroundColor: theme.colors.contentBackground,
       flex: 1,
       paddingHorizontal: 5,
-      paddingVertical: 20,
+      paddingVertical: 20
     },
     activity: {
       marginTop: 20
