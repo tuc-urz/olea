@@ -12,50 +12,50 @@
  * limitations under the License.
  */
 
-import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
-import { Text, TouchableOpacity, StyleSheet, View } from 'react-native';
-import { connect } from 'react-redux';
-import { withTheme } from 'react-native-paper';
-import { withTranslation } from 'react-i18next';
-import { onUpdateRefreshing } from '../../libraries/core';
-import componentStyles from "./styles";
-import { Calendar } from 'react-native-big-calendar';
-import { useCourses } from '../../context/context-timetable';
-import CourseDetailDialog from '../CourseDetailDialog';
-import CalendarStrip from 'react-native-calendar-strip';
-import { DateTime } from 'luxon';
+import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react'
+import { Text, TouchableOpacity, StyleSheet, View } from 'react-native'
+import { connect } from 'react-redux'
+import { withTheme } from 'react-native-paper'
+import { withTranslation } from 'react-i18next'
+import { onUpdateRefreshing } from '../../libraries/core'
+import componentStyles from './styles'
+import { Calendar } from 'react-native-big-calendar'
+import { useCourses } from '../../context/context-timetable'
+import CourseDetailDialog from '../CourseDetailDialog'
+import CalendarStrip from 'react-native-calendar-strip'
+import { DateTime } from 'luxon'
 
-function CalendarMonth(props) {
-  const { theme, setMonth, today, locale, calendarHeight } = props;
+function CalendarMonth (props) {
+  const { theme, setMonth, today, locale, calendarHeight } = props
   const styles = useMemo(
     () => StyleSheet.create(componentStyles(theme)),
     [theme]
-  );
+  )
 
-  const [courses, refreshCourses] = useCourses();
-  const selectedDate = useRef(new Date());
-  const [, setSelectedDateState] = useState(selectedDate.current);
-  const [dialogVisible, setDialogVisible] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [courses, refreshCourses] = useCourses()
+  const selectedDate = useRef(new Date())
+  const [, setSelectedDateState] = useState(selectedDate.current)
+  const [dialogVisible, setDialogVisible] = useState(false)
+  const [selectedEvent, setSelectedEvent] = useState(null)
 
-  const selectedDateStartISO = DateTime.fromISO(JSON.stringify(selectedDate.current).slice(1, -1)).startOf('month').toISODate();
-  const selectedDateEndISO = DateTime.fromISO(JSON.stringify(selectedDate.current).slice(1, -1)).endOf('month').toISODate();
+  const selectedDateStartISO = DateTime.fromISO(JSON.stringify(selectedDate.current).slice(1, -1)).startOf('month').toISODate()
+  const selectedDateEndISO = DateTime.fromISO(JSON.stringify(selectedDate.current).slice(1, -1)).endOf('month').toISODate()
 
   useEffect(() => {
-    refreshCourses(selectedDateStartISO, selectedDateEndISO);
-  }, [selectedDateStartISO, selectedDateEndISO]);
+    refreshCourses(selectedDateStartISO, selectedDateEndISO)
+  }, [selectedDateStartISO, selectedDateEndISO])
 
   const handleDateChange = (date) => {
-    selectedDate.current = date;
-    setSelectedDateState(date);
-  };
+    selectedDate.current = date
+    setSelectedDateState(date)
+  }
 
   const monthCourses = useMemo(() => {
-    const startDate = DateTime.fromISO(selectedDateStartISO);
-    const daysInMonth = startDate.daysInMonth;
-    const daysArray = Array.from({ length: daysInMonth }, (_, index) => startDate.plus({ days: index }).toISODate());
-    return daysArray.reduce((acc, date) => acc.concat(courses?.[date] ?? []), []);
-  }, [selectedDateStartISO, courses]);
+    const startDate = DateTime.fromISO(selectedDateStartISO)
+    const daysInMonth = startDate.daysInMonth
+    const daysArray = Array.from({ length: daysInMonth }, (_, index) => startDate.plus({ days: index }).toISODate())
+    return daysArray.reduce((acc, date) => acc.concat(courses?.[date] ?? []), [])
+  }, [selectedDateStartISO, courses])
 
   const monthEvents = useMemo(() => {
     try {
@@ -69,32 +69,32 @@ function CalendarMonth(props) {
             type: course.type?.data,
             professor: course.lecturer[0]?.data,
             room: course.room.data
-          };
-        });
+          }
+        })
     } catch (error) {
-      console.error('Error in useMemo for monthEvents:', error);
-      return [];
+      console.error('Error in useMemo for monthEvents:', error)
+      return []
     }
-  }, [monthCourses]);
+  }, [monthCourses])
 
   useEffect(() => {
-    handleDateChange(today);
-    setMonth(today.getMonth());
-  }, [today, setMonth]);
+    handleDateChange(today)
+    setMonth(today.getMonth())
+  }, [today, setMonth])
 
   const renderEvent = useCallback((event, touchableOpacityProps) => {
-    const { key, style, ...restTouchableOpacityProps } = touchableOpacityProps;
+    const { key, style, ...restTouchableOpacityProps } = touchableOpacityProps
     return (
-      <TouchableOpacity key={key} {...restTouchableOpacityProps} style={[style, styles.event]} >
+      <TouchableOpacity key={key} {...restTouchableOpacityProps} style={[style, styles.event]}>
         <Text style={styles.eventTitle} numberOfLines={1}>
           {event.title}
         </Text>
       </TouchableOpacity>
-    );
-  }, [styles]);
+    )
+  }, [styles])
 
   const renderHeader = useCallback(() => (
-    <View pointerEvents="none">
+    <View pointerEvents='none'>
       <CalendarStrip
         style={styles.strip}
         locale={locale}
@@ -109,7 +109,7 @@ function CalendarMonth(props) {
       />
 
     </View>
-  ), [selectedDate]);
+  ), [selectedDate])
 
   return (
     <>
@@ -119,16 +119,16 @@ function CalendarMonth(props) {
         renderHeaderForMonthView={renderHeader}
         date={selectedDate.current}
         height={calendarHeight}
-        mode={'month'}
+        mode='month'
         headerContentStyle={{ backgroundColor: 'transparent' }}
         weekStartsOn={1}
         onSwipeEnd={(date) => {
-          handleDateChange(date);
-          setMonth(new Date(date).getMonth());
+          handleDateChange(date)
+          setMonth(new Date(date).getMonth())
         }}
         onPressEvent={(event) => {
-          setDialogVisible(true);
-          setSelectedEvent(event);
+          setDialogVisible(true)
+          setSelectedEvent(event)
         }}
       />
       {dialogVisible && selectedEvent && (
@@ -141,13 +141,13 @@ function CalendarMonth(props) {
         />
       )}
     </>
-  );
+  )
 }
 
 const mapStateToProps = (state) => {
   return {
-    settings: state.settingReducer,
-  };
-};
+    settings: state.settingReducer
+  }
+}
 
-export default connect(mapStateToProps, { onUpdateRefreshing })(withTranslation()(withTheme(CalendarMonth)));
+export default connect(mapStateToProps, { onUpdateRefreshing })(withTranslation()(withTheme(CalendarMonth)))

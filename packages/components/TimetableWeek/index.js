@@ -12,26 +12,26 @@
  * limitations under the License.
  */
 
-import { useMemo, useCallback } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, useWindowDimensions } from 'react-native';
-import { connect } from 'react-redux';
-import { withTheme } from 'react-native-paper';
-import { withTranslation } from 'react-i18next';
-import { Calendar } from 'react-native-big-calendar';
-import { useCourses } from '../../context/context-timetable';
-import CalendarStrip from 'react-native-calendar-strip';
-import { DateTime, Duration } from 'luxon';
-import { TabView } from 'react-native-tab-view';
-import { onUpdateRefreshing } from '../../libraries/core';
-import moment from 'moment';
-import 'moment/locale/de';
+import { useMemo, useCallback } from 'react'
+import { View, Text, TouchableOpacity, StyleSheet, useWindowDimensions } from 'react-native'
+import { connect } from 'react-redux'
+import { withTheme } from 'react-native-paper'
+import { withTranslation } from 'react-i18next'
+import { Calendar } from 'react-native-big-calendar'
+import { useCourses } from '../../context/context-timetable'
+import CalendarStrip from 'react-native-calendar-strip'
+import { DateTime, Duration } from 'luxon'
+import { TabView } from 'react-native-tab-view'
+import { onUpdateRefreshing } from '../../libraries/core'
+import moment from 'moment'
+import 'moment/locale/de'
 
-import componentStyles from './styles';
+import componentStyles from './styles'
 
 /**
  * Die Zeitspanne, welche vor und nach heute angezeigt werden soll.
  */
-const daysTabDuration = Duration.fromISO('P6M');
+const daysTabDuration = Duration.fromISO('P6M')
 
 /**
  *
@@ -39,51 +39,51 @@ const daysTabDuration = Duration.fromISO('P6M');
  * @param {(DateTime)=> void} props.onWeekChanged
  * @returns
  */
-function CalendarWeek(props) {
-  const { selectedISOWeek, theme, settings, calendarScrollOffsetMinutes, calendarHeight, onWeekChanged, onCourseSelected } = props;
+function CalendarWeek (props) {
+  const { selectedISOWeek, theme, settings, calendarScrollOffsetMinutes, calendarHeight, onWeekChanged, onCourseSelected } = props
 
   const styles = useMemo(
     () => StyleSheet.create(componentStyles(theme)),
     [theme]
-  );
+  )
 
-  const { width } = useWindowDimensions();
+  const { width } = useWindowDimensions()
 
-  const [courses] = useCourses();
+  const [courses] = useCourses()
 
-  const language = settings?.settingsGeneral?.language;
+  const language = settings?.settingsGeneral?.language
 
   const selectedWeekDate = useMemo(
     () => DateTime.fromISO(selectedISOWeek),
     [selectedISOWeek]
-  );
+  )
 
   const now = DateTime.now()
-  const todayWeekNumber = now.weekNumber;
-  const todayWeekYearNumber = now.weekYear;
+  const todayWeekNumber = now.weekNumber
+  const todayWeekYearNumber = now.weekYear
 
   const weeksTabViewRoutes = useMemo(
     () => {
-      const todayWeekYear = DateTime.fromObject({ weekNumber: todayWeekNumber, weekYear: todayWeekYearNumber }).startOf('week');
-      const beginWeekYear = todayWeekYear.minus(daysTabDuration).startOf('week');
-      const endWeekYear = todayWeekYear.plus(daysTabDuration).endOf('week');
-      let currentWeekYear = DateTime.fromObject(beginWeekYear.toObject());
+      const todayWeekYear = DateTime.fromObject({ weekNumber: todayWeekNumber, weekYear: todayWeekYearNumber }).startOf('week')
+      const beginWeekYear = todayWeekYear.minus(daysTabDuration).startOf('week')
+      const endWeekYear = todayWeekYear.plus(daysTabDuration).endOf('week')
+      let currentWeekYear = DateTime.fromObject(beginWeekYear.toObject())
 
-      const weekYearRoutes = [];
+      const weekYearRoutes = []
 
       while (currentWeekYear <= endWeekYear) {
-        const currentISOWeekYear = currentWeekYear.toISOWeekDate();
+        const currentISOWeekYear = currentWeekYear.toISOWeekDate()
 
-        const currentWeekYearBeginDate = currentWeekYear.startOf('week');
-        const currentWeekYearEndDate = currentWeekYear.endOf('week');
-        let currentWeekYearDate = DateTime.fromObject(currentWeekYearBeginDate.toObject());
+        const currentWeekYearBeginDate = currentWeekYear.startOf('week')
+        const currentWeekYearEndDate = currentWeekYear.endOf('week')
+        let currentWeekYearDate = DateTime.fromObject(currentWeekYearBeginDate.toObject())
 
-        const currentWeekYearCourses = [];
+        const currentWeekYearCourses = []
 
-        const eventColor = theme.colors.eventContainerSidebar;
+        const eventColor = theme.colors.eventContainerSidebar
 
         while (currentWeekYearDate <= currentWeekYearEndDate) {
-          const currentWeekYearISODate = currentWeekYearDate.toISODate();
+          const currentWeekYearISODate = currentWeekYearDate.toISODate()
           const currentWeekYearDateCourses = courses?.[currentWeekYearISODate]
             ?.map(
               course => (
@@ -96,14 +96,14 @@ function CalendarWeek(props) {
                   professor: course.lecturer[0]?.data,
                   room: course.room.data,
                   // Anfügen des Ürsprügnlichen Vorlesungsobjektes, damit es beim Klick zur Verfügung steht
-                  origine: course,
+                  origine: course
                 }
               )
-            ) ?? [];
+            ) ?? []
 
-          currentWeekYearCourses.push(currentWeekYearDateCourses);
+          currentWeekYearCourses.push(currentWeekYearDateCourses)
 
-          currentWeekYearDate = currentWeekYearDate.plus({ day: 1 });
+          currentWeekYearDate = currentWeekYearDate.plus({ day: 1 })
         }
 
         weekYearRoutes.push(
@@ -112,58 +112,58 @@ function CalendarWeek(props) {
             weekbeginISODate: currentWeekYearBeginDate.toISODate(),
             week: currentWeekYear.weekNumber,
             weekYear: currentWeekYear.weekYear,
-            events: currentWeekYearCourses.flat(),
+            events: currentWeekYearCourses.flat()
           }
-        );
+        )
 
-        currentWeekYear = currentWeekYear.plus({ week: 1 });
+        currentWeekYear = currentWeekYear.plus({ week: 1 })
       }
 
-      return weekYearRoutes;
+      return weekYearRoutes
     },
     [todayWeekNumber, todayWeekYearNumber, courses]
-  );
+  )
 
   const weeksTabViewIndexes = useMemo(
     () => weeksTabViewRoutes
       .reduce(
         (accumulator, currentRoute, currentIndex) =>
-        (
-          {
-            ...accumulator,
-            [currentRoute.key]: currentIndex
-          }
-        ),
+          (
+            {
+              ...accumulator,
+              [currentRoute.key]: currentIndex
+            }
+          ),
         {}
       ),
     [weeksTabViewRoutes]
   )
 
-  const weeksTabViewIndex = weeksTabViewIndexes[selectedISOWeek];
+  const weeksTabViewIndex = weeksTabViewIndexes[selectedISOWeek]
 
   const renderEvent = useCallback((event, touchableOpacityProps) => {
-    const { key, style, ...restTouchableOpacityProps } = touchableOpacityProps;
+    const { key, style, ...restTouchableOpacityProps } = touchableOpacityProps
     return (
       <>
-        <TouchableOpacity key={key} {...restTouchableOpacityProps} style={[style, styles.eventContainer, { borderTopColor: event.color || '#000' }]} >
+        <TouchableOpacity key={key} {...restTouchableOpacityProps} style={[style, styles.eventContainer, { borderTopColor: event.color || '#000' }]}>
           <View style={styles.eventHeader}>
-            <Text style={styles.eventTitle} numberOfLines={2} ellipsizeMode={'clip'} >{event.title}</Text>
+            <Text style={styles.eventTitle} numberOfLines={2} ellipsizeMode='clip'>{event.title}</Text>
           </View>
-          <Text style={styles.eventRoom} numberOfLines={1} ellipsizeMode={'clip'}>{event.room}</Text>
+          <Text style={styles.eventRoom} numberOfLines={1} ellipsizeMode='clip'>{event.room}</Text>
         </TouchableOpacity>
       </>
-    );
-  }, [styles]);
+    )
+  }, [styles])
 
   const renderScene = useCallback(
     ({ route }) => {
       return (
-        <View style={{ flex: 1, width: width }}>
+        <View style={{ flex: 1, width }}>
           <Calendar
             events={route.events}
             renderEvent={renderEvent}
             renderHeader={() => null}
-            mode={'week'}
+            mode='week'
             height={calendarHeight}
             headerContentStyle={{ backgroundColor: 'transparent' }}
             weekStartsOn={1}
@@ -177,15 +177,15 @@ function CalendarWeek(props) {
             hourStyle={styles.hourStyle}
           />
         </View>
-      );
+      )
     },
     [styles, width, courses, renderEvent]
-  );
+  )
 
   return (
     <>
       <View style={styles.viewStrip}>
-        <View pointerEvents="none">
+        <View pointerEvents='none'>
           <CalendarStrip
             style={styles.strip}
             locale={{
@@ -196,7 +196,7 @@ function CalendarWeek(props) {
             showMonth={false}
             iconStyle={{ display: 'none' }}
             startingDate={selectedWeekDate.plus({ day: 1 }).toJSDate()}
-            pointerEvents={'none'}
+            pointerEvents='none'
           />
         </View>
       </View>
@@ -208,20 +208,20 @@ function CalendarWeek(props) {
         lazyPreloadDistance={2}
         onIndexChange={
           (index) => {
-            const deltaISOWeekYear = weeksTabViewRoutes?.[index]?.key;
-            onWeekChanged(deltaISOWeekYear);
+            const deltaISOWeekYear = weeksTabViewRoutes?.[index]?.key
+            onWeekChanged(deltaISOWeekYear)
           }
         }
         renderScene={renderScene}
       />
     </>
-  );
+  )
 }
 
 const mapStateToProps = (state) => {
   return {
-    settings: state.settingReducer,
-  };
-};
+    settings: state.settingReducer
+  }
+}
 
-export default connect(mapStateToProps, { onUpdateRefreshing })(withTranslation()(withTheme(CalendarWeek)));
+export default connect(mapStateToProps, { onUpdateRefreshing })(withTranslation()(withTheme(CalendarWeek)))
