@@ -12,20 +12,20 @@
  * limitations under the License.
  */
 
-import { useMemo } from 'react';
+import { useMemo } from 'react'
 import {
-    StyleSheet,
-    Linking,
-    TouchableOpacity
-} from 'react-native';
+  StyleSheet,
+  Linking,
+  TouchableOpacity
+} from 'react-native'
 
-import { useTheme, Text, Dialog, Portal } from 'react-native-paper';
-import { useTranslation } from 'react-i18next';
+import { useTheme, Text, Dialog, Portal } from 'react-native-paper'
+import { useTranslation } from 'react-i18next'
 
-import IconsOpenasist from '../../libraries/icons-openasist';
-import { useIncreaseFontSize } from '../../libraries/core';
+import IconsOpenasist from '../../libraries/icons-openasist'
+import { useIncreaseFontSize } from '../../libraries/core'
 
-import componentStyles from './styles';
+import componentStyles from './styles'
 
 /**
  * Ein Dialog, der sich über die derzeitige Ansicht legt, welcher die Detailinformationen zu einer Vorlesung anzeigt.
@@ -53,70 +53,72 @@ import componentStyles from './styles';
  *     />
  * );
  */
-export default function CourseDetailDialog({ course, visible, onClose, onDismiss }) {
-    const theme = useTheme();
-    const { t } = useTranslation();
+export default function CourseDetailDialog ({ course, visible, onClose, onDismiss }) {
+  const theme = useTheme()
+  const { t } = useTranslation()
 
-    const styles = useMemo(
-        () => StyleSheet.create(componentStyles(theme)),
-        [theme]
-    );
+  const styles = useMemo(
+    () => StyleSheet.create(componentStyles(theme)),
+    [theme]
+  )
 
-    const { room, url, info, title, times, type, lecturer, addon, ...extraCourseData } = course ?? {};
-    const courseDetails = [
-        { ...room, key: 'room', displayName: t('timetable:detail.room'), icon: 'map-search' },
-        { key: 'startTimes', data: times?.[0]?.start, displayName: t('timetable:detail.start') },
-        { key: 'endTimes', data: times?.[0]?.end, displayName: t('timetable:detail.end') },
-        { ...type, key: 'type', displayName: t('timetable:detail.type') },
-        { ...lecturer?.[0], key: 'lecturer', displayName: t('timetable:detail.lecturer') },
-        { ...url, key: 'url', displayName: t('timetable:detail.url'), icon: 'forward' },
-        { ...info, key: 'info', displayName: t('timetable:detail.info') },
-        { ...addon, key: 'addon', displayName: t('timetable:detail.addon') },
+  const { room, url, info, title, times, type, lecturer, addon, ...extraCourseData } = course ?? {}
+  const courseDetails = [
+    { ...room, key: 'room', displayName: t('timetable:detail.room'), icon: 'map-search' },
+    { key: 'startTimes', data: times?.[0]?.start, displayName: t('timetable:detail.start') },
+    { key: 'endTimes', data: times?.[0]?.end, displayName: t('timetable:detail.end') },
+    { ...type, key: 'type', displayName: t('timetable:detail.type') },
+    { ...lecturer?.[0], key: 'lecturer', displayName: t('timetable:detail.lecturer') },
+    { ...url, key: 'url', displayName: t('timetable:detail.url'), icon: 'forward' },
+    { ...info, key: 'info', displayName: t('timetable:detail.info') },
+    { ...addon, key: 'addon', displayName: t('timetable:detail.addon') },
 
-        // Restliche Daten werden in Format gebracht und angefügt
-        ...Object.entries(extraCourseData)
-            .map(
-                ([courseDataKey, courseDataValue]) =>
-                (
-                    {
-                        key: courseDataKey,
-                        displayName: courseDataValue?.displayname,
-                        ...courseDataValue,
-                    }
-                )
-            )
-    ]
-        .filter(courseDetail => courseDetail?.data ? true : false);
+    // Restliche Daten werden in Format gebracht und angefügt
+    ...Object.entries(extraCourseData)
+      .map(
+        ([courseDataKey, courseDataValue]) =>
+          (
+            {
+              key: courseDataKey,
+              displayName: courseDataValue?.displayname,
+              ...courseDataValue
+            }
+          )
+      )
+  ]
+    .filter(courseDetail => !!courseDetail?.data)
 
-    return (
-        <Portal>
-            <Dialog visible={visible} onDismiss={onDismiss}>
-                <Dialog.Title>{title?.data ?? 'Keine weiteren Informationen'}</Dialog.Title>
-                <Dialog.Content>
-                    {courseDetails ? (
-                        courseDetails.map(courseDetail => (
-                            <CourseDetailDialogText
-                                key={courseDetail?.displayName}
-                                title={courseDetail?.displayName}
-                                content={courseDetail?.data}
-                                url={courseDetail?.url}
-                                icon={courseDetail?.icon}
-                            />
-                        ))
-                    ) : (
-                        <Text>
-                            Keine Informationen verfügbar
-                        </Text>
-                    )}
-                </Dialog.Content>
-                <Dialog.Actions>
-                    <TouchableOpacity onPress={onClose}>
-                        <Text style={styles.dismissButton}>{t('timetable:close')}</Text>
-                    </TouchableOpacity>
-                </Dialog.Actions>
-            </Dialog>
-        </Portal>
-    );
+  return (
+    <Portal>
+      <Dialog visible={visible} onDismiss={onDismiss}>
+        <Dialog.Title>{title?.data ?? 'Keine weiteren Informationen'}</Dialog.Title>
+        <Dialog.Content>
+          {courseDetails
+            ? (
+                courseDetails.map(courseDetail => (
+                  <CourseDetailDialogText
+                    key={courseDetail?.displayName}
+                    title={courseDetail?.displayName}
+                    content={courseDetail?.data}
+                    url={courseDetail?.url}
+                    icon={courseDetail?.icon}
+                  />
+                ))
+              )
+            : (
+              <Text>
+                Keine Informationen verfügbar
+              </Text>
+              )}
+        </Dialog.Content>
+        <Dialog.Actions>
+          <TouchableOpacity onPress={onClose}>
+            <Text style={styles.dismissButton}>{t('timetable:close')}</Text>
+          </TouchableOpacity>
+        </Dialog.Actions>
+      </Dialog>
+    </Portal>
+  )
 }
 
 /**
@@ -128,42 +130,40 @@ export default function CourseDetailDialog({ course, visible, onClose, onDismiss
  * @param {string} props.url
  * @param {string} props.icon
  */
-function CourseDetailDialogText({ title, content, url, icon }) {
-    const increaseFontSize = useIncreaseFontSize();
+function CourseDetailDialogText ({ title, content, url, icon }) {
+  const increaseFontSize = useIncreaseFontSize()
 
-    const theme = useTheme();
-    const { colors } = theme;
+  const theme = useTheme()
+  const { colors } = theme
 
-    const styles = useMemo(
-        () => StyleSheet.create(componentStyles(theme)),
-        [theme]
-    );
+  const styles = useMemo(
+    () => StyleSheet.create(componentStyles(theme)),
+    [theme]
+  )
 
-    return (
-        <TouchableOpacity
-            style={[styles.detailContainer, styles.textDetail]}
-            onPress={
+  return (
+    <TouchableOpacity
+      style={[styles.detailContainer, styles.textDetail]}
+      onPress={
                 url
-                    ? () => Linking.openURL(url)
-                    : null
+                  ? () => Linking.openURL(url)
+                  : null
             }
-            disabled={
-                url
-                    ? false
-                    : true
+      disabled={
+                !url
             }
-        >
-            <Text style={[styles.detailLabel, increaseFontSize ? styles.textDetailBigFont : styles.textDetail]} >
-                {title}
-            </Text>
-            <Text style={[styles.detailValue, increaseFontSize ? styles.textDetailBigFont : styles.textDetail]} ellipsizeMode='tail' >
-                {content}
-            </Text>
-            {
+    >
+      <Text style={[styles.detailLabel, increaseFontSize ? styles.textDetailBigFont : styles.textDetail]}>
+        {title}
+      </Text>
+      <Text style={[styles.detailValue, increaseFontSize ? styles.textDetailBigFont : styles.textDetail]} ellipsizeMode='tail'>
+        {content}
+      </Text>
+      {
                 icon && url
-                    ? <IconsOpenasist icon={icon} size={25} color={colors.icon} />
-                    : null
+                  ? <IconsOpenasist icon={icon} size={25} color={colors.icon} />
+                  : null
             }
-        </TouchableOpacity>
-    )
+    </TouchableOpacity>
+  )
 }
