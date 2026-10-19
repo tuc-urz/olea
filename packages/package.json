@@ -1,6 +1,6 @@
 {
   "name": "@olea-bps/base",
-  "version": "1.1.10",
+  "version": "1.1.11",
   "description": "OLEA base library",
   "main": "index.js",
   "repository": {
@@ -13,6 +13,11 @@
       "name": "Universitätsrechenzentrum TU Chemnitz",
       "email": "support@hrz.tu-chemnitz.de",
       "url": "https://www.tu-chemnitz.de/urz/"
+    },
+    {
+      "name": "HTWK Leipzig",
+      "email": "feedback.app@htwk-leipzig.de",
+      "url": "https://www.htwk-leipzig.de/htwk-app"
     },
     {
       "name": "codeculture",
