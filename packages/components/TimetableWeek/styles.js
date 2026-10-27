@@ -21,7 +21,7 @@ export default function (theme) {
 		},
 		eventRoom: {
 			fontSize: 11,
-			color: '#757575',
+			color: theme.colors.text,
 		},
 		highlightDateContainer: {
 			borderRadius: 100,
