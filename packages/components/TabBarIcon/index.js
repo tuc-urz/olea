@@ -15,7 +15,7 @@ import IconsOpenasist from '../../libraries/icons-openasist';
  */
 export default function TabBarIcon({ icon, color, size }) {
     const theme = useTheme();
-    const iconSize = size ?? theme.tabBar?.iconSize;
+    const iconSize = size ?? theme?.tabBar?.iconSize;
 
     return (
         <View
