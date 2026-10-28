@@ -6,7 +6,7 @@ import { NewsTabbar as NewsTabBarView } from '@olea-bps/base';
 import { NewsList } from '@olea-bps/base';
 import { Modal as ModalComponent } from '@olea-bps/base';
 
-import TabBarIcon               from "../tabBarIcon";
+import { TabBarIcon } from '@olea-bps/base';
 
 /**
  * Tab Options
@@ -14,7 +14,9 @@ import TabBarIcon               from "../tabBarIcon";
 const options = {
     title: 'Feeds',
     tabBarAccessibilityLabel: 'accessibility:navigation.feeds',
-    tabBarIcon:  (props) => TabBarIcon("news", props),
+    tabBarIcon: ({ color }) => (
+        <TabBarIcon icon="news" color={color} />
+    ),
     header: () => null
 }
 

@@ -12,7 +12,7 @@ import { Modal as ModalComponent } from '@olea-bps/base';
 import { CourseDetail as CourseDetailComponent } from '@olea-bps/base';
 import { Jobs as JobPortalView } from '@olea-bps/base';
 import { ComponentJobsFilter as JobFilterComponent } from '@olea-bps/base';
-import TabBarIcon from '../tabBarIcon';
+import { TabBarIcon } from '@olea-bps/base';
 import { SettingsAppInfo as AppInfoSettingsView } from '@olea-bps/base';
 import { TimetableCalendar as TimetableCalendarView } from '@olea-bps/base';
 
@@ -22,7 +22,9 @@ import { TimetableCalendar as TimetableCalendarView } from '@olea-bps/base';
 const options = {
     title: 'Menu',
     tabBarAccessibilityLabel: 'accessibility:navigation.menu',
-    tabBarIcon: (props) => TabBarIcon("menu", props, 26),
+    tabBarIcon: ({ color }) => (
+        <TabBarIcon icon="menu" color={color} />
+    ),
     header: () => null
 }
 

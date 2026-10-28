@@ -6,7 +6,7 @@ import { Canteens as CanteensTabView } from '@olea-bps/base';
 
 import { Modal as ModalComponent } from '@olea-bps/base';
 
-import TabBarIcon               from "../tabBarIcon";
+import { TabBarIcon } from '@olea-bps/base';
 
 /**
  * Tab Options
@@ -14,7 +14,9 @@ import TabBarIcon               from "../tabBarIcon";
 const options = {
     title: 'Canteens',
     tabBarAccessibilityLabel: 'accessibility:navigation.canteens',
-    tabBarIcon:  (props) => TabBarIcon("mensa", props),
+    tabBarIcon: ({ color }) => (
+        <TabBarIcon icon="mensa" color={color} />
+    ),
     header: () => null
 }
 

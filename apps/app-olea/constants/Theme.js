@@ -15,6 +15,9 @@ const theme = {
     version: 2,
     dark: false,
     roundness: 4,
+    tabBar: {
+        iconSize: 24,
+    },
     paddings: paddings,
     colors: themeColors,
     themeStyles: getStyles(themeColors, fontSizes, lineHeights),

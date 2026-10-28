@@ -6,7 +6,7 @@ import { NewsDetail as NewsDetailComponent } from '@olea-bps/base';
 import { CourseDetail as CourseDetailComponent } from '@olea-bps/base';
 import { Modal as ModalComponent } from '@olea-bps/base';
 
-import TabBarIcon               from "../tabBarIcon";
+import { TabBarIcon } from '@olea-bps/base';
 
 /**
  * Tab Options
@@ -14,7 +14,9 @@ import TabBarIcon               from "../tabBarIcon";
 const options = {
     title: 'Dashboard',
     tabBarAccessibilityLabel: 'accessibility:navigation.dashboard' ,
-    tabBarIcon: (props) => TabBarIcon("dashboard", props ),
+    tabBarIcon: ({ color }) => (
+        <TabBarIcon icon="dashboard" color={color} />
+    ),
     header: () => null
 }
 
