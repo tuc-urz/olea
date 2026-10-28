@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-import { createContext, useCallback, useEffect, useContext, useReducer, useMemo } from 'react'
+import { createContext, useCallback, useEffect, useContext, useReducer, useMemo, useState } from 'react'
 import { connect, useDispatch, useSelector } from 'react-redux'
 import { useTheme } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -51,6 +51,10 @@ const SetCanteenAction = 'set_canteen';
 const RemoveUnusedCanteensAction = 'remove_unused_canteens'
 const RemoveUnusedMenusAction = 'remove_unused_menus'
 
+function hasCanteenTitle(canteen) {
+    return typeof canteen?.title === 'string' && canteen.title.trim().length > 0;
+}
+
 /**
  *
  * @param {CanteenState} state
@@ -67,11 +71,16 @@ function CanteensStateReducer(state, action) {
             const menuDate = action.date;
             const menu = action.menu;
 
+            // Late menu responses must not recreate a canteen removed by the server list.
+            if (!hasCanteenTitle(state?.[canteenId])) {
+                return state;
+            }
+
             // Einfügen des Essensangebot(menu) für eine Mensa(canteenId) an einem Tag(menuDate)
             return {
                 // Kopieren der vorherigen Mensen
                 ...state ?? {},
-                //Mense mit id(canteenId) neu erstellen
+                // Bestehende Mensa aktualisieren
                 [canteenId]: {
                     // Kopieren der vorherigen Daten der Mense
                     ...state?.[canteenId] ?? {},
@@ -124,7 +133,7 @@ function CanteensStateReducer(state, action) {
 
         // Anhand einer Liste von Mensa-IDs werden alte Mensen entfernt
         case RemoveUnusedCanteensAction: {
-            const activeCanteenIds = action.activeCanteenIds;
+            const activeCanteenIds = action.activeCanteenIds.map(String);
 
             return Object.fromEntries(
                 Object.entries(state ?? {})
@@ -134,12 +143,19 @@ function CanteensStateReducer(state, action) {
 
         // Mensen und zugehörige Essensangebote aus dem Cache wiederherstellen
         case RestoreCanteens: {
-            const restoredCanteens = action.canteens;
+            // Remove incomplete entries persisted by older app versions, also offline.
+            const restoredCanteens = Object.fromEntries(
+                Object.entries(action.canteens ?? {})
+                    .filter(([, canteen]) => hasCanteenTitle(canteen))
+            );
 
             return state
                 ? { ...state }
                 : restoredCanteens;
         }
+
+        default:
+            return state;
     }
 }
 
@@ -157,14 +173,16 @@ function FavoriteCanteensStateReducer(state, action) {
 
         // Setzen der IDs der favoriten Mensen
         case SetCanteensAction: {
-            const canteensIds = action?.canteensIds;
+            const canteensIds = Array.isArray(action?.canteensIds)
+                ? [...new Set(action.canteensIds.map(String))]
+                : null;
 
             return canteensIds;
         }
 
         // Filtert IDs aus der Einstellung heraus, welche nicht mehr vom Kollektor übersendet werden
         case RemoveUnusedCanteensAction: {
-            const activeCanteenIds = action?.activeCanteenIds;
+            const activeCanteenIds = action.activeCanteenIds.map(String);
 
             const favoriteCanteensIds = intersection(state, activeCanteenIds);
 
@@ -255,17 +273,35 @@ function CanteenContextProvider({ children, settings, rootUrl, rootStgUrl, useSt
 
     const [canteens, dispatchCanteens] = useReducer(CanteensStateReducer, null);
     const [favoriteCanteens, dispatchFavoriteCanteens] = useReducer(FavoriteCanteensStateReducer, null);
+    const [cacheRestored, setCacheRestored] = useState(false);
 
     // Einmaliges Laden der gecachten Mensadaten und der zugehörigen Speisepläne aus dem Cache in den Kontext
     useEffect(
         () => {
-            AsyncStorage
+            let active = true;
+            const restoreCanteens = AsyncStorage
                 .getItem(CanteensStoreKey)
                 .then(storedCanteens => {
+                    if (!active) return;
                     dispatchCanteens({ type: RestoreCanteens, canteens: JSON.parse(storedCanteens) });
                     dispatchCanteens({ type: RemoveUnusedMenusAction, expiryDate: DateTime.now().minus({ weeks: 1 }).endOf('week').toISODate() });
                 })
                 .catch(reason => console.error(componentName, ':', 'can not restore canteens', ':', reason, 'key', ':', CanteensStoreKey));
+
+            const restoreFavorites = AsyncStorage
+                .getItem(FavoriteCanteensStoreKey)
+                .then(storedFavoriteCanteens => {
+                    if (!active) return;
+                    dispatchFavoriteCanteens({ type: SetCanteensAction, canteensIds: JSON.parse(storedFavoriteCanteens) });
+                })
+                .catch(reason => console.error(componentName, ':', 'can not restore favorite canteens ids', ':', reason, 'key', ':', FavoriteCanteensStoreKey));
+
+            // The server list must reconcile both restored caches, never race them.
+            Promise.all([restoreCanteens, restoreFavorites]).then(() => {
+                if (active) setCacheRestored(true);
+            });
+
+            return () => { active = false; };
         }
         , []
     )
@@ -273,40 +309,26 @@ function CanteenContextProvider({ children, settings, rootUrl, rootStgUrl, useSt
     // Wenn die Mensa-Daten sich ändern, werden diese in den Cache zurückgespeichert
     useEffect(
         () => {
-            if (canteens) {
+            if (cacheRestored && canteens) {
                 AsyncStorage
                     .setItem(CanteensStoreKey, JSON.stringify(canteens))
                     .catch(reason => console.error(componentName, ':', 'can`t store canteens: ', reason, 'key:', CanteensStoreKey, 'value:', canteens));
             }
         }
-        , [canteens]
-    )
-
-    // Einmaliges laden der favorisirten Mensen
-    useEffect(
-        () => {
-            AsyncStorage
-                .getItem(FavoriteCanteensStoreKey)
-                .then(storedFavoriteCanteens => {
-                    console.debug(componentName, ':', 'restore favorite canteens ids', ':', storedFavoriteCanteens);
-                    dispatchFavoriteCanteens({ type: SetCanteensAction, canteensIds: JSON.parse(storedFavoriteCanteens) });
-                })
-                .catch(reason => console.error(componentName, ':', 'can not restore favorite canteens ids', ':', reason, 'key', ':', FavoriteCanteensStoreKey));
-        },
-        []
+        , [cacheRestored, canteens]
     )
 
     // Wenn die favorisirten Mensen sich ändern, werden diese in den Cache zurückgespeichert
     useEffect(
         () => {
-            if (Array.isArray(favoriteCanteens)) {
+            if (cacheRestored) {
                 console.debug(componentName, ':', 'store favorite canteens', favoriteCanteens);
                 AsyncStorage
                     .setItem(FavoriteCanteensStoreKey, JSON.stringify(favoriteCanteens))
                     .catch(reason => console.error(componentName, ':', 'can`t store canteens: ', reason, 'key:', FavoriteCanteensStoreKey, 'value:', favoriteCanteens));
             }
         },
-        [favoriteCanteens]
+        [cacheRestored, favoriteCanteens]
     )
 
     console.debug(componentName, ':', 'favorite selections', ':', favoriteSelections);
@@ -401,10 +423,15 @@ function CanteenContextProvider({ children, settings, rootUrl, rootStgUrl, useSt
     // Sobald der Mensa-Context erstellt wird, werden die Mensen vom Server geholt
     useEffect(
         () => {
-            if (apiProvider) {
+            let active = true;
+            if (apiProvider && cacheRestored) {
                 apiProvider.getCanteens()
                     .then(
                         canteens => {
+                            if (!active) return;
+                            if (!Array.isArray(canteens) || canteens.some(canteen => canteen?.id == null || !hasCanteenTitle(canteen))) {
+                                throw new Error('Invalid canteen list');
+                            }
                             // Jede Mensa wird einzeln in den Mensa-State hineinreduziert
                             canteens.forEach(canteen => dispatchCanteens({ type: SetCanteenAction, canteen }));
 
@@ -426,10 +453,12 @@ function CanteenContextProvider({ children, settings, rootUrl, rootStgUrl, useSt
                                 }
                             );
                         }
-                    );
+                    )
+                    .catch(reason => console.warn(componentName, ':', 'can not refresh canteens', ':', reason));
             }
+            return () => { active = false; };
         },
-        [apiProvider]
+        [apiProvider, cacheRestored]
     );
 
     /**
@@ -455,7 +484,8 @@ function CanteenContextProvider({ children, settings, rootUrl, rootStgUrl, useSt
                     if (reason instanceof NotModifiedResponse) {
                         console.debug(componentName, ':', 'Meal from', date, 'and canteen', canteenId, 'not modified');
                     } else {
-                        throw reason;
+                        // Keep cached menus when a request fails (e.g. a removed ID).
+                        console.warn(componentName, ':', 'can not refresh menu', canteenId, date, ':', reason);
                     }
                 }
             );
@@ -504,7 +534,8 @@ function CanteenContextProvider({ children, settings, rootUrl, rootStgUrl, useSt
         <CanteenContext.Provider
             value={{
                 canteens: canteens ?? {},
-                favoriteCanteens: favoriteCanteens ?? Object.keys(canteens ?? {}),
+                favoriteCanteens: (favoriteCanteens ?? Object.keys(canteens ?? {}))
+                    .filter(canteenId => hasCanteenTitle(canteens?.[canteenId])),
                 setFavoriteCanteens,
                 priceGroupCode,
                 setPriceGroupCode,
