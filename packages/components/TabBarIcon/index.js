@@ -5,16 +5,17 @@ import { useTheme } from 'react-native-paper';
 import IconsOpenasist from '../../libraries/icons-openasist';
 
 /**
- * Theme-aware icon for the bottom tab navigation.
+ * Renders a theme-aware icon for the bottom tab navigation.
  *
- * Size precedence:
- * 1. Explicit size
- * 2. Theme tab bar icon size
- * 3. Default size 24
+ * @param {Object} props - Component properties.
+ * @param {string} props.icon - Name of the icon to render.
+ * @param {string} props.color - Color provided by the tab navigator.
+ * @param {number} [props.size] - Optional icon size overriding the theme setting.
+ * @returns {React.JSX.Element} The rendered tab bar icon.
  */
 export default function TabBarIcon({ icon, color, size }) {
     const theme = useTheme();
-    const iconSize = size ?? theme.tabBar?.iconSize ?? 24;
+    const iconSize = size ?? theme.tabBar?.iconSize;
 
     return (
         <View
