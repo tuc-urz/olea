@@ -12,16 +12,16 @@
  * limitations under the License.
  */
 
-import React from 'react';
-import {SafeAreaView, View, ScrollView, Image, TouchableOpacity, Linking} from 'react-native';
+import React from 'react'
+import { SafeAreaView, View, ScrollView, Image, TouchableOpacity, Linking } from 'react-native'
 
-import {List, Text, withTheme} from 'react-native-paper';
-import {withTranslation} from "react-i18next";
+import { List, Text, withTheme } from 'react-native-paper'
+import { withTranslation } from 'react-i18next'
 
-import * as Application from 'expo-application';
+import * as Application from 'expo-application'
 
-import AppbarComponent from '../../components/AppBar';
-import componentStyles from "./styles";
+import AppbarComponent from '../../components/AppBar'
+import componentStyles from './styles'
 
 /**
  * Settings app info
@@ -33,74 +33,73 @@ import componentStyles from "./styles";
  *  - none
  */
 class AppInfoSettingsView extends React.Component {
-    // Styles of this component
-    styles;
+  // Styles of this component
+  styles
 
-    constructor(props) {
-        super(props);
+  constructor (props) {
+    super(props)
 
-        const {theme} = this.props;
-        this.styles = componentStyles(theme);
-    }
+    const { theme } = this.props
+    this.styles = componentStyles(theme)
+  }
 
-    render() {
-        const { theme: { themeStyles, appSettings }, t } = this.props;
-        const { legalNotices } = appSettings;
+  render () {
+    const { theme: { themeStyles, appSettings }, t } = this.props
+    const { legalNotices } = appSettings
 
-        return (
-            <SafeAreaView style={[this.styles.container, themeStyles.appSafeAreaContainer]}>
-                <AppbarComponent
-                    {...this.props}
-                    title={t('settings:version.title')}
+    return (
+      <SafeAreaView style={[this.styles.container, themeStyles.appSafeAreaContainer]}>
+        <AppbarComponent
+          {...this.props}
+          title={t('settings:version.title')}
+        />
+        <View style={themeStyles.container}>
+          <ScrollView>
+            <List.Section>
+              <List.Item
+                key='version'
+                title={t('settings:version.version')}
+                description={Application.nativeApplicationVersion ?? t('settings:version.unknown')}
+                titleNumberOfLines={2}
+                titleStyle={this.styles.listItemTitle}
+                descriptionStyle={this.styles.listItemDescription}
+              />
+              {legalNotices?.licenseText && (
+                <List.Accordion
+                  title={t('settings:version.licenses', { defaultValue: 'Licenses' })}
+                  titleStyle={this.styles.listItemTitle}
+                >
+                  <View style={this.styles.licenseContent}>
+                    {legalNotices.noticeText && (
+                      <Text selectable style={this.styles.licenseText}>
+                        {legalNotices.noticeText}
+                      </Text>
+                    )}
+                    <Text selectable style={this.styles.licenseText}>
+                      {legalNotices.licenseText}
+                    </Text>
+                  </View>
+                </List.Accordion>
+              )}
+            </List.Section>
+
+            {appSettings.infoBanner && (
+              <TouchableOpacity
+                onPress={() => Linking.openURL(appSettings.infoBannerUrl)}
+                activeOpacity={0.7}
+              >
+                <Image
+                  style={this.styles.infoBanner}
+                  source={appSettings.infoBanner}
+                  resizeMode='contain'
                 />
-                <View style={themeStyles.container}>
-                    <ScrollView>
-                    <List.Section>
-                        <List.Item
-                            key="version"
-                            title={t('settings:version.version')}
-                            description={Application.nativeApplicationVersion ?? t("settings:version.unknown")}
-                            titleNumberOfLines={2}
-                            titleStyle={this.styles.listItemTitle}
-                            descriptionStyle={this.styles.listItemDescription}
-                        >
-                        </List.Item>
-                        {legalNotices?.licenseText ? (
-                            <List.Accordion
-                                title={t('settings:version.licenses', { defaultValue: 'Licenses' })}
-                                titleStyle={this.styles.listItemTitle}
-                            >
-                                <View style={this.styles.licenseContent}>
-                                    {legalNotices.noticeText ? (
-                                        <Text selectable style={this.styles.licenseText}>
-                                            {legalNotices.noticeText}
-                                        </Text>
-                                    ) : null}
-                                    <Text selectable style={this.styles.licenseText}>
-                                        {legalNotices.licenseText}
-                                    </Text>
-                                </View>
-                            </List.Accordion>
-                        ) : null}
-                    </List.Section>
-
-                  {
-                    appSettings.infoBanner &&
-                      <TouchableOpacity
-                        onPress={() => Linking.openURL(appSettings.infoBannerUrl)}
-                        activeOpacity={0.7}
-                      >
-                        <Image
-                          style={this.styles.infoBanner}
-                          source={appSettings.infoBanner}
-                          resizeMode="contain" />
-                      </TouchableOpacity>
-                  }
-                    </ScrollView>
-                </View>
-            </SafeAreaView>
-        );
-    }
+              </TouchableOpacity>
+            )}
+          </ScrollView>
+        </View>
+      </SafeAreaView>
+    )
+  }
 }
 
 export default (withTranslation()(withTheme(AppInfoSettingsView)))
