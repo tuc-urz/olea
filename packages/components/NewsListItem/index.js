@@ -67,15 +67,13 @@ export default function NewsListItem({ news }) {
         >
             <View style={themeStyles.flexRow}>
                 <View style={[themeStyles.cardContent, styles.contentContainer]}>
-                    {
-                        imageSrc != null
-                            ? <Image
-                                source={imageSrc}
-                                resizeMode="cover"
-                                style={styles.image}
-                          />
-                            : null
-                    }
+                    {imageSrc != null ? (
+                        <Image
+                            source={imageSrc}
+                            resizeMode="cover"
+                            style={styles.image}
+                        />
+                    ) : null}
                     <Text style={styles.title}>{news.title}</Text>
                     <Text style={styles.description}>{description}</Text>
                     {
