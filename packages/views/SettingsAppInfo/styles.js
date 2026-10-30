@@ -11,6 +11,15 @@ export default function(theme) {
         listItemDescription: {
             fontSize: theme.fontSizes.m
         },
+        licenseContent: {
+            paddingHorizontal: 16,
+            paddingBottom: 16
+        },
+        licenseText: {
+            fontSize: theme.fontSizes.m,
+            color: theme.colors.text,
+            marginBottom: 16
+        },
         infoBanner: {
             width: '100%'
         }

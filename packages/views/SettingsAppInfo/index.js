@@ -13,9 +13,9 @@
  */
 
 import React from 'react';
-import {SafeAreaView, View, Image, TouchableOpacity, Linking} from 'react-native';
+import {SafeAreaView, View, ScrollView, Image, TouchableOpacity, Linking} from 'react-native';
 
-import {List, withTheme} from 'react-native-paper';
+import {List, Text, withTheme} from 'react-native-paper';
 import {withTranslation} from "react-i18next";
 
 import * as Application from 'expo-application';
@@ -45,6 +45,7 @@ class AppInfoSettingsView extends React.Component {
 
     render() {
         const { theme: { themeStyles, appSettings }, t } = this.props;
+        const { legalNotices } = appSettings;
 
         return (
             <SafeAreaView style={[this.styles.container, themeStyles.appSafeAreaContainer]}>
@@ -53,6 +54,7 @@ class AppInfoSettingsView extends React.Component {
                     title={t('settings:version.title')}
                 />
                 <View style={themeStyles.container}>
+                    <ScrollView>
                     <List.Section>
                         <List.Item
                             key="version"
@@ -63,6 +65,23 @@ class AppInfoSettingsView extends React.Component {
                             descriptionStyle={this.styles.listItemDescription}
                         >
                         </List.Item>
+                        {legalNotices?.licenseText ? (
+                            <List.Accordion
+                                title={t('settings:version.licenses', { defaultValue: 'Licenses' })}
+                                titleStyle={this.styles.listItemTitle}
+                            >
+                                <View style={this.styles.licenseContent}>
+                                    {legalNotices.noticeText ? (
+                                        <Text selectable style={this.styles.licenseText}>
+                                            {legalNotices.noticeText}
+                                        </Text>
+                                    ) : null}
+                                    <Text selectable style={this.styles.licenseText}>
+                                        {legalNotices.licenseText}
+                                    </Text>
+                                </View>
+                            </List.Accordion>
+                        ) : null}
                     </List.Section>
 
                   {
@@ -77,6 +96,7 @@ class AppInfoSettingsView extends React.Component {
                           resizeMode="contain" />
                       </TouchableOpacity>
                   }
+                    </ScrollView>
                 </View>
             </SafeAreaView>
         );

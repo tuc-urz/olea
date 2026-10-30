@@ -1,9 +1,36 @@
 const { getDefaultConfig } = require('expo/metro-config');
 const path = require('path');
+const fs = require('fs');
 
 // Find the workspace root
 const workspaceRoot = path.resolve(__dirname, '../..');
 const projectRoot = __dirname;
+
+// Lizenztexte für das App-Bundle erzeugen.
+// Nach Änderungen an LICENSE oder NOTICE.txt Metro neu starten.
+const legalNotices = {
+  noticeText: fs.readFileSync(
+    path.join(projectRoot, 'assets/icons/Licenses/NOTICE.txt'),
+    'utf8'
+  ),
+  licenseText: fs.readFileSync(
+    path.join(workspaceRoot, 'LICENSE'),
+    'utf8'
+  ),
+};
+
+const generatedDirectory = path.join(projectRoot, 'generated');
+const generatedFile = path.join(generatedDirectory, 'legal-notices.json');
+const generatedContent = `${JSON.stringify(legalNotices, null, 2)}\n`;
+
+fs.mkdirSync(generatedDirectory, { recursive: true });
+
+if (
+  !fs.existsSync(generatedFile) ||
+  fs.readFileSync(generatedFile, 'utf8') !== generatedContent
+) {
+  fs.writeFileSync(generatedFile, generatedContent, 'utf8');
+}
 
 const config = getDefaultConfig(projectRoot);
 

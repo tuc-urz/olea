@@ -282,6 +282,7 @@
     "version": {
       "title": "App-Info",
       "version": "Current version",
+      "licenses": "Licenses",
       "unknown": "unknown"
     },
     "notifications": {
@@ -369,7 +370,7 @@
       "timetableCalendar": "Timetable (new)",
       "wlan": "WLAN",
       "howhy": "HOWHY - learning by playing",
-      "version": "App-Info"
+      "version": "App-Info",
     },
     "urls": {
       "feedback": "https://www.tu-chemnitz.de/urz/mail/fba.html?1-a29tbXVuaWthdGlvbkA="
