@@ -73,7 +73,7 @@ export default function NewsListItem({ news }) {
                                 source={imageSrc}
                                 resizeMode="cover"
                                 style={styles.image}
-                            />
+                          />
                             : null
                     }
                     <Text style={styles.title}>{news.title}</Text>
