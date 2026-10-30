@@ -12,6 +12,8 @@ export default function(theme) {
             paddingLeft: theme.paddings.small,
         },
         image: {
+            width: '100%',
+            height: undefined,
             aspectRatio: 16/9,
             paddingBottom: theme.paddings.small,
         },

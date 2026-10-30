@@ -37,7 +37,7 @@ export default function NewsListItem({ news }) {
     const language = useLanguage();
     const { t } = useTranslation();
     const theme = useTheme()
-    const { themeStyles, colors, fontSizes } = theme;
+    const { themeStyles, colors, fontSizes, appSettings } = theme;
     const navigation = useNavigation();
 
     const styles = useMemo(
@@ -54,6 +54,10 @@ export default function NewsListItem({ news }) {
         ? DateTime.fromISO(news.pubdate, { locale: language }).toLocaleString(DateTime.DATETIME_SHORT)
         : null;
 
+    const imageSrc = news?.imageUrl
+        ? { uri: news.imageUrl }
+        : appSettings.header;
+
     return (
         <TouchableOpacity
             onPress={() => navigation.navigate('NewsDetail', { news: news })}
@@ -64,12 +68,12 @@ export default function NewsListItem({ news }) {
             <View style={themeStyles.flexRow}>
                 <View style={[themeStyles.cardContent, styles.contentContainer]}>
                     {
-                        news?.imageUrl
+                        imageSrc != null
                             ? <Image
-                                source={{ uri: news.imageUrl }}
+                                source={imageSrc}
                                 resizeMode="cover"
-                                style={styles.image}>
-                            </Image>
+                                style={styles.image}
+                            />
                             : null
                     }
                     <Text style={styles.title}>{news.title}</Text>
