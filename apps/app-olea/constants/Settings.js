@@ -12,7 +12,7 @@ const defaultApiConfig = {
 export default {
     name: 'OLEA',
     logo: require('./../assets/images/logo.png'),
-    header: require('./../assets/images/logo.png'),
+    header: require('./../assets/images/header.png'),
     mealPlaceboImage: null,
     googleMapsUrl: 'https://www.google.com/maps/place/',
     defaultCity: 'Chemnitz',
