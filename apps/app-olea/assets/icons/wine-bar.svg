@@ -1,0 +1,9 @@
+<!-- Source: Google Material Symbols; Google LLC.
+Source URL: https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/wine_bar/materialsymbolsoutlined/wine_bar_24px.svg
+SPDX-License-Identifier: Apache-2.0
+Modified for OLEA on 2026-10-30: SVG cleaned; coordinates scaled and centered;
+colors adapted to currentColor; IconPark variants rendered as monochrome outlines.
+See Lizenzen/ for upstream licenses and source mapping. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <path fill="currentColor" d="M6.666667 24V21.333333H10.666667V15.866667Q7.8 15.4 5.9 13.2Q4 11 4 8V0H20V8Q20 11 18.1 13.2Q16.2 15.4 13.333333 15.866667V21.333333H17.333333V24H6.666667ZM12 13.333333Q13.866667 13.333333 15.266667 12.2Q16.666667 11.066667 17.133333 9.333333H6.866667Q7.333333 11.066667 8.733333 12.2Q10.133333 13.333333 12 13.333333ZM6.666667 6.666667H17.333333V2.666667H6.666667V6.666667ZM12 13.333333Z"/>
+</svg>

@@ -1,0 +1,9 @@
+<!-- Source: Google Material Symbols; Google LLC.
+Source URL: https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/public/materialsymbolsoutlined/public_24px.svg
+SPDX-License-Identifier: Apache-2.0
+Modified for OLEA on 2026-10-30: SVG cleaned; coordinates scaled and centered;
+colors adapted to currentColor; IconPark variants rendered as monochrome outlines.
+See Lizenzen/ for upstream licenses and source mapping. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <path fill="currentColor" d="M12 24Q9.51 24 7.32 23.055Q5.13 22.11 3.51 20.49Q1.89 18.87 0.945 16.68Q0 14.49 0 12Q0 9.51 0.945 7.32Q1.89 5.13 3.51 3.51Q5.13 1.89 7.32 0.945Q9.51 0 12 0Q14.49 0 16.68 0.945Q18.87 1.89 20.49 3.51Q22.11 5.13 23.055 7.32Q24 9.51 24 12Q24 14.49 23.055 16.68Q22.11 18.87 20.49 20.49Q18.87 22.11 16.68 23.055Q14.49 24 12 24ZM10.8 21.54V19.2Q9.81 19.2 9.105 18.495Q8.4 17.79 8.4 16.8V15.6L2.64 9.84Q2.55 10.38 2.475 10.92Q2.4 11.46 2.4 12Q2.4 15.63 4.785 18.36Q7.17 21.09 10.8 21.54ZM19.08 18.48Q19.68 17.82 20.16 17.055Q20.64 16.29 20.955 15.465Q21.27 14.64 21.435 13.77Q21.6 12.9 21.6 12Q21.6 9.06 19.965 6.63Q18.33 4.2 15.6 3.12V3.6Q15.6 4.59 14.895 5.295Q14.19 6 13.2 6H10.8V8.4Q10.8 8.91 10.455 9.255Q10.11 9.6 9.6 9.6H7.2V12H14.4Q14.91 12 15.255 12.345Q15.6 12.69 15.6 13.2V16.8H16.8Q17.58 16.8 18.21 17.265Q18.84 17.73 19.08 18.48Z"/>
+</svg>
