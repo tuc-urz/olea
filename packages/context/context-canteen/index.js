@@ -144,6 +144,7 @@ function CanteensStateReducer(state, action) {
         // Mensen und zugehörige Essensangebote aus dem Cache wiederherstellen
         case RestoreCanteens: {
             // Remove incomplete entries persisted by older app versions, also offline.
+            // Entries are considered incomplete if their canteen title is missing or blank.
             const restoredCanteens = Object.fromEntries(
                 Object.entries(action.canteens ?? {})
                     .filter(([, canteen]) => hasCanteenTitle(canteen))
@@ -173,7 +174,7 @@ function FavoriteCanteensStateReducer(state, action) {
 
         // Setzen der IDs der favoriten Mensen
         case SetCanteensAction: {
-            const canteensIds = Array.isArray(action?.canteensIds)
+            const canteensIds = Array.isArray(action?.canteensIds) && action.canteensIds.length > 0
                 ? [...new Set(action.canteensIds.map(String))]
                 : null;
 
