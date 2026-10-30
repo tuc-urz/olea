@@ -44,7 +44,7 @@ export default {
                 {title: 'menu:titles.imprint',          icon: 'imprint',        url: ''},
                 {title: 'menu:titles.dataPolicy',       icon: 'lock',           url: ''},
                 {title: 'menu:titles.accessibility',    icon: 'accessibility',  url: ''},
-                {title: 'menu:titles.version',          icon: 'imprint',        view: 'SettingsAppInfo'},
+                {title: 'menu:titles.version',          icon: 'app-info',        view: 'SettingsAppInfo'},
 
             ],
         }

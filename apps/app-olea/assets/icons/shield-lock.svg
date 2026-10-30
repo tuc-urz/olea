@@ -1,0 +1,9 @@
+<!-- Source: Google Material Symbols; Google LLC.
+Source URL: https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/shield_lock/materialsymbolsoutlined/shield_lock_24px.svg
+SPDX-License-Identifier: Apache-2.0
+Modified for OLEA on 2026-10-30: SVG cleaned; coordinates scaled and centered;
+colors adapted to currentColor; IconPark variants rendered as monochrome outlines.
+See Lizenzen/ for upstream licenses and source mapping. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <path fill="currentColor" d="M12 24Q7.83 22.95 5.115 19.215Q2.4 15.48 2.4 10.92V3.6L12 0L21.6 3.6V10.92Q21.6 15.48 18.885 19.215Q16.17 22.95 12 24ZM12 21.48Q15.12 20.49 17.16 17.52Q19.2 14.55 19.2 10.92V5.25L12 2.55L4.8 5.25V10.92Q4.8 14.55 6.84 17.52Q8.88 20.49 12 21.48ZM12 12ZM9.6 16.8H14.4Q14.91 16.8 15.255 16.455Q15.6 16.11 15.6 15.6V12Q15.6 11.49 15.255 11.145Q14.91 10.8 14.4 10.8V9.6Q14.4 8.61 13.695 7.905Q12.99 7.2 12 7.2Q11.01 7.2 10.305 7.905Q9.6 8.61 9.6 9.6V10.8Q9.09 10.8 8.745 11.145Q8.4 11.49 8.4 12V15.6Q8.4 16.11 8.745 16.455Q9.09 16.8 9.6 16.8ZM10.8 10.8V9.6Q10.8 9.09 11.145 8.745Q11.49 8.4 12 8.4Q12.51 8.4 12.855 8.745Q13.2 9.09 13.2 9.6V10.8H10.8Z"/>
+</svg>

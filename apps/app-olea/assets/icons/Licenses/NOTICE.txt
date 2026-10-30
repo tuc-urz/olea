@@ -1,0 +1,68 @@
+OLEA - Third-party SVG icon notices
+==================================
+
+This file documents the third-party SVG icons supplied for OLEA.
+The icons listed below are licensed under the Apache License, Version 2.0.
+The full license text is provided in the repository-root LICENSE file.
+When distributing the application separately, also provide a copy of that
+license with the application. This notice does not replace the license.
+
+Google Material Symbols
+-----------------------
+Provider: Google
+Project: https://github.com/google/material-design-icons
+License: Apache-2.0
+
+Files:
+add.svg, arrow-back.svg, auto-awesome.svg, calendar-month.svg, call.svg,
+contrast.svg, delete.svg, description.svg, download.svg, eco.svg, eye.svg,
+home.svg, hub.svg, info.svg, keyboard-arrow-down.svg, keyboard-arrow-up.svg,
+location-on.svg, mail.svg, manage-accounts.svg, map.svg, menu.svg,
+nest-eco-leaf.svg, newspaper.svg, notifications.svg, open-in-new.svg,
+public.svg, refresh.svg, restaurant.svg, schedule.svg, search.svg,
+settings.svg, share.svg, shield-lock.svg, wifi.svg, wine-bar.svg.
+
+Material Design Icons - Pictogrammers
+------------------------------------
+Provider: Pictogrammers and contributing authors
+Project: https://github.com/Templarian/MaterialDesign
+License: Apache-2.0 (icons)
+
+Files:
+bug.svg, cheese.svg, cow.svg, drumstick.svg, fish.svg, pig.svg, sheep.svg.
+The upstream name of drumstick.svg is food-drumstick.svg.
+
+Pictogrammers describes this icon collection as free, open source and GPL
+friendly, and permits use in commercial and open-source projects.
+Its non-icon code and fonts are not included by this SVG attribution.
+
+IconPark
+--------
+Copyright 2019-present Bytedance Inc.
+Project: https://github.com/bytedance/IconPark
+License: Apache-2.0
+
+Files:
+deer.svg, garlic.svg.
+
+Modifications for OLEA
+----------------------
+Modified on 2026-10-30:
+- Files renamed where applicable to describe the visible motif.
+- SVG markup cleaned; fixed dimensions and unnecessary metadata removed.
+- Geometry proportionally scaled and centered within a 24 x 24 viewBox.
+- Colors adapted to currentColor.
+- IconPark variants converted to monochrome outlines; geometric shapes and
+  transforms converted to path coordinates.
+- Source, license and modification comments added to the SVG files.
+
+Per-file source URLs are recorded in the accompanying Quellen.csv.
+The original authors retain their rights in the underlying icon designs.
+This file is an OLEA attribution summary, not an upstream NOTICE file.
+
+Scope
+-----
+This notice covers the 44 third-party SVG icons listed above.
+The separately supplied OPAL logo (opal.svg) is not covered by these
+Apache license statements. This notice grants no rights to that logo.
+Other OLEA dependencies and their notices are outside this file's scope.
