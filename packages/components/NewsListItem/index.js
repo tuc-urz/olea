@@ -54,7 +54,8 @@ export default function NewsListItem ({ news }) {
     ? DateTime.fromISO(news.pubdate, { locale: language }).toLocaleString(DateTime.DATETIME_SHORT)
     : null
 
-  const imageSrc = news?.imageUrl
+  // Use the configured app header as a fallback when the news has no image URL.
+  const newsImageSource = news?.imageUrl
     ? { uri: news.imageUrl }
     : appSettings.header
 
@@ -67,10 +68,10 @@ export default function NewsListItem ({ news }) {
     >
       <View style={themeStyles.flexRow}>
         <View style={[themeStyles.cardContent, styles.contentContainer]}>
-          {imageSrc != null
+          {newsImageSource != null
             ? (
               <Image
-                source={imageSrc}
+                source={newsImageSource}
                 resizeMode='cover'
                 style={styles.image}
               />

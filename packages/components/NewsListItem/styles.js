@@ -13,6 +13,7 @@ export default function(theme) {
         },
         image: {
             width: '100%',
+            // Override the bundled image's intrinsic height so aspectRatio determines it.
             height: undefined,
             aspectRatio: 16/9,
             paddingBottom: theme.paddings.small,
