@@ -6,8 +6,10 @@ const fs = require('fs')
 const workspaceRoot = path.resolve(__dirname, '../..')
 const projectRoot = __dirname
 
-// Lizenztexte für das App-Bundle erzeugen.
-// Nach Änderungen an LICENSE oder NOTICE.txt Metro neu starten.
+// Read the maintained license sources when Metro loads this configuration.
+// Settings.js imports the generated JSON so these texts are bundled with the app and
+// can be displayed offline in App Info.
+// Restart Metro after changing LICENSE or NOTICE.txt to regenerate the JSON.
 const legalNotices = {
   noticeText: fs.readFileSync(
     path.join(projectRoot, 'assets/icons/Licenses/NOTICE.txt'),
@@ -19,12 +21,17 @@ const legalNotices = {
   )
 }
 
+// Keep the generated bundle input separate from the maintained source files.
+// This JSON file is excluded from Git and recreated on a fresh checkout.
 const generatedDirectory = path.join(projectRoot, 'generated')
 const generatedFile = path.join(generatedDirectory, 'legal-notices.json')
 const generatedContent = `${JSON.stringify(legalNotices, null, 2)}\n`
 
+// Create the output directory if it does not exist yet.
 fs.mkdirSync(generatedDirectory, { recursive: true })
 
+// Write only when the file is missing or its content has changed.
+// This avoids unnecessary file updates that Metro's watcher could pick up.
 if (
   !fs.existsSync(generatedFile) ||
   fs.readFileSync(generatedFile, 'utf8') !== generatedContent

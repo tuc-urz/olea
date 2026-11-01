@@ -1,0 +1,310 @@
+[
+    {
+        "file":  "add.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/add/materialsymbolsoutlined/add_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "arrow-back.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/arrow_back/materialsymbolsoutlined/arrow_back_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "auto-awesome.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/auto_awesome/materialsymbolsoutlined/auto_awesome_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "calendar-month.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/calendar_month/materialsymbolsoutlined/calendar_month_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "call.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/call/materialsymbolsoutlined/call_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "cheese.svg",
+        "source":  "Pictogrammers Material Design Icons",
+        "credit":  "Pictogrammers and contributing authors",
+        "url":  "https://github.com/Templarian/MaterialDesign/blob/master/svg/cheese.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "contrast.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/contrast/materialsymbolsoutlined/contrast_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "cow.svg",
+        "source":  "Pictogrammers Material Design Icons",
+        "credit":  "Pictogrammers and contributing authors",
+        "url":  "https://github.com/Templarian/MaterialDesign/blob/master/svg/cow.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "deer.svg",
+        "source":  "IconPark",
+        "credit":  "Copyright 2019-present Bytedance Inc.",
+        "url":  "https://github.com/bytedance/IconPark/blob/master/source/Animals/deer.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "delete.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/delete/materialsymbolsoutlined/delete_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "description.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/description/materialsymbolsoutlined/description_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "download.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/download/materialsymbolsoutlined/download_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "drumstick.svg",
+        "source":  "Pictogrammers Material Design Icons",
+        "credit":  "Pictogrammers and contributing authors",
+        "url":  "https://github.com/Templarian/MaterialDesign/blob/master/svg/food-drumstick.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "eco.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/eco/materialsymbolsoutlined/eco_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "eye.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/visibility/materialsymbolsoutlined/visibility_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "fish.svg",
+        "source":  "Pictogrammers Material Design Icons",
+        "credit":  "Pictogrammers and contributing authors",
+        "url":  "https://github.com/Templarian/MaterialDesign/blob/master/svg/fish.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "garlic.svg",
+        "source":  "IconPark",
+        "credit":  "Copyright 2019-present Bytedance Inc.",
+        "url":  "https://github.com/bytedance/IconPark/blob/master/source/Foods/garlic.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "home.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/home/materialsymbolsoutlined/home_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "hub.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/hub/materialsymbolsoutlined/hub_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "info.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/info/materialsymbolsoutlined/info_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "keyboard-arrow-down.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/keyboard_arrow_down/materialsymbolsoutlined/keyboard_arrow_down_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "keyboard-arrow-up.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/keyboard_arrow_up/materialsymbolsoutlined/keyboard_arrow_up_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "location-on.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/location_on/materialsymbolsoutlined/location_on_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "bug.svg",
+        "source":  "Pictogrammers Material Design Icons",
+        "credit":  "Pictogrammers and contributing authors",
+        "url":  "https://github.com/Templarian/MaterialDesign/blob/master/svg/bug.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "mail.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/mail/materialsymbolsoutlined/mail_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "manage-accounts.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/manage_accounts/materialsymbolsoutlined/manage_accounts_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "map.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/map/materialsymbolsoutlined/map_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "menu.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/menu/materialsymbolsoutlined/menu_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "nest-eco-leaf.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/nest_eco_leaf/materialsymbolsoutlined/nest_eco_leaf_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "newspaper.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/newspaper/materialsymbolsoutlined/newspaper_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "notifications.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/notifications/materialsymbolsoutlined/notifications_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "open-in-new.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/open_in_new/materialsymbolsoutlined/open_in_new_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "pig.svg",
+        "source":  "Pictogrammers Material Design Icons",
+        "credit":  "Pictogrammers and contributing authors",
+        "url":  "https://github.com/Templarian/MaterialDesign/blob/master/svg/pig.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "public.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/public/materialsymbolsoutlined/public_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "refresh.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/refresh/materialsymbolsoutlined/refresh_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "restaurant.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/restaurant/materialsymbolsoutlined/restaurant_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "schedule.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/schedule/materialsymbolsoutlined/schedule_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "search.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/search/materialsymbolsoutlined/search_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "settings.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/settings/materialsymbolsoutlined/settings_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "share.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/share/materialsymbolsoutlined/share_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "sheep.svg",
+        "source":  "Pictogrammers Material Design Icons",
+        "credit":  "Pictogrammers and contributing authors",
+        "url":  "https://github.com/Templarian/MaterialDesign/blob/master/svg/sheep.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "shield-lock.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/shield_lock/materialsymbolsoutlined/shield_lock_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "wifi.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/wifi/materialsymbolsoutlined/wifi_24px.svg",
+        "license":  "Apache-2.0"
+    },
+    {
+        "file":  "wine-bar.svg",
+        "source":  "Google Material Symbols",
+        "credit":  "Google LLC",
+        "url":  "https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/wine_bar/materialsymbolsoutlined/wine_bar_24px.svg",
+        "license":  "Apache-2.0"
+    }
+]

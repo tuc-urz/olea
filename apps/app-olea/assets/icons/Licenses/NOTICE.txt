@@ -56,7 +56,7 @@ Modified on 2026-10-30:
   transforms converted to path coordinates.
 - Source, license and modification comments added to the SVG files.
 
-Per-file source URLs are recorded in the accompanying Quellen.csv.
+Per-file source URLs are recorded in the accompanying Quellen.json.
 The original authors retain their rights in the underlying icon designs.
 This file is an OLEA attribution summary, not an upstream NOTICE file.
 
