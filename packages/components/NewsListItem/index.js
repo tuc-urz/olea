@@ -54,10 +54,17 @@ export default function NewsListItem ({ news }) {
     ? DateTime.fromISO(news.pubdate, { locale: language }).toLocaleString(DateTime.DATETIME_SHORT)
     : null
 
-  // Use the configured app header as a fallback when the news has no image URL.
-  const newsImageSource = news?.imageUrl
+  // Keep the fallback enabled unless the app configuration explicitly disables it.
+  const showFallbackImage = appSettings?.modules?.news?.showFallbackImage !== false
+
+  let newsImageSource = news?.imageUrl
     ? { uri: news.imageUrl }
-    : appSettings.header
+    : null
+
+  // Use the app header for news without an image URL when fallback images are enabled.
+  if (newsImageSource == null && showFallbackImage) {
+    newsImageSource = appSettings.header
+  }
 
   return (
     <TouchableOpacity
