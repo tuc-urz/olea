@@ -66,9 +66,16 @@ import { DateTime } from 'luxon';
  */
 
 class LoginError extends Error {
-    constructor(message) {
+
+    type;
+    error;
+
+    constructor(message, type, error) {
         super(message);
         this.name = this.constructor.name;
+
+        this.type = type;
+        this.error = error;
     }
 }
 
@@ -312,8 +319,13 @@ function UserContextProvider({ children }) {
                             reason => console.log(componentName, ': tokenResponse: Fehler', ':', reason)
                         );
                     } else {
+                        console.debug(componentName, ':', 'login error', ':', codeResponse.type, '(', JSON.stringify(codeResponse.error), ')')
                         // TODO: Prüfen warum der Login nicht klappte und für die einzeilnen Gründe, genauere Fehlerinfos zurückgeben.
-                        throw new LoginError(`Login Failed: ${codeResponse?.type}`);
+                        throw new LoginError(
+                            `Login Failed: ${codeResponse?.type}`,
+                            codeResponse.type,
+                            codeResponse.error,
+                        );
                     }
                 }
             );
