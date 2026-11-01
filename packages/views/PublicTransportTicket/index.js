@@ -174,7 +174,7 @@ export default function PublicTransportTicketView() {
                         </ScrollView>
                         : <>
                             <Text>
-                                Sie sind nicht eingeloogt
+                                {t('user:notLoggedIn')}
                             </Text>
                             <Button
                                 onPress={
