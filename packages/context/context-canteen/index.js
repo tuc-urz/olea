@@ -71,28 +71,28 @@ function CanteensStateReducer(state, action) {
             const menuDate = action.date;
             const menu = action.menu;
 
-            // Late menu responses must not recreate a canteen removed by the server list.
-            if (!hasCanteenTitle(state?.[canteenId])) {
+            if (hasCanteenTitle(state?.[canteenId])) {
+                // Einfügen des Essensangebot(menu) für eine Mensa(canteenId) an einem Tag(menuDate)
+                return {
+                    // Kopieren der vorherigen Mensen
+                    ...state ?? {},
+                    // Bestehende Mensa aktualisieren
+                    [canteenId]: {
+                        // Kopieren der vorherigen Daten der Mense
+                        ...state?.[canteenId] ?? {},
+                        // Essensangebote werden neu erstellt
+                        menus: {
+                            // Kopieren der alten Essensangebote
+                            ...state?.[canteenId]?.menus ?? {},
+                            // Es wird das Essensangebote(menu) für ein Datum(menuDate) hinterlegt
+                            [menuDate]: menu,
+                        }
+                    }
+                };
+            } else {
+                // Late menu responses must not recreate a canteen removed by the server list.
                 return state;
             }
-
-            // Einfügen des Essensangebot(menu) für eine Mensa(canteenId) an einem Tag(menuDate)
-            return {
-                // Kopieren der vorherigen Mensen
-                ...state ?? {},
-                // Bestehende Mensa aktualisieren
-                [canteenId]: {
-                    // Kopieren der vorherigen Daten der Mense
-                    ...state?.[canteenId] ?? {},
-                    // Essensangebote werden neu erstellt
-                    menus: {
-                        // Kopieren der alten Essensangebote
-                        ...state?.[canteenId]?.menus ?? {},
-                        // Es wird das Essensangebote(menu) für ein Datum(menuDate) hinterlegt
-                        [menuDate]: menu,
-                    }
-                }
-            };
         }
 
         // Anhand eines Datums werden alte Mensen entfernt
@@ -156,6 +156,7 @@ function CanteensStateReducer(state, action) {
         }
 
         default:
+            // Preserve the current state for unhandled actions instead of returning undefined.
             return state;
     }
 }
