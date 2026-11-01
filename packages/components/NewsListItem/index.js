@@ -61,7 +61,8 @@ export default function NewsListItem ({ news }) {
     ? { uri: news.imageUrl }
     : null
 
-  // Use the app header for news without an image URL when fallback images are enabled.
+  // Show the app-specific fallback image so news without an image still have a visual preview.
+  // Each university can disable this fallback in its news settings.
   if (newsImageSource == null && showFallbackImage) {
     newsImageSource = appSettings.header
   }
