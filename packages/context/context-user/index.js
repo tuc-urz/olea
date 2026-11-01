@@ -273,7 +273,7 @@ function UserContextProvider({ children }) {
                     () =>
                         refreshAsync(
                             {
-                                clientId, clientId,
+                                clientId: clientId,
                                 refreshToken: refreshToken,
                             },
                             discovery,
