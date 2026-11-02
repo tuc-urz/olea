@@ -30,6 +30,7 @@ class Main extends React.Component {
     currentHighContrastValue;
     currentIncreaseFontSizeValue;
     appChangeSubscriber;
+    handleNavigationReady = RootNavigation.triggerNavigationReady;
     appearanceSubscriber;
     currentSystemColorScheme = Appearance.getColorScheme();
     currentDarkValue;
@@ -173,7 +174,7 @@ class Main extends React.Component {
                     barStyle={this.state.theme.dark ? 'light-content' : 'dark-content'}
                     backgroundColor={this.state.theme.colors.safeAreaBackground}
                 />
-                <NavigationContainer ref={RootNavigation.navigationRef} linking={settings.deepLinking} onReady={RootNavigation.triggerNavigationReady}>
+                <NavigationContainer ref={RootNavigation.navigationRef} linking={settings.deepLinking} onReady={this.handleNavigationReady}>
                     <ConnectivityContextProvider>
                         <TimetableContextProvider>
                             <CanteenContextProvider>

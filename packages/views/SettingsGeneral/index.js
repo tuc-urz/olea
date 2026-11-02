@@ -63,7 +63,7 @@ class GeneralSettingsView extends React.Component {
    *
    * @private
    */
-  _updateGeneralSettings = () => {
+  handleUpdateGeneralSettings = () => {
     const generalSettings = {
       ...this.props.settings.settingsGeneral,
       language: this.state.language
@@ -156,9 +156,9 @@ class GeneralSettingsView extends React.Component {
     )
   }
 
-  _showDialog = () => this.setState({ visible: true })
+  handleShowDialog = () => this.setState({ visible: true })
 
-  _hideDialog = () => this.setState({ visible: false })
+  handleHideDialog = () => this.setState({ visible: false })
 
   render () {
     // ------------------------------------------------------------------------
@@ -196,7 +196,7 @@ class GeneralSettingsView extends React.Component {
                 <Button
                   accessible
                   labelStyle={this.styles.buttonLabel}
-                  onPress={this._showDialog}
+                  onPress={this.handleShowDialog}
                   color={colors.buttonText}
                 >
                   {t('common:changeLabel')}
@@ -207,7 +207,7 @@ class GeneralSettingsView extends React.Component {
           {/* Show appearance settings only when the app supports color scheme switching. */}
           {this.props.theme.supportsColorScheme === true && this._renderColorScheme()}
           <Portal>
-            <Dialog visible={this.state.visible} onDismiss={this._hideDialog}>
+            <Dialog visible={this.state.visible} onDismiss={this.handleHideDialog}>
               <Dialog.Title style={this.styles.dialogTitle}>
                 {t('settings:common.language')}
               </Dialog.Title>
@@ -217,7 +217,7 @@ class GeneralSettingsView extends React.Component {
                   labelStyle={this.styles.dialogContent}
                   onPress={() => {
                     this.setState({ isChangeMessageVisible: true })
-                    this._hideDialog()
+                    this.handleHideDialog()
                   }}
                   color={colors.buttonText}
                 >
@@ -242,7 +242,7 @@ class GeneralSettingsView extends React.Component {
               <Dialog.Actions>
                 <Button
                   labelStyle={this.styles.dialogContent}
-                  onPress={this._updateGeneralSettings}
+                  onPress={this.handleUpdateGeneralSettings}
                   color={colors.buttonText}
                 >
                   {t('settings:common.languageChangeOk')}

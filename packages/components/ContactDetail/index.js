@@ -15,6 +15,7 @@
 import { useCallback, useMemo } from 'react'
 
 import {
+  Alert,
   Linking,
   Platform,
   SafeAreaView,
@@ -72,7 +73,7 @@ export default function ContactDetailComponent ({ contact, ...restProps }) {
         message: shareMessage
       })
     } catch (error) {
-      alert(error.message)
+      Alert.alert('', error.message)
     }
   }, [contact, t])
 
@@ -141,7 +142,7 @@ export default function ContactDetailComponent ({ contact, ...restProps }) {
           {Array.isArray(contact?.telephone)
             ? contact.telephone.map((telephone, index, telephones) => {
               const title =
-                telephones.length == 1 ? t('contact:phone') : t('contact:phone') + ' ' + index
+                telephones.length === 1 ? t('contact:phone') : t('contact:phone') + ' ' + index
 
               const telephoneNumber = telephone.number
 

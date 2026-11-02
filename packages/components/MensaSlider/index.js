@@ -69,9 +69,6 @@ function HorizontalMenu ({ canteenId, menuDate }) {
 
 // Renders a list of meals for a specific canteen in a horizontal slider
 function HorizontalCanteens ({ menusDate, settings }) {
-  const { t } = useTranslation()
-  const theme = useTheme()
-  const styles = useMemo(() => StyleSheet.create(componentStyles(theme)), [theme])
 
   // Favorisierte Mensen aus dem Mensa-Kontext holen
   const [favoriteCanteens] = useFavoriteCanteens()

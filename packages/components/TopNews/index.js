@@ -146,7 +146,7 @@ class TopNewsComponent extends React.Component {
         this.styles = StyleSheet.create(this.styles);
 
         const {feeds, t} = this.props;
-        const {colors, appSettings} = this.props.theme;
+        const { appSettings } = this.props.theme;
         let topNews = this.props.topNews;
 
         if(!Array.isArray(topNews)) {
@@ -248,7 +248,7 @@ class TopNewsComponent extends React.Component {
                                         }
                                     </View>
                                 </View>
-                              </TouchableOpacity>
+                            </TouchableOpacity>
                             : null
                     ))
                 }

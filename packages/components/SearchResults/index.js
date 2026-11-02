@@ -233,7 +233,6 @@ class SearchResultsComponent extends React.Component {
 
     const { type, t } = this.props
     const { paddings, colors } = this.props.theme
-    const output = []
     let results = []
 
     // Append books
