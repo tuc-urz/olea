@@ -204,7 +204,8 @@ class GeneralSettingsView extends React.Component {
               )}
             />
           </List.Section>
-          {this._renderColorScheme()}
+          {/* Show appearance settings only when the app supports color scheme switching. */}
+          {this.props.theme.supportsColorScheme === true && this._renderColorScheme()}
           <Portal>
             <Dialog visible={this.state.visible} onDismiss={this._hideDialog}>
               <Dialog.Title style={this.styles.dialogTitle}>
