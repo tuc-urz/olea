@@ -147,6 +147,12 @@ export const themeColors = {
     quicklinksBackground: colors.primary,
     eventContainerBackground: colors.primary,
     eventContainerSidebar: colors.primary,
+    eventTitleText: colors.black,
+    eventRoomText: colors.accent,
+    calendarBackground: colors.white,
+    calendarHeaderBackground: colors.white,
+    calendarGrid: colors.grayLight2,
+    calendarGridMinor: colors.grayLight5,
 };
 
 export const themeColorsHighContrast = {
@@ -159,7 +165,106 @@ export const themeColorsHighContrast = {
     priceTable: priceTableColorsHighContrast,
     textLighter: colors.accent,
     overlayColor: addAlpha(colors.primary, 0.65),
-    appbarSubtitle: colors.accent,
+    appbarSubtitle: colors.black,
     eventContainerBackground: colors.primary,
     eventContainerSidebar: colors.primary,
+};
+
+// Complementary UI colors for dark mode.
+export const themeColorsDark = {
+    ...themeColors,
+
+    background: '#252525',
+    surface: '#252525',
+    safeAreaBackground: '#252525',
+    contentBackground: '#181818',
+    searchBackground: '#181818',
+
+    text: '#F5F5F5',
+    textInput: '#F5F5F5',
+    jobsTitleColor: '#F5F5F5',
+    subtitle: '#C6C6C6',
+    iconSubtitle: '#C6C6C6',
+    textLighter: '#C6C6C6',
+    noticeText: '#C6C6C6',
+    lecturerNameText: '#C6C6C6',
+
+    textAccent: colors.primary,
+    icon: '#D8D8D8',
+    accent: '#606060',
+    listSeperator: '#606060',
+    listSeperator2: '#606060',
+
+    categoryBadgeBackgroundColor: '#383838',
+    categoryBadgeColor: '#F5F5F5',
+    bookHoldingBackgroundColor: '#383838',
+    bookHoldingColor: colors.primary,
+
+    disabled: addAlpha(colors.white, 0.38),
+    placeholder: '#C6C6C6',
+    backdrop: addAlpha(colors.black, 0.65),
+
+    checkboxChecked: colors.primary,
+    checkboxUnchecked: '#C6C6C6',
+    loadingIndicator: colors.primary,
+    notification: colors.primary,
+    textInputSelection: colors.accent,
+
+    calendarBackground: '#181818',
+    calendarHeaderBackground: '#252525',
+    calendarGrid: '#606060',
+    calendarGridMinor: '#383838',
+    eventContainerSidebar: colors.accent,
+
+    mensaSliderBackground: addAlpha('#BEC3C6', 0.2),
+    mensaSliderTextColor: '#F5F5F5',
+
+    tertiary: '#FF8A85',
+    tertiaryText: '#3B1110',
+    error: '#FF8A85',
+    errorText: '#3B1110',
+
+    messages: {
+        ...messageColors,
+        errorBackground: '#FF8A85',
+        errorText: '#3B1110',
+    },
+
+    tabs: {
+        ...tabColors,
+        tabTitleDefault: '#C6C6C6',
+        tabIconDefault: '#C6C6C6',
+        tabIndicator: colors.primary,
+        safeAreaTopBackground: '#252525',
+        activeTab: colors.primary,
+        inactiveTab: '#C6C6C6',
+    },
+};
+
+export const themeColorsDarkHighContrast = {
+    ...themeColorsDark,
+
+    eventRoomText: colors.black,
+    text: colors.white,
+    textInput: colors.white,
+    jobsTitleColor: colors.white,
+    textAccent: '#A8F5EB',
+    subtitle: '#DEDEDE',
+    iconSubtitle: '#DEDEDE',
+    textLighter: '#DEDEDE',
+    noticeText: '#DEDEDE',
+    lecturerNameText: '#DEDEDE',
+    icon: colors.white,
+    checkboxChecked: '#A8F5EB',
+    checkboxUnchecked: colors.white,
+
+    tabs: {
+        ...themeColorsDark.tabs,
+        tabIconSelected: '#A8F5EB',
+        tabIconDefault: colors.white,
+        tabTitleSelected: '#A8F5EB',
+        tabIndicator: '#A8F5EB',
+        activeTab: '#A8F5EB',
+        inactiveTab: colors.white,
+    },
 };

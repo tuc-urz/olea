@@ -7,14 +7,14 @@ export const getStyles = (colors, fontSizes, lineHeights) => ({
         backgroundColor: colors.contentBackground
     },
     tabs: {
-        activeColor: colors.primary,
+        activeColor: colors.tabs.tabIndicator,
         inactiveColor: colors.text,
         backgroundColor: colors.background,
     },
     tab: {
         ...fonts.medium,
         fontSize: fontSizes.m,
-        color: colors.primaryText
+        color: colors.tabs.tabIndicator
     },
     tabIndicator: {
         backgroundColor: colors.tabs.tabIndicator,

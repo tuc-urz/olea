@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, AppState, Linking, StatusBar } from 'react-native';
+import { Alert, Appearance, AppState, Linking, StatusBar } from 'react-native';
 
 import { connect } from 'react-redux'
 import { Provider as PaperProvider } from 'react-native-paper';
@@ -30,6 +30,9 @@ class Main extends React.Component {
     currentHighContrastValue;
     currentIncreaseFontSizeValue;
     appChangeSubscriber;
+    appearanceSubscriber;
+    currentSystemColorScheme = Appearance.getColorScheme();
+    currentDarkValue;
 
     constructor() {
         super();
@@ -41,6 +44,12 @@ class Main extends React.Component {
     componentDidMount() {
         this.checkLanguage();
         this.getThemeSettings();
+        this.appearanceSubscriber = Appearance.addChangeListener(
+            ({ colorScheme }) => {
+                this.currentSystemColorScheme = colorScheme;
+                this.getThemeSettings();
+            }
+        );
 
         // this.checkPushMessage();
 
@@ -72,6 +81,9 @@ class Main extends React.Component {
         if (this.appChangeSubscriber) {
             this.appChangeSubscriber.remove();
         }
+        if (this.appearanceSubscriber) {
+            this.appearanceSubscriber.remove();
+        }
     }
 
     checkLanguage() {
@@ -93,12 +105,36 @@ class Main extends React.Component {
     }
 
     getThemeSettings() {
-        const { settingsAccessibility } = this.props;
-        if (this.currentHighContrastValue !== settingsAccessibility.highContrast
-            || this.currentIncreaseFontSizeValue !== settingsAccessibility.increaseFontSize) {
+        const { settingsAccessibility, settingsGeneral } = this.props;
+
+        const colorScheme = ['system', 'light', 'dark'].includes(
+            settingsGeneral?.colorScheme
+        )
+            ? settingsGeneral.colorScheme
+            : 'light';
+
+        const dark = colorScheme === 'dark'
+            || (
+                colorScheme === 'system'
+                && this.currentSystemColorScheme === 'dark'
+            );
+
+        if (
+            this.currentHighContrastValue !== settingsAccessibility.highContrast
+            || this.currentIncreaseFontSizeValue !== settingsAccessibility.increaseFontSize
+            || this.currentDarkValue !== dark
+        ) {
             this.currentHighContrastValue = settingsAccessibility.highContrast;
             this.currentIncreaseFontSizeValue = settingsAccessibility.increaseFontSize;
-            this.setState({ theme: getTheme(this.currentHighContrastValue, this.currentIncreaseFontSizeValue) })
+            this.currentDarkValue = dark;
+
+            this.setState({
+                theme: getTheme(
+                    this.currentHighContrastValue,
+                    this.currentIncreaseFontSizeValue,
+                    dark
+                )
+            });
         }
     }
 
@@ -110,6 +146,8 @@ class Main extends React.Component {
      */
     _handleAppStateChange = nextAppState => {
         if (nextAppState === 'active') {
+            this.currentSystemColorScheme = Appearance.getColorScheme();
+            this.getThemeSettings();
             if (this.state.refreshInterval) {
                 clearInterval(this.state.refreshInterval);
                 this.setState({ refreshInterval: null });
@@ -131,7 +169,10 @@ class Main extends React.Component {
     render() {
         return (
             <PaperProvider theme={this.state.theme}>
-                <StatusBar barStyle="light-content" backgroundColor="#252525" />
+                <StatusBar
+                    barStyle={this.state.theme.dark ? 'light-content' : 'dark-content'}
+                    backgroundColor={this.state.theme.colors.safeAreaBackground}
+                />
                 <NavigationContainer ref={RootNavigation.navigationRef} linking={settings.deepLinking} onReady={RootNavigation.triggerNavigationReady}>
                     <ConnectivityContextProvider>
                         <TimetableContextProvider>
