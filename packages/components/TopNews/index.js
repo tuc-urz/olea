@@ -231,7 +231,8 @@ class TopNewsComponent extends React.Component {
                             </View>
                         </Animated.View>
                     ) : (topItem?.shortDesc
-                            ? <TouchableOpacity
+                        ? (
+                            <TouchableOpacity
                                 style={this.styles.newsItem}
                                 onPress={() => {this._handlePressNews(topItem)}}
                                 accessible={true}
@@ -248,9 +249,10 @@ class TopNewsComponent extends React.Component {
                                         }
                                     </View>
                                 </View>
-                              </TouchableOpacity>
-                            : null
-                    ))
+                            </TouchableOpacity>
+                          )
+                        : null
+                ))
                 }
             </View>
         );
