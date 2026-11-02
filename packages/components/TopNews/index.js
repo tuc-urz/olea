@@ -248,7 +248,7 @@ class TopNewsComponent extends React.Component {
                                         }
                                     </View>
                                 </View>
-                            </TouchableOpacity>
+                              </TouchableOpacity>
                             : null
                     ))
                 }
