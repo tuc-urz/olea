@@ -17,7 +17,7 @@ export default function(theme) {
       companyCity:{
         fontSize: theme.fontSizes.s,
         paddingTop: theme.paddings.xsmall,
-        color: theme.colors.secondaryText
+        color: theme.colors.text
       },
       date:{
         fontSize: theme.fontSizes.s,

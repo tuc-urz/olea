@@ -12,35 +12,28 @@
  * limitations under the License.
  */
 
-import {
-    useCallback,
-    useMemo
-} from 'react';
+import { useCallback, useMemo } from 'react'
 
 import {
-    Linking,
-    Platform,
-    SafeAreaView,
-    ScrollView,
-    Share,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
-} from 'react-native';
-import {
-    Headline,
-    List,
-    useTheme,
-} from 'react-native-paper';
+  Linking,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  Share,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native'
+import { Headline, List, useTheme } from 'react-native-paper'
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next'
 
-import AppbarComponent from '../AppBar';
-import AppbarAction from '../AppbarAction';
-import IconListItem from '../IconListItem';
+import AppbarComponent from '../AppBar'
+import AppbarAction from '../AppbarAction'
+import IconListItem from '../IconListItem'
 
-import componentStyles from './styles';
+import componentStyles from './styles'
 
 /**
  * Contact Detail Component
@@ -51,165 +44,137 @@ import componentStyles from './styles';
  * @param {object} props
  * @param {object} props.contact - Der anzuzeigende Kontakt
  */
-export default function ContactDetailComponent({ contact, ...restProps }) {
-    const theme = useTheme();
-    const { themeStyles } = theme;
-    const { t } = useTranslation();
+export default function ContactDetailComponent ({ contact, ...restProps }) {
+  const theme = useTheme()
+  const { themeStyles } = theme
+  const { t } = useTranslation()
 
-    const styles = useMemo(
-        () => StyleSheet.create(componentStyles(theme)),
-        [theme, componentStyles]
-    );
+  const styles = useMemo(() => StyleSheet.create(componentStyles(theme)), [theme, componentStyles])
 
-    const onShare = useCallback(
-        async () => {
-            try {
-                // Telephone-Objekte aus dem Kontakt auslesen. Falls diese nicht vorhanden sind, mit einem leeren Array initialisieren
-                const contactTelephones = contact?.telephone ?? [];
-                const shareMessageTelephoneNumbers = contactTelephones
-                    .map(telephone => telephone.number)
-                    .map(number => `${t('contact:phone')}: ${number}`)
-                    .join('\n');
+  const onShare = useCallback(async () => {
+    try {
+      // Telephone-Objekte aus dem Kontakt auslesen. Falls diese nicht vorhanden sind, mit einem leeren Array initialisieren
+      const contactTelephones = contact?.telephone ?? []
+      const shareMessageTelephoneNumbers = contactTelephones
+        .map((telephone) => telephone.number)
+        .map((number) => `${t('contact:phone')}: ${number}`)
+        .join('\n')
 
-                const shareMessage = `${t('contact:title')} - ${contact.firstName} ${contact.lastName}`
-                    +
-                    (
-                        contact?.building
-                            ? `\n${t('contact:building')}: ${contact.building}`
-                            : ''
+      const shareMessage =
+        `${t('contact:title')} - ${contact.firstName} ${contact.lastName}` +
+        (contact?.building ? `\n${t('contact:building')}: ${contact.building}` : '') +
+        (contact?.department ? `\n${t('contact:department')}: ${contact.department}` : '') +
+        (contact?.room?.title ? `\n${t('contact:room')}: ${contact.room.title}` : '') +
+        (contact?.email ? `\n${t('contact:email')}: ${contact.email}` : '') +
+        (shareMessageTelephoneNumbers ? '\n' + shareMessageTelephoneNumbers : '')
+
+      await Share.share({
+        message: shareMessage
+      })
+    } catch (error) {
+      alert(error.message)
+    }
+  }, [contact, t])
+
+  return contact
+    ? (
+      <SafeAreaView style={[styles.container, themeStyles.safeAreaContainer]}>
+        <AppbarComponent
+          {...restProps}
+          title={t('contact:contactInformation')}
+          rightAction={<AppbarAction icon='share' onPress={onShare} />}
+        />
+        <ScrollView style={styles.containerInner}>
+          <Headline style={styles.name}>
+            {contact.firstName} {contact.lastName}
+          </Headline>
+          {contact?.building
+            ? (
+              <List.Item
+                key='building'
+                title={t('contact:building')}
+                description={contact.building}
+                descriptionStyle={[themeStyles.textLighter, { color: theme.colors.text }]}
+                titleStyle={themeStyles.searchDetailTitle}
+                descriptionNumberOfLines={200}
+              />
+              )
+            : null}
+          {contact?.department
+            ? (
+              <List.Item
+                key='department'
+                title={t('contact:department')}
+                description={contact.department}
+                descriptionStyle={[themeStyles.textLighter, { color: theme.colors.text }]}
+                titleStyle={themeStyles.searchDetailTitle}
+                descriptionNumberOfLines={200}
+              />
+              )
+            : null}
+          {contact?.room && contact?.room?.title
+            ? (
+              <List.Item
+                key='room'
+                title={t('contact:room')}
+                description={contact.room.title}
+                descriptionStyle={[themeStyles.textLighter, { color: theme.colors.text }]}
+                titleStyle={themeStyles.searchDetailTitle}
+                descriptionNumberOfLines={200}
+              />
+              )
+            : null}
+          {contact?.email
+            ? (
+              <TouchableOpacity key='mail' onPress={() => Linking.openURL('mailto:' + contact.email)}>
+                <IconListItem
+                  title={t('contact:email')}
+                  description={contact.email}
+                  descriptionStyle={[themeStyles.textLighter, { color: theme.colors.text }]}
+                  titleStyle={themeStyles.searchDetailTitle}
+                  icon='mail'
+                  iconColor={theme.colors.icon}
+                />
+              </TouchableOpacity>
+              )
+            : null}
+          {Array.isArray(contact?.telephone)
+            ? contact.telephone.map((telephone, index, telephones) => {
+              const title =
+                telephones.length == 1 ? t('contact:phone') : t('contact:phone') + ' ' + index
+
+              const telephoneNumber = telephone.number
+
+              return (
+                <TouchableOpacity
+                  key={telephoneNumber}
+                  onPress={() => {
+                    const formattedPhoneNumber = telephone.number.replace(/\s/g, '')
+                    Linking.openURL('tel:' + formattedPhoneNumber).catch((error) =>
+                      console.error(
+                        `ContactDetailComponent - Fehler beim öffnen des Telefons ${Platform.OS}`,
+                        error
+                      )
                     )
-                    +
-                    (
-                        contact?.department
-                            ? `\n${t('contact:department')}: ${contact.department}`
-                            : ''
-                    )
-                    +
-                    (
-                        contact?.room?.title
-                            ? `\n${t('contact:room')}: ${contact.room.title}`
-                            : ''
-                    )
-                    +
-                    (
-                        contact?.email
-                            ? `\n${t('contact:email')}: ${contact.email}`
-                            : ''
-                    )
-                    +
-                    (
-                        shareMessageTelephoneNumbers
-                            ? '\n' + shareMessageTelephoneNumbers
-                            : ''
-                    );
-
-                await Share.share({
-                    message: shareMessage,
-                });
-            } catch (error) {
-                alert(error.message);
-            }
-        },
-        [contact, t]
-    );
-
-    return contact
-        ? <SafeAreaView style={[styles.container, themeStyles.safeAreaContainer]}>
-            <AppbarComponent
-                {...restProps}
-                title={t('contact:contactInformation')}
-                rightAction={<AppbarAction icon='share' onPress={onShare} />}
-            />
-            <ScrollView style={styles.containerInner}>
-                <Headline style={styles.name}>{contact.firstName} {contact.lastName}</Headline>
-                {
-                    contact?.building
-                        ? <List.Item
-                            key="building"
-                            title={t('contact:building')}
-                            description={contact.building}
-                            descriptionStyle={themeStyles.textLighter}
-                            titleStyle={themeStyles.searchDetailTitle}
-                            descriptionNumberOfLines={200} />
-                        : null
-                }
-                {
-                    contact?.department
-                        ? <List.Item
-                            key="department"
-                            title={t('contact:department')}
-                            description={contact.department}
-                            descriptionStyle={themeStyles.textLighter}
-                            titleStyle={themeStyles.searchDetailTitle}
-                            descriptionNumberOfLines={200} />
-                        : null
-                }
-                {
-                    contact?.room && contact?.room?.title
-                        ? <List.Item
-                            key="room"
-                            title={t('contact:room')}
-                            description={contact.room.title}
-                            descriptionStyle={themeStyles.textLighter}
-                            titleStyle={themeStyles.searchDetailTitle}
-                            descriptionNumberOfLines={200} />
-                        : null
-                }
-                {
-                    contact?.email
-                        ? <TouchableOpacity
-                            key='mail'
-                            onPress={() => Linking.openURL('mailto:' + contact.email)}
-                        >
-                            <IconListItem
-                                title={t('contact:email')}
-                                description={contact.email}
-                                descriptionStyle={themeStyles.textLighter}
-                                titleStyle={themeStyles.searchDetailTitle}
-                                icon={'mail'}
-                            />
-                        </TouchableOpacity>
-                        : null
-                }
-                {
-                    Array.isArray(contact?.telephone)
-                        ? contact.telephone.map(
-                            (telephone, index, telephones) => {
-
-                                const title = telephones.length == 1
-                                    ? t('contact:phone')
-                                    : t('contact:phone') + ' ' + index;
-
-                                const telephoneNumber = telephone.number
-
-                                return (
-                                    <TouchableOpacity
-                                        key={telephoneNumber}
-                                        onPress={
-                                            () => {
-                                                const formattedPhoneNumber = telephone.number.replace(/\s/g, '');
-                                                Linking.openURL('tel:' + formattedPhoneNumber).catch(error => console.error(`ContactDetailComponent - Fehler beim öffnen des Telefons ${Platform.OS}`, error));
-                                            }
-                                        }
-                                    >
-                                        <IconListItem
-                                            title={title}
-                                            description={telephoneNumber}
-                                            descriptionStyle={themeStyles.textLighter}
-                                            titleStyle={themeStyles.searchDetailTitle}
-                                            icon={'call'}
-                                        />
-                                    </TouchableOpacity>
-                                )
-                            }
-                        )
-                        : null
-                }
-                <View style={styles.space} />
-            </ScrollView>
-        </SafeAreaView>
-
-        : <Text>
-            {t('contact:couldNotLoad')}
-        </Text>;
+                  }}
+                >
+                  <IconListItem
+                    title={title}
+                    description={telephoneNumber}
+                    descriptionStyle={[themeStyles.textLighter, { color: theme.colors.text }]}
+                    titleStyle={themeStyles.searchDetailTitle}
+                    icon='call'
+                    iconColor={theme.colors.icon}
+                  />
+                </TouchableOpacity>
+              )
+            })
+            : null}
+          <View style={styles.space} />
+        </ScrollView>
+      </SafeAreaView>
+      )
+    : (
+      <Text>{t('contact:couldNotLoad')}</Text>
+      )
 }

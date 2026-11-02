@@ -12,24 +12,20 @@
  * limitations under the License.
  */
 
-import { useMemo, useCallback, FC } from 'react';
-import {
-    StyleSheet,
-    Text,
-    View
-} from 'react-native';
+import { useMemo, useCallback, FC } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 
-import { useDispatch } from 'react-redux';
-import { useTheme, Portal, Dialog, Checkbox, Button } from 'react-native-paper';
-import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux'
+import { useTheme, Portal, Dialog, Checkbox, Button } from 'react-native-paper'
+import { useTranslation } from 'react-i18next'
 
 import {
-    onSettingDevelopOverride,
-    useActiveStagingMenuItems,
-    useShowDeeplinkAlert,
-    useStagingServer,
-    useSubscriberId
-} from '../../libraries/core';
+  onSettingDevelopOverride,
+  useActiveStagingMenuItems,
+  useShowDeeplinkAlert,
+  useStagingServer,
+  useSubscriberId
+} from '../../libraries/core'
 
 import componentStyles from './styles'
 
@@ -44,171 +40,150 @@ import componentStyles from './styles'
  * @param {() => void} [props.onDismiss] Callback-Funktion welche ausgeführt wird, wenn der Dialog geschlossen werden soll.
  * @returns {FC}
  */
-export default function DevelopmentDialog({ visible, onDismiss }) {
-    const { t } = useTranslation();
-    const theme = useTheme();
-    const { colors, appSettings } = theme;
-    const mainMenuSettings = appSettings?.mainMenu;
-    const menuItems = mainMenuSettings?.items ?? {};
-    const menuRoutes = mainMenuSettings?.routes ?? [];
-    const isStagingServerActive = useStagingServer();
-    const subscriberId = useSubscriberId();
-    const showDeeplinkAlert = useShowDeeplinkAlert();
-    const activeStagingMenuItems = useActiveStagingMenuItems();
-    const dispatch = useDispatch();
+export default function DevelopmentDialog ({ visible, onDismiss }) {
+  const { t } = useTranslation()
+  const theme = useTheme()
+  const { colors, appSettings } = theme
+  const mainMenuSettings = appSettings?.mainMenu
+  const menuItems = mainMenuSettings?.items ?? {}
+  const menuRoutes = mainMenuSettings?.routes ?? []
+  const isStagingServerActive = useStagingServer()
+  const subscriberId = useSubscriberId()
+  const showDeeplinkAlert = useShowDeeplinkAlert()
+  const activeStagingMenuItems = useActiveStagingMenuItems()
+  const dispatch = useDispatch()
 
-    const styles = useMemo(
-        () => StyleSheet.create(componentStyles(theme)),
-        [theme, componentStyles]
-    )
+  const styles = useMemo(() => StyleSheet.create(componentStyles(theme)), [theme, componentStyles])
 
-    // Erzeugen einer Funktion, die die Entwicklereinstellugen setzt.
-    // Dabei werden immer die derzeitigen Werte gesetzt, außer es werden neue Werte zum überschreiben übergeben.
-    // Diese Funktion sollte langfristig entfallen.
-    const setDevelopmentSettings = useCallback(
-        (settings) => dispatch(
-            onSettingDevelopOverride(
-                'settingsDevelop',
-                {
-                    useStaging: isStagingServerActive,
-                    showDeeplinkAlert: showDeeplinkAlert,
-                    activeStagingMenuItems: activeStagingMenuItems,
-                    ...settings,
-                }
-            )
-        ),
-        [isStagingServerActive, showDeeplinkAlert, activeStagingMenuItems, onSettingDevelopOverride]
-    )
+  // Erzeugen einer Funktion, die die Entwicklereinstellugen setzt.
+  // Dabei werden immer die derzeitigen Werte gesetzt, außer es werden neue Werte zum überschreiben übergeben.
+  // Diese Funktion sollte langfristig entfallen.
+  const setDevelopmentSettings = useCallback(
+    (settings) =>
+      dispatch(
+        onSettingDevelopOverride('settingsDevelop', {
+          useStaging: isStagingServerActive,
+          showDeeplinkAlert,
+          activeStagingMenuItems,
+          ...settings
+        })
+      ),
+    [isStagingServerActive, showDeeplinkAlert, activeStagingMenuItems, onSettingDevelopOverride]
+  )
 
-    const output = [];
+  const output = []
 
-    output.push(
-        <View key={'item_use_stg'} style={styles.selectOption}>
-            <Text>{t('settings:develop.useStagingServer')}</Text>
-            <Checkbox.Android status={isStagingServerActive ? 'checked' : 'unchecked'}
-                onPress={() => setDevelopmentSettings({ useStaging: !isStagingServerActive })}
-                color={colors.checkboxChecked}
-                uncheckedColor={colors.checkboxUnchecked}
-            />
+  output.push(
+    <View key='item_use_stg' style={styles.selectOption}>
+      <Text style={styles.text}>{t('settings:develop.useStagingServer')}</Text>
+      <Checkbox.Android
+        status={isStagingServerActive ? 'checked' : 'unchecked'}
+        onPress={() => setDevelopmentSettings({ useStaging: !isStagingServerActive })}
+        color={colors.checkboxChecked}
+        uncheckedColor={colors.checkboxUnchecked}
+      />
+    </View>
+  )
+
+  output.push(
+    <View key='item_notification_subscriber' style={[{ marginBottom: 30 }]}>
+      <Text style={styles.text}>{t('settings:develop.notificationSubscriberId')}</Text>
+      <Text style={styles.text}>{subscriberId}</Text>
+    </View>
+  )
+  output.push(
+    <View key='item_notification_push_message' style={[{ marginBottom: 30 }]}>
+      <Text style={styles.text}>{t('settings:develop.resetPushMessage')}</Text>
+      <Button
+        buttonColor={colors.primary}
+        textColor={colors.buttonText}
+        onPress={() => dispatch({ type: 'UPDATE_PUSH_MESSAGE_SHOWN', pushMessageShown: false })}
+      >
+        Reset
+      </Button>
+    </View>
+  )
+  output.push(
+    <View key='item_deeplink_show_url' style={[{ marginBottom: 30 }, styles.selectOption]}>
+      <Text style={styles.text}>{t('settings:develop.showDeepLink')}</Text>
+      <Checkbox
+        status={showDeeplinkAlert ? 'checked' : 'unchecked'}
+        onPress={() => setDevelopmentSettings({ showDeeplinkAlert: !showDeeplinkAlert })}
+        color={colors.checkboxChecked}
+        uncheckedColor={colors.checkboxUnchecked}
+      />
+    </View>
+  )
+
+  // Für jeden Menü-Tab einen Bereich erstellen und im Bereich für jeden Menüpunkt eine Checkbox anbieten.
+  // Menüpunkte-Objekt in ein Array umwandeln
+  const activatableMenuItemsSettings = Object.entries(menuItems)
+    // Aus der Liste der Menüpunkten, werden die Menüpunkte herausgefiltert, die immer aktiv/eingeschaltet sind.
+    .map(([menuItemKey, menuItemEntries]) => {
+      const stagingMenuItemEntries = menuItemEntries.filter(
+        (menuItemEntry) =>
+          // Wenn active-Property nicht vorhanden, ist der Menüpunkt activ, dann Negierung, weil nicht aktive Menueinträge gefiltert werden
+          !(menuItemEntry?.active ?? true)
+      )
+      return [menuItemKey, stagingMenuItemEntries]
+    })
+    // Es werden Menü-Tabs herausgefiltert, die keine Menüpunkte, die nur im Stagingmodus zu sehen sind.
+    .filter(([menuItemKey, stagingMenuItemEntries]) => (stagingMenuItemEntries?.length ?? 0) > 0)
+    // Rendern der Menü-Tabs und deren Menüeinträge
+    .map(([menuItemKey, stagingMenuItemEntries]) => {
+      const mainMenuRouteTitleKey = menuRoutes?.find(
+        (menuRoute) => menuRoute?.key === menuItemKey
+      )?.title
+
+      return (
+        <View key={`item_menuitems_${menuItemKey}`}>
+          <Text style={styles.text}>{t(mainMenuRouteTitleKey)}-Tab</Text>
+          {
+            // Rendern der Menüpunkte eines Menü-Tabs
+            stagingMenuItemEntries.map((stagingMenuItemEntry) => {
+              const stagingMenuItemEntryKey = `${stagingMenuItemEntry?.title}`
+
+              // Der Menüpunkt ist aktiv, wenn sein Schlüssel in der Liste der activen Menüpunkte zu finden ist
+              const isActive = activeStagingMenuItems.includes(stagingMenuItemEntryKey)
+
+              return (
+                <Checkbox.Item
+                  key={stagingMenuItemEntryKey}
+                  label={t(stagingMenuItemEntry?.title)}
+                  labelStyle={styles.text}
+                  status={isActive ? 'checked' : 'unchecked'}
+                  color={colors.checkboxChecked}
+                  uncheckedColor={colors.checkboxUnchecked}
+                  theme={theme}
+                  style={styles.selectOption}
+                  onPress={() =>
+                    setDevelopmentSettings({
+                      activeStagingMenuItems: isActive
+                        ? /* Wenn der Menüpunkt schon aktiv ist, wird er aus der Liste der aktiven Punkte entfernt. */ activeStagingMenuItems.filter(
+                          (activeStagingMenuItem) =>
+                            activeStagingMenuItem !== stagingMenuItemEntryKey
+                        )
+                        : /* Wenn der Menüpunkt nicht aktiv ist, wird er zur Liste der aktiven Punkte hinzugefügt. */ [...activeStagingMenuItems, stagingMenuItemEntryKey]
+                    })}
+                />
+              )
+            })
+          }
         </View>
-    );
+      )
+    })
 
-    output.push(
-        <View key={'item_notification_subscriber'} style={[{ marginBottom: 30 }]}>
-            <Text>{t('settings:develop.notificationSubscriberId')}</Text>
-            <Text>{subscriberId}</Text>
-        </View>
-    );
-    output.push(
-        <View key={'item_notification_push_message'} style={[{ marginBottom: 30 }]}>
-            <Text>{t('settings:develop.resetPushMessage')}</Text>
-            <Button
-                buttonColor={colors.primary}
-                textColor={colors.buttonText}
-                onPress={() => dispatch({ type: 'UPDATE_PUSH_MESSAGE_SHOWN', pushMessageShown: false })}
-            >
-                Reset
-            </Button>
-        </View>
-    );
-    output.push(
-        <View key={'item_deeplink_show_url'} style={[{ marginBottom: 30 }, styles.selectOption]}>
-            <Text>{t('settings:develop.showDeepLink')}</Text>
-            <Checkbox
-                status={showDeeplinkAlert ? 'checked' : 'unchecked'}
-                onPress={() => setDevelopmentSettings({ showDeeplinkAlert: !showDeeplinkAlert })}
-                color={colors.checkboxChecked}
-                uncheckedColor={colors.checkboxUnchecked}
-            ></Checkbox>
-        </View>
-    );
-
-    // Für jeden Menü-Tab einen Bereich erstellen und im Bereich für jeden Menüpunkt eine Checkbox anbieten.
-    // Menüpunkte-Objekt in ein Array umwandeln
-    const activatableMenuItemsSettings = Object.entries(menuItems)
-        // Aus der Liste der Menüpunkten, werden die Menüpunkte herausgefiltert, die immer aktiv/eingeschaltet sind.
-        .map(
-            ([menuItemKey, menuItemEntries]) => {
-                const stagingMenuItemEntries = menuItemEntries.filter(
-                    menuItemEntry =>
-                        // Wenn active-Property nicht vorhanden, ist der Menüpunkt activ, dann Negierung, weil nicht aktive Menueinträge gefiltert werden
-                        !(menuItemEntry?.active ?? true)
-                );
-                return [menuItemKey, stagingMenuItemEntries];
-            }
-        )
-        // Es werden Menü-Tabs herausgefiltert, die keine Menüpunkte, die nur im Stagingmodus zu sehen sind.
-        .filter(
-            ([menuItemKey, stagingMenuItemEntries]) => (stagingMenuItemEntries?.length ?? 0) > 0
-        )
-        // Rendern der Menü-Tabs und deren Menüeinträge
-        .map(
-            ([menuItemKey, stagingMenuItemEntries]) => {
-                const mainMenuRouteTitleKey = menuRoutes
-                    ?.find(menuRoute => menuRoute?.key === menuItemKey)
-                    ?.title;
-
-                return (
-                    < View key={`item_menuitems_${menuItemKey}`} >
-                        <Text>{t(mainMenuRouteTitleKey)}-Tab</Text>
-                        {
-                            // Rendern der Menüpunkte eines Menü-Tabs
-                            stagingMenuItemEntries.map(
-                                stagingMenuItemEntry => {
-                                    const stagingMenuItemEntryKey = `${stagingMenuItemEntry?.title}`;
-
-                                    // Der Menüpunkt ist aktiv, wenn sein Schlüssel in der Liste der activen Menüpunkte zu finden ist
-                                    const isActive = activeStagingMenuItems.includes(stagingMenuItemEntryKey);
-
-                                    return (
-                                        <Checkbox.Item
-                                            key={stagingMenuItemEntryKey}
-                                            label={t(stagingMenuItemEntry?.title)}
-                                            status={isActive ? 'checked' : 'unchecked'}
-                                            color={colors.checkboxChecked}
-                                            uncheckedColor={colors.checkboxUnchecked}
-                                            theme={theme}
-                                            style={styles.selectOption}
-                                            onPress={() => setDevelopmentSettings(
-                                                {
-                                                    activeStagingMenuItems: isActive
-                                                        // Wenn der Menüpunkt schon aktiv ist, wird er aus der Liste der aktiven Punkte entfernt.
-                                                        ? activeStagingMenuItems.filter(activeStagingMenuItem => activeStagingMenuItem !== stagingMenuItemEntryKey)
-                                                        // Wenn der Menüpunkt nicht aktiv ist, wird er zur Liste der aktiven Punkte hinzugefügt.
-                                                        : [...activeStagingMenuItems, stagingMenuItemEntryKey]
-                                                }
-                                            )}
-                                        />
-                                    )
-                                }
-                            )
-                        }
-                    </View>
-                )
-            }
-        );
-
-    return (
-        <Portal>
-            <Dialog visible={visible} onDismiss={onDismiss}>
-                <Dialog.Title>{t('settings:develop.dialog')}</Dialog.Title>
-                <Dialog.Content>
-                    {
-                        [
-                            ...output,
-                            ...activatableMenuItemsSettings,
-                        ]
-                    }
-                </Dialog.Content>
-                <Dialog.Actions>
-                    <Button
-                        onPress={onDismiss}
-                        textColor={colors.buttonText}
-                    >
-                        {t('common:okLabel')}
-                    </Button>
-                </Dialog.Actions>
-            </Dialog>
-        </Portal>
-    );
+  return (
+    <Portal>
+      <Dialog visible={visible} onDismiss={onDismiss}>
+        <Dialog.Title style={styles.text}>{t('settings:develop.dialog')}</Dialog.Title>
+        <Dialog.Content>{[...output, ...activatableMenuItemsSettings]}</Dialog.Content>
+        <Dialog.Actions>
+          <Button onPress={onDismiss} textColor={colors.text}>
+            {t('common:okLabel')}
+          </Button>
+        </Dialog.Actions>
+      </Dialog>
+    </Portal>
+  )
 }

@@ -38,8 +38,22 @@ const daysTabDuration = Duration.fromISO('P6M')
  * @param {(DateTime) => void} props.onDateChanged Callback, welche aufgerufen wird, wenn der Tag in der Ansicht wechselt
  * @returns
  */
-function CalendarDay ({ selectedDate, theme, settings, calendarScrollOffsetMinutes, calendarHeight, onDateChanged, onCourseSelected }) {
-  const { appSettings: { modules: { timetable: { showDetails } } } } = theme
+function CalendarDay ({
+  selectedDate,
+  theme,
+  settings,
+  calendarScrollOffsetMinutes,
+  calendarHeight,
+  onDateChanged,
+  onCourseSelected
+}) {
+  const {
+    appSettings: {
+      modules: {
+        timetable: { showDetails }
+      }
+    }
+  } = theme
   const today = DateTime.now().toISODate()
 
   const { width } = useWindowDimensions()
@@ -48,10 +62,7 @@ function CalendarDay ({ selectedDate, theme, settings, calendarScrollOffsetMinut
 
   const language = settings?.settingsGeneral?.language
 
-  const styles = useMemo(
-    () => StyleSheet.create(componentStyles(theme)),
-    [theme]
-  )
+  const styles = useMemo(() => StyleSheet.create(componentStyles(theme)), [theme])
 
   const calendarStripMinDate = useMemo(
     () => DateTime.fromISO(today).minus(daysTabDuration).toJSDate(),
@@ -63,129 +74,145 @@ function CalendarDay ({ selectedDate, theme, settings, calendarScrollOffsetMinut
     [today, daysTabDuration]
   )
 
-  const daysTabViewRoutes = useMemo(
-    () => {
-      const dateRoutes = []
-      const todayDateTime = DateTime.fromISO(today)
-      const beginDateTime = todayDateTime.minus(daysTabDuration)
-      const endDateTime = todayDateTime.plus(daysTabDuration)
-      let currentDateTime = DateTime.fromObject(beginDateTime.toObject())
+  const daysTabViewRoutes = useMemo(() => {
+    const dateRoutes = []
+    const todayDateTime = DateTime.fromISO(today)
+    const beginDateTime = todayDateTime.minus(daysTabDuration)
+    const endDateTime = todayDateTime.plus(daysTabDuration)
+    let currentDateTime = DateTime.fromObject(beginDateTime.toObject())
 
-      const eventColor = theme.colors.eventContainerSidebar
+    const eventColor = theme.colors.eventContainerSidebar
 
-      while (currentDateTime <= endDateTime) {
-        const currentISODate = currentDateTime.toISODate()
-        const currentDateTimeCourses = courses?.[currentISODate]
-          ?.map(
-            course => (
-              {
-                title: course.title.data,
-                start: new Date(Date.parse(course.startDateTime)),
-                end: new Date(Date.parse(course.endDateTime)),
-                color: eventColor,
-                type: course.type?.data,
-                professor: course.lecturer[0]?.data,
-                room: course.room.data,
-                // Anfügen des Ürsprügnlichen Vorlesungsobjektes, damit es beim Klick zur Verfügung steht
-                origine: course
-              }
-            )
-          ) ?? []
+    while (currentDateTime <= endDateTime) {
+      const currentISODate = currentDateTime.toISODate()
+      const currentDateTimeCourses =
+        courses?.[currentISODate]?.map((course) => ({
+          title: course.title.data,
+          start: new Date(Date.parse(course.startDateTime)),
+          end: new Date(Date.parse(course.endDateTime)),
+          color: eventColor,
+          type: course.type?.data,
+          professor: course.lecturer[0]?.data,
+          room: course.room.data,
+          // Anfügen des Ürsprügnlichen Vorlesungsobjektes, damit es beim Klick zur Verfügung steht
+          origine: course
+        })) ?? []
 
-        dateRoutes.push(
-          {
-            key: currentISODate,
-            date: currentDateTime,
-            events: currentDateTimeCourses
-          }
-        )
+      dateRoutes.push({
+        key: currentISODate,
+        date: currentDateTime,
+        events: currentDateTimeCourses
+      })
 
-        currentDateTime = currentDateTime.plus({ day: 1 })
-      }
+      currentDateTime = currentDateTime.plus({ day: 1 })
+    }
 
-      return dateRoutes
-    },
-    [today, courses, language]
-  )
+    return dateRoutes
+  }, [today, courses, language, theme.colors.eventContainerSidebar])
 
   const daysTabViewIndexes = useMemo(
-    () => daysTabViewRoutes
-      .reduce(
-        (accumulator, currentRoute, currentIndex) =>
-          (
-            {
-              ...accumulator,
-              [currentRoute.key]: currentIndex
-            }
-          ),
+    () =>
+      daysTabViewRoutes.reduce(
+        (accumulator, currentRoute, currentIndex) => ({
+          ...accumulator,
+          [currentRoute.key]: currentIndex
+        }),
         {}
       ),
     [daysTabViewRoutes]
   )
 
-  const daysTabViewIndex = useMemo(
-    () => {
-      const selectedISODate = selectedDate.toISODate()
-      return daysTabViewIndexes[selectedISODate]
-    },
-    [daysTabViewIndexes, selectedDate]
-  )
+  const daysTabViewIndex = useMemo(() => {
+    const selectedISODate = selectedDate.toISODate()
+    return daysTabViewIndexes[selectedISODate]
+  }, [daysTabViewIndexes, selectedDate])
 
-  const renderEvent = useCallback((event, touchableOpacityProps) => {
-    const { key, style, ...restTouchableOpacityProps } = touchableOpacityProps
-    return (
-      <TouchableOpacity key={key} {...restTouchableOpacityProps} style={[style, styles.eventContainer, { borderLeftColor: event.color || '#000' }]}>
-        <View style={styles.eventHeader}>
-          <Text style={styles.eventTitle} numberOfLines={1} ellipsizeMode='tail'>
-            {event.title}
-          </Text>
-          <Text style={styles.eventType} numberOfLines={1} ellipsizeMode='tail'>
-            {event.type}
-          </Text>
-        </View>
-        <Text style={styles.eventProfessor} numberOfLines={1} ellipsizeMode='head'>
-          {event.professor}
-        </Text>
-        <View style={styles.eventFooter}>
-          <Text style={styles.eventTime} numberOfLines={1} ellipsizeMode='tail'>
-            {`${event.start.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })} - ${event.end.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })}`}
-          </Text>
-          <Text style={styles.eventRoom} numberOfLines={1} ellipsizeMode='tail'>
-            {event.room}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    )
-  }, [styles])
-
-  const renderScene = useCallback(
-    ({ route }) => {
+  const renderEvent = useCallback(
+    (event, touchableOpacityProps) => {
+      const { key, style, ...restTouchableOpacityProps } = touchableOpacityProps
       return (
-        <View style={{ flex: 1, width }}>
-          <Calendar
-            events={route.events}
-            renderEvent={renderEvent}
-            renderHeader={() => null}
-            overlapOffset={95}
-            mode='day'
-            height={calendarHeight}
-            headerContentStyle={{ backgroundColor: 'transparent' }}
-            weekStartsOn={1}
-            date={route.key}
-            swipeEnabled={false}
-            onPressEvent={
-                            showDetails
-                            // Wenn eine Vorlesung im Kalender angeklickt wird, wird die ursprüngliche Vorlesung ausgelesen und selektiert
-                              ? (event) => onCourseSelected(event.origine)
-                              : null
-                        }
-            scrollOffsetMinutes={calendarScrollOffsetMinutes}
-            hourStyle={styles.hourStyle}
-          />
-        </View>
+        <TouchableOpacity
+          key={key}
+          {...restTouchableOpacityProps}
+          style={[
+            style,
+            styles.eventContainer,
+            { borderLeftColor: event.color ?? theme.colors.eventContainerSidebar }
+          ]}
+        >
+          <View style={styles.eventHeader}>
+            <Text style={styles.eventTitle} numberOfLines={1} ellipsizeMode='tail'>
+              {event.title}
+            </Text>
+            <Text style={styles.eventType} numberOfLines={1} ellipsizeMode='tail'>
+              {event.type}
+            </Text>
+          </View>
+          <Text style={styles.eventProfessor} numberOfLines={1} ellipsizeMode='head'>
+            {event.professor}
+          </Text>
+          <View style={styles.eventFooter}>
+            <Text style={styles.eventTime} numberOfLines={1} ellipsizeMode='tail'>
+              {`${event.start.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })} - ${event.end.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' })}`}
+            </Text>
+            <Text style={styles.eventRoom} numberOfLines={1} ellipsizeMode='tail'>
+              {event.room}
+            </Text>
+          </View>
+        </TouchableOpacity>
       )
     },
-    [styles, calendarScrollOffsetMinutes, courses, width, renderEvent]
+    [styles, theme.colors.eventContainerSidebar]
+  )
+
+  const renderScene = useCallback(
+    ({ route }) => (
+      <View
+        style={{
+          flex: 1,
+          width,
+          backgroundColor: theme.colors.calendarBackground
+        }}
+      >
+        <Calendar
+          key={theme.dark ? 'dark' : 'light'}
+          events={route.events}
+          renderEvent={renderEvent}
+          renderHeader={() => null}
+          overlapOffset={95}
+          mode='day'
+          height={calendarHeight}
+          headerContentStyle={{ backgroundColor: 'transparent' }}
+          bodyContainerStyle={{
+            backgroundColor: theme.colors.calendarBackground
+          }}
+          theme={{
+            palette: {
+              gray: {
+                100: theme.colors.calendarGridMinor,
+                200: theme.colors.calendarGrid
+              }
+            }
+          }}
+          weekStartsOn={1}
+          date={route.key}
+          swipeEnabled={false}
+          onPressEvent={showDetails ? (event) => onCourseSelected(event.origine) : null}
+          scrollOffsetMinutes={calendarScrollOffsetMinutes}
+          hourStyle={styles.hourStyle}
+        />
+      </View>
+    ),
+    [
+      styles,
+      width,
+      renderEvent,
+      theme,
+      calendarHeight,
+      calendarScrollOffsetMinutes,
+      showDetails,
+      onCourseSelected
+    ]
   )
 
   return (
@@ -193,23 +220,24 @@ function CalendarDay ({ selectedDate, theme, settings, calendarScrollOffsetMinut
       <View style={styles.stripShadow}>
         <CalendarStrip
           style={styles.strip}
+          calendarColor={theme.colors.calendarHeaderBackground}
+          dateNameStyle={{ color: theme.colors.text }}
+          dateNumberStyle={{ color: theme.colors.text }}
+          highlightDateNameStyle={{ color: theme.colors.text }}
+          highlightDateNumberStyle={{ color: theme.colors.text }}
           locale={{
             name: language,
             config: moment.localeData(language)
           }}
           selectedDate={selectedDate.toJSDate()}
-          onDateSelected={
-                        (date) =>
-                          onDateChanged?.(
-                            DateTime.fromObject(
-                              {
-                                year: date.year(),
-                                month: date.month() + 1,
-                                day: date.date()
-                              }
-                            )
-                          )
-                    }
+          onDateSelected={(date) =>
+            onDateChanged?.(
+              DateTime.fromObject({
+                year: date.year(),
+                month: date.month() + 1,
+                day: date.date()
+              })
+            )}
           highlightDateContainerStyle={styles.highlightDateContainer}
           showMonth={false}
           iconStyle={{ display: 'none' }}
@@ -224,14 +252,12 @@ function CalendarDay ({ selectedDate, theme, settings, calendarScrollOffsetMinut
         renderTabBar={() => null}
         lazy
         lazyPreloadDistance={1}
-        onIndexChange={
-                    (index) => {
-                      const currentDateTime = daysTabViewRoutes?.[daysTabViewIndex].date
-                      const indexDelta = index - daysTabViewIndex
-                      const deltaDateTime = currentDateTime.plus({ days: indexDelta })
-                      onDateChanged?.(deltaDateTime)
-                    }
-                }
+        onIndexChange={(index) => {
+          const currentDateTime = daysTabViewRoutes?.[daysTabViewIndex].date
+          const indexDelta = index - daysTabViewIndex
+          const deltaDateTime = currentDateTime.plus({ days: indexDelta })
+          onDateChanged?.(deltaDateTime)
+        }}
         renderScene={renderScene}
       />
     </>
@@ -244,8 +270,9 @@ const mapStateToProps = (state) => {
     pluginStyles: state.pluginReducer.timetable.styles,
     settings: state.settingReducer,
     refreshing: state.stateReducer.refreshing
-
   }
 }
 
-export default connect(mapStateToProps, { onUpdateRefreshing })(withTranslation()(withTheme(CalendarDay)))
+export default connect(mapStateToProps, { onUpdateRefreshing })(
+  withTranslation()(withTheme(CalendarDay))
+)
