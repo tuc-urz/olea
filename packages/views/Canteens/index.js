@@ -18,11 +18,11 @@ import {
     ActivityIndicator,
     SafeAreaView,
     StyleSheet,
-    Text
+    Text,
+    FlatList
 } from 'react-native';
 
-import { useTheme } from 'react-native-paper';
-import { AccordionList } from 'accordion-collapse-react-native';
+import { List, useTheme } from 'react-native-paper';
 import { TabView, TabBar, TabBarItem } from 'react-native-tab-view';
 import { useTranslation } from 'react-i18next';
 import { CommonActions, useNavigation, useRoute } from '@react-navigation/native';
@@ -63,47 +63,62 @@ function generateDayRoutes(begin, daysToRender, language, disabledWeekdays = [])
     )?.filter(dayRoute => !disabledWeekdays?.includes(dayRoute?.date?.weekday));
 }
 
-function CanteensAccordionHeader({ canteenId, menuDate, isExpanded, styles }) {
+function CanteenAccordion ({ canteenId, menuDate, styles }) {
     const { t } = useTranslation();
     const [canteen] = useCanteen(canteenId);
-    const [, refreshMenu, mealAmount, filteredMealAmount, activeSelections] = useFilteredMenu(canteenId, menuDate);
-    const { themeStyles, colors } = useTheme();
+    const [, refreshMenu, mealAmount, filteredMealAmount, activeSelections] =
+        useFilteredMenu(canteenId, menuDate);
+    const { colors } = useTheme();
 
     useEffect(
         () => {
             refreshMenu();
         },
         [canteenId, menuDate]
-    )
+    );
+
+    const description =
+        Array.isArray(activeSelections) && activeSelections.length > 0
+            ? t('canteen:amountOfFilteredMeals', {
+                filteredMealAmount,
+                mealAmount,
+                filters: activeSelections.map(
+                    selection => t(selection.labelKey)
+                )
+            })
+            : undefined;
 
     return (
-        <View style={styles.header}>
-            <View style={[themeStyles.cardLeftIcon, { marginStart: 5 }]}>
-                {
-                    canteen?.type
-                        ? <IconsOpenasist icon={((canteen.type === 'cafeteria') ? 'coffee' : 'mensa')} size={25} color={colors.icon} />
-                        : null
-                }
+        <List.Accordion
+            id={canteenId}
+            title={canteen?.title ?? `Fehler: Mensa mit ID ${canteenId} kann nicht angezeigt werden. Bitte melden!`}
+            description={description}
+            titleNumberOfLines={0}
+            descriptionNumberOfLines={0}
+            titleStyle={[styles.headerText, { color: colors.text }]}
+            descriptionStyle={{ color: colors.text }}
+            style={{ backgroundColor: colors.background }}
+            left={() =>
+                canteen?.type
+                    ? (
+                        <View style={styles.accordionIcon}>
+                            <IconsOpenasist
+                                icon={canteen.type === 'cafeteria' ? 'coffee' : 'mensa'}
+                                size={25}
+                                color={colors.icon}
+                            />
+                        </View>
+                    )
+                    : null
+            }
+        >
+            <View style={styles.accordionContent}>
+                <MensaMenu
+                    canteenId={canteenId}
+                    menuDate={menuDate}
+                />
             </View>
-            <View>
-                <Text style={styles.headerText}>{canteen?.title ?? `Fehler: Mensa mit ID ${canteenId} kann nicht angezeigt werden. Bitte melden!`}</Text>
-                {
-                    Array.isArray(activeSelections) && activeSelections.length > 0
-                        ? <Text>
-                            {
-                                t(
-                                    'canteen:amountOfFilteredMeals',
-                                    { filteredMealAmount, mealAmount, filters: activeSelections.map(favoriteSelection => t(favoriteSelection.labelKey)) }
-                                )
-                            }
-                        </Text>
-                        : null
-                }
-            </View>
-            <View style={styles.arrowIcon}>
-                <IconsOpenasist icon={isExpanded ? 'up' : 'down'} size={20} color={colors.grayLight5} />
-            </View>
-        </View>
+        </List.Accordion>
     );
 }
 
@@ -150,44 +165,33 @@ function CanteensAccordion({ expandedCanteenId, menuDate, onCanteenSelect, Cante
     );
 
     return (
-        <AccordionList
-            list={canteensIds}
-            expandedKey={expandedCanteenId}
-            onToggle={
-                // Wenn eine Mensa-Akkordion-Element vim Nutzer angeklickt wird, soll dessen ID bzw. Key an die onCanteenSelect-Funktion gegeben werden.
-                // Wird das Akkordion-Element geschlossen, wird null übergeben.
-                // Somit kann eine Eltern-Komponente die Kontrolle über die geöffenten Akkordion-Elemente übernehmen (siehe expandedCanteenId).
-                (key, index, isExpanded) => onCanteenSelect?.(
-                    // Wenn isExpanded == false, wurde die Mensa gerade geschlossen, ansonsten wurde die Mensa vom Nutzer geöffnet.
-                    isExpanded
-                        // Mensa-Akkordion-Element wurde geöffnet. Es wird der Mensa-Key zurückgeben.
-                        ? key
-                        // Mensa-Akkordion-Element wurde geschlossen. Es wird kein Mensa-Key zurückgeben.
-                        : null
-                )
-            }
-            keyExtractor={(canteenId, index) => canteenId}
-            header={
-                (canteenId, index, isExpanded) =>
-                    <CanteensAccordionHeader
+        <List.AccordionGroup
+            expandedId={expandedCanteenId == null ? '' : String(expandedCanteenId)}
+            onAccordionPress={canteenId => {
+                const currentId = expandedCanteenId == null
+                    ? null
+                    : String(expandedCanteenId);
+
+                onCanteenSelect?.(
+                    currentId === canteenId ? null : canteenId
+                );
+            }}
+        >
+            <FlatList
+                data={canteensIds}
+                extraData={expandedCanteenId}
+                keyExtractor={canteenId => canteenId}
+                renderItem={({ item: canteenId }) => (
+                    <CanteenAccordion
                         canteenId={canteenId}
                         menuDate={menuDate}
-                        isExpanded={isExpanded}
                         styles={styles}
                     />
-            }
-            body={
-                canteenId =>
-                    < View style={styles.content} >
-                        <MensaMenu
-                            canteenId={canteenId}
-                            menuDate={menuDate}
-                        />
-                    </View >
-            }
-            ListEmptyComponent={CanteensEmptyComponent}
-        />
-    )
+                )}
+                ListEmptyComponent={CanteensEmptyComponent}
+            />
+        </List.AccordionGroup>
+    );
 }
 
 /**
