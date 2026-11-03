@@ -2,7 +2,7 @@ export default function(theme) {
     return {
         container: {
             flex: 1,
-            backgroundColor: theme.colors.background,
+            backgroundColor: theme.colors.contentBackground,
         },
         contentContainer: {
             paddingTop: 0
