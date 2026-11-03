@@ -1,5 +1,4 @@
 import { useCallback } from 'react';
-import { ColorValue } from 'react-native';
 
 import {
     Appbar,

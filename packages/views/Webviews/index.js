@@ -85,7 +85,7 @@ class WebviewsView extends React.Component {
      * If the base URL of the event is different from the initial base URL, open it in the external browser.
      * Still allows url navigation with # values in the URL by comparing the base URL of the event with the base URL of the initial URL.
      */
-    onShouldStartLoadWithRequest = (event) => {
+    handleShouldStartLoadWithRequest = (event) => {
         const {url} = this.props.route.params;
         const baseUrl = url.split('#')[0];
         const eventBaseUrl = event.url.split('#')[0];
@@ -105,9 +105,9 @@ class WebviewsView extends React.Component {
         const {language} = this.props.settings.settingsGeneral
 
         // Get the current title of the element, that should be displayed e.g. Imprint, data policy, etc.
-        const title = route.params && route.params.title || null;
+        const title = (route.params && route.params.title) || null;
         // Get the url for the current element defined in the settings
-        const url = route.params && route.params.url || null;
+        const url = (route.params && route.params.url) || null;
 
         // The returned View contains a Appbar followed by the webview that calls the websites provided in the URL
         return (
@@ -129,7 +129,7 @@ class WebviewsView extends React.Component {
                                      rightAction={<Appbar.Action color={colors.appbarIconColor ?? colors.primaryText} icon="refresh"  onPress={() => this.webView.ref.reload()}/>}/>
                 </View>
                 <WebView
-                    ref={ref => this.webView.ref = ref}
+                    ref={ref => { this.webView.ref = ref; }}
                     // In addition to only providing the url as a source, headers can be defined that will contain additional information
                     // In this case the header provides information about the current system-language in order to display a given translation of the website
                     source={{ uri: url, headers: {
@@ -140,7 +140,7 @@ class WebviewsView extends React.Component {
                     onNavigationStateChange={(navState) => { this.webView.canGoBack = navState.canGoBack; }}
                     injectedJavaScript={this.jsScript + customScript}
                     onMessage={() => {}}
-                    onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest}
+                    onShouldStartLoadWithRequest={this.handleShouldStartLoadWithRequest}
                 />
             </SafeAreaView>
         );
