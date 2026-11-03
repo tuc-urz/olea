@@ -117,7 +117,7 @@ class WebviewsView extends React.Component {
                                      title={title}
                                      leftAction={
                                          <Appbar.Action
-                                             icon={props => <IconsOpenasist {...props} icon={'back'} color={colors.primaryText} /> }
+                                             icon={props => <IconsOpenasist {...props} icon={'back'} color={colors.appbarIconColor ?? colors.primaryText} /> }
                                              onPress={() => {
                                                  if (this.webView.canGoBack) {
                                                      this.webView.ref.goBack();
@@ -126,7 +126,7 @@ class WebviewsView extends React.Component {
                                                  }
                                              }} />
                                      }
-                                     rightAction={<Appbar.Action  icon="refresh"  onPress={() => this.webView.ref.reload()}/>}/>
+                                     rightAction={<Appbar.Action color={colors.appbarIconColor ?? colors.primaryText} icon="refresh"  onPress={() => this.webView.ref.reload()}/>}/>
                 </View>
                 <WebView
                     ref={ref => this.webView.ref = ref}

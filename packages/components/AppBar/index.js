@@ -40,7 +40,16 @@ function AppbarComponent({ settings, title, leftAction, rightAction, subtitle, s
     )
 
     return (
-        <Appbar.Header style={[{ elevation: 0 }, isBigFont ? { height: 70 } : null, style]} statusBarHeight={0}>
+        <Appbar.Header
+            style={[
+                { elevation: 0 },
+                colors.appbarBackground != null
+                    ? { backgroundColor: colors.appbarBackground }
+                    : null,
+                isBigFont ? { height: 70 } : null,
+                style
+            ]}
+            statusBarHeight={0}>
             {
                 leftAction
                     ? leftAction
@@ -55,7 +64,13 @@ function AppbarComponent({ settings, title, leftAction, rightAction, subtitle, s
             <Appbar.Content
                 style={isBigFont ? styles.contentStyleBigFont : {}}
                 title={title}
-                titleStyle={[styles.titleStyle, isBigFont ? styles.titleBigFont : null]}
+                titleStyle={[
+                    styles.titleStyle,
+                    isBigFont ? styles.titleBigFont : null,
+                    colors.appbarText != null
+                        ? { color: colors.appbarText }
+                        : null
+                ]}
                 subtitle={subtitle}
                 subtitleStyle={[styles.subtitle, isBigFont ? styles.subtitleBigFont : null]} />
             {

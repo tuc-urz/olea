@@ -16,13 +16,14 @@ import IconsOpenasist from '../../libraries/icons-openasist';
  *
  * @param {object} props - Es werden die Properties der {@link Appbar.Action}-Komponente unsterstützt
  * @param {string} props.icon - Name eines Icons, welches über die {@link IconsOpenasist} angezeigt werden kann.
- * @param {?ColorValue} props.color - Farbe des Icons. Wenn keine Farbe übergeben wird, wird die primäre Textfarbe (`primaryText`) aus den Theme verwendet.
+ * @param {?ColorValue} props.color - Farbe des Icons. Wenn keine Farbe übergeben wird, wird die Appbar-Iconfarbe (appbarIconColor), ersatzweise primaryText aus den Theme verwendet.
  * @returns
  */
 export default function AppbarAction({ icon, color, ...rest }) {
     const theme = useTheme();
-    const iconColor = color ?? theme?.colors?.primaryText;
-
+    const iconColor = color
+        ?? theme?.colors?.appbarIconColor
+        ?? theme?.colors?.primaryText;
     const iconCallback = useCallback(
         props =>
             <IconsOpenasist

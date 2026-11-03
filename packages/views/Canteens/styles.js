@@ -1,7 +1,8 @@
 export default function (theme) {
   return {
     container: {
-      flex: 1
+      flex: 1,
+      backgroundColor: theme.colors.contentBackground
     },
     centerContainer: {
       flex: 1,
@@ -24,7 +25,7 @@ export default function (theme) {
       marginRight: 9
     },
     option: {
-      backgroundColor: theme.colors.background,
+      backgroundColor: theme.colors.surface,
       paddingHorizontal: 0,
       paddingVertical: 0,
       borderBottomWidth: 0.4,
@@ -48,14 +49,14 @@ export default function (theme) {
       backgroundColor: theme.colors.secondary
     },
     header: {
-      backgroundColor: theme.colors.background,
+      backgroundColor: theme.colors.surface,
       padding: 10,
       flexDirection: 'row',
       justifyContent: 'flex-start',
       alignItems: 'center'
     },
     content: {
-      backgroundColor: theme.colors.background,
+      backgroundColor: theme.colors.contentBackground,
       flex: 1
     },
     headerText: {

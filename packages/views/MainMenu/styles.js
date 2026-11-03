@@ -3,7 +3,7 @@ export default function (theme) {
         container: {
             flex: 1,
             paddingTop: 0,
-            backgroundColor: theme.colors.background,
+            backgroundColor: theme.colors.contentBackground,
         },
         optionTextContainer: {
             flex: 1,
@@ -20,7 +20,7 @@ export default function (theme) {
             flex: 0.2
         },
         option: {
-            backgroundColor: theme.colors.background,
+            backgroundColor: theme.colors.surface,
             paddingHorizontal: 0,
             paddingVertical: 5,
             borderBottomWidth: 1,

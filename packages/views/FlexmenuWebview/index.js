@@ -119,7 +119,7 @@ export default function FlexMenuWebView({ route, ...props }) {
                 title={t(webviewTitle)}
                 leftAction={
                     <Appbar.Action
-                        icon={props => <IconsOpenasist {...props} icon={'back'} color={colors.primaryText} />}
+                        icon={props => <IconsOpenasist {...props} icon={'back'} color={colors.appbarIconColor ?? colors.primaryText} />}
                         onPress={
                             webviewCanGoBack
                                 ? webview?.current?.goBack
@@ -136,6 +136,7 @@ export default function FlexMenuWebView({ route, ...props }) {
                 rightAction={
                     <Appbar.Action
                         icon="refresh"
+                        color={colors.appbarIconColor ?? colors.primaryText}
                         onPress={webview?.current?.reload}
                         accessible={true}
                         accessibilityLabel={t('accessibility:appbar.reload')}

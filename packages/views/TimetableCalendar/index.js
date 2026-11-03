@@ -395,12 +395,15 @@ function TimetableViewCalendar (props) {
                     )
             }
           >
-            <Text style={{ color: whiteAppbar === colors.primary ? '#fff' : '#000' }}>
+            <Text style={{
+              color: colors.appbarText
+                ?? (whiteAppbar === colors.primary ? '#fff' : '#000')
+            }}>
               {t('timetable:today')}
             </Text>
           </TouchableOpacity>
         }
-        style={{ backgroundColor: colors.primary /* whiteAppbar */ }} // hintergrundappbar
+        style={{ backgroundColor: colors.appbarBackground ?? colors.primary }}
         title={
           activeMode === 'month'
             ? `${months[activeHeaderDate.month - 1]}`

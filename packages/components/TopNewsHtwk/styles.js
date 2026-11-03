@@ -60,7 +60,7 @@ export default function (theme) {
       flex: 1
     },
     newsItem: {
-      backgroundColor: theme.colors.background,
+      backgroundColor: theme.colors.surface,
       paddingHorizontal: theme.paddings.default,
       paddingTop: theme.paddings.xsmall,
       paddingBottom: theme.paddings.xsmall

@@ -11,7 +11,7 @@ export default function (theme) {
       flex: 0.2
     },
     entry: {
-      backgroundColor: theme.colors.background,
+      backgroundColor: theme.colors.surface,
       paddingHorizontal: 0,
       paddingVertical: 5,
       borderBottomWidth: 1,

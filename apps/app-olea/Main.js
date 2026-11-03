@@ -171,7 +171,7 @@ class Main extends React.Component {
         return (
             <PaperProvider theme={this.state.theme}>
                 <StatusBar
-                    barStyle={this.state.theme.dark ? 'light-content' : 'dark-content'}
+                    barStyle="light-content"
                     backgroundColor={this.state.theme.colors.safeAreaBackground}
                 />
                 <NavigationContainer ref={RootNavigation.navigationRef} linking={settings.deepLinking} onReady={this.handleNavigationReady}>

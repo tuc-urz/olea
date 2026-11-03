@@ -99,8 +99,10 @@ export const themeColors = {
     iconSubtitle: colors.accent,
     background: colors.white,
     safeAreaBackground: colors.white,
-    appbarIconColor: colors.black,
-    appbarSubtitle: colors.standardDescription,
+    appbarBackground: colors.accent,
+    appbarText: colors.primary,
+    appbarIconColor: colors.primary,
+    appbarSubtitle: colors.primary,
     contentBackground: colors.grayLight5,
     searchBackground: colors.grayLight5,
     surface: colors.white,
@@ -165,7 +167,9 @@ export const themeColorsHighContrast = {
     priceTable: priceTableColorsHighContrast,
     textLighter: colors.accent,
     overlayColor: addAlpha(colors.primary, 0.65),
-    appbarSubtitle: colors.black,
+    appbarText: colors.white,
+    appbarIconColor: colors.white,
+    appbarSubtitle: colors.white,
     eventContainerBackground: colors.primary,
     eventContainerSidebar: colors.primary,
 };
@@ -174,6 +178,7 @@ export const themeColorsHighContrast = {
 export const themeColorsDark = {
     ...themeColors,
 
+    appbarBackground: '#252525',
     background: '#252525',
     surface: '#252525',
     safeAreaBackground: '#252525',
@@ -216,7 +221,7 @@ export const themeColorsDark = {
     calendarGridMinor: '#383838',
     eventContainerSidebar: colors.accent,
 
-    mensaSliderBackground: addAlpha('#BEC3C6', 0.2),
+    mensaSliderBackground: '#252525',
     mensaSliderTextColor: '#F5F5F5',
 
     tertiary: '#FF8A85',
@@ -244,6 +249,9 @@ export const themeColorsDark = {
 export const themeColorsDarkHighContrast = {
     ...themeColorsDark,
 
+    appbarText: colors.white,
+    appbarIconColor: colors.white,
+    appbarSubtitle: colors.white,
     eventRoomText: colors.black,
     text: colors.white,
     textInput: colors.white,
