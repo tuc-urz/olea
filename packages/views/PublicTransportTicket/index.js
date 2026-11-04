@@ -191,6 +191,7 @@ export default function PublicTransportTicketView() {
                                                                 loginFailedInfoMessage = [
                                                                     t('user:tryLoginAgain'),
                                                                 ].join('\n');
+                                                                break;
                                                             }
                                                             case 'error': {
                                                                 const error_code = reason.error.code
@@ -200,6 +201,7 @@ export default function PublicTransportTicketView() {
                                                                     t(`user:error:${error_code}`),
                                                                     JSON.stringify({ error: reason.error }),
                                                                 ].join('\n');
+                                                                break;
                                                             }
                                                             default: {
                                                                 loginFailedInfoMessage = [
