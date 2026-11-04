@@ -183,7 +183,7 @@ export default function PublicTransportTicketView() {
                                             ? login()
                                                 .catch(
                                                     reason => {
-                                                        console.debug(componentName, ':', 'login failed', ':', reason); +JSON.stringify({ type: reason.type, error: reason.error })
+                                                        console.debug(componentName, ':', 'login failed', ':', reason, '(', JSON.stringify({ type: reason.type, error: reason.error }, ')'))
 
                                                         let loginFailedInfoMessage = t('user:tryLoginAgain');
                                                         switch (reason.type) {
