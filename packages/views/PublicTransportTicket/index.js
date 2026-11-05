@@ -174,7 +174,7 @@ export default function PublicTransportTicketView() {
                         </ScrollView>
                         : <>
                             <Text>
-                                Sie sind nicht eingeloogt
+                                {t('user:notLoggedIn')}
                             </Text>
                             <Button
                                 onPress={
@@ -183,10 +183,38 @@ export default function PublicTransportTicketView() {
                                             ? login()
                                                 .catch(
                                                     reason => {
-                                                        console.debug(componentName, ':', 'login failed', ':', reason);
+                                                        console.debug(componentName, ':', 'login failed', ':', reason, '(', JSON.stringify({ type: reason.type, error: reason.error }, ')'))
+
+                                                        let loginFailedInfoMessage = t('user:tryLoginAgain');
+                                                        switch (reason.type) {
+                                                            case 'dismiss': {
+                                                                loginFailedInfoMessage = [
+                                                                    t('user:tryLoginAgain'),
+                                                                ].join('\n');
+                                                                break;
+                                                            }
+                                                            case 'error': {
+                                                                const error_code = reason.error.code
+
+                                                                loginFailedInfoMessage = [
+                                                                    t('user:tryLoginAgain'),
+                                                                    t(`user:error:${error_code}`),
+                                                                    JSON.stringify({ error: reason.error }),
+                                                                ].join('\n');
+                                                                break;
+                                                            }
+                                                            default: {
+                                                                loginFailedInfoMessage = [
+                                                                    t('user:tryLoginAgain'),
+                                                                    `Errortype: ${reason.type}`,
+                                                                    JSON.stringify(reason.error),
+                                                                ].join('\n');
+                                                            }
+                                                        }
+
                                                         Alert.alert(
                                                             t('user:loginFailed'),
-                                                            t('user:tryLoginAgain'),
+                                                            loginFailedInfoMessage,
                                                         );
                                                     }
                                                 )

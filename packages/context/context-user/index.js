@@ -14,7 +14,14 @@
 
 import { createContext, useState, useEffect, useContext, useMemo, useReducer, useCallback } from 'react'
 
-import { useAutoDiscovery, makeRedirectUri, useAuthRequest, exchangeCodeAsync, refreshAsync } from 'expo-auth-session';
+import {
+    useAutoDiscovery,
+    makeRedirectUri,
+    useAuthRequest,
+    exchangeCodeAsync,
+    refreshAsync,
+    fetchUserInfoAsync,
+} from 'expo-auth-session';
 import * as WebBrowser from 'expo-web-browser';
 import * as SecureStore from 'expo-secure-store';
 
@@ -59,9 +66,16 @@ import { DateTime } from 'luxon';
  */
 
 class LoginError extends Error {
-    constructor(message) {
+
+    type;
+    error;
+
+    constructor(message, type, error) {
         super(message);
         this.name = this.constructor.name;
+
+        this.type = type;
+        this.error = error;
     }
 }
 
@@ -225,71 +239,37 @@ function UserContextProvider({ children }) {
     useEffect(
         () => {
             if (accessToken && discovery?.userInfoEndpoint) {
-                fetch(
-                    discovery.userInfoEndpoint,
-                    {
-                        headers: {
-                            'Authorization': 'Bearer ' + accessToken,
+                fetchUserInfoAsync({ accessToken }, discovery)
+                    .then(
+                        userInfo => {
+                            console.debug(componentName, ':', 'fetch user', ':', userInfo);
+
+                            const userInfos = {
+                                ...userInfo,
+                                organizational_units: userInfo?.ou?.map(
+                                    (organizational_unit_name, index) => ({
+                                        name: organizational_unit_name,
+                                        number: userInfo?.ounumber?.[index],
+                                        short_name: userInfo?.oushort?.[index],
+                                    })
+                                ) ?? [],
+                                member_types: [
+                                    ...(userInfo?.employeetype?.includes?.('Student') ? ['student'] : []),
+                                    ...(userInfo?.employeetype?.includes?.('Mitarbeiter') ? ['employee'] : []),
+                                ]
+                            };
+
+                            console.debug(componentName, ':', 'convert response to user', ':', userInfos);
+
+                            setUser(userInfos);
                         }
-                    }
-                ).then(
-                    response => response.json()
-                ).then(
-                    userInfoJsonResponse => {
-                        console.debug(componentName, ':', 'fetch user', ':', userInfoJsonResponse);
-
-                        const userInfos = {
-                            ...userInfoJsonResponse,
-                            organizational_units: userInfoJsonResponse?.ou?.map(
-                                (organizational_unit_name, index) => ({
-                                    name: organizational_unit_name,
-                                    number: userInfoJsonResponse?.ounumber?.[index],
-                                    short_name: userInfoJsonResponse?.oushort?.[index],
-                                })
-                            ) ?? [],
-                            member_types: [
-                                ...(userInfoJsonResponse?.employeetype?.includes?.('Student') ? ['student'] : null),
-                                ...(userInfoJsonResponse?.employeetype?.includes?.('Mitarbeiter') ? ['employee'] : null),
-                            ]
-                        };
-
-                        console.debug(componentName, ':', 'convert response to user', ':', userInfos);
-
-                        setUser(userInfos);
-                    }
-                ).catch(
-                    reason => console.warn(componentName, ':', 'can`t fetch user infos', ':', reason)
-                );
+                    ).catch(
+                        reason => console.warn(componentName, ':', 'can`t fetch user infos', ':', reason)
+                    );
             }
         },
         [accessToken, discovery]
     );
-
-    // Wenn das Format vom Server stimmt wird kann der oberer Hook mit diesem ersetzt werden
-    //useEffect(
-    //    () => {
-    //        if (accessToken && discovery) {
-    //            fetchUserInfoAsync(
-    //                {
-    //                    accessToken: accessToken
-    //                },
-    //                discovery,
-    //            ).then(
-    //                userInfo => console.warn(userInfo)
-    //            ).then(
-    //                response => response.json()
-    //            ).then(
-    //                jsonResponse => {
-    //                    console.debug(componentName, ':', 'fetch user ', jsonResponse);
-    //                    setUser(jsonResponse);
-    //                }
-    //            ).catch(
-    //                reason => console.warn(componentName, ':', 'can`t fetch user infos', ':', reason)
-    //            );
-    //        }
-    //    },
-    // [accessToken, discovery]
-    //);
 
     useEffect(
         () => {
@@ -300,7 +280,7 @@ function UserContextProvider({ children }) {
                     () =>
                         refreshAsync(
                             {
-                                clientId, clientId,
+                                clientId: clientId,
                                 refreshToken: refreshToken,
                             },
                             discovery,
@@ -339,8 +319,13 @@ function UserContextProvider({ children }) {
                             reason => console.log(componentName, ': tokenResponse: Fehler', ':', reason)
                         );
                     } else {
+                        console.debug(componentName, ':', 'login error', ':', codeResponse.type, '(', JSON.stringify(codeResponse.error), ')')
                         // TODO: Prüfen warum der Login nicht klappte und für die einzeilnen Gründe, genauere Fehlerinfos zurückgeben.
-                        throw new LoginError(`Login Failed: ${codeResponse?.type}`);
+                        throw new LoginError(
+                            `Login Failed: ${codeResponse?.type}`,
+                            codeResponse.type,
+                            codeResponse.error,
+                        );
                     }
                 }
             );
