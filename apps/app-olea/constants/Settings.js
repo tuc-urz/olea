@@ -1,3 +1,5 @@
+import legalNotices from '../generated/legal-notices.json'
+
 const defaultApiConfig = {
   production: {
     provider: 'hs-collector-v2',
@@ -11,6 +13,7 @@ const defaultApiConfig = {
 
 export default {
   name: 'OLEA',
+  legalNotices,
   logo: require('./../assets/images/logo.png'),
   header: require('./../assets/images/header.png'),
   mealPlaceboImage: null,
@@ -44,7 +47,7 @@ export default {
         { title: 'menu:titles.imprint', icon: 'imprint', url: '' },
         { title: 'menu:titles.dataPolicy', icon: 'lock', url: '' },
         { title: 'menu:titles.accessibility', icon: 'accessibility', url: '' },
-        { title: 'menu:titles.version', icon: 'imprint', view: 'SettingsAppInfo' }
+        { title: 'menu:titles.version', icon: 'app-info', view: 'SettingsAppInfo' }
 
       ]
     }

@@ -1,0 +1,9 @@
+<!-- Source: Google Material Symbols; Google LLC.
+Source URL: https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/mail/materialsymbolsoutlined/mail_24px.svg
+SPDX-License-Identifier: Apache-2.0
+Modified for OLEA on 2026-10-30: SVG cleaned; coordinates scaled and centered;
+colors adapted to currentColor; IconPark variants rendered as monochrome outlines.
+See Lizenzen/ for upstream licenses and source mapping. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <path fill="currentColor" d="M2.4 21.6Q1.41 21.6 0.705 20.895Q0 20.19 0 19.2V4.8Q0 3.81 0.705 3.105Q1.41 2.4 2.4 2.4H21.6Q22.59 2.4 23.295 3.105Q24 3.81 24 4.8V19.2Q24 20.19 23.295 20.895Q22.59 21.6 21.6 21.6H2.4ZM12 13.2 2.4 7.2V19.2H21.6V7.2L12 13.2ZM12 10.8 21.6 4.8H2.4L12 10.8ZM2.4 7.2V4.8V19.2V7.2Z"/>
+</svg>
