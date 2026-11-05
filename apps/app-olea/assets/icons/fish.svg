@@ -1,0 +1,9 @@
+<!-- Source: Pictogrammers Material Design Icons; Pictogrammers and contributing authors.
+Source URL: https://github.com/Templarian/MaterialDesign/blob/master/svg/fish.svg
+SPDX-License-Identifier: Apache-2.0
+Modified for OLEA on 2026-10-30: SVG cleaned; coordinates scaled and centered;
+colors adapted to currentColor; IconPark variants rendered as monochrome outlines.
+See Lizenzen/ for upstream licenses and source mapping. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <path fill="currentColor" d="M12 21 12.912 17.4C9 17.148 5.508 15.48 4.5 13.296C4.392 13.872 4.236 14.4 3.996 14.796C3.204 16.2 1.596 16.2 0 16.2C1.32 16.2 1.8 14.316 1.8 12C1.8 9.684 1.32 7.8 0 7.8C1.596 7.8 3.204 7.8 3.996 9.204C4.236 9.6 4.392 10.128 4.5 10.704C5.28 9 7.584 7.62 10.392 6.984L8.4 3C10.8 3 13.2 3 14.796 3.804C16.152 4.476 16.932 5.724 17.628 7.056C21.132 7.896 24 9.792 24 12C24 14.256 21 16.2 17.4 16.992C16.404 18.312 15.432 19.536 14.604 20.196C13.596 21 12.804 21 12 21M18 10.2C17.337258 10.2 16.8 10.737258 16.8 11.4C16.8 12.062742 17.337258 12.6 18 12.6C18.662742 12.6 19.2 12.062742 19.2 11.4C19.2 10.737258 18.662742 10.2 18 10.2Z"/>
+</svg>

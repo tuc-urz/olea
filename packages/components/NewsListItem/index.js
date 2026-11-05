@@ -12,78 +12,91 @@
  * limitations under the License.
  */
 
-import { useMemo } from 'react';
+import { useMemo } from 'react'
 import {
-    Text,
-    StyleSheet,
-    View,
-    TouchableOpacity,
-    Image,
-} from 'react-native';
+  Text,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+  Image
+} from 'react-native'
 
-import { useTheme } from 'react-native-paper';
-import { useTranslation } from 'react-i18next';
-import { useNavigation } from '@react-navigation/native';
+import { useTheme } from 'react-native-paper'
+import { useTranslation } from 'react-i18next'
+import { useNavigation } from '@react-navigation/native'
 
-import { DateTime } from 'luxon';
+import { DateTime } from 'luxon'
 
-import { useLanguage } from '../../libraries/core';
-import IconsOpenasist from '../../libraries/icons-openasist';
+import { useLanguage } from '../../libraries/core'
+import IconsOpenasist from '../../libraries/icons-openasist'
 
-import componentStyles from './styles';
+import componentStyles from './styles'
 
-export default function NewsListItem({ news }) {
-    const componentName = NewsListItem.name;
-    const language = useLanguage();
-    const { t } = useTranslation();
-    const theme = useTheme()
-    const { themeStyles, colors, fontSizes } = theme;
-    const navigation = useNavigation();
+export default function NewsListItem ({ news }) {
+  const componentName = NewsListItem.name
+  const language = useLanguage()
+  const { t } = useTranslation()
+  const theme = useTheme()
+  const { themeStyles, colors, fontSizes, appSettings } = theme
+  const navigation = useNavigation()
 
-    const styles = useMemo(
-        () => StyleSheet.create(componentStyles(theme)),
-        [theme, componentStyles]
-    );
+  const styles = useMemo(
+    () => StyleSheet.create(componentStyles(theme)),
+    [theme, componentStyles]
+  )
 
-    const description = news.shortDesc
-        .replace(/<(?:.|\n)*?>/gm, '')
-        .replace('Weiterlesen ›', '');
+  const description = news.shortDesc
+    .replace(/<(?:.|\n)*?>/gm, '')
+    .replace('Weiterlesen ›', '')
 
-    console.debug(componentName, ':', `news ${news?.guid} pub date`, ':', news.pubdate);
-    const publicationDate = news?.pubdate
-        ? DateTime.fromISO(news.pubdate, { locale: language }).toLocaleString(DateTime.DATETIME_SHORT)
-        : null;
+  console.debug(componentName, ':', `news ${news?.guid} pub date`, ':', news.pubdate)
+  const publicationDate = news?.pubdate
+    ? DateTime.fromISO(news.pubdate, { locale: language }).toLocaleString(DateTime.DATETIME_SHORT)
+    : null
 
-    return (
-        <TouchableOpacity
-            onPress={() => navigation.navigate('NewsDetail', { news: news })}
-            accessible={true}
-            accessibilityLabel={t('accessibility:feedNewsItem', { news: [news.title, description].join('. '), date: publicationDate })}
-            accessibilityHint={t('accessibility:feedNewsItemHint')}
-        >
-            <View style={themeStyles.flexRow}>
-                <View style={[themeStyles.cardContent, styles.contentContainer]}>
-                    {
-                        news?.imageUrl
-                            ? <Image
-                                source={{ uri: news.imageUrl }}
-                                resizeMode="cover"
-                                style={styles.image}>
-                            </Image>
-                            : null
-                    }
-                    <Text style={styles.title}>{news.title}</Text>
-                    <Text style={styles.description}>{description}</Text>
-                    {
-                        publicationDate
-                            ? <View style={[themeStyles.flexRow, { alignItems: 'center', alignContent: 'center' }]}>
-                                <IconsOpenasist icon={'time'} size={fontSizes.l} color={colors.iconSubtitle} />
-                                <Text style={[themeStyles.cardSubTitle, styles.publicationDate]}>{publicationDate}</Text>
-                            </View>
-                            : null
-                    }
-                </View>
-            </View>
-        </TouchableOpacity>
-    );
+  // Keep the fallback enabled unless the app configuration explicitly disables it.
+  const showFallbackImage = appSettings?.modules?.news?.showFallbackImage !== false
+
+  let newsImageSource = news?.imageUrl
+    ? { uri: news.imageUrl }
+    : null
+
+  // Show the app-specific fallback image so news without an image still have a visual preview.
+  // Each university can disable this fallback in its news settings.
+  if (newsImageSource == null && showFallbackImage) {
+    newsImageSource = appSettings.header
+  }
+
+  return (
+    <TouchableOpacity
+      onPress={() => navigation.navigate('NewsDetail', { news })}
+      accessible
+      accessibilityLabel={t('accessibility:feedNewsItem', { news: [news.title, description].join('. '), date: publicationDate })}
+      accessibilityHint={t('accessibility:feedNewsItemHint')}
+    >
+      <View style={themeStyles.flexRow}>
+        <View style={[themeStyles.cardContent, styles.contentContainer]}>
+          {newsImageSource != null
+            ? (
+              <Image
+                source={newsImageSource}
+                resizeMode='cover'
+                style={styles.image}
+              />
+              )
+            : null}
+          <Text style={styles.title}>{news.title}</Text>
+          <Text style={styles.description}>{description}</Text>
+          {publicationDate
+            ? (
+              <View style={[themeStyles.flexRow, { alignItems: 'center', alignContent: 'center' }]}>
+                <IconsOpenasist icon='time' size={fontSizes.l} color={colors.iconSubtitle} />
+                <Text style={[themeStyles.cardSubTitle, styles.publicationDate]}>{publicationDate}</Text>
+              </View>
+              )
+            : null}
+        </View>
+      </View>
+    </TouchableOpacity>
+  )
 }

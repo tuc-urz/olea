@@ -1,0 +1,11 @@
+<!-- Source: IconPark; Copyright 2019-present Bytedance Inc..
+Source URL: https://github.com/bytedance/IconPark/blob/master/source/Foods/garlic.svg
+SPDX-License-Identifier: Apache-2.0
+Modified for OLEA on 2026-10-30: SVG cleaned; coordinates scaled and centered;
+colors adapted to currentColor; IconPark variants rendered as monochrome outlines.
+See Lizenzen/ for upstream licenses and source mapping. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <path fill="none" stroke="currentColor" stroke-width="2.181817" stroke-linecap="round" stroke-linejoin="round" d="M13.635768 10.09091C13.635768 14.454544 15.272186 13.363636 15.817586 16.090907C16.376403 18.885433 14.038314 21.54545 11.18106 21.54545C8.323807 21.54545 5.999081 18.940797 5.999408 16.090907C5.999408 13.57669 7.362989 12 8.72668 11.181819C10.09037 10.363637 11.454006 9.545456 11.454006 7.363638"/>
+  <path fill="none" stroke="currentColor" stroke-width="2.181817" stroke-linecap="round" stroke-linejoin="round" d="M16.908549 11.181819C17.454003 11.181819 19.908547 12.272727 20.181274 14.999999C20.427983 17.467143 18.817639 21.272723 11.99946 21.54545"/>
+  <path fill="none" stroke="currentColor" stroke-width="2.181817" stroke-linecap="round" stroke-linejoin="round" d="M7.636371 20.454542C3.35612 20.454542 1.091634 17.889161 1.090909 14.999999C1.090909 11.888018 5.454554 9.000001 6.545462 8.454547C7.636371 7.909093 8.181825 6.844202 8.181825 5.727276V3.545458C8.181825 2.792584 8.519843 2.45455 9.272734 2.45455H14.181823C14.803913 2.45455 15.272731 3.000004 15.272731 3.545458V5.181821C15.272731 6.300548 15.965022 7.185111 16.956712 7.679184C17.370985 7.885966 17.808221 8.083638 18.254948 8.266365C20.060675 9.005074 22.909091 10.170492 22.909091 13.363636C22.909091 16.025998 21.05291 18.272724 19.636366 18.272724"/>
+</svg>

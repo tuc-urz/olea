@@ -4,7 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Search as SearchView } from '@olea-bps/base';
 import { Modal as ModalComponent } from '@olea-bps/base';
 
-import TabBarIcon               from "../tabBarIcon";
+import { TabBarIcon } from '@olea-bps/base';
 
 /**
  * Tab Options
@@ -12,7 +12,9 @@ import TabBarIcon               from "../tabBarIcon";
 const options = {
     title: 'Search',
     tabBarAccessibilityLabel: 'accessibility:navigation.search',
-    tabBarIcon:  (props) => TabBarIcon("search", props),
+    tabBarIcon: ({ color }) => (
+        <TabBarIcon icon="search" color={color} />
+    ),
     header: () => null
 }
 

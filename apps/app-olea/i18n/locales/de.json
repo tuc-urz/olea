@@ -283,6 +283,7 @@
     "version": {
       "title": "App-Info",
       "version": "Aktuelle Version",
+      "licenses": "Lizenzen",
       "unknown": "Unbekannt"
     },
     "notifications": {

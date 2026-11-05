@@ -1,0 +1,9 @@
+<!-- Source: Google Material Symbols; Google LLC.
+Source URL: https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/restaurant/materialsymbolsoutlined/restaurant_24px.svg
+SPDX-License-Identifier: Apache-2.0
+Modified for OLEA on 2026-10-30: SVG cleaned; coordinates scaled and centered;
+colors adapted to currentColor; IconPark variants rendered as monochrome outlines.
+See Lizenzen/ for upstream licenses and source mapping. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <path fill="currentColor" d="M6.6 24V13.02Q5.07 12.6 4.035 11.34Q3 10.08 3 8.4V0H5.4V8.4H6.6V0H9V8.4H10.2V0H12.6V8.4Q12.6 10.08 11.565 11.34Q10.53 12.6 9 13.02V24H6.6ZM18.6 24V14.4H15V6Q15 3.51 16.755 1.755Q18.51 0 21 0V24H18.6Z"/>
+</svg>
