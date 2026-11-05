@@ -35,7 +35,7 @@ function HorizontalMenu ({ canteenId, menuDate }) {
 
   const styles = useMemo(() => StyleSheet.create(componentStyles(theme)), [theme])
 
-  const [canteen] = useCanteen(canteenId, menuDate)
+  const [canteen] = useCanteen(canteenId)
   const [menu, refreshMenu, mealAmount, filteredMealAmount] = useFilteredMenu(canteenId, menuDate)
 
   useEffect(() => {
