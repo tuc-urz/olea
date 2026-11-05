@@ -131,7 +131,8 @@ class JobFilterComponent extends React.Component {
             title={item.name}
             textStyle={this.styles.title}
             onPress={() => this.handleChange(index)}
-            checkedColor={colors.primary}
+            checkedColor={colors.checkboxChecked}
+            uncheckedColor={colors.checkboxUnchecked}
           />}
         keyExtractor={this._keyExtractor}
       />
