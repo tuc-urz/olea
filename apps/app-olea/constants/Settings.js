@@ -15,7 +15,7 @@ export default {
   name: 'OLEA',
   legalNotices,
   logo: require('./../assets/images/logo.png'),
-  header: require('./../assets/images/logo.png'),
+  header: require('./../assets/images/header.png'),
   mealPlaceboImage: null,
   googleMapsUrl: 'https://www.google.com/maps/place/',
   defaultCity: 'Chemnitz',
@@ -69,7 +69,9 @@ export default {
   },
   modules: {
     news: {
-      api: defaultApiConfig
+      api: defaultApiConfig,
+      // Show the app header for newsfeed entries without an image URL.
+      showFallbackImage: true
     },
     timetable: {
       // Wenn kein API-Provider angegeben wird, wird standartmäßig die generelle API-Einstellung verwendet.
