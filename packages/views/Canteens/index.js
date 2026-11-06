@@ -12,7 +12,13 @@
  * limitations under the License.
  */
 
-import { useState, useEffect, useMemo } from 'react';
+import {
+    useState,
+    useEffect,
+    useMemo,
+    useRef
+} from 'react';
+
 import {
     View,
     ActivityIndicator,
@@ -22,20 +28,42 @@ import {
     FlatList
 } from 'react-native';
 
-import { List, useTheme } from 'react-native-paper';
-import { TabView, TabBar, TabBarItem } from 'react-native-tab-view';
-import { useTranslation } from 'react-i18next';
-import { CommonActions, useNavigation, useRoute } from '@react-navigation/native';
+import {
+    List,
+    useTheme
+} from 'react-native-paper';
 
-import { DateTime, Duration } from 'luxon';
+import {
+    TabView,
+    TabBar,
+    TabBarItem
+} from 'react-native-tab-view';
+
+import { useTranslation } from 'react-i18next';
+
+import {
+    CommonActions,
+    useNavigation,
+    useRoute
+} from '@react-navigation/native';
+
+import {
+    DateTime,
+    Duration
+} from 'luxon';
 
 import moment from 'moment';
 import 'moment/locale/de';
-
 import AppbarComponent from '../../components/AppBar';
 import IconsOpenasist from '../../libraries/icons-openasist';
 import MensaMenu from '../../components/MensaMenu';
-import { useCanteen, useCanteens, useFilteredMenu } from '../../context/context-canteen';
+
+import {
+    useCanteen,
+    useCanteens,
+    useFilteredMenu
+} from '../../context/context-canteen';
+
 import { useLanguage } from '../../libraries/core';
 
 import componentStyles from './styles';
@@ -63,7 +91,7 @@ function generateDayRoutes(begin, daysToRender, language, disabledWeekdays = [])
     )?.filter(dayRoute => !disabledWeekdays?.includes(dayRoute?.date?.weekday));
 }
 
-function CanteenAccordion ({ canteenId, menuDate, styles }) {
+function CanteenAccordion ({ canteenId, menuDate, styles, onContentLayout }) {
     const { t } = useTranslation();
     const [canteen] = useCanteen(canteenId);
     const [, refreshMenu, mealAmount, filteredMealAmount, activeSelections] =
@@ -112,7 +140,10 @@ function CanteenAccordion ({ canteenId, menuDate, styles }) {
                     : null
             }
         >
-            <View style={styles.accordionContent}>
+            <View
+                style={styles.accordionContent}
+                onLayout={() => onContentLayout?.(canteenId)}
+            >
                 <MensaMenu
                     canteenId={canteenId}
                     menuDate={menuDate}
@@ -163,29 +194,53 @@ function CanteensAccordion({ expandedCanteenId, menuDate, onCanteenSelect, Cante
         () => StyleSheet.create(componentStyles(theme)),
         [theme]
     );
+    const listRef = useRef(null);
+    const pendingScrollId = useRef(null);
+    const currentId = expandedCanteenId == null
+        ? null
+        : String(expandedCanteenId);
+
+    const handleAccordionPress = canteenId => {
+        const nextId = currentId === canteenId ? null : canteenId;
+        pendingScrollId.current = currentId !== null ? nextId : null;
+        onCanteenSelect?.(nextId);
+    };
+
+    const handleContentLayout = canteenId => {
+        if (pendingScrollId.current !== canteenId) return;
+
+        requestAnimationFrame(() => {
+            if (pendingScrollId.current !== canteenId) return;
+
+            pendingScrollId.current = null;
+            const index = canteensIds.indexOf(canteenId);
+
+            if (index >= 0) {
+                listRef.current?.scrollToIndex({
+                    index,
+                    viewPosition: 0,
+                    animated: false
+                });
+            }
+        });
+    };
 
     return (
         <List.AccordionGroup
-            expandedId={expandedCanteenId == null ? '' : String(expandedCanteenId)}
-            onAccordionPress={canteenId => {
-                const currentId = expandedCanteenId == null
-                    ? null
-                    : String(expandedCanteenId);
-
-                onCanteenSelect?.(
-                    currentId === canteenId ? null : canteenId
-                );
-            }}
+            expandedId={currentId ?? ''}
+            onAccordionPress={handleAccordionPress}
         >
             <FlatList
                 data={canteensIds}
                 extraData={expandedCanteenId}
                 keyExtractor={canteenId => canteenId}
+                ref={listRef}
                 renderItem={({ item: canteenId }) => (
                     <CanteenAccordion
                         canteenId={canteenId}
                         menuDate={menuDate}
                         styles={styles}
+                        onContentLayout={handleContentLayout}
                     />
                 )}
                 ListEmptyComponent={CanteensEmptyComponent}
