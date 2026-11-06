@@ -1,11 +1,11 @@
-import { useCallback } from 'react';
+import { useCallback } from 'react'
 
 import {
-    Appbar,
-    useTheme,
-} from 'react-native-paper';
+  Appbar,
+  useTheme
+} from 'react-native-paper'
 
-import IconsOpenasist from '../../libraries/icons-openasist';
+import IconsOpenasist from '../../libraries/icons-openasist'
 
 /**
  * Eine Action, welche die Icons über die {@link IconsOpenasist}-Komponente einbindet.
@@ -18,25 +18,25 @@ import IconsOpenasist from '../../libraries/icons-openasist';
  * @param {?ColorValue} props.color - Farbe des Icons. Wenn keine Farbe übergeben wird, wird die Appbar-Iconfarbe (appbarIconColor), ersatzweise primaryText aus den Theme verwendet.
  * @returns
  */
-export default function AppbarAction({ icon, color, ...rest }) {
-    const theme = useTheme();
-    const iconColor = color
-        ?? theme?.colors?.appbarIconColor
-        ?? theme?.colors?.primaryText;
-    const iconCallback = useCallback(
-        props =>
-            <IconsOpenasist
-                {...props}
-                icon={icon}
-                color={iconColor}
-            />,
-        [icon, iconColor]
-    );
+export default function AppbarAction ({ icon, color, ...rest }) {
+  const theme = useTheme()
+  const iconColor = color ??
+        theme?.colors?.appbarIconColor ??
+        theme?.colors?.primaryText
+  const iconCallback = useCallback(
+    props =>
+      <IconsOpenasist
+        {...props}
+        icon={icon}
+        color={iconColor}
+      />,
+    [icon, iconColor]
+  )
 
-    return (
-        <Appbar.Action
-            {...rest}
-            icon={iconCallback}
-        />
-    );
+  return (
+    <Appbar.Action
+      {...rest}
+      icon={iconCallback}
+    />
+  )
 }

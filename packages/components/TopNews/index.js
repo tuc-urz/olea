@@ -12,28 +12,26 @@
  * limitations under the License.
  */
 
-import React                from 'react';
+import React from 'react'
 import {
-    Animated,
-    Dimensions,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
-} from 'react-native';
+  Animated,
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native'
 
-import {connect}            from 'react-redux';
-import {withTheme}          from "react-native-paper";
+import { connect } from 'react-redux'
+import { withTheme } from 'react-native-paper'
 
-import merge                from 'lodash/merge';
-import NetInfo              from '@react-native-community/netinfo';
+import merge from 'lodash/merge'
+import NetInfo from '@react-native-community/netinfo'
 
-import componentStyles      from "./styles";
-import PropTypes            from "prop-types";
-import {withTranslation}     from "react-i18next";
-import { handleHtmlEntities } from '../../libraries/core/helper/format.helper';
-
-
+import componentStyles from './styles'
+import PropTypes from 'prop-types'
+import { withTranslation } from 'react-i18next'
+import { handleHtmlEntities } from '../../libraries/core/helper/format.helper'
 
 /**
  * Top News Component
@@ -47,219 +45,224 @@ import { handleHtmlEntities } from '../../libraries/core/helper/format.helper';
  *  - none
  */
 class TopNewsComponent extends React.Component {
+  static propTypes = {
+    animationRange: PropTypes.any
+  }
 
-    static propTypes = {
-        animationRange: PropTypes.any
-    };
+  // Styles of this component
+  styles
 
-    // Styles of this component
-    styles;
+  animateHeader = null
+  animateBackground = null
+  topNews = null
+  hasConnection = true
+  netInfoUnsubscribe = null
 
-    animateHeader = null;
-    animateBackground = null;
-    topNews = null;
-    hasConnection = true;
-    netInfoUnsubscribe = null;
+  constructor (props) {
+    super(props)
 
-    constructor(props) {
-        super(props);
+    // ------------------------------------------------------------------------
+    // PLUGIN FUNCTIONALITY
+    // ------------------------------------------------------------------------
 
-        // ------------------------------------------------------------------------
-        // PLUGIN FUNCTIONALITY
-        // ------------------------------------------------------------------------
+    const { pluginStyles, theme } = this.props
+    this.styles = componentStyles(theme)
 
-        const { pluginStyles,theme } = this.props;
-        this.styles = componentStyles(theme);
-
-        if(pluginStyles) {
-            this.styles = merge(this.styles, pluginStyles);
-        }
-
-        this.styles = StyleSheet.create(this.styles);
-        // ------------------------------------------------------------------------
-
-        const height = Dimensions.get('window').height;
-
-        this.animateHeader = {
-            transform: [{
-                translateY: this.props.animationRange.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [0, height / 8],
-                })
-            }]
-        };
-
-        this.animateLogo = {
-            transform: [{
-                translateY: this.props.animationRange.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [30, (height / 50)],
-                })
-            },
-            {
-                scale: this.props.animationRange.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [1, .4],
-                })
-            }]
-        };
-
-        this.animateBackground = {
-            transform: [{
-                translateY: this.props.animationRange.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [0, height / 7],
-                    extrapolate: 'clamp'
-                })
-            }]
-        };
-
-        this.netInfoUnsubscribe = NetInfo.addEventListener(state => {
-             this.hasConnection = state.isInternetReachable && state.isConnected;
-        });
+    if (pluginStyles) {
+      this.styles = merge(this.styles, pluginStyles)
     }
 
-    componentWillUnmount() {
-        if(this.netInfoUnsubscribe) {
-            this.netInfoUnsubscribe();
-        }
+    this.styles = StyleSheet.create(this.styles)
+    // ------------------------------------------------------------------------
+
+    const height = Dimensions.get('window').height
+
+    this.animateHeader = {
+      transform: [{
+        translateY: this.props.animationRange.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, height / 8]
+        })
+      }]
     }
 
-    render() {
+    this.animateLogo = {
+      transform: [{
+        translateY: this.props.animationRange.interpolate({
+          inputRange: [0, 1],
+          outputRange: [30, (height / 50)]
+        })
+      },
+      {
+        scale: this.props.animationRange.interpolate({
+          inputRange: [0, 1],
+          outputRange: [1, 0.4]
+        })
+      }]
+    }
 
-        // ------------------------------------------------------------------------
-        // PLUGIN FUNCTIONALITY
-        // ------------------------------------------------------------------------
-        const PluginComponent = this.props.pluginComponent;
-        if (PluginComponent) {
-            return <PluginComponent />;
-        }
-        // ------------------------------------------------------------------------
+    this.animateBackground = {
+      transform: [{
+        translateY: this.props.animationRange.interpolate({
+          inputRange: [0, 1],
+          outputRange: [0, height / 7],
+          extrapolate: 'clamp'
+        })
+      }]
+    }
 
-        const { theme, pluginStyles } = this.props;
-        this.styles = componentStyles(theme);
+    this.netInfoUnsubscribe = NetInfo.addEventListener(state => {
+      this.hasConnection = state.isInternetReachable && state.isConnected
+    })
+  }
 
-        if (pluginStyles) {
-            this.styles = merge(this.styles, pluginStyles);
-        }
+  componentWillUnmount () {
+    if (this.netInfoUnsubscribe) {
+      this.netInfoUnsubscribe()
+    }
+  }
 
-        this.styles = StyleSheet.create(this.styles);
+  render () {
+    // ------------------------------------------------------------------------
+    // PLUGIN FUNCTIONALITY
+    // ------------------------------------------------------------------------
+    const PluginComponent = this.props.pluginComponent
+    if (PluginComponent) {
+      return <PluginComponent />
+    }
+    // ------------------------------------------------------------------------
 
-        const {feeds, t} = this.props;
-        const { appSettings } = this.props.theme;
-        let topNews = this.props.topNews;
+    const { theme, pluginStyles } = this.props
+    this.styles = componentStyles(theme)
 
-        if(!Array.isArray(topNews)) {
-            topNews = [];
-        }
+    if (pluginStyles) {
+      this.styles = merge(this.styles, pluginStyles)
+    }
 
-        let topItem = null;
-        let imageSrc = null;
-        let feedTitle = null;
-        if(topNews[0]) {
-            topItem = topNews[0];
-            if(topItem.imageUrl) {
-                imageSrc = {uri: topItem.imageUrl};
-            }
-        }
+    this.styles = StyleSheet.create(this.styles)
 
-        if(feeds && topItem && topItem.originFeedId) {
-            const feed = feeds.filter(feed => feed.feedid === topItem.originFeedId)[0];
+    const { feeds, t } = this.props
+    const { appSettings } = this.props.theme
+    let topNews = this.props.topNews
 
-            if(feed && feed.title) {
-                feedTitle = feed.title.toUpperCase();
-            }
-        }
+    if (!Array.isArray(topNews)) {
+      topNews = []
+    }
 
-        if(!imageSrc)
-            imageSrc = appSettings.header;
+    let topItem = null
+    let imageSrc = null
+    let feedTitle = null
+    if (topNews[0]) {
+      topItem = topNews[0]
+      if (topItem.imageUrl) {
+        imageSrc = { uri: topItem.imageUrl }
+      }
+    }
 
+    if (feeds && topItem && topItem.originFeedId) {
+      const feed = feeds.filter(feed => feed.feedid === topItem.originFeedId)[0]
 
-        // Top News available
-        this.topNews = topItem;
+      if (feed && feed.title) {
+        feedTitle = feed.title.toUpperCase()
+      }
+    }
 
-        // Notice about "." in accessibilityLabels: This will set a short break in the sound output, like in a normal sentence.
+    if (!imageSrc) { imageSrc = appSettings.header }
 
-        return (
-            <View style={{overflow:'hidden'}}>
-                <View stlyle={this.styles.backgroundImageWrapper}>
-                    <TouchableOpacity
-                        onPress={
+    // Top News available
+    this.topNews = topItem
+
+    // Notice about "." in accessibilityLabels: This will set a short break in the sound output, like in a normal sentence.
+
+    return (
+      <View style={{ overflow: 'hidden' }}>
+        <View stlyle={this.styles.backgroundImageWrapper}>
+          <TouchableOpacity
+            onPress={
                             topItem?.link ?? null
-                                ? () => { this._handlePressNews(topItem) }
-                                : null
+                              ? () => { this._handlePressNews(topItem) }
+                              : null
                         }
-                    >
-                        <Animated.Image
-                            source={imageSrc}
-                            resizeMode="cover"
-                            fadeDuration={0}
-                            style={[this.styles.newsImage, this.animateBackground]}
-                            accessible={true}
-                            accessibilityLabel={
+          >
+            <Animated.Image
+              source={imageSrc}
+              resizeMode='cover'
+              fadeDuration={0}
+              style={[this.styles.newsImage, this.animateBackground]}
+              accessible
+              accessibilityLabel={
                                 !topItem && !this.hasConnection
-                                    ? t('home:noConnectionTitle')
-                                    : (!topItem ? t('home:noItemTitle') : handleHtmlEntities(topItem.title))
+                                  ? t('home:noConnectionTitle')
+                                  : (!topItem ? t('home:noItemTitle') : handleHtmlEntities(topItem.title))
                             }
-                            accessibilityHint={!topItem ? '' : t('accessibility:topNewsHint')}
-                        />
-                    </TouchableOpacity>
-                </View>
+              accessibilityHint={!topItem ? '' : t('accessibility:topNewsHint')}
+            />
+          </TouchableOpacity>
+        </View>
 
-                {
-                    (!topItem && !this.hasConnection) ? (
-                        <Animated.View style={[this.styles.newsItem]}
-                                       accessible={true}
-                                       accessibilityLabel={t('home:noConnectionTitle')}>
-                            <Text
-                                style={this.styles.newsItemCategory}>{t('home:noConnectionSubtitle').toUpperCase()}</Text>
-                            <Text style={this.styles.newsItemTitle}>{t('home:noConnectionTitle')}</Text>
-                            <Text style={this.styles.newsItemText}>{t('home:noConnectionText')}</Text>
-                            <View style={this.styles.newsItemActionbar}>
-                                <Text style={this.styles.newsItemDate}></Text>
-                            </View>
+        {
+                    (!topItem && !this.hasConnection)
+                      ? (
+                        <Animated.View
+                          style={[this.styles.newsItem]}
+                          accessible
+                          accessibilityLabel={t('home:noConnectionTitle')}
+                        >
+                          <Text
+                            style={this.styles.newsItemCategory}
+                          >{t('home:noConnectionSubtitle').toUpperCase()}
+                          </Text>
+                          <Text style={this.styles.newsItemTitle}>{t('home:noConnectionTitle')}</Text>
+                          <Text style={this.styles.newsItemText}>{t('home:noConnectionText')}</Text>
+                          <View style={this.styles.newsItemActionbar}>
+                            <Text style={this.styles.newsItemDate} />
+                          </View>
                         </Animated.View>
-                    ) : ((!topItem) ? (
-                        <Animated.View style={[this.styles.newsItem]}
-                                       accessible={true}
-                                       accessibilityLabel={t('home:noItemTitle')}>
-                            <Text style={this.styles.newsItemCategory}>{t('home:noItemSubtitle').toUpperCase()}</Text>
-                            <Text style={this.styles.newsItemTitle}>{t('home:noItemTitle')}</Text>
-                            <Text style={this.styles.newsItemText}>{t('home:noItemText')}</Text>
-                            <View style={this.styles.newsItemActionbar}>
-                                <Text style={this.styles.newsItemDate}/>
-                            </View>
-                        </Animated.View>
-                    ) : (topItem?.shortDesc
-                        ? (
-                            <TouchableOpacity
-                                style={this.styles.newsItem}
-                                onPress={() => {this._handlePressNews(topItem)}}
-                                accessible={true}
-                                accessibilityLabel={handleHtmlEntities(topItem.title)}
-                                accessibilityHint={t('accessibility:topNewsHint')}>
-                                <View>
+                        )
+                      : ((!topItem)
+                          ? (
+                            <Animated.View
+                              style={[this.styles.newsItem]}
+                              accessible
+                              accessibilityLabel={t('home:noItemTitle')}
+                            >
+                              <Text style={this.styles.newsItemCategory}>{t('home:noItemSubtitle').toUpperCase()}</Text>
+                              <Text style={this.styles.newsItemTitle}>{t('home:noItemTitle')}</Text>
+                              <Text style={this.styles.newsItemText}>{t('home:noItemText')}</Text>
+                              <View style={this.styles.newsItemActionbar}>
+                                <Text style={this.styles.newsItemDate} />
+                              </View>
+                            </Animated.View>
+                            )
+                          : (topItem?.shortDesc
+                              ? (
+                                <TouchableOpacity
+                                  style={this.styles.newsItem}
+                                  onPress={() => { this._handlePressNews(topItem) }}
+                                  accessible
+                                  accessibilityLabel={handleHtmlEntities(topItem.title)}
+                                  accessibilityHint={t('accessibility:topNewsHint')}
+                                >
+                                  <View>
                                     {feedTitle && <Text style={this.styles.newsItemCategory}>{feedTitle}</Text>}
                                     <Text style={this.styles.newsItemTitle}>{handleHtmlEntities(topItem.title)}</Text>
                                     <Text style={this.styles.newsItemText}>{handleHtmlEntities(topItem.shortDesc)} ... <Text style={this.styles.newsItemReadMore}>{t('home:readMore')}</Text></Text>
                                     <View style={this.styles.newsItemActionbar}>
-                                        {topItem?.author != null
-                                            ? <Text style={this.styles.newsItemAuthor}>{handleHtmlEntities(topItem.author)}</Text>
-                                            : null
-                                        }
+                                      {topItem?.author != null
+                                        ? <Text style={this.styles.newsItemAuthor}>{handleHtmlEntities(topItem.author)}</Text>
+                                        : null}
                                     </View>
-                                </View>
-                            </TouchableOpacity>
-                          )
-                        : null
-                ))
+                                  </View>
+                                </TouchableOpacity>
+                                )
+                              : null
+                            ))
                 }
-            </View>
-        );
-    }
+      </View>
+    )
+  }
 
-
-    /**
+  /**
      * User has pressed the news item card.
      * Shows the news details in a modal window.
      *
@@ -267,26 +270,25 @@ class TopNewsComponent extends React.Component {
      *
      * @private
      */
-    _handlePressNews = (news) => {
-        if (news) {
-            this.props.navigation.navigate(
-                'TopNewsDetail',
-                {
-                    news: {...news, 'feedId': 0},
-                    newsType: "Default"
-                });
-        }
+  _handlePressNews = (news) => {
+    if (news) {
+      this.props.navigation.navigate(
+        'TopNewsDetail',
+        {
+          news: { ...news, feedId: 0 },
+          newsType: 'Default'
+        })
     }
+  }
 }
 
-
 const mapStateToProps = state => {
-    return {
-        pluginComponent: state.pluginReducer.topNews.component,
-        pluginStyles: state.pluginReducer.topNews.styles,
-        topNews: state.apiReducer.topNews,
-        feeds: state.apiReducer.feeds
-    };
-};
+  return {
+    pluginComponent: state.pluginReducer.topNews.component,
+    pluginStyles: state.pluginReducer.topNews.styles,
+    topNews: state.apiReducer.topNews,
+    feeds: state.apiReducer.feeds
+  }
+}
 
 export default connect(mapStateToProps, null)(withTranslation()(withTheme(TopNewsComponent)))

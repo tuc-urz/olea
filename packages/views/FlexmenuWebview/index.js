@@ -12,24 +12,24 @@
  * limitations under the License.
  */
 
-import { useMemo, useState, useCallback, useRef } from 'react';
+import { useMemo, useState, useCallback, useRef } from 'react'
 import {
-    StyleSheet,
-    SafeAreaView,
-    ActivityIndicator,
-    BackHandler,
-    Platform,
-} from 'react-native';
+  StyleSheet,
+  SafeAreaView,
+  ActivityIndicator,
+  BackHandler,
+  Platform
+} from 'react-native'
 
-import { Appbar, useTheme } from "react-native-paper";
-import { useTranslation } from "react-i18next";
-import { useFocusEffect } from '@react-navigation/native';
-import { WebView } from 'react-native-webview';
+import { Appbar, useTheme } from 'react-native-paper'
+import { useTranslation } from 'react-i18next'
+import { useFocusEffect } from '@react-navigation/native'
+import { WebView } from 'react-native-webview'
 
-import AppbarComponent from '../../components/AppBar';
-import IconsOpenasist from '../../libraries/icons-openasist';
+import AppbarComponent from '../../components/AppBar'
+import IconsOpenasist from '../../libraries/icons-openasist'
 
-import componentStyles from "./styles";
+import componentStyles from './styles'
 
 /**
  * Corona Info View
@@ -43,19 +43,19 @@ import componentStyles from "./styles";
  * Navigation-Parameters:
  *  - none
  */
-export default function FlexMenuWebView({ route, ...props }) {
-    const theme = useTheme();
-    const { colors, themeStyles } = theme;
-    const { t } = useTranslation();
-    const flexMenuEntry = route?.params?.item ?? props?.item;
+export default function FlexMenuWebView ({ route, ...props }) {
+  const theme = useTheme()
+  const { colors, themeStyles } = theme
+  const { t } = useTranslation()
+  const flexMenuEntry = route?.params?.item ?? props?.item
 
-    const webviewURL = route?.params?.url ?? props?.url;
-    const webviewTitle = flexMenuEntry.title;
+  const webviewURL = route?.params?.url ?? props?.url
+  const webviewTitle = flexMenuEntry.title
 
-    const webview = useRef(null);
-    const [webviewCanGoBack, setWebviewCanGoBack] = useState();
+  const webview = useRef(null)
+  const [webviewCanGoBack, setWebviewCanGoBack] = useState()
 
-    /**
+  /**
      * Erstellen einer Liste von erlauben Hosts, die in der Webview verwendet werden dürfen.
      * In der Liste ist nur ein Host, welcher aus der anzuzeigenden URL extrahiert wird.
      *
@@ -65,104 +65,105 @@ export default function FlexMenuWebView({ route, ...props }) {
      *
      * @type {string[]|undefined}
      */
-    const webviewOriginWhitelist = useMemo(
-        () => {
-            // URL-String in URL-Instanze konvertieren
-            const url = new URL(webviewURL);
-            // Host/Origin aus URL extrahieren
-            const webviewURLOrigin = url.origin;
+  const webviewOriginWhitelist = useMemo(
+    () => {
+      // URL-String in URL-Instanze konvertieren
+      const url = new URL(webviewURL)
+      // Host/Origin aus URL extrahieren
+      const webviewURLOrigin = url.origin
 
-            // Auswahl das Rückgabewerted abhängig vond der Plattform
-            // Standartmäßig wird eine Liste mit dem Host der URL zurückgegeben
-            // Unter iOS wird undefined zurückgegeben
-            return Platform.select({
-                default: [webviewURLOrigin],
-                ios: undefined,
-            });
-        },
-        [webviewURL]
-    );
+      // Auswahl das Rückgabewerted abhängig vond der Plattform
+      // Standartmäßig wird eine Liste mit dem Host der URL zurückgegeben
+      // Unter iOS wird undefined zurückgegeben
+      return Platform.select({
+        default: [webviewURLOrigin],
+        ios: undefined
+      })
+    },
+    [webviewURL]
+  )
 
-    // Styles of this component
-    const styles = useMemo(
-        () => StyleSheet.create(componentStyles(theme)),
-        [theme]
-    )
+  // Styles of this component
+  const styles = useMemo(
+    () => StyleSheet.create(componentStyles(theme)),
+    [theme]
+  )
 
-    useFocusEffect(
-        useCallback(
-            () => {
-                const onBackPress = webviewCanGoBack && webview?.current
-                    ? () => {
-                        webview?.current?.goBack();
-                        return true;
-                    }
-                    : () => {
-                        props?.navigation?.goBack();
-                        return true;
-                    }
+  useFocusEffect(
+    useCallback(
+      () => {
+        const onBackPress = webviewCanGoBack && webview?.current
+          ? () => {
+              webview?.current?.goBack()
+              return true
+            }
+          : () => {
+              props?.navigation?.goBack()
+              return true
+            }
 
-                const subscription = BackHandler.addEventListener(
-                    'hardwareBackPress',
-                    onBackPress
-                );
-
-                return () => subscription.remove();
-            },
-            [webviewCanGoBack]
+        const subscription = BackHandler.addEventListener(
+          'hardwareBackPress',
+          onBackPress
         )
-    );
 
-    return (
-        <SafeAreaView style={[styles.container, themeStyles.appSafeAreaContainer]}>
-            <AppbarComponent {...props}
-                title={t(webviewTitle)}
-                leftAction={
-                    <Appbar.Action
-                        icon={props => <IconsOpenasist {...props} icon={'back'} color={colors.appbarIconColor ?? colors.primaryText} />}
-                        onPress={
+        return () => subscription.remove()
+      },
+      [webviewCanGoBack]
+    )
+  )
+
+  return (
+    <SafeAreaView style={[styles.container, themeStyles.appSafeAreaContainer]}>
+      <AppbarComponent
+        {...props}
+        title={t(webviewTitle)}
+        leftAction={
+          <Appbar.Action
+            icon={props => <IconsOpenasist {...props} icon='back' color={colors.appbarIconColor ?? colors.primaryText} />}
+            onPress={
                             webviewCanGoBack
-                                ? webview?.current?.goBack
-                                : props?.navigation?.goBack
+                              ? webview?.current?.goBack
+                              : props?.navigation?.goBack
                         }
-                        accessible={true}
-                        accessibilityLabel={
+            accessible
+            accessibilityLabel={
                             webviewCanGoBack
-                                ? t('accessibility:appbar.navigateBack')
-                                : t('accessibility:appbar.back')
+                              ? t('accessibility:appbar.navigateBack')
+                              : t('accessibility:appbar.back')
                         }
-                    />
+          />
                 }
-                rightAction={
-                    <Appbar.Action
-                        icon="refresh"
-                        color={colors.appbarIconColor ?? colors.primaryText}
-                        onPress={webview?.current?.reload}
-                        accessible={true}
-                        accessibilityLabel={t('accessibility:appbar.reload')}
-                    />
+        rightAction={
+          <Appbar.Action
+            icon='refresh'
+            color={colors.appbarIconColor ?? colors.primaryText}
+            onPress={webview?.current?.reload}
+            accessible
+            accessibilityLabel={t('accessibility:appbar.reload')}
+          />
                 }
-            />
-            <WebView
-                ref={webview}
-                source={{ uri: webviewURL }}
-                startInLoadingState={true}
-                allowsFullscreenVideo={true}
-                allowsInlineMediaPlayback={true}
-                originWhitelist={webviewOriginWhitelist}
-                renderLoading={
+      />
+      <WebView
+        ref={webview}
+        source={{ uri: webviewURL }}
+        startInLoadingState
+        allowsFullscreenVideo
+        allowsInlineMediaPlayback
+        originWhitelist={webviewOriginWhitelist}
+        renderLoading={
                     () =>
-                        <ActivityIndicator
-                            style={styles.activity}
-                            size='large'
-                            color={colors.loadingIndicator}
-                        />
+                      <ActivityIndicator
+                        style={styles.activity}
+                        size='large'
+                        color={colors.loadingIndicator}
+                      />
                 }
-                onLoad={
+        onLoad={
                     syntheticEvent =>
-                        setWebviewCanGoBack(syntheticEvent?.nativeEvent?.canGoBack ?? false)
+                      setWebviewCanGoBack(syntheticEvent?.nativeEvent?.canGoBack ?? false)
                 }
-            />
-        </SafeAreaView>
-    );
+      />
+    </SafeAreaView>
+  )
 }

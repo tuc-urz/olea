@@ -396,9 +396,10 @@ function TimetableViewCalendar (props) {
             }
           >
             <Text style={{
-              color: colors.appbarText
-                ?? (whiteAppbar === colors.primary ? '#fff' : '#000')
-            }}>
+              color: colors.appbarText ??
+                (whiteAppbar === colors.primary ? '#fff' : '#000')
+            }}
+            >
               {t('timetable:today')}
             </Text>
           </TouchableOpacity>

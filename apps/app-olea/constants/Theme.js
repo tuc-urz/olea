@@ -1,29 +1,29 @@
-import settings from './Settings';
+import settings from './Settings'
 
-import fonts from './layout/Fonts';
-
-import {
-    fontSizes,
-    accessibilityFontSizes,
-    lineHeights,
-    accessibilityLineHeights
-} from './layout/fontSizes';
-
-import icons from './layout/Icons';
-import iconsSVG from './layout/IconsSVG';
-import { getStyles } from './layout/Styles';
-import paddings from './layout/Paddings';
+import fonts from './layout/Fonts'
 
 import {
-    themeColors,
-    themeColorsHighContrast,
-    themeColorsDark,
-    themeColorsDarkHighContrast
-} from './layout/Colors';
+  fontSizes,
+  accessibilityFontSizes,
+  lineHeights,
+  accessibilityLineHeights
+} from './layout/fontSizes'
 
-import { Asset } from 'expo-asset';
+import icons from './layout/Icons'
+import iconsSVG from './layout/IconsSVG'
+import { getStyles } from './layout/Styles'
+import paddings from './layout/Paddings'
 
-const fontFamily = Asset.fromModule(require('./../assets/fonts/Poppins-Regular.ttf')).uri;
+import {
+  themeColors,
+  themeColorsHighContrast,
+  themeColorsDark,
+  themeColorsDarkHighContrast
+} from './layout/Colors'
+
+import { Asset } from 'expo-asset'
+
+const fontFamily = Asset.fromModule(require('./../assets/fonts/Poppins-Regular.ttf')).uri
 
 /**
  * Erstellt den HTML-Head mit den Styles für die WebView.
@@ -32,8 +32,8 @@ const fontFamily = Asset.fromModule(require('./../assets/fonts/Poppins-Regular.t
  * @param {object} sizes - Schriftgrößen des aktiven App-Themes.
  * @returns {string} HTML-Head mit Schriftdefinition und Styles.
  */
-function createThemeCss(colors, sizes) {
-    return '<head><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">' +
+function createThemeCss (colors, sizes) {
+  return '<head><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">' +
         '<style type="text/css">' +
         '@font-face {font-family: \'poppins-regular\'; src:url(' + fontFamily + ')}' +
         'html, body {background-color: ' + colors.contentBackground + '; color: ' + colors.text + ';}' +
@@ -42,65 +42,65 @@ function createThemeCss(colors, sizes) {
         '.content span[style*="windowtext" i] {color: inherit !important;}' +
         'strong {font-weight: 600}' +
         '.content {width: 100%;}' +
-        '</style></head>';
+        '</style></head>'
 }
 
 const theme = {
-    version: 2,
-    dark: false,
-    supportsColorScheme: true,
-    roundness: 4,
-    tabBar: {
-        iconSize: 24,
-    },
-    paddings: paddings,
-    colors: themeColors,
-    themeStyles: getStyles(themeColors, fontSizes, lineHeights),
-    fonts,
-    fontSizes: fontSizes,
-    lineHeights: lineHeights,
-    appSettings: settings,
-    css: createThemeCss(themeColors, fontSizes),
-    customScript: "document.cookie = 'klaro=%7B%22matomo%22%3Afalse%2C%22technicalTracker%22%3Atrue%7D'",
-    animation: {
-        scale: 1.0,
-    },
-    AppIcons: icons, //old icons import from .ttf font file
-    icons: iconsSVG //new icons import from svg file
-};
+  version: 2,
+  dark: false,
+  supportsColorScheme: true,
+  roundness: 4,
+  tabBar: {
+    iconSize: 24
+  },
+  paddings,
+  colors: themeColors,
+  themeStyles: getStyles(themeColors, fontSizes, lineHeights),
+  fonts,
+  fontSizes,
+  lineHeights,
+  appSettings: settings,
+  css: createThemeCss(themeColors, fontSizes),
+  customScript: "document.cookie = 'klaro=%7B%22matomo%22%3Afalse%2C%22technicalTracker%22%3Atrue%7D'",
+  animation: {
+    scale: 1.0
+  },
+  AppIcons: icons, // old icons import from .ttf font file
+  icons: iconsSVG // new icons import from svg file
+}
 
 export const getTheme = (highContrast, increaseFontSize, dark = false) => {
-    const colorsToUse = dark
-        ? (
-            highContrast
-                ? themeColorsDarkHighContrast
-                : themeColorsDark
-        )
-        : (
-            highContrast
-                ? themeColorsHighContrast
-                : themeColors
-        );
+  const colorsToUse = dark
+    ? (
+        highContrast
+          ? themeColorsDarkHighContrast
+          : themeColorsDark
+      )
+    : (
+        highContrast
+          ? themeColorsHighContrast
+          : themeColors
+      )
 
-    const fontSizesToUse = increaseFontSize
-        ? accessibilityFontSizes
-        : fontSizes;
+  const fontSizesToUse = increaseFontSize
+    ? accessibilityFontSizes
+    : fontSizes
 
-    const lineHeightsToUse = increaseFontSize
-        ? accessibilityLineHeights
-        : lineHeights;
+  const lineHeightsToUse = increaseFontSize
+    ? accessibilityLineHeights
+    : lineHeights
 
-    return {
-        ...theme,
-        dark,
-        colors: colorsToUse,
-        themeStyles: getStyles(
-            colorsToUse,
-            fontSizesToUse,
-            lineHeightsToUse
-        ),
-        fontSizes: fontSizesToUse,
-        lineHeights: lineHeightsToUse,
-        css: createThemeCss(colorsToUse, fontSizesToUse)
-    };
-};
+  return {
+    ...theme,
+    dark,
+    colors: colorsToUse,
+    themeStyles: getStyles(
+      colorsToUse,
+      fontSizesToUse,
+      lineHeightsToUse
+    ),
+    fontSizes: fontSizesToUse,
+    lineHeights: lineHeightsToUse,
+    css: createThemeCss(colorsToUse, fontSizesToUse)
+  }
+}
