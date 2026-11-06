@@ -138,7 +138,7 @@ export default function UserSettingsView(props) {
                         </>
                         : <>
                             <Text>
-                                Sie sind nicht eingeloogt
+                                {t('user:notLoggedIn')}
                             </Text>
                             <Button
                                 onPress={

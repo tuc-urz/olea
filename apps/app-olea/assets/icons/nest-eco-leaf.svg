@@ -1,0 +1,9 @@
+<!-- Source: Google Material Symbols; Google LLC.
+Source URL: https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/nest_eco_leaf/materialsymbolsoutlined/nest_eco_leaf_24px.svg
+SPDX-License-Identifier: Apache-2.0
+Modified for OLEA on 2026-10-30: SVG cleaned; coordinates scaled and centered;
+colors adapted to currentColor; IconPark variants rendered as monochrome outlines.
+See Lizenzen/ for upstream licenses and source mapping. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <path fill="currentColor" d="M12 24Q9.9 24 8.04375 23.34375Q6.1875 22.6875 4.65 21.4875L2.55 23.55Q2.1375 23.9625 1.5 23.9625Q0.8625 23.9625 0.45 23.55Q0.0375 23.1375 0.0375 22.5Q0.0375 21.8625 0.45 21.45L2.5125 19.3875Q1.3125 17.85 0.65625 15.975Q0 14.1 0 12Q0 6.975 3.4875 3.4875Q6.975 0 12 0H24V12Q24 17.025 20.5125 20.5125Q17.025 24 12 24ZM12 21Q15.75 21 18.375 18.375Q21 15.75 21 12V3H12Q8.25 3 5.625 5.625Q3 8.25 3 12Q3 13.4625 3.45 14.79375Q3.9 16.125 4.6875 17.2125L12.45 9.45Q12.8625 9.0375 13.5 9.0375Q14.1375 9.0375 14.55 9.45Q15 9.9 15 10.51875Q15 11.1375 14.55 11.5875L6.7875 19.35Q7.875 20.1375 9.20625 20.56875Q10.5375 21 12 21ZM12 12Z"/>
+</svg>

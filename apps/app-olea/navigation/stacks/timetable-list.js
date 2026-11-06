@@ -4,7 +4,7 @@ import { TimetableListView as TimetableViewList } from '@olea-bps/base';
 import { CourseDetail as TimetableCourseView } from '@olea-bps/base';
 import { Modal as ModalComponent } from '@olea-bps/base';
 
-import TabBarIcon               from '../tabBarIcon';
+import { TabBarIcon } from '@olea-bps/base';
 
 /**
  * Tab Options
@@ -12,7 +12,9 @@ import TabBarIcon               from '../tabBarIcon';
 const options = {
     title: 'Timetable',
     tabBarAccessibilityLabel: 'accessibility:navigation.timetable',
-    tabBarIcon: (props) => TabBarIcon("timetable", props),
+    tabBarIcon: ({ color }) => (
+        <TabBarIcon icon="timetable" color={color} />
+    ),
     header: () => null
 }
 
