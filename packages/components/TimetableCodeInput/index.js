@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react'
 import {
   StyleSheet,
   View,
@@ -21,19 +21,19 @@ import {
   KeyboardAvoidingView,
   Alert,
   Text,
-  Linking,
-} from 'react-native';
+  Linking
+} from 'react-native'
 import { connect } from 'react-redux'
-import { Paragraph, TextInput, Button, withTheme } from 'react-native-paper';
-import { withTranslation } from 'react-i18next';
+import { Paragraph, TextInput, Button, withTheme } from 'react-native-paper'
+import { withTranslation } from 'react-i18next'
 
 import {
   ApiProviderNotInitializedError,
   useCourses,
-  useTimetableCode,
-} from '../../context/context-timetable';
+  useTimetableCode
+} from '../../context/context-timetable'
 
-import componentStyles from './styles';
+import componentStyles from './styles'
 
 /**
  * Diese Callback-Funktion wird gerufen, wenn der vom Nutzer ausgelöste Import erfolgreich war.
@@ -53,103 +53,119 @@ import componentStyles from './styles';
  * @param {onImportSuccessfullyFinished} props.onImportFailed
  * @param {onImportFailed} props.ponImportSuccessfullyFinished
  */
-function TimetableCodeInput(props) {
+function TimetableCodeInput (props) {
   const {
     theme,
-    theme: { colors, appSettings: { modules: { timetable: { code } } } },
+    theme: {
+      colors,
+      appSettings: {
+        modules: {
+          timetable: { code }
+        }
+      }
+    },
     t,
     // Callback, welche nach dem erfolgreichen Importieren aufgerufen wird.
     onImportSuccessfullyFinished,
     // Callback, welche nach einem fehlgeschlagenen Importversuch aufgerufen wird.
-    onImportFailed,
-  } = props;
+    onImportFailed
+  } = props
 
-  const componentName = TimetableCodeInput.name;
+  const componentName = TimetableCodeInput.name
 
   // Einstellungen für den Stundenplan-Code
-  const timetableCodeInputLength = code?.length ?? 0;
-  const timetableCodeInputFilters = code?.filters;
-  const timetableCodeInputPreSaveFilters = Array.isArray(code?.preSaveFilters) ? code.preSaveFilters : [];
-  const timetableCodeInputFilterToUpperCase = timetableCodeInputFilters?.toUpperCase ?? false;
+  const timetableCodeInputLength = code?.length ?? 0
+  const timetableCodeInputFilters = code?.filters
+  const timetableCodeInputPreSaveFilters = Array.isArray(code?.preSaveFilters)
+    ? code.preSaveFilters
+    : []
+  const timetableCodeInputFilterToUpperCase = timetableCodeInputFilters?.toUpperCase ?? false
 
-  const [timetableCode, saveTimetableCode] = useTimetableCode();
-  const [, refreshCourses] = useCourses();
+  const [timetableCode, saveTimetableCode] = useTimetableCode()
+  const [, refreshCourses] = useCourses()
 
-  const [timetableCodeInput, setTimetableCodeInput] = useState(timetableCode);
-  const [importing, setImporting] = useState(false);
+  const [timetableCodeInput, setTimetableCodeInput] = useState(timetableCode)
+  const [importing, setImporting] = useState(false)
 
   // Generate styles. Will be generated only if not present or the theme property changes.
-  const styles = useMemo(
-    () => StyleSheet.create(componentStyles(theme)),
-    [theme]
-  )
+  const styles = useMemo(() => StyleSheet.create(componentStyles(theme)), [theme])
 
   const handleLinkPress = (url) => {
-    Linking.openURL(url);
-  };
+    Linking.openURL(url)
+  }
 
   const renderTextWithLinks = (text) => {
-    const parts = text.split(/(https?:\/\/[^\s]+)/g);
+    const parts = text.split(/(https?:\/\/[^\s]+)/g)
     return parts.map((part, index) => {
       if (part.match(/https?:\/\/[^\s]+/)) {
-        const displayText = part.replace(/https?:\/\//, '');
+        const displayText = part.replace(/https?:\/\//, '')
         return (
-          <Text
-            key={index}
-            style={styles.link}
-            onPress={() => handleLinkPress(part)}
-          >
+          <Text key={index} style={styles.link} onPress={() => handleLinkPress(part)}>
             {displayText}
           </Text>
-        );
+        )
       }
-      return part;
-    });
-  };
+      return part
+    })
+  }
 
-  const paragraphText = t(timetableCode ? 'timetable:inputTimetableCode' : 'timetable:notImportedYet', { timetableCodeInputLength });
+  const paragraphText = t(
+    timetableCode ? 'timetable:inputTimetableCode' : 'timetable:notImportedYet',
+    { timetableCodeInputLength }
+  )
 
   return (
     <ScrollView style={styles.mainContentContainer}>
-      <KeyboardAvoidingView behavior={"padding"} >
+      <KeyboardAvoidingView behavior='padding'>
         <View style={styles.paragraph}>
-          {/*selectable and dataDetectorType only work on andorid*/}
-          <Paragraph style={styles.paragraphText} selectable={true} dataDetectorType={'link'}>
+          {/* selectable and dataDetectorType only work on andorid */}
+          <Paragraph style={styles.paragraphText} selectable dataDetectorType='link'>
             {renderTextWithLinks(paragraphText)}
           </Paragraph>
         </View>
         <View style={styles.importTextInputContainer}>
           <TextInput
-            theme={{ colors: { primary: colors.textInput, placeholder: colors.textLighter } }}
+            theme={{
+              colors: {
+                primary: colors.textInput,
+                placeholder: colors.textLighter,
+                text: colors.text,
+                background: colors.background
+              }
+            }}
             style={styles.paragraphText}
             selectionColor={colors.textInputSelection}
             label={t('timetable:inputPlaceholder')}
             value={timetableCodeInput}
             autoCapitalize={timetableCodeInputFilterToUpperCase ? 'characters' : 'none'}
-            maxLength={timetableCodeInputLength ? timetableCodeInputLength : null}
+            maxLength={timetableCodeInputLength || null}
             onChangeText={setTimetableCodeInput}
           />
         </View>
         <Button
           onPress={async () => {
             // Wenn eine Mindestlänge des Stundenplandcodes konfiguriert ist und diese nicht von der Eingabe erreicht wird, wird ein Fehlerdialog angezeigt
-            if (timetableCodeInputLength && (timetableCodeInput?.length ?? 0) < timetableCodeInputLength) {
-              const alertTranslationValues = { timetableCodeInputLength };
+            if (
+              timetableCodeInputLength &&
+              (timetableCodeInput?.length ?? 0) < timetableCodeInputLength
+            ) {
+              const alertTranslationValues = { timetableCodeInputLength }
               Alert.alert(
                 t('timetable:errorCodeShort:title', alertTranslationValues),
                 t('timetable:errorCodeShort:message', alertTranslationValues),
-                [{ text: 'OK' }],
-              );
+                [{ text: 'OK' }]
+              )
             } else {
               // Import-Ladeanimation aktivieren
-              setImporting(true);
+              setImporting(true)
               await saveTimetableCode(
                 // Falls Filter eingestellt sind, werden diese nacheinander auf den Stundenplancode angewendet
                 timetableCodeInputPreSaveFilters.reduce(
-                  (currentTimetableCode, preSaveFilter) => preSaveFilter?.(currentTimetableCode) ?? currentTimetableCode,
+                  (currentTimetableCode, preSaveFilter) =>
+                    preSaveFilter?.(currentTimetableCode) ?? currentTimetableCode,
                   timetableCodeInput
                 )
-              );
+              )
               /**
                * Dieser Aufruf ist eigentlich unnötig, aber die Nutzer möchten Feedback, wenn der Stundenplan nochmal importiert wird.
                * Der Stundenplan wird über einen useEffect-Hook neu geladen, sobald der neue Stundenplancode vom Context gespeichert wurde.
@@ -166,40 +182,50 @@ function TimetableCodeInput(props) {
                 .then(() => onImportSuccessfullyFinished?.())
                 .catch((reason) => {
                   if (reason instanceof ApiProviderNotInitializedError) {
-                    console.error(componentName, ': ', reason);
+                    console.error(componentName, ': ', reason)
                   } else {
-                    console.debug(componentName, ': ', reason);
+                    console.debug(componentName, ': ', reason)
                   }
                   // Rufe onImportFailed.Callback, wenn Import fehlschlug
-                  onImportFailed?.(reason);
+                  onImportFailed?.(reason)
                 })
                 // Import-Ladeanimation immer deaktivieren
-                .finally(() => setImporting(false));
+                .finally(() => setImporting(false))
             }
           }}
           labelStyle={styles.importButtonLabel}
-          color={colors.buttonText}
+          color={colors.text}
         >
           {t('timetable:importButton')}
         </Button>
         {
           // Es wird ein Ladesymbol angezeigt, wenn der Stundenplan importiert wird.
           importing
-            ? <>
-              <ActivityIndicator style={styles.activity} size="large" color={colors.loadingIndicator} />
-              <View style={styles.paragraph}><Paragraph>{t('timetable:importInProgress', '')}</Paragraph></View>
-            </>
+            ? (
+              <>
+                <ActivityIndicator
+                  style={styles.activity}
+                  size='large'
+                  color={colors.loadingIndicator}
+                />
+                <View style={styles.paragraph}>
+                  <Paragraph style={styles.paragraphText}>
+                    {t('timetable:importInProgress', '')}
+                  </Paragraph>
+                </View>
+              </>
+              )
             : null
         }
       </KeyboardAvoidingView>
     </ScrollView>
-  );
+  )
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     settings: state.settingReducer
-  };
-};
+  }
+}
 
 export default connect(mapStateToProps, null)(withTranslation()(withTheme(TimetableCodeInput)))

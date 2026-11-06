@@ -12,19 +12,19 @@
  * limitations under the License.
  */
 
-import React from 'react';
-import { SafeAreaView, View, Text } from 'react-native';
+import React from 'react'
+import { SafeAreaView, View, Text } from 'react-native'
 
 import { connect } from 'react-redux'
-import { Button, List, Dialog, Portal, RadioButton, withTheme } from 'react-native-paper';
-import { withTranslation } from 'react-i18next';
+import { Button, List, Dialog, Portal, RadioButton, withTheme } from 'react-native-paper'
+import { withTranslation } from 'react-i18next'
 
-import merge from 'lodash/merge';
+import merge from 'lodash/merge'
 
-import { onSettingGeneralOverride, store } from '../../libraries/core';
-import AppbarComponent from '../../components/AppBar';
+import { onSettingGeneralOverride, store } from '../../libraries/core'
+import AppbarComponent from '../../components/AppBar'
 
-import componentStyles from './styles';
+import componentStyles from './styles'
 
 /**
  * Settings General
@@ -36,138 +36,239 @@ import componentStyles from './styles';
  *  - none
  */
 class GeneralSettingsView extends React.Component {
-    // Styles of this component
-    styles;
+  // Styles of this component
+  styles
 
-    constructor(props) {
-        super(props);
+  constructor (props) {
+    super(props)
 
-        // ------------------------------------------------------------------------
-        // PLUGIN FUNCTIONALITY
-        // ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
+    // PLUGIN FUNCTIONALITY
+    // ------------------------------------------------------------------------
 
-        const { pluginStyles, theme } = this.props;
-        this.styles = componentStyles(theme);
+    const { pluginStyles, theme } = this.props
+    this.styles = componentStyles(theme)
 
-        if (pluginStyles) {
-            this.styles = merge(this.styles, pluginStyles);
-        }
-
-        this.state = {
-            language: this.props.settings.settingsGeneral.language,
-        };
+    if (pluginStyles) {
+      this.styles = merge(this.styles, pluginStyles)
     }
 
-    /**
-     * update the general settings
-     *
-     * @private
-     */
-    _updateGeneralSettings = () => {
-        const generalSettings = {
-            language: this.state.language
-        };
-        this.setState({ isChangeMessageVisible: false });
-        store.dispatch(onSettingGeneralOverride('generalSettings', generalSettings));
-    };
-
-    getLanguageByKey = () => {
-        const { theme } = this.props;
-        const languageCode = this.state.language;
-        const languageObject = theme.appSettings.languages.find((language) => language.code === languageCode);
-        return languageObject ? languageObject : theme.appSettings.languages[0];
-    };
-
-    _renderLanguages = () => {
-        const { theme, t } = this.props;
-        const { colors } = theme;
-        const languages = theme.appSettings.languages.map(language =>
-            <View key={'lanuage-' + language.code} >
-                <RadioButton.Item
-                    value={language.code}
-                    color={colors.checkboxChecked}
-                    label={t(language.labelKey)}
-                    labelStyle={this.styles.dialogContent}
-                    uncheckedColor={colors.checkboxUnchecked}
-                    mode={'android'}
-                />
-            </View>
-        );
-
-        return (
-            <RadioButton.Group
-                onValueChange={value => this.setState({ language: value })}
-                value={this.state.language}>
-                {languages}
-            </RadioButton.Group>
-        );
-    };
-
-    _showDialog = () => this.setState({ visible: true });
-
-    _hideDialog = () => this.setState({ visible: false });
-
-    render() {
-        // ------------------------------------------------------------------------
-        // PLUGIN FUNCTIONALITY
-        // ------------------------------------------------------------------------
-        const PluginComponent = this.props.pluginComponent;
-        if (PluginComponent) {
-            return <PluginComponent />;
-        }
-        // ------------------------------------------------------------------------
-
-
-        const { theme: { themeStyles, colors }, t } = this.props;
-
-        return (
-            <SafeAreaView style={[this.styles.container, themeStyles.appSafeAreaContainer]}>
-                <AppbarComponent {...this.props} title={t('settings:common.title')} />
-                <View accessible={false} style={themeStyles.container}>
-                    <List.Section>
-                        <List.Item accessible={false} key='language' title={t('settings:common.language')} description={t(this.getLanguageByKey().labelKey)}
-                            titleStyle={this.styles.listItemTitle} descriptionStyle={this.styles.listItemDescription}
-                            right={() => <Button accessible={true} labelStyle={this.styles.buttonLabel} onPress={this._showDialog} color={colors.buttonText}>{t('common:changeLabel')}</Button>
-                            }>
-                        </List.Item>
-                    </List.Section>
-                    <Portal>
-                        <Dialog visible={this.state.visible}
-                            onDismiss={this._hideDialog}>
-                            <Dialog.Title style={this.styles.dialogTitle}>{t('settings:common.language')}</Dialog.Title>
-                            <Dialog.Content>
-                                {this._renderLanguages()}
-                            </Dialog.Content>
-                            <Dialog.Actions>
-                                <Button labelStyle={this.styles.dialogContent} onPress={() => { this.setState({ isChangeMessageVisible: true }); this._hideDialog(); }} color={colors.buttonText}>{t('common:okLabel')}</Button>
-                            </Dialog.Actions>
-                        </Dialog>
-                    </Portal>
-                    <Portal>
-                        <Dialog visible={this.state.isChangeMessageVisible}
-                            onDismiss={() => this.setState({ isChangeMessageVisible: false })}>
-                            <Dialog.Title style={this.styles.dialogTitle}>{t('settings:common.languageChange')}</Dialog.Title>
-                            <Dialog.Content>
-                                <Text style={this.styles.dialogContent}>{t('settings:common.languageChangeText')}</Text>
-                            </Dialog.Content>
-                            <Dialog.Actions>
-                                <Button labelStyle={this.styles.dialogContent} onPress={this._updateGeneralSettings} color={colors.buttonText}>{t('settings:common.languageChangeOk')}</Button>
-                                <Button labelStyle={this.styles.dialogContent} onPress={() => this.setState({ isChangeMessageVisible: false })} color={colors.buttonText}>{t('common:cancelLabel')}</Button>
-                            </Dialog.Actions>
-                        </Dialog>
-                    </Portal>
-                </View>
-            </SafeAreaView>
-        );
+    this.state = {
+      language: this.props.settings.settingsGeneral.language
     }
+  }
+
+  /**
+   * update the general settings
+   *
+   * @private
+   */
+  handleUpdateGeneralSettings = () => {
+    const generalSettings = {
+      ...this.props.settings.settingsGeneral,
+      language: this.state.language
+    }
+    this.setState({ isChangeMessageVisible: false })
+    store.dispatch(onSettingGeneralOverride('generalSettings', generalSettings))
+  }
+
+  getLanguageByKey = () => {
+    const { theme } = this.props
+    const languageCode = this.state.language
+    const languageObject = theme.appSettings.languages.find(
+      (language) => language.code === languageCode
+    )
+    return languageObject || theme.appSettings.languages[0]
+  }
+
+  _renderLanguages = () => {
+    const { theme, t } = this.props
+    const { colors } = theme
+    const languages = theme.appSettings.languages.map((language) => (
+      <View key={'lanuage-' + language.code}>
+        <RadioButton.Item
+          value={language.code}
+          color={colors.checkboxChecked}
+          label={t(language.labelKey)}
+          labelStyle={this.styles.dialogContent}
+          uncheckedColor={colors.checkboxUnchecked}
+          mode='android'
+        />
+      </View>
+    ))
+
+    return (
+      <RadioButton.Group
+        onValueChange={(value) => this.setState({ language: value })}
+        value={this.state.language}
+      >
+        {languages}
+      </RadioButton.Group>
+    )
+  }
+
+  _getColorScheme = () => {
+    const value = this.props.settings.settingsGeneral.colorScheme
+    return ['system', 'light', 'dark'].includes(value) ? value : 'light'
+  }
+
+  _renderColorScheme = () => {
+    const { theme, t } = this.props
+    const { colors } = theme
+    const options = [
+      ['system', 'System', 'System'],
+      ['light', 'Hell', 'Light'],
+      ['dark', 'Dunkel', 'Dark']
+    ]
+    const isGerman = this.getLanguageByKey().code === 'de'
+
+    return (
+      <List.Section>
+        <List.Subheader style={this.styles.listItemTitle}>
+          {t('settings:common.colorScheme', {
+            defaultValue: isGerman ? 'Darstellung' : 'Appearance'
+          })}
+        </List.Subheader>
+        <RadioButton.Group
+          value={this._getColorScheme()}
+          onValueChange={(colorScheme) => {
+            const generalSettings = {
+              ...this.props.settings.settingsGeneral,
+              colorScheme
+            }
+            store.dispatch(onSettingGeneralOverride('generalSettings', generalSettings))
+          }}
+        >
+          {options.map(([value, german, english]) => (
+            <RadioButton.Item
+              key={value}
+              value={value}
+              label={t(`settings:common.colorSchemeOptions.${value}`, {
+                defaultValue: isGerman ? german : english
+              })}
+              labelStyle={this.styles.dialogContent}
+              color={colors.checkboxChecked}
+              uncheckedColor={colors.checkboxUnchecked}
+            />
+          ))}
+        </RadioButton.Group>
+      </List.Section>
+    )
+  }
+
+  handleShowDialog = () => this.setState({ visible: true })
+
+  handleHideDialog = () => this.setState({ visible: false })
+
+  render () {
+    // ------------------------------------------------------------------------
+    // PLUGIN FUNCTIONALITY
+    // ------------------------------------------------------------------------
+    const PluginComponent = this.props.pluginComponent
+    if (PluginComponent) {
+      return <PluginComponent />
+    }
+    // ------------------------------------------------------------------------
+
+    const {
+      theme: { themeStyles, colors },
+      t
+    } = this.props
+    this.styles = componentStyles(this.props.theme)
+
+    if (this.props.pluginStyles) {
+      this.styles = merge(this.styles, this.props.pluginStyles)
+    }
+
+    return (
+      <SafeAreaView style={[this.styles.container, themeStyles.appSafeAreaContainer]}>
+        <AppbarComponent {...this.props} title={t('settings:common.title')} />
+        <View accessible={false} style={themeStyles.container}>
+          <List.Section>
+            <List.Item
+              accessible={false}
+              key='language'
+              title={t('settings:common.language')}
+              description={t(this.getLanguageByKey().labelKey)}
+              titleStyle={this.styles.listItemTitle}
+              descriptionStyle={this.styles.listItemDescription}
+              right={() => (
+                <Button
+                  accessible
+                  labelStyle={this.styles.buttonLabel}
+                  onPress={this.handleShowDialog}
+                  color={colors.buttonText}
+                >
+                  {t('common:changeLabel')}
+                </Button>
+              )}
+            />
+          </List.Section>
+          {/* Show appearance settings only when the app supports color scheme switching. */}
+          {this.props.theme.supportsColorScheme === true && this._renderColorScheme()}
+          <Portal>
+            <Dialog visible={this.state.visible} onDismiss={this.handleHideDialog}>
+              <Dialog.Title style={this.styles.dialogTitle}>
+                {t('settings:common.language')}
+              </Dialog.Title>
+              <Dialog.Content>{this._renderLanguages()}</Dialog.Content>
+              <Dialog.Actions>
+                <Button
+                  labelStyle={this.styles.dialogContent}
+                  onPress={() => {
+                    this.setState({ isChangeMessageVisible: true })
+                    this.handleHideDialog()
+                  }}
+                  color={colors.buttonText}
+                >
+                  {t('common:okLabel')}
+                </Button>
+              </Dialog.Actions>
+            </Dialog>
+          </Portal>
+          <Portal>
+            <Dialog
+              visible={this.state.isChangeMessageVisible}
+              onDismiss={() => this.setState({ isChangeMessageVisible: false })}
+            >
+              <Dialog.Title style={this.styles.dialogTitle}>
+                {t('settings:common.languageChange')}
+              </Dialog.Title>
+              <Dialog.Content>
+                <Text style={this.styles.dialogContent}>
+                  {t('settings:common.languageChangeText')}
+                </Text>
+              </Dialog.Content>
+              <Dialog.Actions>
+                <Button
+                  labelStyle={this.styles.dialogContent}
+                  onPress={this.handleUpdateGeneralSettings}
+                  color={colors.buttonText}
+                >
+                  {t('settings:common.languageChangeOk')}
+                </Button>
+                <Button
+                  labelStyle={this.styles.dialogContent}
+                  onPress={() => this.setState({ isChangeMessageVisible: false })}
+                  color={colors.buttonText}
+                >
+                  {t('common:cancelLabel')}
+                </Button>
+              </Dialog.Actions>
+            </Dialog>
+          </Portal>
+        </View>
+      </SafeAreaView>
+    )
+  }
 }
 
-const mapStateToProps = state => {
-    return {
-        pluginComponent: state.pluginReducer.settingsGeneral.component,
-        pluginStyles: state.pluginReducer.settingsGeneral.styles,
-        settings: state.settingReducer
-    };
-};
+const mapStateToProps = (state) => {
+  return {
+    pluginComponent: state.pluginReducer.settingsGeneral.component,
+    pluginStyles: state.pluginReducer.settingsGeneral.styles,
+    settings: state.settingReducer
+  }
+}
 
 export default connect(mapStateToProps, null)(withTranslation()(withTheme(GeneralSettingsView)))
