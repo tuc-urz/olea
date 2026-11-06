@@ -1,10 +1,20 @@
 import React from 'react';
-import { Alert, Appearance, AppState, Linking, StatusBar } from 'react-native';
+import {
+    Alert,
+    Appearance,
+    AppState,
+    Linking,
+    StatusBar
+} from 'react-native';
 
 import { connect } from 'react-redux'
 import { Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from "@react-navigation/native";
-import { DataService, RootNavigation, store } from '@olea-bps/base';
+import {
+    DataService,
+    RootNavigation,
+    store
+} from '@olea-bps/base';
 
 import i18n from './i18n/i18n';
 import { getTheme } from './constants/Theme';

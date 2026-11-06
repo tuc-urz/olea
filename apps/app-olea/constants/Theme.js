@@ -1,27 +1,49 @@
 import settings from './Settings';
 
 import fonts from './layout/Fonts';
-import { fontSizes, accessibilityFontSizes, lineHeights, accessibilityLineHeights } from './layout/fontSizes';
+
+import {
+    fontSizes,
+    accessibilityFontSizes,
+    lineHeights,
+    accessibilityLineHeights
+} from './layout/fontSizes';
+
 import icons from './layout/Icons';
 import iconsSVG from './layout/IconsSVG';
 import { getStyles } from './layout/Styles';
 import paddings from './layout/Paddings';
-import {themeColors, themeColorsHighContrast, themeColorsDark, themeColorsDarkHighContrast} from './layout/Colors';
+
+import {
+    themeColors,
+    themeColorsHighContrast,
+    themeColorsDark,
+    themeColorsDarkHighContrast
+} from './layout/Colors';
+
 import { Asset } from 'expo-asset';
 
 const fontFamily = Asset.fromModule(require('./../assets/fonts/Poppins-Regular.ttf')).uri;
 
-const createThemeCss = (colors, sizes) =>
-    '<head><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">' +
-    '<style type="text/css">' +
-    '@font-face {font-family: \'poppins-regular\'; src:url(' + fontFamily + ')}' +
-    'html, body {background-color: ' + colors.contentBackground + '; color: ' + colors.text + ';}' +
-    '* {font-size: ' + sizes.l + 'px; font-family: \'poppins-regular\'; max-width: 100%;}' +
-    'a {color: ' + colors.textAccent + ';}' +
-    '.content span[style*="windowtext" i] {color: inherit !important;}' +
-    'strong {font-weight: 600}' +
-    '.content {width: 100%;}' +
-    '</style></head>';
+/**
+ * Erstellt den HTML-Head mit den Styles für die WebView.
+ *
+ * @param {object} colors - Farben des aktiven App-Themes.
+ * @param {object} sizes - Schriftgrößen des aktiven App-Themes.
+ * @returns {string} HTML-Head mit Schriftdefinition und Styles.
+ */
+function createThemeCss(colors, sizes) {
+    return '<head><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">' +
+        '<style type="text/css">' +
+        '@font-face {font-family: \'poppins-regular\'; src:url(' + fontFamily + ')}' +
+        'html, body {background-color: ' + colors.contentBackground + '; color: ' + colors.text + ';}' +
+        '* {font-size: ' + sizes.l + 'px; font-family: \'poppins-regular\'; max-width: 100%;}' +
+        'a {color: ' + colors.textAccent + ';}' +
+        '.content span[style*="windowtext" i] {color: inherit !important;}' +
+        'strong {font-weight: 600}' +
+        '.content {width: 100%;}' +
+        '</style></head>';
+}
 
 const theme = {
     version: 2,
