@@ -1,0 +1,9 @@
+<!-- Source: Google Material Symbols; Google LLC.
+Source URL: https://raw.githubusercontent.com/google/material-design-icons/master/symbols/web/refresh/materialsymbolsoutlined/refresh_24px.svg
+SPDX-License-Identifier: Apache-2.0
+Modified for OLEA on 2026-10-30: SVG cleaned; coordinates scaled and centered;
+colors adapted to currentColor; IconPark variants rendered as monochrome outlines.
+See Lizenzen/ for upstream licenses and source mapping. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <path fill="currentColor" d="M12 24Q6.975 24 3.4875 20.5125Q0 17.025 0 12Q0 6.975 3.4875 3.4875Q6.975 0 12 0Q14.5875 0 16.95 1.06875Q19.3125 2.1375 21 4.125V0H24V10.5H13.5V7.5H19.8Q18.6 5.4 16.51875 4.2Q14.4375 3 12 3Q8.25 3 5.625 5.625Q3 8.25 3 12Q3 15.75 5.625 18.375Q8.25 21 12 21Q14.8875 21 17.2125 19.35Q19.5375 17.7 20.475 15H23.625Q22.575 18.975 19.35 21.4875Q16.125 24 12 24Z"/>
+</svg>

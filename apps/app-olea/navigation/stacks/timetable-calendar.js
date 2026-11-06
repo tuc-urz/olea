@@ -2,7 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { TimetableCalendar as TimetableViewCalendar } from '@olea-bps/base';
 
-import TabBarIcon from               '../tabBarIcon';
+import { TabBarIcon } from '@olea-bps/base';
 
 /**
  * Tab Options
@@ -10,7 +10,9 @@ import TabBarIcon from               '../tabBarIcon';
 const options = {
     title: 'Timetable',
     tabBarAccessibilityLabel: 'accessibility:navigation.timetable',
-    tabBarIcon: (props) => TabBarIcon("timetable", props),
+    tabBarIcon: ({ color }) => (
+        <TabBarIcon icon="timetable" color={color} />
+    ),
     header: () => null
 }
 
