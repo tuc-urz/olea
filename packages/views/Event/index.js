@@ -17,7 +17,7 @@ import {
   useMemo,
   useEffect,
   useCallback
-} from 'react';
+} from 'react'
 import {
   ActivityIndicator,
   Dimensions,
@@ -26,32 +26,32 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  View,
-} from 'react-native';
+  View
+} from 'react-native'
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next'
 import {
   Appbar,
   List,
   useTheme
-} from 'react-native-paper';
+} from 'react-native-paper'
 import {
   TabView,
   TabBar,
   SceneMap
-} from 'react-native-tab-view';
-import { useNavigation } from '@react-navigation/native';
+} from 'react-native-tab-view'
+import { useNavigation } from '@react-navigation/native'
 
-import moment from 'moment';
-import { DateTime } from 'luxon';
+import moment from 'moment'
+import { DateTime } from 'luxon'
 
-import EventContextProvider, { usePersonalEvents, usePersonalEventsCode, useEvents } from '../../context/context-event';
-import AppbarComponent from '../../components/AppBar';
-import IconsOpenasist from '../../libraries/icons-openasist';
-import EventCodeInputComponent from '../../components/EventCodeInput';
-import TimetableEventComponent from '../../components/TimetableEvent';
+import EventContextProvider, { usePersonalEvents, usePersonalEventsCode, useEvents } from '../../context/context-event'
+import AppbarComponent from '../../components/AppBar'
+import IconsOpenasist from '../../libraries/icons-openasist'
+import EventCodeInputComponent from '../../components/EventCodeInput'
+import TimetableEventComponent from '../../components/TimetableEvent'
 
-import componentStyles from './styles';
+import componentStyles from './styles'
 
 /**
  * Groups events into non-empty time slots based on when each event begins.
@@ -61,25 +61,21 @@ import componentStyles from './styles';
  * @param {number} length - Duration of each slot in hours.
  * @returns {Object[]} Slots with a start timestamp as ID, display times and matching events.
  */
-function generateTimeslots(allEvents, start, end, length) {
-
-  const timeslotList = [];
+function generateTimeslots (allEvents, start, end, length) {
+  const timeslotList = []
   /*
     For-Loop that loops from the start to the end in increments provided by length
     So that there are timeslots from the start to the end of the event day
   */
   for (let timeSlot = moment(start); timeSlot.isSameOrBefore(end); timeSlot.add(length, 'hours')) {
     // Define start and end(start + length) for each timeslot
-    var timeslotStart = moment(timeSlot);
-    var timeslotEnd = moment(timeSlot).add(length, 'hours');
-
-    // Exclude the slot end so an event starting at the boundary belongs to the next slot.
-    var eventsInTimeslot = allEvents.filter(
+    const timeslotStart = moment(timeSlot)
+    const timeslotEnd = moment(timeSlot).add(length, 'hours')
+    const eventsInTimeslot = allEvents.filter(
       currentEvent =>
-        moment(currentEvent.begin).isSameOrAfter(timeslotStart)
-        &&
+        moment(currentEvent.begin).isSameOrAfter(timeslotStart) &&
         moment(currentEvent.begin).isBefore(timeslotEnd)
-    );
+    )
 
     if (eventsInTimeslot.length > 0) {
       timeslotList.push({
@@ -87,11 +83,11 @@ function generateTimeslots(allEvents, start, end, length) {
         startTs: timeslotStart.format('HH:mm'),
         endTs: timeslotEnd.format('HH:mm'),
         eventsTs: eventsInTimeslot
-      });
+      })
     }
   }
 
-  return timeslotList;
+  return timeslotList
 }
 
 /**
@@ -99,8 +95,8 @@ function generateTimeslots(allEvents, start, end, length) {
  * @param {Object} props - Component props.
  * @param {Object[]} [props.items=[]] - Events to display in their existing order.
  */
-function EventList({ items: events = [], styles }) {
-  const { t } = useTranslation();
+function EventList ({ items: events = [], styles }) {
+  const { t } = useTranslation()
 
   return (
     <>
@@ -108,8 +104,8 @@ function EventList({ items: events = [], styles }) {
         events
           ?.map(
             (event) => {
-              const startTime = DateTime.fromISO(event.begin).toLocaleString(DateTime.TIME_24_SIMPLE);
-              const endTime = DateTime.fromISO(event.end).toLocaleString(DateTime.TIME_24_SIMPLE);
+              const startTime = DateTime.fromISO(event.begin).toLocaleString(DateTime.TIME_24_SIMPLE)
+              const endTime = DateTime.fromISO(event.end).toLocaleString(DateTime.TIME_24_SIMPLE)
 
               return (
                 <TimetableEventComponent
@@ -119,63 +115,62 @@ function EventList({ items: events = [], styles }) {
                   location={event?.location}
                   locationUrl={event?.locationUrl}
                   description={event?.description}
-                  times={{ start: startTime, end: endTime }} />
-              );
+                  times={{ start: startTime, end: endTime }}
+                />
+              )
             }
-          )
-        ?? null
+          ) ??
+        null
       }
     </>
-  );
+  )
 }
 
 /**
  * Renders the time slots for the All Events tab, with one slot open at a time.
  */
-function EventTimeslotList() {
-  const componentName = EventTimeslotList.name;
-  const theme = useTheme();
-  const [events, refreshEvents] = useEvents();
-  const { t } = useTranslation();
+function EventTimeslotList () {
+  const componentName = EventTimeslotList.name
+  const theme = useTheme()
+  const [events, refreshEvents] = useEvents()
+  const { t } = useTranslation()
 
   const styles = useMemo(
     () => StyleSheet.create(componentStyles(theme)),
     [theme, componentStyles]
-  );
+  )
 
   const timeslots = useMemo(
     () => {
       if (Array.isArray(events) && events.length > 0) {
         // get the value of the start-prop of the earliest-event
-        const earliestEvent = events.reduce((previousEvent, currentEvent) => { return currentEvent.begin < previousEvent.begin ? currentEvent : previousEvent });
+        const earliestEvent = events.reduce((previousEvent, currentEvent) => { return currentEvent.begin < previousEvent.begin ? currentEvent : previousEvent })
         // get the value of the end-prop of the latest-event
-        const latestEvent = events.reduce((previousEvent, currentEvent) => { return currentEvent.end > previousEvent.end ? currentEvent : previousEvent });
-        return generateTimeslots(events, earliestEvent.begin, latestEvent.end, 1.5);
-
+        const latestEvent = events.reduce((previousEvent, currentEvent) => { return currentEvent.end > previousEvent.end ? currentEvent : previousEvent })
+        return generateTimeslots(events, earliestEvent.begin, latestEvent.end, 1.5)
       } else if (Array.isArray(events) && events.length === 0) {
-        return [];
-
+        return []
       } else {
-        console.debug(componentName, ':', 'No events to Generate timeslots');
-        return null;
+        console.debug(componentName, ':', 'No events to Generate timeslots')
+        return null
       }
     },
     [events, generateTimeslots]
-  );
+  )
 
   useEffect(
     () => {
-      refreshEvents();
+      refreshEvents()
     },
     [refreshEvents]
-  );
+  )
 
-  function renderTimeslotIcon() {
+  function renderTimeslotIcon () {
     return (
       <View style={[theme.themeStyles.cardLeftIcon, { marginStart: 5 }]}>
-        <IconsOpenasist icon="info" size={25} color={theme.colors.icon} />
+        <IconsOpenasist icon='info' size={25} color={theme.colors.icon} />
       </View>
-    );
+    )
   }
 
   /**
@@ -183,8 +178,8 @@ function EventTimeslotList() {
    * @param {Object} row - FlatList render data for the current row.
    * @param {Object} row.item - Time slot with its ID, display times and events.
    */
-  function renderTimeslot({ item: timeslot }) {
-    const title = `${timeslot.startTs} ${t('event:type.to')} ${timeslot.endTs} ${t('event:type.oclock')}`;
+  function renderTimeslot ({ item: timeslot }) {
+    const title = `${timeslot.startTs} ${t('event:type.to')} ${timeslot.endTs} ${t('event:type.oclock')}`
 
     return (
       <List.Accordion
@@ -199,7 +194,7 @@ function EventTimeslotList() {
           <EventList items={timeslot.eventsTs} />
         </View>
       </List.Accordion>
-    );
+    )
   }
 
   return Array.isArray(timeslots)
@@ -220,23 +215,20 @@ function EventTimeslotList() {
       <Text>{t('canteen:notAvailable')}</Text>
       <ActivityIndicator style={styles.activity} size='large' color={theme.colors.loadingIndicator} />
     </View>
-
 }
 
-function SelectedEventList() {
-  const componentName = SelectedEventList.name;
-  const theme = useTheme();
-
-  const [personalEvents, refreshPersonalEvents] = usePersonalEvents();
+function SelectedEventList () {
+  const theme = useTheme()
+  const [personalEvents, refreshPersonalEvents] = usePersonalEvents()
 
   const styles = useMemo(
     () => StyleSheet.create(componentStyles(theme)),
     [theme, componentStyles]
-  );
+  )
 
   useEffect(
     () => {
-      refreshPersonalEvents();
+      refreshPersonalEvents()
     },
     [refreshPersonalEvents]
   )
@@ -248,25 +240,23 @@ function SelectedEventList() {
         items={personalEvents}
       />
     </ScrollView>
-  );
+  )
 }
 
 const TabViewScenes = SceneMap({
   all_events: EventTimeslotList,
-  personal_events: SelectedEventList,
-});
+  personal_events: SelectedEventList
+})
 
+export default function EventsView (props) {
+  const [personalEventsCode] = usePersonalEventsCode()
+  const theme = useTheme()
+  const { colors, themeStyles } = theme
+  const { t } = useTranslation()
+  const navigation = useNavigation()
 
-export default function EventsView(props) {
-
-  const [personalEventsCode] = usePersonalEventsCode();
-  const theme = useTheme();
-  const { colors, themeStyles } = theme;
-  const { t } = useTranslation();
-  const navigation = useNavigation();
-
-  const [showCodeInput, setShowCodeInput] = useState(personalEventsCode ? false : true);
-  const [tabIndex, setTabIndex] = useState(0);
+  const [showCodeInput, setShowCodeInput] = useState(!personalEventsCode)
+  const [tabIndex, setTabIndex] = useState(0)
 
   const tabRoutes = useMemo(
     () =>
@@ -274,17 +264,16 @@ export default function EventsView(props) {
         {
           key: 'personal_events',
           title: t('event:tabs.selected'),
-          accessibilityLabel: t('accessibility:event.selected'),
+          accessibilityLabel: t('accessibility:event.selected')
         },
         {
           key: 'all_events',
           title: t('event:tabs.all'),
-          accessibilityLabel: t('accessibility:event.all'),
+          accessibilityLabel: t('accessibility:event.all')
         }
       ],
     [t]
-  );
-
+  )
 
   const styles = useMemo(
     () => StyleSheet.create(componentStyles(theme)),
@@ -294,10 +283,11 @@ export default function EventsView(props) {
   const leftAction = useMemo(
     () => (
       <Appbar.Action
-        icon={props => <IconsOpenasist {...props} icon={'back'} color={colors.primaryText} />}
+        icon={props => <IconsOpenasist {...props} icon='back' color={colors.primaryText} />}
         onPress={() => {
-          navigation.goBack();
-        }} />
+          navigation.goBack()
+        }}
+      />
     ),
     [colors, navigation]
   )
@@ -316,21 +306,21 @@ export default function EventsView(props) {
   const closeCodeInput = useCallback(
     () => setShowCodeInput(false),
     [setShowCodeInput]
-  );
+  )
 
   const closeCodeInputAndShowPersonalEvents = useCallback(
     () => {
-      setTabIndex(tabRoutes.findIndex(route => route.key === 'personal_events'));
-      setShowCodeInput(false);
+      setTabIndex(tabRoutes.findIndex(route => route.key === 'personal_events'))
+      setShowCodeInput(false)
     },
     [tabRoutes, setShowCodeInput, setTabIndex]
-  );
-
+  )
 
   return (
     <SafeAreaView style={[styles.container, themeStyles.appSafeAreaContainer]}>
       <View>
-        <AppbarComponent {...props}
+        <AppbarComponent
+          {...props}
           title={t('menu:titles.event')}
           leftAction={leftAction}
           rightAction={rightAction}
@@ -338,10 +328,11 @@ export default function EventsView(props) {
       </View>
       {
         showCodeInput
-          ? <EventCodeInputComponent {...props}
-            onClose={closeCodeInput}
-            onPersonalEventsImported={closeCodeInputAndShowPersonalEvents}
-          />
+          ? <EventCodeInputComponent
+              {...props}
+              onClose={closeCodeInput}
+              onPersonalEventsImported={closeCodeInputAndShowPersonalEvents}
+            />
           : <View style={themeStyles.container}>
             <TabView
               index={tabIndex}
@@ -357,17 +348,16 @@ export default function EventsView(props) {
                   inactiveColor={themeStyles.tabs.inactiveColor}
                   indicatorStyle={themeStyles.tabIndicator}
                   tabStyle={{ paddingHorizontal: 20 }}
-                />
-              }
+                />}
               renderScene={TabViewScenes}
             />
           </View>
       }
     </SafeAreaView>
-  );
+  )
 }
 
-export function APIProvidetEventsView(props) {
+export function APIProvidetEventsView (props) {
   return (
     <EventContextProvider>
       <EventsView
