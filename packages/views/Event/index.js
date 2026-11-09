@@ -199,22 +199,26 @@ function EventTimeslotList () {
 
   return Array.isArray(timeslots)
     ? timeslots.length > 0
-      ? <List.AccordionGroup>
-        <FlatList
-          data={timeslots}
-          keyExtractor={timeslot => timeslot.id}
-          renderItem={renderTimeslot}
-        />
-      </List.AccordionGroup>
-      : <View style={styles.content}>
-        <Text>
-          Es werden gerade keine Veranstalltungen angeboten
-        </Text>
+      ? (
+        <List.AccordionGroup>
+          <FlatList
+            data={timeslots}
+            keyExtractor={timeslot => timeslot.id}
+            renderItem={renderTimeslot}
+          />
+        </List.AccordionGroup>
+        )
+      : (
+        <View style={styles.content}>
+          <Text>Es werden gerade keine Veranstalltungen angeboten</Text>
+        </View>
+        )
+    : (
+      <View style={styles.content}>
+        <Text>{t('canteen:notAvailable')}</Text>
+        <ActivityIndicator style={styles.activity} size='large' color={theme.colors.loadingIndicator} />
       </View>
-    : <View style={styles.content}>
-      <Text>{t('canteen:notAvailable')}</Text>
-      <ActivityIndicator style={styles.activity} size='large' color={theme.colors.loadingIndicator} />
-    </View>
+      )
 }
 
 function SelectedEventList () {
@@ -328,30 +332,34 @@ export default function EventsView (props) {
       </View>
       {
         showCodeInput
-          ? <EventCodeInputComponent
+          ? (
+            <EventCodeInputComponent
               {...props}
               onClose={closeCodeInput}
               onPersonalEventsImported={closeCodeInputAndShowPersonalEvents}
             />
-          : <View style={themeStyles.container}>
-            <TabView
-              index={tabIndex}
-              navigationState={{ index: tabIndex, routes: tabRoutes }}
-              initialLayout={{ height: 0, width: Dimensions.get('window').width }}
-              onIndexChange={setTabIndex}
-              renderTabBar={props =>
-                <TabBar
-                  {...props}
-                  style={themeStyles.tabs}
-                  labelStyle={themeStyles.tab}
-                  activeColor={themeStyles.tabs.activeColor}
-                  inactiveColor={themeStyles.tabs.inactiveColor}
-                  indicatorStyle={themeStyles.tabIndicator}
-                  tabStyle={{ paddingHorizontal: 20 }}
-                />}
-              renderScene={TabViewScenes}
-            />
-          </View>
+            )
+          : (
+            <View style={themeStyles.container}>
+              <TabView
+                index={tabIndex}
+                navigationState={{ index: tabIndex, routes: tabRoutes }}
+                initialLayout={{ height: 0, width: Dimensions.get('window').width }}
+                onIndexChange={setTabIndex}
+                renderTabBar={props =>
+                  <TabBar
+                    {...props}
+                    style={themeStyles.tabs}
+                    labelStyle={themeStyles.tab}
+                    activeColor={themeStyles.tabs.activeColor}
+                    inactiveColor={themeStyles.tabs.inactiveColor}
+                    indicatorStyle={themeStyles.tabIndicator}
+                    tabStyle={{ paddingHorizontal: 20 }}
+                  />}
+                renderScene={TabViewScenes}
+              />
+            </View>
+            )
       }
     </SafeAreaView>
   )
