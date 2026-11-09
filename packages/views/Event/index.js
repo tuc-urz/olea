@@ -12,10 +12,16 @@
  * limitations under the License.
  */
 
-import { useState, useMemo, useEffect, useCallback } from 'react';
+import {
+  useState,
+  useMemo,
+  useEffect,
+  useCallback
+} from 'react';
 import {
   ActivityIndicator,
   Dimensions,
+  FlatList,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -24,9 +30,16 @@ import {
 } from 'react-native';
 
 import { useTranslation } from 'react-i18next';
-import { Appbar, useTheme } from 'react-native-paper';
-import { AccordionList } from 'accordion-collapse-react-native';
-import { TabView, TabBar, SceneMap } from 'react-native-tab-view';
+import {
+  Appbar,
+  List,
+  useTheme
+} from 'react-native-paper';
+import {
+  TabView,
+  TabBar,
+  SceneMap
+} from 'react-native-tab-view';
 import { useNavigation } from '@react-navigation/native';
 
 import moment from 'moment';
@@ -41,12 +54,12 @@ import TimetableEventComponent from '../../components/TimetableEvent';
 import componentStyles from './styles';
 
 /**
- * @param {*} allEvents List of events
- * @param {*} start Startingpoint of the timeslot-list/start of the event-day
- * @param {*} end Endpoint of the timeslot-list/end of the event-day
- * @param {*} length length of the single timeslots
- * @returns a list of objects for each timeslot including start(startTs), end(endTs) and a list(events) of events for that timeslot
- * startTs and endTs are moment().js-elements/modified date-time-elements while events will contain the event-objects for this timeslot
+ * Groups events into non-empty time slots based on when each event begins.
+ * @param {Object[]} allEvents - Events to group, each with a begin timestamp.
+ * @param {string} start - ISO timestamp at which the first slot starts.
+ * @param {string} end - ISO timestamp up to which slots are generated.
+ * @param {number} length - Duration of each slot in hours.
+ * @returns {Object[]} Slots with a start timestamp as ID, display times and matching events.
  */
 function generateTimeslots(allEvents, start, end, length) {
 
@@ -60,13 +73,7 @@ function generateTimeslots(allEvents, start, end, length) {
     var timeslotStart = moment(timeSlot);
     var timeslotEnd = moment(timeSlot).add(length, 'hours');
 
-    /*
-      Use the build in filter()-Method to find all events in the given timeslot, so between timeslotStart and timeslotEnd
-      The timeslotStart and timeslotEnd are defined in the yyyy-MM-ddTHH:mm:ssZ-format in order to be able to compare them directly to the
-      start and end-prop in the event-Objects
-      A event will be sorted in the current timeslot, if the value of the start prop is between the start and end of the current timeslot
-      This is due to also include events that start in one timeslot and end in another timeslot
-    */
+    // Exclude the slot end so an event starting at the boundary belongs to the next slot.
     var eventsInTimeslot = allEvents.filter(
       currentEvent =>
         moment(currentEvent.begin).isSameOrAfter(timeslotStart)
@@ -74,10 +81,13 @@ function generateTimeslots(allEvents, start, end, length) {
         moment(currentEvent.begin).isBefore(timeslotEnd)
     );
 
-    // If there are any Event-objects in the given timeslot, the event have to be sorted in the correct order
     if (eventsInTimeslot.length > 0) {
-      // After that, push the current timeslot-object into the timeslotList
-      timeslotList.push({ startTs: timeslotStart.format('HH:mm'), endTs: timeslotEnd.format('HH:mm'), eventsTs: eventsInTimeslot })
+      timeslotList.push({
+        id: timeslotStart.toISOString(),
+        startTs: timeslotStart.format('HH:mm'),
+        endTs: timeslotEnd.format('HH:mm'),
+        eventsTs: eventsInTimeslot
+      });
     }
   }
 
@@ -85,51 +95,15 @@ function generateTimeslots(allEvents, start, end, length) {
 }
 
 /**
- * Event View
- *
- * Parameters:
- *  - none
- *
- * Navigation-Parameters:
- *  - none
- */
-
-/**
- * Die Funktion erzeugt einen Header für die jeweilige Liste, der eine Kurzbezeichnung und ein Icon zur Identifikation beinhaltet
- *
- * @param {object} props beinhaltet styles, themes und weitere props
- * @param {boolean} props.isExpanded Flag das signalisiert, ob die aktuelle Liste geöffnet ist oder nicht
- * @param {string} props.startTime Startzeit der Liste
- * @param {string} props.endTime Endzeit der Liste
- */
-function TimeslotAccordionHeader({ startTime, endTime, styles, isExpanded }) {
-  const { t } = useTranslation();
-  const theme = useTheme();
-  const { colors, themeStyles } = theme;
-
-  return (
-    <View style={styles.header}>
-      <View style={[themeStyles.cardLeftIcon, { marginStart: 5 }]}>
-        <IconsOpenasist icon={('info')} size={25} color={colors.icon} />
-      </View>
-      <Text style={styles.headerText}>{`${startTime} ${t('event:type.to')} ${endTime} ${t('event:type.oclock')}`}</Text>
-      <View style={styles.arrowIcon}>
-        <IconsOpenasist icon={isExpanded ? 'up' : 'down'} size={20} color={colors.grayLight5} />
-      </View>
-    </View>
-  );
-}
-
-/**
- * @param {object} props beinhaltet styles, themes und weitere props
- * @param {Array} props.items Die Liste von Events vom aktuellen Tab
- * @return eine Scrollview, welche eine Liste von TimeTableEventComponent enthält
+ * Renders event cards inside the scroll container provided by the current tab.
+ * @param {Object} props - Component props.
+ * @param {Object[]} [props.items=[]] - Events to display in their existing order.
  */
 function EventList({ items: events = [], styles }) {
   const { t } = useTranslation();
 
   return (
-    <ScrollView>
+    <>
       {
         events
           ?.map(
@@ -151,19 +125,18 @@ function EventList({ items: events = [], styles }) {
           )
         ?? null
       }
-    </ScrollView>
+    </>
   );
 }
 
-/***
- * Hook-Component welche eine Accordionliste mit dem entsprechenden Inhalt generiert. Inklusive Header.
- *
- * @param props beinhaltet styles, themes und weitere props
+/**
+ * Renders the time slots for the All Events tab, with one slot open at a time.
  */
 function EventTimeslotList() {
   const componentName = EventTimeslotList.name;
   const theme = useTheme();
   const [events, refreshEvents] = useEvents();
+  const { t } = useTranslation();
 
   const styles = useMemo(
     () => StyleSheet.create(componentStyles(theme)),
@@ -197,17 +170,47 @@ function EventTimeslotList() {
     [refreshEvents]
   );
 
+  function renderTimeslotIcon() {
+    return (
+      <View style={[theme.themeStyles.cardLeftIcon, { marginStart: 5 }]}>
+        <IconsOpenasist icon="info" size={25} color={theme.colors.icon} />
+      </View>
+    );
+  }
+
+  /**
+   * Renders a collapsible time slot with its scheduled events.
+   * @param {Object} row - FlatList render data for the current row.
+   * @param {Object} row.item - Time slot with its ID, display times and events.
+   */
+  function renderTimeslot({ item: timeslot }) {
+    const title = `${timeslot.startTs} ${t('event:type.to')} ${timeslot.endTs} ${t('event:type.oclock')}`;
+
+    return (
+      <List.Accordion
+        id={timeslot.id}
+        title={title}
+        titleNumberOfLines={0}
+        titleStyle={[styles.headerText, { color: theme.colors.text }]}
+        style={{ backgroundColor: theme.colors.background }}
+        left={renderTimeslotIcon}
+      >
+        <View style={{ paddingLeft: 0 }}>
+          <EventList items={timeslot.eventsTs} />
+        </View>
+      </List.Accordion>
+    );
+  }
+
   return Array.isArray(timeslots)
     ? timeslots.length > 0
-      ? <AccordionList
-        list={timeslots}
-        header={
-          (timeslot, index, isExpanded) => <TimeslotAccordionHeader startTime={timeslot.startTs} endTime={timeslot.endTs} styles={styles} isExpanded={isExpanded} />
-        }
-        body={
-          (timeslot) => <EventList items={timeslot.eventsTs} styles={styles} />
-        }
-      />
+      ? <List.AccordionGroup>
+        <FlatList
+          data={timeslots}
+          keyExtractor={timeslot => timeslot.id}
+          renderItem={renderTimeslot}
+        />
+      </List.AccordionGroup>
       : <View style={styles.content}>
         <Text>
           Es werden gerade keine Veranstalltungen angeboten
@@ -239,11 +242,13 @@ function SelectedEventList() {
   )
 
   return (
-    <EventList
-      styles={styles}
-      items={personalEvents}
-    />
-  )
+    <ScrollView>
+      <EventList
+        styles={styles}
+        items={personalEvents}
+      />
+    </ScrollView>
+  );
 }
 
 const TabViewScenes = SceneMap({
