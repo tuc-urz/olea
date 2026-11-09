@@ -36,7 +36,7 @@ export default function(theme) {
             marginBottom: theme.paddings.small
         },
         newsImage: {
-            aspectRatio: 16/9,
+            height: width * 9 / 16,
             width: width
         },
         backgroundImageWrapper: {
