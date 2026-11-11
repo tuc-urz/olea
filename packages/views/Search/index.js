@@ -160,11 +160,7 @@ function SearchView(props) {
                   ? (
                     <View style={[styles.containerInner, styles.containerLoading]}>
                       <Text>{t('search:inProgress')}</Text>
-                      <ActivityIndicator
-                        style={styles.activity}
-                        size='large'
-                        color={props.theme.colors.loadingIndicator}
-                      />
+                      <ActivityIndicator style={styles.activity} size='large' color={props.theme.colors.loadingIndicator} />
                     </View>
                     )
                   : <SearchResultsComponent type={route.key} {...props} />}
