@@ -12,25 +12,25 @@
  * limitations under the License.
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
 import {
-    ScrollView,
-    StyleSheet,
-    Text,
-    View,
-    SafeAreaView,
-} from 'react-native';
-import { Appbar, withTheme } from 'react-native-paper';
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView
+} from 'react-native'
+import { Appbar, withTheme } from 'react-native-paper'
 
-import { withTranslation } from 'react-i18next';
+import { withTranslation } from 'react-i18next'
 
-import merge from 'lodash/merge';
+import merge from 'lodash/merge'
 
-import AppbarComponent from '../AppBar';
-import IconsOpenasist from '../../libraries/icons-openasist';
-import TimetableListComponent from '../TimetableList';
+import AppbarComponent from '../AppBar'
+import IconsOpenasist from '../../libraries/icons-openasist'
+import TimetableListComponent from '../TimetableList'
 
 import componentStyles from './styles'
 
@@ -47,105 +47,112 @@ import componentStyles from './styles'
  *  - none
  */
 class OtherCoursesComponent extends React.Component {
-    static propTypes = {
-        course: PropTypes.array
-    };
+  static propTypes = {
+    course: PropTypes.array
+  }
 
-    // Styles of this component
-    styles;
+  // Styles of this component
+  styles
 
-    course = null;
+  course = null
 
-    constructor(props) {
-        super(props);
+  constructor (props) {
+    super(props)
 
-        // ------------------------------------------------------------------------
-        // PLUGIN FUNCTIONALITY
-        // ------------------------------------------------------------------------
+    // ------------------------------------------------------------------------
+    // PLUGIN FUNCTIONALITY
+    // ------------------------------------------------------------------------
 
-        const { pluginStyles, theme } = this.props;
-        this.styles = componentStyles(theme);
+    const { pluginStyles, theme } = this.props
+    this.styles = componentStyles(theme)
 
-        if (pluginStyles) {
-            this.styles = merge(componentStyles, pluginStyles);
-        }
-
-        this.styles = StyleSheet.create(this.styles);
-
-        // ------------------------------------------------------------------------
-    };
-
-    _renderList = () => {
-        var renderList = this.course?.map((course, courseIndex) =>
-            <TimetableListComponent
-                {...this.props}
-                key={'course_' + courseIndex}
-                course={course}
-                times={null} />
-        ) ?? [];
-
-        return (
-            <View style={this.styles.renderList}>
-                {renderList}
-            </View>
-        );
-    };
-
-    _renderContent = () => {
-        const { themeStyles } = this.props.theme;
-        return (
-            <View style={themeStyles.container}>
-                <ScrollView>
-                    {this._renderList()}
-                </ScrollView>
-            </View>
-        );
-    };
-
-    render() {
-        // ------------------------------------------------------------------------
-        // PLUGIN FUNCTIONALITY
-        // ------------------------------------------------------------------------
-        const PluginComponent = this.props.pluginComponent;
-        if (PluginComponent) {
-            return <PluginComponent />;
-        }
-        // ------------------------------------------------------------------------
-
-        const { themeStyles } = this.props.theme;
-        const { course, t } = this.props;
-        const { colors } = this.props.theme;
-
-        if (!course) {
-            return (
-                <SafeAreaView style={[this.styles.container, themeStyles.safeAreaContainer]}>
-                    <AppbarComponent {...this.props}
-                        title={t('timetable:moreEvents')}
-                        leftAction={<Appbar.Action
-                            icon={props => <IconsOpenasist {...props} icon={'down'} color={colors.appbarIconColor ?? colors.primaryText} />}
-                            onPress={() => {
-                                this.props.navigation.goBack(null);
-                            }} />} />
-                    <Text>{t('course:couldNotLoad')}</Text>
-                </SafeAreaView>
-            );
-        } else if (!this.course) {
-            this.course = course;
-        }
-
-        return (
-            <SafeAreaView style={[this.styles.container, themeStyles.safeAreaContainer]}>
-                <AppbarComponent {...this.props}
-                    title={t('timetable:moreEvents')}
-                    leftAction={<Appbar.Action
-                        icon={props => <IconsOpenasist {...props} icon={'down'} color={colors.appbarIconColor ?? colors.primaryText} />}
-                        onPress={() => {
-                            this.props.navigation.goBack(null);
-                        }} />} />
-                {this._renderContent()}
-            </SafeAreaView>
-        );
+    if (pluginStyles) {
+      this.styles = merge(componentStyles, pluginStyles)
     }
+
+    this.styles = StyleSheet.create(this.styles)
+
+    // ------------------------------------------------------------------------
+  };
+
+  _renderList = () => {
+    const renderList = this.course?.map((course, courseIndex) =>
+      <TimetableListComponent
+        {...this.props}
+        key={'course_' + courseIndex}
+        course={course}
+        times={null}
+      />
+    ) ?? []
+
+    return (
+      <View style={this.styles.renderList}>
+        {renderList}
+      </View>
+    )
+  }
+
+  _renderContent = () => {
+    const { themeStyles } = this.props.theme
+    return (
+      <View style={themeStyles.container}>
+        <ScrollView>
+          {this._renderList()}
+        </ScrollView>
+      </View>
+    )
+  }
+
+  render () {
+    // ------------------------------------------------------------------------
+    // PLUGIN FUNCTIONALITY
+    // ------------------------------------------------------------------------
+    const PluginComponent = this.props.pluginComponent
+    if (PluginComponent) {
+      return <PluginComponent />
+    }
+    // ------------------------------------------------------------------------
+
+    const { themeStyles } = this.props.theme
+    const { course, t } = this.props
+    const { colors } = this.props.theme
+
+    if (!course) {
+      return (
+        <SafeAreaView style={[this.styles.container, themeStyles.safeAreaContainer]}>
+          <AppbarComponent
+            {...this.props}
+            title={t('timetable:moreEvents')}
+            leftAction={<Appbar.Action
+              icon={props => <IconsOpenasist {...props} icon='down' color={colors.appbarIconColor ?? colors.primaryText} />}
+              onPress={() => {
+                this.props.navigation.goBack(null)
+              }}
+                        />}
+          />
+          <Text>{t('course:couldNotLoad')}</Text>
+        </SafeAreaView>
+      )
+    } else if (!this.course) {
+      this.course = course
+    }
+
+    return (
+      <SafeAreaView style={[this.styles.container, themeStyles.safeAreaContainer]}>
+        <AppbarComponent
+          {...this.props}
+          title={t('timetable:moreEvents')}
+          leftAction={<Appbar.Action
+            icon={props => <IconsOpenasist {...props} icon='down' color={colors.appbarIconColor ?? colors.primaryText} />}
+            onPress={() => {
+              this.props.navigation.goBack(null)
+            }}
+                      />}
+        />
+        {this._renderContent()}
+      </SafeAreaView>
+    )
+  }
 }
 
 export default withTranslation()(withTheme(OtherCoursesComponent))

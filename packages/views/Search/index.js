@@ -12,28 +12,27 @@
  * limitations under the License.
  */
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react'
 import {
-    StyleSheet,
-    SafeAreaView,
-    View,
-    ActivityIndicator,
-    Platform
-} from 'react-native';
+  StyleSheet,
+  SafeAreaView,
+  View,
+  ActivityIndicator,
+  Platform
+} from 'react-native'
 import { connect } from 'react-redux'
-import { Searchbar, Text, withTheme } from 'react-native-paper';
-import { TabView, TabBar } from 'react-native-tab-view';
-import { withTranslation } from "react-i18next";
+import { Searchbar, Text, withTheme } from 'react-native-paper'
+import { TabView, TabBar } from 'react-native-tab-view'
+import { withTranslation } from 'react-i18next'
 
-import NetInfo from '@react-native-community/netinfo';
+import NetInfo from '@react-native-community/netinfo'
 
-import { SearchService } from '../../libraries/core';
+import { SearchService } from '../../libraries/core'
 
-import componentStyles from "./styles";
-import IconsOpenasist from '../../libraries/icons-openasist';
-import AppbarComponent from '../../components/AppBar';
-import SearchResultsComponent from '../../components/SearchResults';
-
+import componentStyles from './styles'
+import IconsOpenasist from '../../libraries/icons-openasist'
+import AppbarComponent from '../../components/AppBar'
+import SearchResultsComponent from '../../components/SearchResults'
 
 /**
  * Search View
@@ -47,111 +46,109 @@ import SearchResultsComponent from '../../components/SearchResults';
  *  - none
  */
 
+function SearchView (props) {
+  const [searchTabIndex, setSearchTabIndex] = useState(0)
+  const [hasConnection, setHasConnection] = useState(true)
+  const [inProgress, setInProgress] = useState(false)
+  const [searchString, setSearchString] = useState(props.searchTopic ? props.searchTopic : '')
 
-function SearchView(props) {
-    const [searchTabIndex, setSearchTabIndex] = useState(0);
-    const [hasConnection, setHasConnection] = useState(true);
-    const [inProgress, setInProgress] = useState(false);
-    const [searchString, setSearchString] = useState(props.searchTopic ? props.searchTopic : '');
+  const { theme, theme: { themeStyles, colors }, t } = props
+  const activeSearchCategories = props?.theme?.appSettings?.modules?.search?.activeCategories ?? SearchService.categories
 
-    const { theme, theme: { themeStyles, colors }, t } = props;
-    const activeSearchCategories = props?.theme?.appSettings?.modules?.search?.activeCategories ?? SearchService.categories;
+  const searchTabRoutes = useMemo(
+    () => [
+      { key: 'all', title: t('search:tabs.all') },
+      ...activeSearchCategories.map(activeSearchCategory => ({
+        key: activeSearchCategory,
+        title: t(`search:tabs.${activeSearchCategory}`)
+      }))
+    ],
+    [activeSearchCategories, t]
+  )
 
-    const searchTabRoutes = useMemo(
-        () => [
-            { key: 'all', title: t('search:tabs.all') },
-            ...activeSearchCategories.map(activeSearchCategory => ({
-                key: activeSearchCategory,
-                title: t(`search:tabs.${activeSearchCategory}`)
-            }))
-        ],
-        [activeSearchCategories, t]
-    );
+  useEffect(
+    () => NetInfo.addEventListener(state => setHasConnection(state.isInternetReachable && state.isConnected)),
+    [NetInfo]
+  )
 
-    useEffect(
-        () => NetInfo.addEventListener(state => setHasConnection(state.isInternetReachable && state.isConnected)),
-        [NetInfo]
-    );
+  const styles = useMemo(
+    () => StyleSheet.create(componentStyles(theme)),
+    [theme]
+  )
 
-    const styles = useMemo(
-        () => StyleSheet.create(componentStyles(theme)),
-        [theme]
-    )
+  const _onPressButton = () => {
+    if (searchString.length > 0) {
+      _executeSearch()
+    }
+  }
 
-    const _onPressButton = () => {
-        if (searchString.length > 0) {
-            _executeSearch();
-        }
-    };
+  const _executeSearch = () => {
+    const includedSearches = props.theme.appSettings.modules.search.activeCategories
+    const searchService = new SearchService()
 
-    const _executeSearch = () => {
-        const includedSearches = props.theme.appSettings.modules.search.activeCategories;
-        const searchService = new SearchService();
+    setInProgress(true)
 
-        setInProgress(true);
+    if (searchTabIndex > 0 && searchTabRoutes.length > 0) {
+      searchService.searchByType(
+        searchTabRoutes[searchTabIndex]?.key,
+        searchString,
+        () => {
+          setInProgress(false)
+        })
+    } else {
+      searchService.searchAll(searchString, () => {
+        setInProgress(false)
+      }, includedSearches)
+    }
+  }
 
-        if (searchTabIndex > 0 && searchTabRoutes.length > 0) {
-            searchService.searchByType(
-                searchTabRoutes[searchTabIndex]?.key,
-                searchString,
-                () => {
-                    setInProgress(false);
-                });
-        } else {
-            searchService.searchAll(searchString, () => {
-                setInProgress(false);
-            }, includedSearches);
-        }
-    };
-
-    /**
+  /**
      * Render the top bar for categories
      *
      * @param props
      * @returns {*}
      * @private
      */
-    const _renderTabBar = (props) => {
-
-        return (
-            <View style={styles.tabBarContainer}>
-                <TabBar
-                    {...props}
-                    scrollEnabled
-                    style={themeStyles.tabs}
-                    activeColor={themeStyles.tabs.activeColor}
-                    inactiveColor={themeStyles.tabs.inactiveColor}
-                    labelStyle={themeStyles.tab}
-                    indicatorStyle={themeStyles.tabIndicator}
-                    tabStyle={{ width: 'auto', paddingHorizontal: 20 }}
-                />
-                <Searchbar
-                    onSubmitEditing={() => _onPressButton()}
-                    onIconPress={() => _onPressButton()}
-                    onChangeText={setSearchString}
-                    icon={props => <IconsOpenasist {...props} icon={'search'} color={colors.icon} />}
-                    style={styles.searchBar}
-                    inputStyle={styles.searchBarInput}
-                    value={searchString}
-                    placeholder={t('search:title') + ' ...'}
-                    placeholderTextColor={colors.textLighter}
-                    clearAccessibilityLabel={t('accessibility:search:searchBarClearButton')}
-                    cursorColor={colors.searchAccent}
-                    selectionHandleColor={colors.searchAccent}
-                    selectionColor={Platform.OS === 'ios'
-                        ? (colors.searchAccent ?? colors.primary)
-                        : colors.primary}
-                />
-            </View>
-        );
-    };
-
+  const _renderTabBar = (props) => {
     return (
-        <SafeAreaView style={[styles.container, themeStyles.appSafeAreaContainer]}>
-            <AppbarComponent title={t('search:title')} {...props} />
-            <TabView
-                style={styles}
-                navigationState={{ index: searchTabIndex, routes: searchTabRoutes }}
+      <View style={styles.tabBarContainer}>
+        <TabBar
+          {...props}
+          scrollEnabled
+          style={themeStyles.tabs}
+          activeColor={themeStyles.tabs.activeColor}
+          inactiveColor={themeStyles.tabs.inactiveColor}
+          labelStyle={themeStyles.tab}
+          indicatorStyle={themeStyles.tabIndicator}
+          tabStyle={{ width: 'auto', paddingHorizontal: 20 }}
+        />
+        <Searchbar
+          onSubmitEditing={() => _onPressButton()}
+          onIconPress={() => _onPressButton()}
+          onChangeText={setSearchString}
+          icon={props => <IconsOpenasist {...props} icon='search' color={colors.icon} />}
+          style={styles.searchBar}
+          inputStyle={styles.searchBarInput}
+          value={searchString}
+          placeholder={t('search:title') + ' ...'}
+          placeholderTextColor={colors.textLighter}
+          clearAccessibilityLabel={t('accessibility:search:searchBarClearButton')}
+          cursorColor={colors.searchAccent}
+          selectionHandleColor={colors.searchAccent}
+          selectionColor={Platform.OS === 'ios'
+            ? (colors.searchAccent ?? colors.primary)
+            : colors.primary}
+        />
+      </View>
+    )
+  }
+
+  return (
+    <SafeAreaView style={[styles.container, themeStyles.appSafeAreaContainer]}>
+      <AppbarComponent title={t('search:title')} {...props} />
+      <TabView
+        style={styles}
+        navigationState={{ index: searchTabIndex, routes: searchTabRoutes }}
         renderScene={({ route }) => (
           hasConnection
             ? (
@@ -174,24 +171,19 @@ function SearchView(props) {
               </View>
               )
         )}
-                renderTabBar={_renderTabBar}
-                onIndexChange={setSearchTabIndex}
-            />
-        </SafeAreaView>
-    );
-
+        renderTabBar={_renderTabBar}
+        onIndexChange={setSearchTabIndex}
+      />
+    </SafeAreaView>
+  )
 }
 
 const mapStateToProps = state => {
-    return {
-        pluginComponent: state.pluginReducer.search.component,
-        pluginStyles: state.pluginReducer.search.styles,
-        searchTopic: state.stateReducer.searchTopic
-    };
-};
+  return {
+    pluginComponent: state.pluginReducer.search.component,
+    pluginStyles: state.pluginReducer.search.styles,
+    searchTopic: state.stateReducer.searchTopic
+  }
+}
 
-export default connect(mapStateToProps, null)(withTranslation()(withTheme(SearchView)));
-
-
-
-
+export default connect(mapStateToProps, null)(withTranslation()(withTheme(SearchView)))

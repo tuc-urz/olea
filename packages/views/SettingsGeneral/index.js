@@ -166,6 +166,7 @@ class GeneralSettingsView extends React.Component {
       </List.Section>
     )
   }
+
   handleShowAccentColorDialog = () => this.setState({ accentColorDialogVisible: true })
 
   handleHideAccentColorDialog = () => this.setState({ accentColorDialogVisible: false })
