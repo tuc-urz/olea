@@ -13,7 +13,13 @@
  */
 
 import React, { useState, useEffect, useMemo } from 'react';
-import { StyleSheet, SafeAreaView, View, ActivityIndicator } from 'react-native';
+import { 
+    StyleSheet,
+    SafeAreaView,
+    View,
+    ActivityIndicator,
+    Platform
+} from 'react-native';
 import { connect } from 'react-redux'
 import { Searchbar, Text, withTheme } from 'react-native-paper';
 import { TabView, TabBar } from 'react-native-tab-view';
@@ -130,6 +136,11 @@ function SearchView(props) {
                     placeholder={t('search:title') + ' ...'}
                     placeholderTextColor={colors.textLighter}
                     clearAccessibilityLabel={t('accessibility:search:searchBarClearButton')}
+                    cursorColor={colors.searchAccent}
+                    selectionHandleColor={colors.searchAccent}
+                    selectionColor={Platform.OS === 'ios'
+                        ? (colors.searchAccent ?? colors.primary)
+                        : colors.primary}
                 />
             </View>
         );

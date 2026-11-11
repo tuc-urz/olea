@@ -252,9 +252,14 @@ export default function MainMenu(props) {
             <AppbarComponent title={t('menu:title')} {...props}
                 rightAction={
                     <>
-                        {isStagingServerActive ? <Text>Server: Staging</Text> : null}
+                        {isStagingServerActive ? (
+                            <Text style={{ color: theme.colors.appbarText }}>
+                                Server: Staging
+                            </Text>
+                        ) : null}
                         <Appbar.Action
                             icon={developCounter >= 10 ? 'grid' : undefined}
+                            color={theme.colors.appbarIconColor}
                             onPress={
                                 () => developCounter >= 10
                                     ? setIsDevelopMenuVisible(true)

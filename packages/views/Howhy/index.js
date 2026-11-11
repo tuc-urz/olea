@@ -95,7 +95,7 @@ class HowyView extends React.Component {
                         title={t('howhy:title')}
                         leftAction={
                             <Appbar.Action
-                                icon={props => <IconsOpenasist {...props} icon={'back'} color={colors.primaryText} /> }
+                                icon={props => <IconsOpenasist {...props} icon={'back'} color={colors.appbarIconColor ?? colors.primaryText} /> }
                                 onPress={() => {
                                     if (this.webView.canGoBack) {
                                         this.webView.ref.goBack();
@@ -110,6 +110,7 @@ class HowyView extends React.Component {
                          rightAction={
                              <Appbar.Action
                                  icon="refresh"
+                                 color={colors.appbarIconColor}
                                  onPress={() => this.webView.ref.reload()}
                                  accessible={true}
                                  accessibilityLabel={t('accessibility:appbar.reload')}

@@ -132,14 +132,17 @@ export default function JobPortalView(props) {
                     title={t('menu:titles.job')}
                     leftAction={
                         <Appbar.Action
-                            icon={props => <IconsOpenasist {...props} icon={'back'} color={colors.primaryText} />}
+                            icon={props => <IconsOpenasist {...props} icon={'back'} color={colors.appbarIconColor ?? colors.primaryText} />}
                             onPress={
                                 () => navigation.goBack(null)
                             }
                         />
                     }
                     rightAction={
-                        <Appbar.Action icon="filter" onPress={
+                        <Appbar.Action
+                            icon="filter"
+                            color={colors.appbarIconColor}
+                            onPress={
                             () =>
                                 navigation.navigate(
                                     'JobFilter',

@@ -289,7 +289,7 @@ export default function EventsView(props) {
   const leftAction = useMemo(
     () => (
       <Appbar.Action
-        icon={props => <IconsOpenasist {...props} icon={'back'} color={colors.primaryText} />}
+        icon={props => <IconsOpenasist {...props} icon={'back'} color={colors.appbarIconColor ?? colors.primaryText} />}
         onPress={() => {
           navigation.goBack();
         }} />

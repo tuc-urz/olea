@@ -123,7 +123,7 @@ class OtherCoursesComponent extends React.Component {
                     <AppbarComponent {...this.props}
                         title={t('timetable:moreEvents')}
                         leftAction={<Appbar.Action
-                            icon={props => <IconsOpenasist {...props} icon={'down'} color={colors.primaryText} />}
+                            icon={props => <IconsOpenasist {...props} icon={'down'} color={colors.appbarIconColor ?? colors.primaryText} />}
                             onPress={() => {
                                 this.props.navigation.goBack(null);
                             }} />} />
@@ -139,7 +139,7 @@ class OtherCoursesComponent extends React.Component {
                 <AppbarComponent {...this.props}
                     title={t('timetable:moreEvents')}
                     leftAction={<Appbar.Action
-                        icon={props => <IconsOpenasist {...props} icon={'down'} color={colors.primaryText} />}
+                        icon={props => <IconsOpenasist {...props} icon={'down'} color={colors.appbarIconColor ?? colors.primaryText} />}
                         onPress={() => {
                             this.props.navigation.goBack(null);
                         }} />} />
