@@ -13,7 +13,7 @@
  */
 
 import React, { useState, useEffect, useMemo } from 'react';
-import { 
+import {
     StyleSheet,
     SafeAreaView,
     View,
