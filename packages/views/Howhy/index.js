@@ -118,7 +118,9 @@ class HowyView extends React.Component {
                          }/>
                 </View>
                 <WebView
-                    ref={ref => this.webView.ref = ref}
+                    ref={ref => {
+                        this.webView.ref = ref;
+                    }}
                     source={{uri: t('howhy:url')}}
                     startInLoadingState={true}
                     allowsFullscreenVideo={true}
@@ -140,7 +142,7 @@ class HowyView extends React.Component {
                         // this should prevent white screen issues on ios
                         const { nativeEvent } = syntheticEvent;
                         console.warn('Content process terminated, reloading', nativeEvent);
-                        this.refs.webview.reload();
+                        this.webView.ref?.reload();
                     }}
                 />
             </SafeAreaView>

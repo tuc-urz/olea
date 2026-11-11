@@ -57,8 +57,8 @@ function generateTimeslots(allEvents, start, end, length) {
   */
   for (let timeSlot = moment(start); timeSlot.isSameOrBefore(end); timeSlot.add(length, 'hours')) {
     // Define start and end(start + length) for each timeslot
-    var timeslotStart = moment(timeSlot);
-    var timeslotEnd = moment(timeSlot).add(length, 'hours');
+    const timeslotStart = moment(timeSlot);
+    const timeslotEnd = moment(timeSlot).add(length, 'hours');
 
     /*
       Use the build in filter()-Method to find all events in the given timeslot, so between timeslotStart and timeslotEnd
@@ -67,7 +67,7 @@ function generateTimeslots(allEvents, start, end, length) {
       A event will be sorted in the current timeslot, if the value of the start prop is between the start and end of the current timeslot
       This is due to also include events that start in one timeslot and end in another timeslot
     */
-    var eventsInTimeslot = allEvents.filter(
+    const eventsInTimeslot = allEvents.filter(
       currentEvent =>
         moment(currentEvent.begin).isSameOrAfter(timeslotStart)
         &&
@@ -163,6 +163,7 @@ function EventList({ items: events = [], styles }) {
 function EventTimeslotList() {
   const componentName = EventTimeslotList.name;
   const theme = useTheme();
+  const { t } = useTranslation();
   const [events, refreshEvents] = useEvents();
 
   const styles = useMemo(
@@ -208,20 +209,23 @@ function EventTimeslotList() {
           (timeslot) => <EventList items={timeslot.eventsTs} styles={styles} />
         }
       />
-      : <View style={styles.content}>
-        <Text>
-          Es werden gerade keine Veranstalltungen angeboten
-        </Text>
+      : (
+        <View style={styles.content}>
+          <Text>
+            Es werden gerade keine Veranstalltungen angeboten
+          </Text>
+        </View>
+        )
+    : (
+      <View style={styles.content}>
+        <Text>{t('canteen:notAvailable')}</Text>
+        <ActivityIndicator style={styles.activity} size='large' color={theme.colors.loadingIndicator} />
       </View>
-    : <View style={styles.content}>
-      <Text>{t('canteen:notAvailable')}</Text>
-      <ActivityIndicator style={styles.activity} size='large' color={theme.colors.loadingIndicator} />
-    </View>
+      )
 
 }
 
 function SelectedEventList() {
-  const componentName = SelectedEventList.name;
   const theme = useTheme();
 
   const [personalEvents, refreshPersonalEvents] = usePersonalEvents();
@@ -337,26 +341,27 @@ export default function EventsView(props) {
             onClose={closeCodeInput}
             onPersonalEventsImported={closeCodeInputAndShowPersonalEvents}
           />
-          : <View style={themeStyles.container}>
-            <TabView
-              index={tabIndex}
-              navigationState={{ index: tabIndex, routes: tabRoutes }}
-              initialLayout={{ height: 0, width: Dimensions.get('window').width }}
-              onIndexChange={setTabIndex}
-              renderTabBar={props =>
-                <TabBar
-                  {...props}
-                  style={themeStyles.tabs}
-                  labelStyle={themeStyles.tab}
-                  activeColor={themeStyles.tabs.activeColor}
-                  inactiveColor={themeStyles.tabs.inactiveColor}
-                  indicatorStyle={themeStyles.tabIndicator}
-                  tabStyle={{ paddingHorizontal: 20 }}
-                />
-              }
-              renderScene={TabViewScenes}
-            />
-          </View>
+          : (
+            <View style={themeStyles.container}>
+              <TabView
+                index={tabIndex}
+                navigationState={{ index: tabIndex, routes: tabRoutes }}
+                initialLayout={{ height: 0, width: Dimensions.get('window').width }}
+                onIndexChange={setTabIndex}
+                renderTabBar={props =>
+                  <TabBar
+                    {...props}
+                    style={themeStyles.tabs}
+                    labelStyle={themeStyles.tab}
+                    activeColor={themeStyles.tabs.activeColor}
+                    inactiveColor={themeStyles.tabs.inactiveColor}
+                    indicatorStyle={themeStyles.tabIndicator}
+                    tabStyle={{ paddingHorizontal: 20 }}
+                  />}
+                renderScene={TabViewScenes}
+              />
+            </View>
+            )
       }
     </SafeAreaView>
   );

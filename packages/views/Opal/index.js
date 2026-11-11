@@ -115,7 +115,9 @@ class OpalView extends React.Component {
                          }/>
                 </View>
                 <WebView
-                    ref={ref => this.webView.ref = ref}
+                    ref={ref => {
+                        this.webView.ref = ref;
+                    }}
                     source={{uri: t('opal:url')}}
                     startInLoadingState={true}
                     injectedJavaScript={customScript}

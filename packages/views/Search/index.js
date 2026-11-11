@@ -152,26 +152,32 @@ function SearchView(props) {
             <TabView
                 style={styles}
                 navigationState={{ index: searchTabIndex, routes: searchTabRoutes }}
-                renderScene={
-                    ({ route, jumpTo }) =>
-                        hasConnection
-                          ? <View style={styles.containerInner}>
-                                {
-                                    inProgress
-                                      ? <View style={[styles.containerInner, styles.containerLoading]}>
-                                            <Text>{t('search:inProgress')}</Text>
-                                            <ActivityIndicator style={styles.activity} size="large" color={props.theme.colors.loadingIndicator} />
-                                        </View>
-                                      : <SearchResultsComponent type={route.key} {...props} />
-                                }
-                            </View>
-                          : <View style={[styles.containerInner, styles.containerLoading]}>
-                                <IconsOpenasist icon={"search"} size={48} color={props.theme.colors.loadingIndicator} />
-                                <Text style={styles.title}>{t('search:noInternetTitle')}</Text>
-                                <Text style={styles.subtitle}>{t('search:noInternetSubtitle')}</Text>
-                            </View>
-
-                }
+        renderScene={({ route }) => (
+          hasConnection
+            ? (
+              <View style={styles.containerInner}>
+                {inProgress
+                  ? (
+                    <View style={[styles.containerInner, styles.containerLoading]}>
+                      <Text>{t('search:inProgress')}</Text>
+                      <ActivityIndicator
+                        style={styles.activity}
+                        size='large'
+                        color={props.theme.colors.loadingIndicator}
+                      />
+                    </View>
+                    )
+                  : <SearchResultsComponent type={route.key} {...props} />}
+              </View>
+              )
+            : (
+              <View style={[styles.containerInner, styles.containerLoading]}>
+                <IconsOpenasist icon='search' size={48} color={props.theme.colors.loadingIndicator} />
+                <Text style={styles.title}>{t('search:noInternetTitle')}</Text>
+                <Text style={styles.subtitle}>{t('search:noInternetSubtitle')}</Text>
+              </View>
+              )
+        )}
                 renderTabBar={_renderTabBar}
                 onIndexChange={setSearchTabIndex}
             />

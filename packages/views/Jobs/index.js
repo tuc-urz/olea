@@ -194,25 +194,29 @@ export default function JobPortalView(props) {
                                     </TouchableOpacity>
                             }
                         />
-                        : jobsRequestInProgress || categoriesRequestInProgress
-                            ? <View style={styles.innerContainer}>
-                                <ActivityIndicator style={styles.activity} size="large" color={colors.loadingIndicator} />
-                            </View>
-                            : <View style={[styles.containerInner, styles.containerErrorMsg]}>
-                                <Text style={styles.titleNoJobs}>{t('jobs:noJobsTitle')}</Text>
-                                <Button
-                                    onPress={
-                                        () => {
-                                            refreshJobs();
-                                            refreshCategories();
-                                        }
-                                    }
-                                    color={colors.buttonText}
-                                    mode={'outlined'}
-                                >
-                                    {t('common:reload')}
-                                </Button>
-                            </View>
+                      : jobsRequestInProgress || categoriesRequestInProgress
+                        ? (
+                          <View style={styles.innerContainer}>
+                            <ActivityIndicator style={styles.activity} size='large' color={colors.loadingIndicator} />
+                          </View>
+                          )
+                        : (
+                          <View style={[styles.containerInner, styles.containerErrorMsg]}>
+                            <Text style={styles.titleNoJobs}>{t('jobs:noJobsTitle')}</Text>
+                            <Button
+                              onPress={
+                                          () => {
+                                            refreshJobs()
+                                            refreshCategories()
+                                          }
+                                      }
+                              color={colors.buttonText}
+                              mode='outlined'
+                            >
+                              {t('common:reload')}
+                            </Button>
+                          </View>
+                          )
                 }
             </View>
         </SafeAreaView>

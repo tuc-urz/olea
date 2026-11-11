@@ -24,7 +24,6 @@ import {
 } from 'react-native';
 import { Appbar, withTheme } from 'react-native-paper';
 
-import { connect } from 'react-redux'
 import { withTranslation } from 'react-i18next';
 
 import merge from 'lodash/merge';
