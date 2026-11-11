@@ -54,7 +54,8 @@ class GeneralSettingsView extends React.Component {
     }
 
     this.state = {
-      language: this.props.settings.settingsGeneral.language
+      language: this.props.settings.settingsGeneral.language,
+      accentColorDialogVisible: false
     }
   }
 
@@ -115,6 +116,7 @@ class GeneralSettingsView extends React.Component {
   _renderColorScheme = () => {
     const { theme, t } = this.props
     const { colors } = theme
+    const hasAccentColors = (theme.accentColorOptions?.length ?? 0) > 0
     const options = [
       ['system', 'System', 'System'],
       ['light', 'Hell', 'Light'],
@@ -129,6 +131,13 @@ class GeneralSettingsView extends React.Component {
             defaultValue: isGerman ? 'Darstellung' : 'Appearance'
           })}
         </List.Subheader>
+        {hasAccentColors && (
+          <Text accessibilityRole='header' style={this.styles.colorSchemeHeading}>
+            {t('settings:common.colorSchemeHeading', {
+              defaultValue: isGerman ? 'Farbschema' : 'Color scheme'
+            })}
+          </Text>
+        )}
         <RadioButton.Group
           value={this._getColorScheme()}
           onValueChange={(colorScheme) => {
@@ -149,10 +158,109 @@ class GeneralSettingsView extends React.Component {
               labelStyle={this.styles.dialogContent}
               color={colors.checkboxChecked}
               uncheckedColor={colors.checkboxUnchecked}
+              style={hasAccentColors ? this.styles.colorSchemeOption : undefined}
             />
           ))}
         </RadioButton.Group>
+        {hasAccentColors && this._renderAccentColor()}
       </List.Section>
+    )
+  }
+  handleShowAccentColorDialog = () => this.setState({ accentColorDialogVisible: true })
+
+  handleHideAccentColorDialog = () => this.setState({ accentColorDialogVisible: false })
+
+  /**
+   * Saves the chosen accent while preserving the other general settings.
+   *
+   * @param {string} accentColor The selected accent color identifier.
+   */
+  handleAccentColorChange = (accentColor) => {
+    const { settingsGeneral, settingsAccessibility } = this.props.settings
+
+    if (!settingsAccessibility.highContrast) {
+      store.dispatch(onSettingGeneralOverride('generalSettings', {
+        ...settingsGeneral,
+        accentColor
+      }))
+    }
+
+    this.handleHideAccentColorDialog()
+  }
+
+  _renderAccentColor = () => {
+    const { theme, settings, t } = this.props
+    const { accentColorOptions, colors } = theme
+    const { highContrast } = settings.settingsAccessibility
+    const { accentColor, language } = settings.settingsGeneral
+    const isGerman = language === 'de'
+
+    const title = t('settings:common.accentColor', {
+      defaultValue: isGerman ? 'Akzentfarbe wählen' : 'Choose Accent color'
+    })
+    const defaultOption = accentColorOptions[0]
+    const selectedOption = accentColorOptions.find(option => option.value === accentColor) ?? defaultOption
+    const displayedOption = highContrast ? defaultOption : selectedOption
+
+    function getOptionLabel (option) {
+      return option.labels[language] ?? option.labels.en
+    }
+
+    function renderSwatch () {
+      return (
+        <View
+          accessible={false}
+          style={[swatchStyle, { backgroundColor: displayedOption.color }]}
+        />
+      )
+    }
+
+    const swatchStyle = this.styles.accentColorSwatch
+
+    return (
+      <>
+        <List.Item
+          title={title}
+          description={highContrast
+            ? t('settings:common.accentColorHighContrast', {
+              defaultValue: isGerman
+                ? 'Bei hohem Kontrast wird Gelb verwendet.'
+                : 'Yellow is used in high contrast mode.'
+            })
+            : getOptionLabel(selectedOption)}
+          titleStyle={this.styles.listItemTitle}
+          descriptionStyle={this.styles.listItemDescription}
+          style={this.styles.accentColorItem}
+          disabled={highContrast}
+          onPress={this.handleShowAccentColorDialog}
+          right={renderSwatch}
+        />
+        <Portal>
+          <Dialog
+            visible={!highContrast && this.state.accentColorDialogVisible}
+            onDismiss={this.handleHideAccentColorDialog}
+          >
+            <Dialog.Title style={this.styles.dialogTitle}>{title}</Dialog.Title>
+            <Dialog.Content>
+              <RadioButton.Group
+                value={selectedOption.value}
+                onValueChange={this.handleAccentColorChange}
+              >
+                {accentColorOptions.map(option => (
+                  <RadioButton.Item
+                    key={option.value}
+                    value={option.value}
+                    label={getOptionLabel(option)}
+                    labelStyle={this.styles.dialogContent}
+                    color={colors.checkboxChecked}
+                    uncheckedColor={colors.checkboxUnchecked}
+                  />
+                ))}
+              </RadioButton.Group>
+            </Dialog.Content>
+          </Dialog>
+        </Portal>
+      </>
     )
   }
 
