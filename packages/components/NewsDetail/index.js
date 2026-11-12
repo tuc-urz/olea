@@ -59,8 +59,8 @@ class NewsDetailComponent extends React.Component {
   }
 
   /**
-     * Constant to store news types. These types are used to change the view accordingly.
-     */
+   * Constant to store news types. These types are used to change the view accordingly.
+   */
   static newsTypes = Object.freeze({
     topNews: 'TopNews'
   })
@@ -107,14 +107,14 @@ class NewsDetailComponent extends React.Component {
       imageHeight: Dimensions.get('window').height / 3.8,
       scrollY: new Animated.Value(Platform.OS === 'ios' ? -this.maxHeaderHeight : 0)
     }
-  };
+  }
 
   /**
-     * Share function for contact
-     *
-     * @returns {Promise<void>}
-     * @private
-     */
+   * Share function for contact
+   *
+   * @returns {Promise<void>}
+   * @private
+   */
   async _onShare () {
     try {
       const message = this.news.title + '\n\n' + this.news.link
@@ -134,9 +134,9 @@ class NewsDetailComponent extends React.Component {
     } catch (error) {
       Alert.alert('', error.message)
     }
-  };
+  }
 
-  _onScroll = event => {
+  _onScroll = (event) => {
     const scrollPosY = event.nativeEvent.contentOffset.y
     const imageHeight = Dimensions.get('window').height / 2.8
 
@@ -146,16 +146,22 @@ class NewsDetailComponent extends React.Component {
   }
 
   /**
-     * get the news content
-     *
-     * @param news
-     * @param css
-     *
-     * @returns {{html: string}}
-     * @private
-     */
+   * get the news content
+   *
+   * @param news
+   * @param css
+   *
+   * @returns {{html: string}}
+   * @private
+   */
   _getNewsContent = (news, css) => {
-    const newsContent = { html: css + "<div class='content'><meta http-equiv='Content-Type' content='text/html; charset=utf-8' />" + news.desc + '</div>' }
+    const newsContent = {
+      html:
+        css +
+        "<div class='content'><meta http-equiv='Content-Type' content='text/html; charset=utf-8' />" +
+        news.desc +
+        '</div>'
+    }
     if (Platform.OS === 'android') {
       newsContent.baseUrl = ''
     }
@@ -163,12 +169,12 @@ class NewsDetailComponent extends React.Component {
   }
 
   /**
-    * checks if the url is a valid one -> if so, it will open the URL in the browser
-    * otherwise it stops the request
-    *
-    * @param url
-    * @returns {boolean}
-    */
+   * checks if the url is a valid one -> if so, it will open the URL in the browser
+   * otherwise it stops the request
+   *
+   * @param url
+   * @returns {boolean}
+   */
   handleNavigationStateChange = ({ url }) => {
     if (!url.match(this.urlRegex)) {
       return true
@@ -188,20 +194,17 @@ class NewsDetailComponent extends React.Component {
     const { customScript } = this.props.theme
     return (
       <View style={this.styles.container}>
-        <WebView
-          injectedJavaScript={customScript}
-          source={{ uri: news.link }}
-        />
+        <WebView injectedJavaScript={customScript} source={{ uri: news.link }} />
       </View>
     )
   }
 
   /**
-     * Render news contact details content
-     *
-     * @returns {*}
-     * @private
-     */
+   * Render news contact details content
+   *
+   * @returns {*}
+   * @private
+   */
   _renderContent = (news) => {
     const { appSettings, css, themeStyles } = this.props.theme
     this.currentURL = news.link
@@ -218,7 +221,9 @@ class NewsDetailComponent extends React.Component {
 
     let pubDate = news ? news.pubdate : null
     const date = news ? moment(news.pubdate) : moment()
-    if (date) { pubDate = date.format('DD.MM.YYYY HH:mm') }
+    if (date) {
+      pubDate = date.format('DD.MM.YYYY HH:mm')
+    }
 
     return (
       <View style={this.styles.container}>
@@ -227,19 +232,23 @@ class NewsDetailComponent extends React.Component {
             pointerEvents='none'
             style={[this.styles.header, { height: this.maxHeaderHeight }]}
           >
-            {imageSrc != null &&
+            {imageSrc != null && (
               <Animated.Image
                 source={imageSrc}
                 style={[
                   this.styles.image,
                   {
                     height: this.maxHeaderHeight
-
                   }
                 ]}
-              />}
+              />
+            )}
           </Animated.View>
-          {news.contentImageDesc ? (<Text style={this.styles.imageDesc}>{news.contentImageDesc}</Text>) : null}
+          {news.contentImageDesc
+            ? (
+              <Text style={this.styles.imageDesc}>{news.contentImageDesc}</Text>
+              )
+            : null}
           <View style={this.styles.containerContent}>
             <Headline style={this.styles.title}>{news.title}</Headline>
             <WebViewAutoHeight
@@ -250,7 +259,9 @@ class NewsDetailComponent extends React.Component {
               customStyle='html, body { overflow: hidden; }'
               contentInset={{ top: 0, left: 0, right: 0, bottom: 0 }}
               onNavigationStateChange={this.handleNavigationStateChange}
-              ref={el => { this.webView = el }}
+              ref={(el) => {
+                this.webView = el
+              }}
             />
             <Text style={[this.styles.newsContent, this.styles.newsContentText]}>{pubDate}</Text>
           </View>
@@ -270,16 +281,20 @@ class NewsDetailComponent extends React.Component {
     // ------------------------------------------------------------------------
 
     const { themeStyles } = this.props.theme
+    const { theme, pluginStyles } = this.props
+    this.styles = componentStyles(theme)
+    if (pluginStyles) {
+      this.styles = merge(this.styles, pluginStyles)
+    }
+    this.styles = StyleSheet.create(this.styles)
+
     const { news, route, t, feed } = this.props
     const { newsType } = route.params
 
     if (!news) {
       return (
         <SafeAreaView style={[this.styles.container, themeStyles.appSafeAreaContainer]}>
-          <AppbarComponent
-            {...this.props}
-            title={t('news:title')}
-          />
+          <AppbarComponent {...this.props} title={t('news:title')} />
           <View style={this.styles.container}>
             <Text>{t('news:couldNotLoad')}</Text>
           </View>
@@ -296,12 +311,12 @@ class NewsDetailComponent extends React.Component {
           {...this.props}
           title={title}
           rightAction={
-                        newsType
-                          ? null
-                          : <AppbarAction icon='share' onPress={this._onShare.bind(this)} />
-                    }
+            newsType ? null : <AppbarAction icon='share' onPress={this._onShare.bind(this)} />
+          }
         />
-        {newsType === NewsDetailComponent.newsTypes.topNews ? this._renderTopNewsContent(news) : this._renderContent(news)}
+        {newsType === NewsDetailComponent.newsTypes.topNews
+          ? this._renderTopNewsContent(news)
+          : this._renderContent(news)}
       </SafeAreaView>
     )
   }

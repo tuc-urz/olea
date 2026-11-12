@@ -127,7 +127,7 @@ function CanteenAccordion ({ canteenId, menuDate, styles, onContentLayout }) {
       descriptionNumberOfLines={0}
       titleStyle={[styles.headerText, { color: colors.text }]}
       descriptionStyle={{ color: colors.text }}
-      style={{ backgroundColor: colors.background }}
+      style={{ backgroundColor: colors.surface ?? colors.background }}
       left={() =>
         canteen?.type
           ? (
@@ -278,10 +278,7 @@ export default function CanteensView (props) {
   const { t } = useTranslation()
   const navigation = useNavigation()
 
-  const styles = useMemo(
-    () => StyleSheet.create(componentStyles(theme)),
-    [theme]
-  )
+  const styles = useMemo(() => StyleSheet.create(componentStyles(theme)), [theme])
 
   const disabledWeekdays = theme?.appSettings?.modules?.canteen?.disabledWeekdays ?? []
   const weeksToRender = theme?.appSettings?.modules?.canteen?.weeksToRender ?? 1
@@ -293,7 +290,7 @@ export default function CanteensView (props) {
   // Derzeitiger Tag
   const today = now.startOf('day')
   // Suche nach dem Index des heutigen Tages oder den Tag danach. Kann kein Index gefunden werden, wird -1 genommen.
-  let initialDayTabIndex = daysTabViewRoutes.findIndex(dayTab => dayTab.date >= today)
+  let initialDayTabIndex = daysTabViewRoutes.findIndex((dayTab) => dayTab.date >= today)
   // Wenn kein Index gefunden werden konnte, wird der letzte Tab genommen
   // Wenn nur eine Woche gerendert wird und die Wochenendtagen ausgeschalten wird, wird kein folgetag gefunden.
   initialDayTabIndex = initialDayTabIndex === -1 ? daysTabViewRoutes.length - 1 : initialDayTabIndex
@@ -347,12 +344,12 @@ export default function CanteensView (props) {
 
     if (!menuDate) return
 
-    const menuDateIndex = routes.findIndex(route => route.date.toISODate() === menuDate)
+    const menuDateIndex = routes.findIndex((route) => route.date.toISODate() === menuDate)
     setIndex(menuDateIndex)
     navigation.dispatch(CommonActions.setParams({ menuDate: undefined }))
   }
 
-  const _renderTabBar = props => {
+  const _renderTabBar = (props) => {
     return (
       <TabBar
         {...props}
@@ -362,7 +359,7 @@ export default function CanteensView (props) {
         inactiveColor={themeStyles.tabs.inactiveColor}
         indicatorStyle={themeStyles.tabIndicator}
         tabStyle={{ width: 'auto', paddingHorizontal: 20 }}
-        renderTabBarItem={({ route, navigationState, ...rest }) =>
+        renderTabBarItem={({ route, navigationState, ...rest }) => (
           <TabBarItem
             {...rest}
             key={route.key}
@@ -371,20 +368,19 @@ export default function CanteensView (props) {
             labelStyle={themeStyles.tab}
             activeColor={themeStyles.tabs.activeColor}
             inactiveColor={themeStyles.tabs.inactiveColor}
-                    // Die einbindung von moment.js zum Anzeigen des Wochentages sollte langfristig entfernt werden.
-                    // Funktioniert die Luxon funktionalität der Wochenanzeige nicht unter iOS datetime.toFormat('ccc')
+            // Die einbindung von moment.js zum Anzeigen des Wochentages sollte langfristig entfernt werden.
+            // Funktioniert die Luxon funktionalität der Wochenanzeige nicht unter iOS datetime.toFormat('ccc')
             labelText={`${moment.unix(route.date.toUnixInteger()).locale(language).format('dd')}, ${route.date.toFormat('dd.LL.')}`}
             accessibilityLabel={route.date.toFormat('DDDD')}
-          />}
+          />
+        )}
       />
     )
   }
 
   return (
     <SafeAreaView style={[styles.container, themeStyles.appSafeAreaContainer]}>
-      <AppbarComponent
-        title={t('canteen:title')} {...props}
-      />
+      <AppbarComponent title={t('canteen:title')} {...props} />
       <View style={themeStyles.container}>
         <TabView
           style={style}
@@ -397,42 +393,44 @@ export default function CanteensView (props) {
           }}
           renderTabBar={_renderTabBar}
           onIndexChange={setIndex}
-          renderScene={
-                        ({ route }) => {
-                          const menuDate = route?.key
+          renderScene={({ route }) => {
+            const menuDate = route?.key
 
-                          return (
-                            <CanteensAccordion
-                              menuDate={menuDate}
-                              expandedCanteenId={activeCanteen}
-                              onCanteenSelect={
-                                        // Wenn dieses Akkordion eine Mensa öffnet oder schließt, wird der activeCanteen statte mit der ID der Mensa aktualisiert.
-                                        // Falls der Nutzer die Mensa schließt und damit keine Mensa im Akkordion öffen ist, wird null in den State geschrieben.
-                                        expandedCanteenId => setActiveCanteen(expandedCanteenId)
-                                    }
-                              CanteensEmptyComponent={
-                                <View>
-                                  <Text>{t('canteen:notAvailable')}</Text>
-                                  <ActivityIndicator style={styles.activity} size='large' color={colors.loadingIndicator} />
-                                </View>
-                                    }
-                            />
-                          )
-                        }
-                    }
+            return (
+              <CanteensAccordion
+                menuDate={menuDate}
+                expandedCanteenId={activeCanteen}
+                onCanteenSelect={
+                  // Wenn dieses Akkordion eine Mensa öffnet oder schließt, wird der activeCanteen statte mit der ID der Mensa aktualisiert.
+                  // Falls der Nutzer die Mensa schließt und damit keine Mensa im Akkordion öffen ist, wird null in den State geschrieben.
+                  (expandedCanteenId) => setActiveCanteen(expandedCanteenId)
+                }
+                CanteensEmptyComponent={
+                  <View>
+                    <Text>{t('canteen:notAvailable')}</Text>
+                    <ActivityIndicator
+                      style={styles.activity}
+                      size='large'
+                      color={colors.loadingIndicator}
+                    />
+                  </View>
+                }
+              />
+            )
+          }}
           lazy
           lazyPreloadDistance={2}
-          renderLazyPlaceholder={(route) =>
+          renderLazyPlaceholder={(route) => (
             <View style={styles.centerContainer}>
               <ActivityIndicator
                 style={styles.activity}
                 size='large'
                 color={theme.colors.loadingIndicator}
               />
-            </View>}
+            </View>
+          )}
         />
       </View>
-
     </SafeAreaView>
   )
 }

@@ -87,13 +87,11 @@ class JobFilterComponent extends React.Component {
   }
 
   handleChange = (index) => {
-    this.setState(prevState => {
+    this.setState((prevState) => {
       const checked = [...prevState.checked]
-      const selectedIds = this.addOrRemSelectedIds(
-        prevState.data,
-        index,
-        [...prevState.selectedIds]
-      )
+      const selectedIds = this.addOrRemSelectedIds(prevState.data, index, [
+        ...prevState.selectedIds
+      ])
 
       checked[index] = !checked[index]
 
@@ -125,25 +123,27 @@ class JobFilterComponent extends React.Component {
       <FlatList
         data={data}
         extraData={this.state}
-        renderItem={({ item, index }) =>
+        renderItem={({ item, index }) => (
           <CheckBox
             checked={checked[index]}
             title={item.name}
             textStyle={this.styles.title}
+            containerStyle={this.styles.checkboxContainer}
             onPress={() => this.handleChange(index)}
             checkedColor={colors.checkboxChecked}
             uncheckedColor={colors.checkboxUnchecked}
-          />}
+          />
+        )}
         keyExtractor={this._keyExtractor}
       />
     )
   }
 
   /**
-     * Tab for services
-     * @returns {*}
-     * @constructor
-     */
+   * Tab for services
+   * @returns {*}
+   * @constructor
+   */
 
   render () {
     // ------------------------------------------------------------------------
@@ -164,23 +164,23 @@ class JobFilterComponent extends React.Component {
             title='Filter'
             leftAction={
               <Appbar.Action
-                icon={props => <IconsOpenasist {...props} icon='back' color={colors.primaryText} />}
+                icon={(props) => (
+                  <IconsOpenasist {...props} icon='back' color={colors.primaryText} />
+                )}
                 onPress={() => {
                   this.goBack()
                 }}
               />
-                       }
+            }
           />
         </View>
-        <View style={themeStyles.container}>
-          {this._renderListView()}
-        </View>
+        <View style={themeStyles.container}>{this._renderListView()}</View>
       </SafeAreaView>
     )
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     pluginComponent: state.pluginReducer.jobFilter.component,
     pluginStyles: state.pluginReducer.jobFilter.styles

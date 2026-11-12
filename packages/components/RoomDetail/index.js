@@ -25,12 +25,7 @@ import {
   Alert
 } from 'react-native'
 import { connect } from 'react-redux'
-import {
-  Appbar,
-  Headline,
-  List,
-  withTheme
-} from 'react-native-paper'
+import { Appbar, Headline, List, withTheme } from 'react-native-paper'
 import { withTranslation } from 'react-i18next'
 import { WebView } from 'react-native-webview'
 import { useFocusEffect } from '@react-navigation/native'
@@ -44,18 +39,20 @@ import componentStyles from './styles'
 
 // Use the current screen's navigation context, not the search screen's props.
 function RoomWebViewBackHandler ({ onBack }) {
-  useFocusEffect(useCallback(() => {
-    if (Platform.OS !== 'android') {
-      return
-    }
+  useFocusEffect(
+    useCallback(() => {
+      if (Platform.OS !== 'android') {
+        return
+      }
 
-    const subscription = BackHandler.addEventListener('hardwareBackPress', () => {
-      onBack()
-      return true
-    })
+      const subscription = BackHandler.addEventListener('hardwareBackPress', () => {
+        onBack()
+        return true
+      })
 
-    return () => subscription.remove()
-  }, [onBack]))
+      return () => subscription.remove()
+    }, [onBack])
+  )
 
   return null
 }
@@ -116,22 +113,40 @@ class RoomDetailComponent extends React.Component {
   }
 
   /**
-     * Share function for room
-     *
-     * @returns {Promise<void>}
-     * @private
-     */
+   * Share function for room
+   *
+   * @returns {Promise<void>}
+   * @private
+   */
   async _onShare () {
     try {
       const { room, theme, t } = this.props
       let roomTitle = room.code2017 || room.title
       roomTitle += room.codeDez1 ? ' (' + t('room:old') + ': ' + room.codeDez1 + ')' : ''
 
-      const message = t('room:title') + ' - ' + roomTitle +
-                ((room.building.name) ? '\n' + t('room:building') + ': ' + room.building.name : '') +
-                ((room.building.postaladdress) ? '\n' + t('room:address') + ': ' + room.building.postaladdress + ', ' + (room.building.postalcode ? '\n' + room.building.postalcode + ' ' + theme.appSettings.defaultCity : '') : '') +
-                ((room.codeDez1) ? '\n' + t('room:campusFinderLink') + ': ' + room.url : '') +
-                ((room.codeDez1) ? '\n' + t('room:googleMapsLink') + ': ' + theme.appSettings.googleMapsUrl + room.building.coordinates.replace(/\s/g, '') : '')
+      const message =
+        t('room:title') +
+        ' - ' +
+        roomTitle +
+        (room.building.name ? '\n' + t('room:building') + ': ' + room.building.name : '') +
+        (room.building.postaladdress
+          ? '\n' +
+            t('room:address') +
+            ': ' +
+            room.building.postaladdress +
+            ', ' +
+            (room.building.postalcode
+              ? '\n' + room.building.postalcode + ' ' + theme.appSettings.defaultCity
+              : '')
+          : '') +
+        (room.codeDez1 ? '\n' + t('room:campusFinderLink') + ': ' + room.url : '') +
+        (room.codeDez1
+          ? '\n' +
+            t('room:googleMapsLink') +
+            ': ' +
+            theme.appSettings.googleMapsUrl +
+            room.building.coordinates.replace(/\s/g, '')
+          : '')
 
       const result = await Share.share({
         message
@@ -149,14 +164,14 @@ class RoomDetailComponent extends React.Component {
     } catch (error) {
       Alert.alert('', error.message)
     }
-  };
+  }
 
   /**
-     * Render room details content
-     *
-     * @returns a view that includes the full name of the room, its building plus address, one button for opening the campus-navigator and one for opening google-maps
-     * @private
-     */
+   * Render room details content
+   *
+   * @returns a view that includes the full name of the room, its building plus address, one button for opening the campus-navigator and one for opening google-maps
+   * @private
+   */
   _renderContent = () => {
     const { room, t, theme } = this.props
     const { themeStyles } = theme
@@ -168,34 +183,31 @@ class RoomDetailComponent extends React.Component {
     return (
       <View style={this.styles.containerInner}>
         <Headline style={this.styles.titleHeadline}>{roomTitle}</Headline>
-        {
-                    (room?.building ?? null)
-                      ? (
-                        <>
-                          <List.Item
-                            key='building'
-                            title={t('room:building')}
-                            description={room.building.name}
-                            descriptionStyle={themeStyles.textLighter}
-                            titleStyle={themeStyles.searchDetailTitle}
-                          />
-                          <List.Item
-                            key='address'
-                            title={t('room:address')}
-                            description={
-                                    room.building.postaladdress + (
-                                      (room?.building?.postalcode ?? false)
-                                        ? '\n' + room.building.postalcode + ' ' + theme.appSettings.defaultCity
-                                        : ''
-                                    )
-                                }
-                            descriptionStyle={themeStyles.textLighter}
-                            titleStyle={themeStyles.searchDetailTitle}
-                          />
-                        </>
-                        )
-                      : null
-                }
+        {(room?.building ?? null)
+          ? (
+            <>
+              <List.Item
+                key='building'
+                title={t('room:building')}
+                description={room.building.name}
+                descriptionStyle={[themeStyles.textLighter, { color: colors.text }]}
+                titleStyle={themeStyles.searchDetailTitle}
+              />
+              <List.Item
+                key='address'
+                title={t('room:address')}
+                description={
+                room.building.postaladdress +
+                ((room?.building?.postalcode ?? false)
+                  ? '\n' + room.building.postalcode + ' ' + theme.appSettings.defaultCity
+                  : '')
+              }
+                descriptionStyle={[themeStyles.textLighter, { color: colors.text }]}
+                titleStyle={themeStyles.searchDetailTitle}
+              />
+            </>
+            )
+          : null}
         <View style={this.styles.buttonContainer} key='buttonContainer'>
           {(room?.url ?? null)
             ? (
@@ -211,14 +223,8 @@ class RoomDetailComponent extends React.Component {
                   })
                 }}
               >
-                <IconsOpenasist
-                  icon='map-search'
-                  size={25}
-                  color={colors.messages.noticeText}
-                />
-                <Headline style={this.styles.buttonText}>
-                  {t('room:campusFinderLink')}
-                </Headline>
+                <IconsOpenasist icon='map-search' size={25} color={colors.messages.noticeText} />
+                <Headline style={this.styles.buttonText}>{t('room:campusFinderLink')}</Headline>
               </TouchableOpacity>
               )
             : null}
@@ -236,14 +242,8 @@ class RoomDetailComponent extends React.Component {
                   })
                 }}
               >
-                <IconsOpenasist
-                  icon='location'
-                  size={25}
-                  color={colors.messages.noticeText}
-                />
-                <Headline style={this.styles.buttonText}>
-                  {t('room:googleMapsLink')}
-                </Headline>
+                <IconsOpenasist icon='location' size={25} color={colors.messages.noticeText} />
+                <Headline style={this.styles.buttonText}>{t('room:googleMapsLink')}</Headline>
               </TouchableOpacity>
               )
             : null}
@@ -274,20 +274,32 @@ class RoomDetailComponent extends React.Component {
           <AppbarComponent
             {...this.props}
             title={title}
-            leftAction={<Appbar.Action
-              icon={props => <IconsOpenasist {...props} icon='back' color={colors.primaryText} />}
-              onPress={this.handleCloseWebView}
-                        />}
+            leftAction={
+              <Appbar.Action
+                icon={(props) => (
+                  <IconsOpenasist {...props} icon='back' color={colors.primaryText} />
+                )}
+                onPress={this.handleCloseWebView}
+              />
+            }
           />
           <WebView
-            ref={ref => {
+            ref={(ref) => {
               this.webView.ref = ref
             }}
             source={{ uri: url }}
             injectedJavaScript={customScript}
             startInLoadingState
-            renderLoading={() => <ActivityIndicator style={this.styles.activity} size='large' color={colors.loadingIndicator} />}
-            onNavigationStateChange={(navState) => { this.webView.canGoBack = navState.canGoBack }}
+            renderLoading={() => (
+              <ActivityIndicator
+                style={this.styles.activity}
+                size='large'
+                color={colors.loadingIndicator}
+              />
+            )}
+            onNavigationStateChange={(navState) => {
+              this.webView.canGoBack = navState.canGoBack
+            }}
           />
         </SafeAreaView>
       )
@@ -306,7 +318,7 @@ class RoomDetailComponent extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     pluginComponent: state.pluginReducer.roomDirectory.component,
     pluginStyles: state.pluginReducer.roomDirectory.styles

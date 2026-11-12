@@ -12,16 +12,15 @@
  * limitations under the License.
  */
 
-
 import { View, TouchableOpacity, Text, StyleSheet, TouchableNativeFeedback } from 'react-native'
 
-import { useTheme } from 'react-native-paper';
-import { useTranslation } from 'react-i18next';
-import { useNavigation } from '@react-navigation/native';
+import { useTheme } from 'react-native-paper'
+import { useTranslation } from 'react-i18next'
+import { useNavigation } from '@react-navigation/native'
 
-import IconsOpenasist from '../../libraries/icons-openasist';
+import IconsOpenasist from '../../libraries/icons-openasist'
 
-import componentStyles from './styles';
+import componentStyles from './styles'
 
 /**
  * Ein einzelner Eintrag im Hauptmenü, welcher beim draufdrücken eine View oder URL öffnet.
@@ -43,46 +42,38 @@ import componentStyles from './styles';
  * @param {string}  [props.iconSVG] siehe {@link IconsOpenasist}
  * @param {number}  [props.iconSize] Größe des Icons (siehe {@link IconsOpenasist})
  */
-export default function MainMenuEntry({ title, icon, iconSVG, iconSize, view, url, isLocalized }) {
-    const { t } = useTranslation();
-    const theme = useTheme();
-    const { colors } = theme;
-    const navigation = useNavigation();
-    const styles = StyleSheet.create(componentStyles(theme));
+export default function MainMenuEntry ({ title, icon, iconSVG, iconSize, view, url, isLocalized }) {
+  const { t } = useTranslation()
+  const theme = useTheme()
+  const { colors } = theme
+  const navigation = useNavigation()
+  const styles = StyleSheet.create(componentStyles(theme))
 
-    const translatedTitle = t(title);
+  const translatedTitle = t(title)
 
-    return (
-        <TouchableOpacity
-            style={styles.entry}
-            background={TouchableNativeFeedback.Ripple(colors.background, false)}
-            onPress={
-                () => {
-                    if (view) {
-                        navigation.navigate(view);
-                    } else if (url) {
-                        navigation.navigate(
-                            'Web',
-                            {
-                                title: translatedTitle,
+  return (
+    <TouchableOpacity
+      style={styles.entry}
+      background={TouchableNativeFeedback.Ripple(colors.background, false)}
+      onPress={() => {
+        if (view) {
+          navigation.navigate(view)
+        } else if (url) {
+          navigation.navigate('Web', {
+            title: translatedTitle,
 
-                                // Is isLocalized is true url is localized via i18n files, use the given key to get the correct url
-                                url: (isLocalized ?? false)
-                                    ? t(url)
-                                    : url,
-                            }
-                        );
-                    }
-                }
-            }>
-            <View style={styles.textContainer} accessiblity={true} accessibilityLabel={translatedTitle}>
-                <View style={styles.iconContainer}>
-                    <IconsOpenasist icon={icon} iconSVG={iconSVG} color={colors.iconDefault} size={iconSize ?? 34} />
-                </View>
-                <Text style={styles.titleText}>
-                    {translatedTitle}
-                </Text>
-            </View>
-        </TouchableOpacity>
-    )
+            // Is isLocalized is true url is localized via i18n files, use the given key to get the correct url
+            url: (isLocalized ?? false) ? t(url) : url
+          })
+        }
+      }}
+    >
+      <View style={styles.textContainer} accessiblity accessibilityLabel={translatedTitle}>
+        <View style={styles.iconContainer}>
+          <IconsOpenasist icon={icon} iconSVG={iconSVG} color={colors.icon} size={iconSize ?? 34} />
+        </View>
+        <Text style={styles.titleText}>{translatedTitle}</Text>
+      </View>
+    </TouchableOpacity>
+  )
 }
