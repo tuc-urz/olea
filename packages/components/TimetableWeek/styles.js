@@ -16,12 +16,13 @@ export default function (theme) {
       overflow: 'visible'
     },
     eventTitle: {
+      color: theme.colors.eventTitleText,
       fontSize: 12,
       fontWeight: 'bold'
     },
     eventRoom: {
-      fontSize: 11,
-      color: theme.colors.text
+      color: theme.colors.eventRoomText,
+      fontSize: 11
     },
     highlightDateContainer: {
       borderRadius: 100,
@@ -38,12 +39,12 @@ export default function (theme) {
       width: '89%',
       paddingTop: 5,
       paddingBottom: 5,
-      backgroundColor: '#fff',
+      backgroundColor: theme.colors.calendarHeaderBackground,
       alignSelf: 'flex-end'
     },
     viewStrip: {
       height: 65,
-      backgroundColor: '#fff',
+      backgroundColor: theme.colors.calendarHeaderBackground,
       elevation: 4,
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 3 },
