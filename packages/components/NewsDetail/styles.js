@@ -43,7 +43,8 @@ export default function (theme) {
     title: {
       paddingLeft: 10,
       fontSize: theme.fontSizes.title,
-      lineHeight: theme.lineHeights.titleBig
+      lineHeight: theme.lineHeights.titleBig,
+      color: theme.colors.text
     },
     bar: {
       alignItems: 'flex-start',
@@ -60,14 +61,15 @@ export default function (theme) {
     newsContent: {
       marginVertical: theme.paddings.default,
       marginHorizontal: theme.paddings.small,
-      width: width - (2 * theme.paddings.small)
+      width: width - 2 * theme.paddings.small
     },
     newsContentText: {
+      color: theme.colors.text,
       fontSize: theme.fontSizes.m
     },
     imageDesc: {
-      backgroundColor: theme.colors.overlayColor,
-      color: theme.colors.primaryText,
+      backgroundColor: theme.colors.contentBackground,
+      color: theme.colors.text,
       paddingVertical: 2,
       paddingHorizontal: theme.paddings.small,
       fontSize: theme.fontSizes.xs

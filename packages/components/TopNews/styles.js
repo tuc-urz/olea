@@ -60,27 +60,31 @@ export default function (theme) {
       flex: 1
     },
     newsItem: {
-      backgroundColor: theme.colors.background,
+      backgroundColor: theme.colors.surface,
       paddingHorizontal: theme.paddings.default,
       paddingTop: theme.paddings.default
     },
     newsItemCategory: {
       marginBottom: 5,
-      fontSize: theme.fontSizes.s
+      fontSize: theme.fontSizes.s,
+      color: theme.colors.text
     },
     newsItemTitle: {
       ...theme.fonts.bold,
       fontSize: theme.fontSizes.xxl,
       lineHeight: theme.lineHeights.titleBigger,
-      marginBottom: theme.paddings.small
+      marginBottom: theme.paddings.small,
+      color: theme.colors.text
     },
     newsItemText: {
       ...theme.fonts.regular,
       fontSize: theme.fontSizes.m,
-      lineHeight: theme.lineHeights.s
+      lineHeight: theme.lineHeights.s,
+      color: theme.colors.text
     },
     newsItemReadMore: {
-      textDecorationLine: 'underline'
+      textDecorationLine: 'underline',
+      color: theme.colors.textAccent
     },
     newsItemActionbar: {
       borderBottomColor: theme.colors.accent,

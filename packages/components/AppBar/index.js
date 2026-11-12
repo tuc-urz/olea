@@ -12,73 +12,86 @@
  * limitations under the License.
  */
 
-import React, { useMemo } from 'react';
-import { StyleSheet } from 'react-native';
-import PropTypes from 'prop-types';
+import React, { useMemo } from 'react'
+import { StyleSheet } from 'react-native'
+import PropTypes from 'prop-types'
 
-import { Appbar, useTheme } from 'react-native-paper';
-import { useTranslation } from 'react-i18next';
-import { useNavigation } from '@react-navigation/native';
+import { Appbar, useTheme } from 'react-native-paper'
+import { useTranslation } from 'react-i18next'
+import { useNavigation } from '@react-navigation/native'
 
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 
-import IconsOpenasist from '../../libraries/icons-openasist';
+import IconsOpenasist from '../../libraries/icons-openasist'
 
-import componentStyles from './styles';
+import componentStyles from './styles'
 
-function AppbarComponent({ settings, title, leftAction, rightAction, subtitle, style }) {
-    const theme = useTheme();
-    const { t } = useTranslation();
-    const { colors } = theme;
-    const navigation = useNavigation();
-    const isBigFont = settings?.settingsAccessibility?.increaseFontSize ?? false;
+function AppbarComponent ({ settings, title, leftAction, rightAction, subtitle, style }) {
+  const theme = useTheme()
+  const { t } = useTranslation()
+  const { colors } = theme
+  const navigation = useNavigation()
+  const isBigFont = settings?.settingsAccessibility?.increaseFontSize ?? false
 
-    // Styles of this component
-    const styles = useMemo(
-        () => StyleSheet.create(componentStyles(theme)),
-        [theme]
-    )
+  // Styles of this component
+  const styles = useMemo(
+    () => StyleSheet.create(componentStyles(theme)),
+    [theme]
+  )
 
-    return (
-        <Appbar.Header style={[{ elevation: 0 }, isBigFont ? { height: 70 } : null, style]} statusBarHeight={0}>
-            {
-                leftAction
-                    ? leftAction
-                    : <Appbar.Action
-                        icon={(props) => <IconsOpenasist {...props} icon={'back'} color={colors.appbarIconColor} />}
-                        onPress={() => navigation.goBack(null)}
-                        accessible={true}
-                        accessibilityLabel={t('accessibility:appbar.navigateBack')}
-                        accessibilityHint={t('accessibility:appbar.back')}
-                    />
+  return (
+    <Appbar.Header
+      style={[
+        { elevation: 0 },
+        colors.appbarBackground != null
+          ? { backgroundColor: colors.appbarBackground }
+          : null,
+        isBigFont ? { height: 70 } : null,
+        style
+      ]}
+      statusBarHeight={0}
+    >
+      {
+                leftAction || <Appbar.Action
+                  icon={(props) => <IconsOpenasist {...props} icon='back' color={colors.appbarIconColor} />}
+                  onPress={() => navigation.goBack(null)}
+                  accessible
+                  accessibilityLabel={t('accessibility:appbar.navigateBack')}
+                  accessibilityHint={t('accessibility:appbar.back')}
+                              />
             }
-            <Appbar.Content
-                style={isBigFont ? styles.contentStyleBigFont : {}}
-                title={title}
-                titleStyle={[styles.titleStyle, isBigFont ? styles.titleBigFont : null]}
-                subtitle={subtitle}
-                subtitleStyle={[styles.subtitle, isBigFont ? styles.subtitleBigFont : null]} />
-            {
-                rightAction
-                    ? rightAction
-                    : null
+      <Appbar.Content
+        style={isBigFont ? styles.contentStyleBigFont : {}}
+        title={title}
+        titleStyle={[
+          styles.titleStyle,
+          isBigFont ? styles.titleBigFont : null,
+          colors.appbarText != null
+            ? { color: colors.appbarText }
+            : null
+        ]}
+        subtitle={subtitle}
+        subtitleStyle={[styles.subtitle, isBigFont ? styles.subtitleBigFont : null]}
+      />
+      {
+                rightAction || null
             }
-        </Appbar.Header>
-    );
+    </Appbar.Header>
+  )
 }
 
-//DEPRECATED: Proptypes werden in React 19 nicht mehr unterstützt, stattdessen wird TypeScript empfohlen.
+// DEPRECATED: Proptypes werden in React 19 nicht mehr unterstützt, stattdessen wird TypeScript empfohlen.
 AppbarComponent.propTypes = {
-    title: PropTypes.string,
-    rightAction: PropTypes.any,
-    leftAction: PropTypes.any,
-    style: PropTypes.object
-};
+  title: PropTypes.string,
+  rightAction: PropTypes.any,
+  leftAction: PropTypes.any,
+  style: PropTypes.object
+}
 
 const mapStateToProps = state => {
-    return {
-        settings: state.settingReducer
-    };
-};
+  return {
+    settings: state.settingReducer
+  }
+}
 
 export default connect(mapStateToProps, null)(AppbarComponent)
