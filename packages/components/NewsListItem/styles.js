@@ -23,13 +23,15 @@ export default function (theme) {
       fontSize: theme.fontSizes.subtitle,
       lineHeight: theme.lineHeights.titleSmall,
       marginTop: theme.paddings.default,
-      marginBottom: theme.paddings.small
+      marginBottom: theme.paddings.small,
+      color: theme.colors.text
     },
     description: {
       ...theme.fonts.regular,
       fontSize: theme.fontSizes.itemText,
       lineHeight: theme.lineHeights.s,
-      marginBottom: theme.paddings.small
+      marginBottom: theme.paddings.small,
+      color: theme.colors.text
     }
   }
 }
