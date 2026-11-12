@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -308,6 +308,9 @@ function TimetableViewCalendar (props) {
     themeStyles.tabIndicator
   ])
 
+  const useImportAccent = theme.accentColorOptions?.length && colors.appbarBackground
+  const importButtonBackground = useImportAccent ? colors.appbarBackground : colors.primary
+
   const renderForm = () => (
     <View style={styles.formContainer}>
       <View style={styles.inputContainer}>
@@ -346,14 +349,17 @@ function TimetableViewCalendar (props) {
         : null}
 
       <TouchableOpacity
-        style={styles.importButton}
+        style={[styles.importButton, { backgroundColor: importButtonBackground }]}
         labelStyle={styles.importButtonLabel}
         label={t('eventCode:importButton')}
         onPress={() => {
           handleImportButtonPress()
         }}
       >
-        <Headline style={styles.importButtonLabel} color={colors.buttonText}>
+        <Headline
+          style={styles.importButtonLabel}
+          color={colors.timetableImportButtonText ?? colors.buttonText}
+        >
           {t('timetable:importButton')}
         </Headline>
       </TouchableOpacity>
