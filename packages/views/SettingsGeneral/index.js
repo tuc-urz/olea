@@ -16,13 +16,21 @@ import React from 'react'
 import { SafeAreaView, View, Text } from 'react-native'
 
 import { connect } from 'react-redux'
-import { Button, List, Dialog, Portal, RadioButton, withTheme } from 'react-native-paper'
+import {
+  Button,
+  List,
+  Dialog,
+  Portal,
+  RadioButton,
+  withTheme
+} from 'react-native-paper'
 import { withTranslation } from 'react-i18next'
 
 import merge from 'lodash/merge'
 
 import { onSettingGeneralOverride, store } from '../../libraries/core'
 import AppbarComponent from '../../components/AppBar'
+import { RadioButtonItem } from '../../components/SelectionControls'
 
 import componentStyles from './styles'
 
@@ -84,16 +92,12 @@ class GeneralSettingsView extends React.Component {
 
   _renderLanguages = () => {
     const { theme, t } = this.props
-    const { colors } = theme
     const languages = theme.appSettings.languages.map((language) => (
       <View key={'lanuage-' + language.code}>
-        <RadioButton.Item
+        <RadioButtonItem
           value={language.code}
-          color={colors.checkboxChecked}
           label={t(language.labelKey)}
           labelStyle={this.styles.dialogContent}
-          uncheckedColor={colors.checkboxUnchecked}
-          mode='android'
         />
       </View>
     ))
@@ -115,7 +119,6 @@ class GeneralSettingsView extends React.Component {
 
   _renderColorScheme = () => {
     const { theme, t } = this.props
-    const { colors } = theme
     const hasAccentColors = (theme.accentColorOptions?.length ?? 0) > 0
     const options = [
       ['system', 'System', 'System'],
@@ -149,15 +152,13 @@ class GeneralSettingsView extends React.Component {
           }}
         >
           {options.map(([value, german, english]) => (
-            <RadioButton.Item
+            <RadioButtonItem
               key={value}
               value={value}
               label={t(`settings:common.colorSchemeOptions.${value}`, {
                 defaultValue: isGerman ? german : english
               })}
               labelStyle={this.styles.dialogContent}
-              color={colors.checkboxChecked}
-              uncheckedColor={colors.checkboxUnchecked}
               style={hasAccentColors ? this.styles.colorSchemeOption : undefined}
             />
           ))}
@@ -191,7 +192,7 @@ class GeneralSettingsView extends React.Component {
 
   _renderAccentColor = () => {
     const { theme, settings, t } = this.props
-    const { accentColorOptions, colors } = theme
+    const { accentColorOptions} = theme
     const { highContrast } = settings.settingsAccessibility
     const { accentColor, language } = settings.settingsGeneral
     const isGerman = language === 'de'
@@ -248,13 +249,11 @@ class GeneralSettingsView extends React.Component {
                 onValueChange={this.handleAccentColorChange}
               >
                 {accentColorOptions.map(option => (
-                  <RadioButton.Item
+                  <RadioButtonItem
                     key={option.value}
                     value={option.value}
                     label={getOptionLabel(option)}
                     labelStyle={this.styles.dialogContent}
-                    color={colors.checkboxChecked}
-                    uncheckedColor={colors.checkboxUnchecked}
                   />
                 ))}
               </RadioButton.Group>

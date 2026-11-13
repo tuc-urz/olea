@@ -16,12 +16,15 @@ import React from 'react'
 import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native'
 import { connect } from 'react-redux'
 import { withTranslation } from 'react-i18next'
-import { Appbar, withTheme } from 'react-native-paper'
-import { CheckBox } from 'react-native-elements'
+import {
+  Appbar,
+  withTheme
+} from 'react-native-paper'
 
 import merge from 'lodash/merge'
 import componentStyles from './styles'
 import AppbarComponent from '../AppBar'
+import { CheckboxItem } from '../SelectionControls'
 import IconsOpenasist from '../../libraries/icons-openasist'
 
 /**
@@ -116,7 +119,6 @@ class JobFilterComponent extends React.Component {
   }
 
   _renderListView = () => {
-    const { colors } = this.props.theme
     const { data, checked } = this.state
 
     return (
@@ -124,14 +126,13 @@ class JobFilterComponent extends React.Component {
         data={data}
         extraData={this.state}
         renderItem={({ item, index }) => (
-          <CheckBox
-            checked={checked[index]}
-            title={item.name}
-            textStyle={this.styles.title}
-            containerStyle={this.styles.checkboxContainer}
+          <CheckboxItem
+            status={checked[index] ? 'checked' : 'unchecked'}
+            label={item.name}
+            position='leading'
+            labelStyle={this.styles.title}
+            style={this.styles.checkboxContainer}
             onPress={() => this.handleChange(index)}
-            checkedColor={colors.checkboxChecked}
-            uncheckedColor={colors.checkboxUnchecked}
           />
         )}
         keyExtractor={this._keyExtractor}

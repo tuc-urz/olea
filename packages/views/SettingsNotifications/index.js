@@ -16,13 +16,18 @@ import React from 'react';
 import { Alert, SafeAreaView, View } from 'react-native';
 
 import {connect} from 'react-redux'
-import { withTheme, Checkbox, Text, Switch } from "react-native-paper";
+import {
+  withTheme,
+  Text,
+  Switch
+} from 'react-native-paper'
 import {withTranslation} from "react-i18next";
 
 import merge from 'lodash/merge';
 
 import { onSettingNotificationsOverride, store } from '../../libraries/core'
 import AppbarComponent from '../../components/AppBar';
+import { CheckboxItem } from '../../components/SelectionControls';
 import componentStyles from "./styles";
 
 /**
@@ -122,7 +127,7 @@ class NotificationsSettingsView extends React.Component {
     }
 
     feedSettings() {
-        const { theme: { colors }, t, feeds } = this.props;
+        const { t, feeds } = this.props;
         const { enablePushNotifications, enabledFeedNotifications } = this.state;
 
         let feedItems = [];
@@ -131,16 +136,13 @@ class NotificationsSettingsView extends React.Component {
         );
         feeds.forEach(feed => {
             feedItems.push(
-                <Checkbox.Item
+                <CheckboxItem
                     disabled={!enablePushNotifications}
                     key={feed.feedid}
                     label={feed.title}
                     labelStyle={this.styles.labelStyle}
                     status={enabledFeedNotifications.indexOf(feed.feedid) > -1 ? 'checked' : 'unchecked'}
                     onPress={() => this._handleChange('feed', feed.feedid)}
-                    color={colors.checkboxChecked}
-                    uncheckedColor={colors.checkboxUnchecked}
-                    mode="android"
                 />
             )
         });

@@ -15,10 +15,14 @@
 import React, { useMemo } from 'react';
 import { StyleSheet } from 'react-native';
 
-import { RadioButton, useTheme } from 'react-native-paper';
+import {
+  RadioButton,
+  useTheme
+} from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
 import SettingsDialog from '../SettingsDialog';
+import { RadioButtonItem } from '../SelectionControls';
 
 import componentStyles from './styles';
 
@@ -46,15 +50,12 @@ export default function SettingsDialogRadio({ title, visible, options, selectedO
           options.map(
             option => {
               const optionKey = option?.key;
-              const colors = theme.colors;
               return (
-                <RadioButton.Item
+                <RadioButtonItem
                   key={optionKey}
                   value={optionKey}
                   label={t(option.label)}
                   labelStyle={styles.optionLabel}
-                  color={colors.checkboxChecked}
-                  mode={'android'}
                 />
               )
             }

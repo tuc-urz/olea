@@ -16,7 +16,12 @@ import { useMemo, useCallback } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
 import { useDispatch } from 'react-redux'
-import { useTheme, Portal, Dialog, Checkbox, Button } from 'react-native-paper'
+import {
+  useTheme,
+  Portal,
+  Dialog,
+  Button
+} from 'react-native-paper'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -26,6 +31,11 @@ import {
   useStagingServer,
   useSubscriberId
 } from '../../libraries/core'
+
+import {
+  CheckboxControl,
+  CheckboxItem
+} from '../SelectionControls'
 
 import componentStyles from './styles'
 
@@ -76,11 +86,10 @@ export default function DevelopmentDialog ({ visible, onDismiss }) {
   output.push(
     <View key='item_use_stg' style={styles.selectOption}>
       <Text style={styles.text}>{t('settings:develop.useStagingServer')}</Text>
-      <Checkbox.Android
+      <CheckboxControl
         status={isStagingServerActive ? 'checked' : 'unchecked'}
+        accessibilityLabel={t('settings:develop.useStagingServer')}
         onPress={() => setDevelopmentSettings({ useStaging: !isStagingServerActive })}
-        color={colors.checkboxChecked}
-        uncheckedColor={colors.checkboxUnchecked}
       />
     </View>
   )
@@ -106,11 +115,10 @@ export default function DevelopmentDialog ({ visible, onDismiss }) {
   output.push(
     <View key='item_deeplink_show_url' style={[{ marginBottom: 30 }, styles.selectOption]}>
       <Text style={styles.text}>{t('settings:develop.showDeepLink')}</Text>
-      <Checkbox
+      <CheckboxControl
         status={showDeeplinkAlert ? 'checked' : 'unchecked'}
+        accessibilityLabel={t('settings:develop.showDeepLink')}
         onPress={() => setDevelopmentSettings({ showDeeplinkAlert: !showDeeplinkAlert })}
-        color={colors.checkboxChecked}
-        uncheckedColor={colors.checkboxUnchecked}
       />
     </View>
   )
@@ -147,13 +155,11 @@ export default function DevelopmentDialog ({ visible, onDismiss }) {
               const isActive = activeStagingMenuItems.includes(stagingMenuItemEntryKey)
 
               return (
-                <Checkbox.Item
+                <CheckboxItem
                   key={stagingMenuItemEntryKey}
                   label={t(stagingMenuItemEntry?.title)}
                   labelStyle={styles.text}
                   status={isActive ? 'checked' : 'unchecked'}
-                  color={colors.checkboxChecked}
-                  uncheckedColor={colors.checkboxUnchecked}
                   theme={theme}
                   style={styles.selectOption}
                   onPress={() =>
