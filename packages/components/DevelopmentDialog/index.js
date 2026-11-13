@@ -161,7 +161,7 @@ export default function DevelopmentDialog ({ visible, onDismiss }) {
                   labelStyle={styles.text}
                   status={isActive ? 'checked' : 'unchecked'}
                   theme={theme}
-                  style={styles.selectOption}
+                  style={styles.menuItemOption}
                   onPress={() =>
                     setDevelopmentSettings({
                       activeStagingMenuItems: isActive
