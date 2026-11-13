@@ -30,6 +30,7 @@
         "aps-environment": "development"
       },
       "supportsTablet": true,
+      "userInterfaceStyle": "automatic",
       "bundleIdentifier": "de.openasist.app",
       "buildNumber": "1",
       "icon": "./assets/images/icon.ios.png",
