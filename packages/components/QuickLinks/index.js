@@ -19,6 +19,7 @@ import {
   Text,
   View,
   Linking,
+  Share,
   TouchableOpacity,
   useWindowDimensions
 } from 'react-native'
@@ -67,6 +68,22 @@ function openQuicklink (url) {
   })
 }
 
+/**
+ * Opens the native share dialog for a quicklink.
+ * Users can copy the URL or share it with another app.
+ *
+ * @param {string} url - URL of the quicklink.
+ * @param {string} title - Display title of the quicklink.
+ */
+function shareQuicklink (url, title) {
+  Share.share({
+    message: url,
+    title
+  }).catch((error) => {
+    console.warn('Could not share quicklink:', error)
+  })
+}
+
   return (
     // If quicklinks are in settings.js defined return content, otherwise return nothing to render
     Array.isArray(quicklinks) && quicklinks.length > 0
@@ -105,6 +122,7 @@ function openQuicklink (url) {
                   accessibilityLabel={accessibilityTitle}
                   accessibilityRole='button'
                   onPress={() => openQuicklink(url)}
+                  onLongPress={() => shareQuicklink(url, title)}
                 >
                   <View style={styles.roundButtons}>
                     <IconsOpenasist
