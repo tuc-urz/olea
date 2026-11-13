@@ -3,10 +3,7 @@
     "name": "OLEA",
     "description": "",
     "slug": "openasist-openasist",
-    "platforms": [
-      "ios",
-      "android"
-    ],
+    "platforms": ["ios", "android"],
     "scheme": "de.openasist.app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -21,9 +18,7 @@
       "enabled": false,
       "checkAutomatically": "NEVER"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "usesBroadcastPushNotifications": true,
       "entitlements": {
@@ -43,10 +38,7 @@
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": true
         },
-        "UIBackgroundModes": [
-          "remote-notification",
-          "fetch"
-        ],
+        "UIBackgroundModes": ["remote-notification", "fetch"],
         "ITSAppUsesNonExemptEncryption": false
       }
     },
@@ -56,10 +48,7 @@
         "backgroundColor": "#00535c",
         "foregroundImage": "./assets/images/icon.png"
       },
-      "permissions": [
-        "ACCESS_NETWORK_STATE",
-        "INTERNET"
-      ],
+      "permissions": ["ACCESS_NETWORK_STATE", "INTERNET"],
       "blockedPermissions": [
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",
