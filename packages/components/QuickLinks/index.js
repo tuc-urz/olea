@@ -14,6 +14,7 @@
 
 import { useMemo } from 'react'
 import {
+  Alert,
   StyleSheet,
   Text,
   View,
@@ -48,6 +49,23 @@ function QuickLinksComponent ({ theme, theme: { colors } }) {
     () => StyleSheet.create(componentStyles(theme, width, height)),
     [theme, width, height]
   )
+
+/**
+ * Opens a quicklink using the operating system's URL handler.
+ * Avoids a preliminary canOpenURL check that may incorrectly reject
+ * valid web links on iOS.
+ *
+ * @param {string} url - URL of the quicklink to open.
+ */
+function openQuicklink (url) {
+  Linking.openURL(url).catch((error) => {
+    console.warn('Could not open quicklink:', error)
+    Alert.alert(
+      t('quicklinks:openErrorTitle'),
+      t('quicklinks:openErrorMessage')
+    )
+  })
+}
 
   return (
     // If quicklinks are in settings.js defined return content, otherwise return nothing to render
@@ -86,12 +104,7 @@ function QuickLinksComponent ({ theme, theme: { colors } }) {
                   key={`${title}_${icon}`}
                   accessibilityLabel={accessibilityTitle}
                   accessibilityRole='button'
-                  onPress={() =>
-                    Linking.canOpenURL(url).then((supported) => {
-                      if (supported) {
-                        Linking.openURL(url)
-                      }
-                    })}
+                  onPress={() => openQuicklink(url)}
                 >
                   <View style={styles.roundButtons}>
                     <IconsOpenasist

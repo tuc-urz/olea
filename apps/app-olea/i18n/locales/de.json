@@ -211,7 +211,9 @@
     },
     "urls": {
       "library": "https://bibliothek.htwk-leipzig.de"
-    }
+    },
+    "openErrorTitle": "Link konnte nicht geöffnet werden",
+    "openErrorMessage": "Bitte versuche es erneut oder kopiere den Link und öffne ihn in deinem Browser."
   },
   "room": {
     "title": "Raum",
