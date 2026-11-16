@@ -30,11 +30,7 @@
       "buildNumber": "1",
       "icon": "./assets/images/icon.ios.png",
       "infoPlist": {
-        "NSLocationUsageDescription": "Diese App verwendet deinen Standort, um Haltestellen in deiner Nähe und das Wetter an deinem Standort anzuzeigen.",
-        "NSLocationAlwaysUsageDescription": "Diese App verwendet deinen Standort, um Haltestellen in deiner Nähe und das Wetter an deinem Standort anzuzeigen.",
-        "NSLocationWhenInUseUsageDescription": "Diese App verwendet deinen Standort, um Haltestellen in deiner Nähe und das Wetter an deinem Standort anzuzeigen.",
-        "NSCameraUsageDescription": "Damit du ein Profilbild hochladen kannst, benötigt die App deine Berechtigung, um auf die Kamera zuzugreifen.",
-        "NSPhotoLibraryUsageDescription": "Für das Speichern und Auswählen eines Profilbilds, benötigt die App die entsprechende Berechtigung.",
+        "NSLocationWhenInUseUsageDescription": "Wir verwenden deinen Standort, um dir nahegelegene Haltestellen oder das Wetter an deinem aktuellen Standort anzuzeigen.",
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": true
         },
