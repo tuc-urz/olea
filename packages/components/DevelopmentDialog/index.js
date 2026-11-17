@@ -95,8 +95,8 @@ export default function DevelopmentDialog ({ visible, onDismiss }) {
     <View key='item_notification_push_message' style={[{ marginBottom: 30 }]}>
       <Text style={styles.text}>{t('settings:develop.resetPushMessage')}</Text>
       <Button
-        buttonColor={colors.primary}
-        textColor={colors.buttonText}
+        buttonColor={colors.developmentResetButtonBackground ?? colors.primary}
+        textColor={colors.developmentResetButtonText ?? colors.buttonText}
         onPress={() => dispatch({ type: 'UPDATE_PUSH_MESSAGE_SHOWN', pushMessageShown: false })}
       >
         Reset
