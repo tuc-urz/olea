@@ -70,6 +70,15 @@ export default function (theme) {
       borderBottomColor: theme.colors.accent,
       borderBottomWidth: 1
     },
+    accordionIcon: {
+      justifyContent: 'center',
+      marginStart: 10,
+      marginEnd: 6
+    },
+    accordionContent: {
+      backgroundColor: theme.colors.contentBackground ?? theme.colors.background,
+      paddingLeft: 0
+    },
     arrowIcon: {
       marginStart: 'auto',
       marginEnd: 10
