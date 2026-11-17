@@ -92,14 +92,13 @@ export default function (theme) {
       marginTop: 10,
       padding: theme.paddings.small,
       flex: 1,
-      backgroundColor: theme.colors.primary,
       borderBottomRightRadius: 10,
       borderBottomLeftRadius: 10,
       borderTopRightRadius: 10,
       borderTopLeftRadius: 10
     },
     importButtonLabel: {
-      color: theme.colors.buttonText,
+      color: theme.colors.timetableImportButtonText ?? theme.colors.buttonText,
       ...theme.fonts.medium,
       fontSize: theme.fontSizes.xl,
       lineHeight: theme.lineHeights.l,

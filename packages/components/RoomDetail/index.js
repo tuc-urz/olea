@@ -277,7 +277,7 @@ class RoomDetailComponent extends React.Component {
             leftAction={
               <Appbar.Action
                 icon={(props) => (
-                  <IconsOpenasist {...props} icon='back' color={colors.primaryText} />
+                  <IconsOpenasist {...props} icon='back' color={colors.appbarIconColor ?? colors.primaryText} />
                 )}
                 onPress={this.handleCloseWebView}
               />

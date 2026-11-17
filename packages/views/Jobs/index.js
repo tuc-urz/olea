@@ -12,29 +12,29 @@
  * limitations under the License.
  */
 
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import {
-    FlatList,
-    Text,
-    SafeAreaView,
-    TouchableOpacity,
-    Linking,
-    StyleSheet,
-    View,
-    ActivityIndicator,
-} from 'react-native';
+  FlatList,
+  Text,
+  SafeAreaView,
+  TouchableOpacity,
+  Linking,
+  StyleSheet,
+  View,
+  ActivityIndicator
+} from 'react-native'
 
-import { Appbar, Button, useTheme } from 'react-native-paper';
-import { useTranslation } from 'react-i18next';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { Appbar, Button, useTheme } from 'react-native-paper'
+import { useTranslation } from 'react-i18next'
+import { useNavigation, useRoute } from '@react-navigation/native'
 
-import { DateTime } from 'luxon';
+import { DateTime } from 'luxon'
 
-import AppbarComponent from '../../components/AppBar';
-import IconsOpenasist from '../../libraries/icons-openasist';
-import { useLanguage, useStagingServer } from '../../libraries/core';
+import AppbarComponent from '../../components/AppBar'
+import IconsOpenasist from '../../libraries/icons-openasist'
+import { useLanguage, useStagingServer } from '../../libraries/core'
 
-import componentStyles from './styles';
+import componentStyles from './styles'
 
 /**
  * Job Portal View
@@ -47,171 +47,177 @@ import componentStyles from './styles';
  * Navigation-Parameters:
  *  - none
  */
-export default function JobPortalView(props) {
-    const navigation = useNavigation();
-    const route = useRoute();
-    const selectedCategorieIds = route?.params?.selectedIds ?? [];
-    const checked = route?.params?.checked ?? [];
-    const theme = useTheme();
-    const { colors, themeStyles } = theme;
-    const { t } = useTranslation();
-    const language = useLanguage();
-    const isStagingServerActive = useStagingServer();
-    const apiUrl = isStagingServerActive
-        ? theme.appSettings?.modules?.job?.api?.staging?.url
-        : theme.appSettings?.modules?.job?.api?.production?.url;
+export default function JobPortalView (props) {
+  const navigation = useNavigation()
+  const route = useRoute()
+  const selectedCategorieIds = route?.params?.selectedIds ?? []
+  const checked = route?.params?.checked ?? []
+  const theme = useTheme()
+  const { colors, themeStyles } = theme
+  const { t } = useTranslation()
+  const language = useLanguage()
+  const isStagingServerActive = useStagingServer()
+  const apiUrl = isStagingServerActive
+    ? theme.appSettings?.modules?.job?.api?.staging?.url
+    : theme.appSettings?.modules?.job?.api?.production?.url
 
-    const [jobs, setJobs] = useState([]);
-    const [categories, setCategories] = useState(null);
-    const [jobsRequestInProgress, setJobsRequestInProgress] = useState(false);
-    const [categoriesRequestInProgress, setCategoriesRequestInProgress] = useState(false);
+  const [jobs, setJobs] = useState([])
+  const [categories, setCategories] = useState(null)
+  const [jobsRequestInProgress, setJobsRequestInProgress] = useState(false)
+  const [categoriesRequestInProgress, setCategoriesRequestInProgress] = useState(false)
 
-    const styles = useMemo(
-        () => StyleSheet.create(componentStyles(theme)),
-        [theme, componentStyles]
-    )
+  const styles = useMemo(
+    () => StyleSheet.create(componentStyles(theme)),
+    [theme, componentStyles]
+  )
 
-    const refreshJobs = useCallback(
-        () => {
-            const getJobsUrl = new URL('jobs/', apiUrl);
+  const refreshJobs = useCallback(
+    () => {
+      const getJobsUrl = new URL('jobs/', apiUrl)
 
-            setJobsRequestInProgress(true);
+      setJobsRequestInProgress(true)
 
-            fetch(getJobsUrl)
-                .then(response => response.json())
-                .then(setJobs)
-                .finally(() => setJobsRequestInProgress(false));
-        },
-        [apiUrl, setJobs, setJobsRequestInProgress]
-    )
+      fetch(getJobsUrl)
+        .then(response => response.json())
+        .then(setJobs)
+        .finally(() => setJobsRequestInProgress(false))
+    },
+    [apiUrl, setJobs, setJobsRequestInProgress]
+  )
 
-    const refreshCategories = useCallback(
-        () => {
-            const getJobsUrl = new URL('jobs/categories/', apiUrl);
+  const refreshCategories = useCallback(
+    () => {
+      const getJobsUrl = new URL('jobs/categories/', apiUrl)
 
-            setCategoriesRequestInProgress(true);
+      setCategoriesRequestInProgress(true)
 
-            fetch(getJobsUrl)
-                .then(response => response.json())
-                .then(setCategories)
-                .finally(() => setCategoriesRequestInProgress(false));
-        },
-        [apiUrl, setCategories, setCategoriesRequestInProgress]
-    )
+      fetch(getJobsUrl)
+        .then(response => response.json())
+        .then(setCategories)
+        .finally(() => setCategoriesRequestInProgress(false))
+    },
+    [apiUrl, setCategories, setCategoriesRequestInProgress]
+  )
 
+  useEffect(
+    refreshJobs,
+    [refreshJobs]
+  )
 
-    useEffect(
-        refreshJobs,
-        [refreshJobs]
-    )
+  useEffect(
+    refreshCategories,
+    [refreshCategories]
+  )
 
-    useEffect(
-        refreshCategories,
-        [refreshCategories]
-    )
+  const filteredJobs = useMemo(
+    () => {
+      if (Array.isArray(jobs) && jobs.length > 0) {
+        if (Array.isArray(selectedCategorieIds) && selectedCategorieIds.length > 0) { return jobs.filter(job => selectedCategorieIds.includes(job.catID)) } else {
+          return jobs
+        }
+      } else {
+        return null
+      }
+    },
+    [jobs, selectedCategorieIds]
+  )
 
-    const filteredJobs = useMemo(
-        () => {
-            if (Array.isArray(jobs) && jobs.length > 0) {
-                if (Array.isArray(selectedCategorieIds) && selectedCategorieIds.length > 0)
-                    return jobs.filter(job => selectedCategorieIds.includes(job.catID));
-                else {
-                    return jobs;
-                }
-            } else {
-                return null;
-            }
-        },
-        [jobs, selectedCategorieIds]
-    )
-
-    return (
-        <SafeAreaView style={[styles.container, themeStyles.appSafeAreaContainer]}>
-            <View>
-                <AppbarComponent {...props}
-                    title={t('menu:titles.job')}
-                    leftAction={
-                        <Appbar.Action
-                            icon={props => <IconsOpenasist {...props} icon={'back'} color={colors.primaryText} />}
-                            onPress={
+  return (
+    <SafeAreaView style={[styles.container, themeStyles.appSafeAreaContainer]}>
+      <View>
+        <AppbarComponent
+          {...props}
+          title={t('menu:titles.job')}
+          leftAction={
+            <Appbar.Action
+              icon={props => <IconsOpenasist {...props} icon='back' color={colors.appbarIconColor ?? colors.primaryText} />}
+              onPress={
                                 () => navigation.goBack(null)
                             }
-                        />
+            />
                     }
-                    rightAction={
-                        <Appbar.Action icon="filter" onPress={
+          rightAction={
+            <Appbar.Action
+              icon='filter'
+              color={colors.appbarIconColor}
+              onPress={
                             () =>
-                                navigation.navigate(
-                                    'JobFilter',
-                                    {
-                                        checked: checked,
-                                        selectedIds: selectedCategorieIds,
-                                        catData: categories,
-                                    }
-                                )
-                        } />
-                    } />
-            </View>
-            <View style={themeStyles.container}>
-                {
+                              navigation.navigate(
+                                'JobFilter',
+                                {
+                                  checked,
+                                  selectedIds: selectedCategorieIds,
+                                  catData: categories
+                                }
+                              )
+                        }
+            />
+                    }
+        />
+      </View>
+      <View style={themeStyles.container}>
+        {
                     filteredJobs?.length
-                        ? <FlatList
-                            data={filteredJobs}
-                            initialNumToRender={6}
-                            keyExtractor={
+                      ? <FlatList
+                          data={filteredJobs}
+                          initialNumToRender={6}
+                          keyExtractor={
                                 (item, index) => item?.url ?? 'job_' + index
                             }
-                            refreshing={jobsRequestInProgress || categoriesRequestInProgress}
-                            onRefresh={
+                          refreshing={jobsRequestInProgress || categoriesRequestInProgress}
+                          onRefresh={
                                 () => {
-                                    refreshCategories();
-                                    refreshJobs();
+                                  refreshCategories()
+                                  refreshJobs()
                                 }
                             }
-                            renderItem={
+                          renderItem={
                                 ({ item }) =>
-                                    <TouchableOpacity
-                                        style={themeStyles.card}
-                                        onPress={() => { Linking.openURL(item.url) }}
-                                        accessible={true}
-                                        accessibilityLabel={t(item.company ? 'accessibility:jobs.descriptionWithCompany' : 'accessibility:jobs.descriptionWithoutCompany', item)
-                                        }
-                                    >
-                                        <View style={[themeStyles.cardContent]}>
-                                            <Text style={[styles.title, themeStyles.cardTitle]}>
-                                                {item.title}
-                                            </Text>
-                                            <Text style={[themeStyles.cardSubTitle, styles.companyCity]}>
-                                                {item.company ? item.company + " - " : null}{item.place}
-                                            </Text>
-                                            <Text style={[themeStyles.cardSubTitle, styles.date]}>
-                                                {item.category} - {DateTime.fromISO(item.dateFrom).setLocale(language).toLocaleString()}
-                                            </Text>
-                                        </View>
-                                    </TouchableOpacity>
+                                  <TouchableOpacity
+                                    style={themeStyles.card}
+                                    onPress={() => { Linking.openURL(item.url) }}
+                                    accessible
+                                    accessibilityLabel={t(item.company ? 'accessibility:jobs.descriptionWithCompany' : 'accessibility:jobs.descriptionWithoutCompany', item)}
+                                  >
+                                    <View style={[themeStyles.cardContent]}>
+                                      <Text style={[styles.title, themeStyles.cardTitle]}>
+                                        {item.title}
+                                      </Text>
+                                      <Text style={[themeStyles.cardSubTitle, styles.companyCity]}>
+                                        {item.company ? item.company + ' - ' : null}{item.place}
+                                      </Text>
+                                      <Text style={[themeStyles.cardSubTitle, styles.date]}>
+                                        {item.category} - {DateTime.fromISO(item.dateFrom).setLocale(language).toLocaleString()}
+                                      </Text>
+                                    </View>
+                                  </TouchableOpacity>
                             }
                         />
-                        : jobsRequestInProgress || categoriesRequestInProgress
-                            ? <View style={styles.innerContainer}>
-                                <ActivityIndicator style={styles.activity} size="large" color={colors.loadingIndicator} />
-                            </View>
-                            : <View style={[styles.containerInner, styles.containerErrorMsg]}>
-                                <Text style={styles.titleNoJobs}>{t('jobs:noJobsTitle')}</Text>
-                                <Button
-                                    onPress={
-                                        () => {
-                                            refreshJobs();
-                                            refreshCategories();
-                                        }
-                                    }
-                                    color={colors.buttonText}
-                                    mode={'outlined'}
-                                >
-                                    {t('common:reload')}
-                                </Button>
-                            </View>
+                      : jobsRequestInProgress || categoriesRequestInProgress
+                        ? (
+                          <View style={styles.innerContainer}>
+                            <ActivityIndicator style={styles.activity} size='large' color={colors.loadingIndicator} />
+                          </View>
+                          )
+                        : (
+                          <View style={[styles.containerInner, styles.containerErrorMsg]}>
+                            <Text style={styles.titleNoJobs}>{t('jobs:noJobsTitle')}</Text>
+                            <Button
+                              onPress={
+                                          () => {
+                                            refreshJobs()
+                                            refreshCategories()
+                                          }
+                                      }
+                              color={colors.buttonText}
+                              mode='outlined'
+                            >
+                              {t('common:reload')}
+                            </Button>
+                          </View>
+                          )
                 }
-            </View>
-        </SafeAreaView>
-    );
+      </View>
+    </SafeAreaView>
+  )
 }

@@ -94,7 +94,11 @@ function QuickLinksComponent ({ theme, theme: { colors } }) {
                     })}
                 >
                   <View style={styles.roundButtons}>
-                    <IconsOpenasist icon={icon} color={colors.primaryText} size={35} />
+                    <IconsOpenasist
+                      icon={icon}
+                      color={colors.quicklinksForeground ?? colors.primaryText}
+                      size={35}
+                    />
                     <View style={styles.linkextern}>
                       <Text style={styles.quicklinkLabel}>{title}</Text>
                     </View>

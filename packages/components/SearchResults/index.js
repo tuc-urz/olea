@@ -146,7 +146,7 @@ class SearchResultsComponent extends React.Component {
 
       // Rooms
     } else if (item.code2017) {
-      borderColor = colors.primary
+      borderColor = colors.searchAccent ?? colors.primary
       icon = 'map-search'
       key = item.code2017
       // title       = unescape(item.code2017);
@@ -154,7 +154,7 @@ class SearchResultsComponent extends React.Component {
       subtitle = unescape(`${item.building.postaladdress} ${item.building.name}`)
       type = this.resultTypes.rooms
     } else if (item.building && item.building.code) {
-      borderColor = colors.primary
+      borderColor = colors.searchAccent ?? colors.primary
       icon = 'map-search'
       key = item.building.code
       title = unescape(item.title)
@@ -327,7 +327,7 @@ class SearchResultsComponent extends React.Component {
     ) {
       return (
         <View style={[this.styles.containerInner, this.styles.containerErrorMsg]}>
-          <IconsOpenasist icon='search' size={48} color={colors.primary} />
+          <IconsOpenasist icon='search' size={48} color={colors.searchAccent ?? colors.primary} />
           <Text style={this.styles.title}>{t('search:noResultsTitle')}</Text>
           <Text style={this.styles.subtitle}>{t('search:noResultsSubtitle')}</Text>
         </View>

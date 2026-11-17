@@ -37,7 +37,7 @@ export default function (theme, width, height) {
       backgroundColor: 'red'
     },
     quicklinkLabel: {
-      color: theme.colors.primaryText,
+      color: theme.colors.quicklinksForeground ?? theme.colors.primaryText,
       fontSize: theme.fontSizes.s,
       lineHeight: theme.fontSizes.subtitle * 1.1,
       textAlign: 'center'
