@@ -80,6 +80,20 @@ export default {
          *  Live: https://asist.hrz.tu-chemnitz.de/asist/rest/
          */
   },
+    /**
+   * Einstellungen für den Login per OAuth2/OpenID-Connect (wird vom UserContextProvider genutzt).
+   * Die Werte sind Platzhalter und müssen in der jeweiligen Hochschul-App gesetzt werden.
+   * @property {string} scheme URL-Schema der App für die Weiterleitung nach dem Login
+   * @property {string} clientId Client-ID der App beim Identity-Provider
+   * @property {string} issuer URL des Identity-Providers (für die automatische Discovery)
+   * @property {string[]} scopes Zusätzliche Scopes, die neben 'openid' angefragt werden
+   */
+  auth: {
+    scheme: 'de.openasist.app',
+    clientId: '',
+    issuer: '',
+    scopes: [],
+  },
   modules: {
     news: {
       api: defaultApiConfig,
