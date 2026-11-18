@@ -13,8 +13,12 @@ import { NavigationContainer } from '@react-navigation/native'
 import {
   DataService,
   RootNavigation,
-  store
-  , CanteenContextProvider, TimetableContextProvider, ConnectivityContextProvider, NewsContextProvider
+  store,
+  CanteenContextProvider,
+  TimetableContextProvider,
+  ConnectivityContextProvider,
+  NewsContextProvider,
+  UserContextProvider,
 } from '@olea-bps/base'
 
 import i18n from './i18n/i18n'
@@ -181,15 +185,17 @@ class Main extends React.Component {
           backgroundColor={this.state.theme.colors.safeAreaBackground}
         />
         <NavigationContainer ref={RootNavigation.navigationRef} linking={settings.deepLinking} onReady={this.handleNavigationReady}>
-          <ConnectivityContextProvider>
-            <TimetableContextProvider>
-              <CanteenContextProvider>
-                <NewsContextProvider>
-                  <MainTabNavigator colors={this.state.theme.colors.tabs} />
-                </NewsContextProvider>
-              </CanteenContextProvider>
-            </TimetableContextProvider>
-          </ConnectivityContextProvider>
+          <UserContextProvider>
+            <ConnectivityContextProvider>
+              <TimetableContextProvider>
+                <CanteenContextProvider>
+                  <NewsContextProvider>
+                    <MainTabNavigator colors={this.state.theme.colors.tabs} />
+                  </NewsContextProvider>
+                </CanteenContextProvider>
+              </TimetableContextProvider>
+            </ConnectivityContextProvider>
+          </UserContextProvider>
         </NavigationContainer>
       </PaperProvider>
     )
