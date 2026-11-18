@@ -1,4 +1,5 @@
 import legalNotices from '../generated/legal-notices.json'
+import InstitutionLogo from '../assets/images/institution-logo.svg';
 
 const defaultApiConfig = {
   production: {
@@ -19,6 +20,17 @@ export default {
   mealPlaceboImage: null,
   googleMapsUrl: 'https://www.google.com/maps/place/',
   defaultCity: 'Chemnitz',
+  /**
+   * Globale Angaben zur Hochschule/Institution, die von allen Modulen genutzt werden können.
+   * Nicht zu verwechseln mit `name`, welches den Namen der App enthält.
+   * @property {string} name Name der Hochschule/Institution
+   * @property {React.ComponentType} logo Logo der Hochschule als SVG-Komponente (über react-native-svg-transformer importiert)
+   */
+  institution: {
+      name: 'OLEA Hochschule',
+      // Platzhalter: Hier wird später das Logo der jeweiligen Hochschule eingebunden.
+      logo: InstitutionLogo,
+  },
   languages: [
     { code: 'de', extCode: 'deu', labelKey: 'settings:common.languages.de' },
     { code: 'en', extCode: 'eng', labelKey: 'settings:common.languages.en' }
