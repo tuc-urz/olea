@@ -370,11 +370,39 @@
       "timetableCalendar": "Timetable (new)",
       "wlan": "WLAN",
       "howhy": "HOWHY - learning by playing",
+      "idCard": "University ID card",
       "version": "App-Info"
     },
     "urls": {
       "feedback": "https://www.tu-chemnitz.de/urz/mail/fba.html?1-a29tbXVuaWthdGlvbkA="
     }
+  },
+  "user": {
+    "settingsTitle": "User account",
+    "name": "Name",
+    "username": "Username",
+    "email": "Email",
+    "matriculationNumber": "Matriculation number",
+    "memberTypes": "Status",
+    "memberType": {
+      "student": "Student",
+      "employee": "Employee"
+    },
+    "organizationalUnits": "Faculty / Department",
+    "refreshTokenExpiresAt": "Login valid until",
+    "notLoggedIn": "You are not logged in.",
+    "logginButton": "Log in",
+    "loginFailed": "Login failed",
+    "tryLoginAgain": "Please try again.",
+    "connectionError": "Connection error",
+    "connectionErrorTryLoginAgain": "The login service cannot be reached. Please check your internet connection and try again.",
+    "logout": "Log out",
+    "logoutConfirmation": "Do you really want to log out?",
+    "logoutOkButton": "Yes, log out",
+    "logoutNoButton": "Cancel"
+  },
+  "idcard": {
+    "title": "University ID card"
   },
   "warning": {
     "noConnection": "No internet connection"

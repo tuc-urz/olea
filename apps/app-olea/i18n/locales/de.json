@@ -374,11 +374,39 @@
       "timetableCalendar": "Stundenplan (neu)",
       "version": "App-Info",
       "wlan": "WLAN",
-      "howhy": "HOWHY - learning by playing"
+      "howhy": "HOWHY - learning by playing",
+      "idCard": "Hochschulausweis"
     },
     "urls": {
       "feedback": "https://www.tu-chemnitz.de/urz/mail/fba.html?1-a29tbXVuaWthdGlvbkA="
     }
+  },
+  "user": {
+    "settingsTitle": "Benutzerkonto",
+    "name": "Name",
+    "username": "Benutzername",
+    "email": "E-Mail",
+    "matriculationNumber": "Matrikelnummer",
+    "memberTypes": "Status",
+    "memberType": {
+      "student": "Studierende/r",
+      "employee": "Mitarbeitende/r"
+    },
+    "organizationalUnits": "Fakultät / Einrichtung",
+    "refreshTokenExpiresAt": "Anmeldung gültig bis",
+    "notLoggedIn": "Sie sind nicht angemeldet.",
+    "logginButton": "Anmelden",
+    "loginFailed": "Anmeldung fehlgeschlagen",
+    "tryLoginAgain": "Bitte versuchen Sie es erneut.",
+    "connectionError": "Verbindungsfehler",
+    "connectionErrorTryLoginAgain": "Der Anmeldedienst ist nicht erreichbar. Bitte prüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.",
+    "logout": "Abmelden",
+    "logoutConfirmation": "Möchten Sie sich wirklich abmelden?",
+    "logoutOkButton": "Ja, abmelden",
+    "logoutNoButton": "Abbrechen"
+  },
+  "idcard": {
+    "title": "Hochschulausweis"
   },
   "warning": {
     "noConnection": "Keine Internetverbindung"

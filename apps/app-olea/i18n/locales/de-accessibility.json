@@ -1,5 +1,8 @@
 {
   "accessibility": {
+    "idcard": {
+      "avatar": "Platzhalter für das Profilbild mit den Initialen des Namens"
+    },
     "topNewsHint": "Beitrag lesen",
     "appbar": {
       "back": "Zurück zu vorherigen Ansicht",
