@@ -15,6 +15,7 @@ import { ComponentJobsFilter as JobFilterComponent } from '@olea-bps/base';
 import { TabBarIcon } from '@olea-bps/base';
 import { SettingsAppInfo as AppInfoSettingsView } from '@olea-bps/base';
 import { TimetableCalendar as TimetableCalendarView } from '@olea-bps/base';
+import { IdCard as IdCardView } from '@olea-bps/base';
 
 /**
  * Tab Options
@@ -52,6 +53,7 @@ const stack = (props) => {
             <Stack.Screen name="JobFilter"              component={JobFilterComponent}          options={{headerShown: false}}/>
 
             <Stack.Screen name="TimetableCalendarView"  component={TimetableCalendarView}       options={{headerShown: false}}/>
+            <Stack.Screen name="IdCard"                 component={IdCardView}                  options={{headerShown: false}}/>
         </Stack.Navigator>
     );
 }

@@ -48,7 +48,8 @@ export default {
     ],
     items: {
       services: [
-        { title: 'menu:titles.aboutUs', icon: 'feedback', url: 'https://www.bps-system.de/olea/' }
+        { title: 'menu:titles.aboutUs', icon: 'feedback', url: 'https://www.bps-system.de/olea/' },
+        { title: 'menu:titles.idCard',  icon: 'profile',  view: 'IdCard' },
       ],
       settings: [
         { title: 'menu:titles.settingsGeneral', icon: 'settings', view: 'SettingsGeneral' },
