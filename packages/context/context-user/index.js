@@ -45,6 +45,7 @@ import { DateTime } from 'luxon';
  * @property {string} family_name Nachname
  * @property {string} email Email
  * @property {string} phone_number Telefonnummer
+ * @property {string} [matriculation_number] Matrikelnummer (optional, nur bei Studierenden)
  * @property {string[]} member_types Angehörigkeitsstatuse des Nutzers
  * @property {OrganizationalUnit[]} organizational_units Organisationseinheiten/Kostenstellen/Fachbereiche, die der Nutzer angehört
  */
