@@ -55,6 +55,7 @@ export { default as FeedNews } from './views/FeedNews';
 export { default as Flexmenu } from './views/Flexmenu';
 export { default as FlexmenuWebview } from './views/FlexmenuWebview';
 export { default as Howhy } from './views/Howhy';
+export { default as IdCard } from './views/IdCard';
 export { default as Jobs } from './views/Jobs';
 export { default as MainMenu } from './views/MainMenu';
 export { default as NewsTabbar } from './views/NewsTabbar';
