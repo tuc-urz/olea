@@ -19,7 +19,6 @@ import {
     useRef,
 } from 'react';
 import {
-    AccessibilityInfo,
     Alert,
     Animated,
     Easing,
@@ -38,6 +37,7 @@ import { DateTime } from 'luxon';
 import AppbarComponent from '../../components/AppBar';
 import { useUser } from '../../context/context-user';
 import { usePublicTransportTicket } from '../../context/context-public-transport-ticket';
+import { useReduceMotion } from '../../libraries/accessibility';
 
 import componentStyles from './styles';
 import {
@@ -159,28 +159,9 @@ function IdCardInfoTile({ label, value, large, styles }) {
  * @param {Object} props.styles Stylesheet des Ausweises
  */
 function IdCardShine({ cardWidth, styles }) {
-    const componentName = IdCardShine.name;
     const animationProgress = useRef(new Animated.Value(0)).current;
-    const [isReduceMotionEnabled, setIsReduceMotionEnabled] = useState(false);
-
-    // Systemeinstellung "Bewegung reduzieren" abfragen und auf Änderungen reagieren
-    useEffect(
-        () => {
-            AccessibilityInfo.isReduceMotionEnabled()
-                .then(setIsReduceMotionEnabled)
-                .catch(reason => console.debug(componentName, ':', 'reduce motion setting not available', ':', reason));
-
-            const reduceMotionSubscription = AccessibilityInfo.addEventListener(
-                'reduceMotionChanged',
-                setIsReduceMotionEnabled
-            );
-
-            return () => {
-                reduceMotionSubscription?.remove();
-            };
-        },
-        []
-    );
+    // Systemeinstellung "Bewegung reduzieren", Änderungen werden live übernommen
+    const isReduceMotionEnabled = useReduceMotion();
 
     // Endlosanimation starten, sobald die Breite des Ausweises bekannt ist
     useEffect(

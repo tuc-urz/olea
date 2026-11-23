@@ -167,6 +167,8 @@ export {
 
 // Exports Contexts libraries
 
+export * from './libraries/accessibility';
+
 export {
     default as HttpApiProvider,
     JsonContentType,
