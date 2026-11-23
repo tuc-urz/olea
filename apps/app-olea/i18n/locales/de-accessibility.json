@@ -1,7 +1,8 @@
 {
   "accessibility": {
     "idcard": {
-      "avatar": "Platzhalter für das Profilbild mit den Initialen des Namens"
+      "avatar": "Platzhalter für das Profilbild",
+      "publicTransportTicketHint": "Öffnet das Deutschlandticket"
     },
     "topNewsHint": "Beitrag lesen",
     "appbar": {

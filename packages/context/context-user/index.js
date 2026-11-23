@@ -46,6 +46,11 @@ import { DateTime } from 'luxon';
  * @property {string} email Email
  * @property {string} phone_number Telefonnummer
  * @property {string} [matriculation_number] Matrikelnummer (optional, nur bei Studierenden)
+ * @property {string[]} [study_programs] Studiengänge, z.B. ["Informatik (M.Sc.)"] (optional, nur bei Studierenden)
+ * @property {string} [enrolled_since] Semester der Immatrikulation, z.B. "WS 2024/25" (optional, nur bei Studierenden)
+ * @property {string} [semester] Semester, für das der Ausweis gilt, z.B. "SS 2027" (optional)
+ * @property {string} [valid_until] Gültigkeitsdatum des Ausweises im ISO-Format, z.B. "2027-03-31" (optional)
+ * @property {boolean} [reregistration_confirmed] Rückmeldung für das aktuelle Semester bestätigt (optional, nur bei Studierenden)
  * @property {string[]} member_types Angehörigkeitsstatuse des Nutzers
  * @property {OrganizationalUnit[]} organizational_units Organisationseinheiten/Kostenstellen/Fachbereiche, die der Nutzer angehört
  */

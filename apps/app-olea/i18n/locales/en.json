@@ -383,6 +383,11 @@
     "username": "Username",
     "email": "Email",
     "matriculationNumber": "Matriculation number",
+    "matriculationNumberShort": "Matr. no.",
+    "studyPrograms": "Study program",
+    "enrolledSince": "Enrolled since",
+    "semester": "Semester",
+    "validUntil": "Valid until",
     "memberTypes": "Status",
     "memberType": {
       "student": "Student",
@@ -401,8 +406,17 @@
     "logoutOkButton": "Yes, log out",
     "logoutNoButton": "Cancel"
   },
+  "publictransportticket": {
+    "title": "Deutschlandticket"
+  },
   "idcard": {
-    "title": "University ID card"
+    "title": "University ID card",
+    "myCard": "My ID card",
+    "valid": "ID card valid",
+    "expired": "ID card expired",
+    "reregistrationConfirmed": "Re-registration confirmed",
+    "publicTransportTicketIncluded": "Included as semester ticket",
+    "show": "Show"
   },
   "warning": {
     "noConnection": "No internet connection"

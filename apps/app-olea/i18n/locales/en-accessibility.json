@@ -1,7 +1,8 @@
 {
   "accessibility": {
     "idcard": {
-      "avatar": "Profile picture placeholder showing the initials of the name"
+      "avatar": "Profile picture placeholder",
+      "publicTransportTicketHint": "Opens the Deutschlandticket"
     },
     "topNewsHint": "Read article",
     "appbar": {

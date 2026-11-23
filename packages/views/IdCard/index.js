@@ -26,16 +26,28 @@ import {
     SafeAreaView,
     ScrollView,
     StyleSheet,
+    TouchableOpacity,
     View,
 } from 'react-native';
 
 import { useTheme, Text, Button } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
+import { DateTime } from 'luxon';
 
 import AppbarComponent from '../../components/AppBar';
 import { useUser } from '../../context/context-user';
+import { usePublicTransportTicket } from '../../context/context-public-transport-ticket';
 
 import componentStyles from './styles';
+import {
+    AlertCircleIcon,
+    CalendarIcon,
+    CheckCircleIcon,
+    ChevronRightIcon,
+    PersonIcon,
+    TrainIcon,
+} from './icons';
 
 /**
  * Dauer eines Durchlaufs des Hologramm-Streifens über den Ausweis in Millisekunden.
@@ -55,29 +67,18 @@ const shineWidth = 60;
 /**
  * Kantenlänge des Hochschullogos im Kopfbereich des Ausweises in Pixeln.
  */
-const institutionLogoSize = 48;
+const institutionLogoSize = 24;
 
 /**
- * Ermittelt die Initialen des Nutzers für den Avatar-Platzhalter.
- * Es werden bevorzugt Vor- und Nachname verwendet, ansonsten der Anzeigename.
+ * Bereinigt einen oder mehrere Werte: leere Werte (null, undefined, Leerstring) werden entfernt.
  *
- * @param {import('../../context/context-user').User|null} user Angemeldeter Nutzer
- * @returns {string} Initialen in Großbuchstaben, z.B. "MM" für "Max Mustermann", oder ein leerer String
- * @example
- * getInitials({ given_name: 'Max', family_name: 'Mustermann' }); // "MM"
+ * @param {string|string[]|null|undefined} value Wert oder Liste von Werten
+ * @returns {string[]} Liste der nicht-leeren Werte
  */
-function getInitials(user) {
-    const nameParts = user?.given_name || user?.family_name
-        ? [user?.given_name, user?.family_name]
-        : (user?.name ?? '').split(' ');
-
-    return nameParts
-        .filter(namePart => namePart)
-        .map(namePart => namePart.trim().charAt(0))
-        // Bei mehreren Vornamen sollen nur die erste und letzte Initiale angezeigt werden.
-        .filter((initial, index, initials) => index === 0 || index === initials.length - 1)
-        .join('')
-        .toUpperCase();
+function toValues(value) {
+    return (Array.isArray(value) ? value : [value])
+        .filter(singleValue => singleValue !== null && singleValue !== undefined && `${singleValue}`.trim() !== '')
+        .map(singleValue => `${singleValue}`);
 }
 
 /**
@@ -96,31 +97,48 @@ function getDisplayName(user) {
 }
 
 /**
- * Zeigt ein Feld des Ausweises bestehend aus Bezeichnung und Wert(en) an.
- * Sind keine Werte vorhanden, wird das Feld nicht angezeigt.
+ * Wandelt das Gültigkeitsdatum des Ausweises in ein Luxon-Datum um.
+ *
+ * @param {string|undefined} validUntil Datum im ISO-Format, z.B. "2027-03-31"
+ * @returns {DateTime|null} Ende des Gültigkeitstages oder null, wenn kein gültiges Datum vorhanden ist
+ */
+function parseValidUntil(validUntil) {
+    if (!validUntil) {
+        return null;
+    }
+
+    const validUntilDate = DateTime.fromISO(validUntil);
+
+    // Der Ausweis ist bis einschließlich des angegebenen Tages gültig
+    return validUntilDate.isValid ? validUntilDate.endOf('day') : null;
+}
+
+/**
+ * Kachel mit Bezeichnung und Wert(en) unterhalb des Ausweises.
+ * Sind keine Werte vorhanden, wird die Kachel nicht angezeigt.
  *
  * @param {Object} props
- * @param {string} props.label Bezeichnung des Feldes
+ * @param {string} props.label Bezeichnung der Kachel
  * @param {string|string[]|null|undefined} props.value Anzuzeigender Wert oder Liste von Werten
+ * @param {boolean} [props.large] Wert in größerer Schrift anzeigen (für kurze Werte wie Nummern)
  * @param {Object} props.styles Stylesheet des Ausweises
  */
-function IdCardField({ label, value, styles }) {
-    const values = (Array.isArray(value) ? value : [value])
-        .filter(singleValue => singleValue !== null && singleValue !== undefined && `${singleValue}`.trim() !== '');
+function IdCardInfoTile({ label, value, large, styles }) {
+    const values = toValues(value);
 
     if (values.length === 0) {
         return null;
     }
 
     return (
-        <View style={styles.field}>
-            <Text style={styles.fieldLabel}>
+        <View style={styles.infoTile} accessible={true}>
+            <Text style={styles.infoTileLabel}>
                 {label}
             </Text>
             {
                 values.map(
                     singleValue =>
-                        <Text key={singleValue} style={styles.fieldValue}>
+                        <Text key={singleValue} style={large ? styles.infoTileValueLarge : styles.infoTileValue}>
                             {singleValue}
                         </Text>
                 )
@@ -128,7 +146,6 @@ function IdCardField({ label, value, styles }) {
         </View>
     );
 }
-
 /**
  * Animierter, halbtransparenter Hologramm-Streifen, der in regelmäßigen Abständen über den Ausweis läuft.
  * Das Live-Element zeigt bei einer Kontrolle auf einen Blick, dass der Ausweis in der App angezeigt wird
@@ -231,8 +248,14 @@ function IdCardShine({ cardWidth, styles }) {
  *
  * Der Ausweis kann von allen Hochschulangehörigen (Studierende, Mitarbeitende, sonstige Angehörige) genutzt werden.
  * Die angezeigten Daten stammen ausschließlich aus dem Login des Nutzers (siehe {@link useUser}).
+ * Alle Angaben außer dem Namen sind optional und werden nur angezeigt, wenn sie vom Login geliefert werden.
+ *
  * Die Bezeichnung und das Logo der Hochschule werden aus den globalen App-Einstellungen
  * (`appSettings.institution`) gelesen.
+ *
+ * Liegt über den {@link usePublicTransportTicket ÖPNV-Ticket-Kontext} ein Ticket vor, wird ein Verweis
+ * auf die View `PublicTransportTicket` angezeigt. Dafür muss die Hochschul-App den
+ * `PublicTransportTicketContextProvider` einbinden und die View unter diesem Namen registrieren.
  *
  * @param {Object} props Eigenschaften der View, werden an die Appbar weitergereicht
  */
@@ -242,9 +265,13 @@ export default function IdCardView(props) {
     const theme = useTheme();
     const { themeStyles } = theme;
     // Übersetzungsfunktion holen
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+
+    const navigation = useNavigation();
 
     const [user, login] = useUser();
+    // Ticketdaten sind nur vorhanden, wenn das ÖPNV-Ticket-Modul eingebunden ist und der Nutzer ein Ticket besitzt
+    const [ticketBarcode] = usePublicTransportTicket();
 
     // Globale Angaben zur Hochschule aus den App-Einstellungen
     const institutionName = theme?.appSettings?.institution?.name ?? null;
@@ -260,7 +287,6 @@ export default function IdCardView(props) {
     );
 
     const displayName = getDisplayName(user);
-    const initials = getInitials(user);
     // Angehörigkeitsstatus übersetzen, unbekannte Status werden unverändert angezeigt
     const memberTypes = user?.member_types
         ?.map(memberType => t(`user:memberType.${memberType}`, { defaultValue: memberType }))
@@ -268,6 +294,19 @@ export default function IdCardView(props) {
     const organizationalUnits = user?.organizational_units
         ?.map(organizationalUnit => organizationalUnit?.name)
         ?? [];
+    const studyPrograms = toValues(user?.study_programs);
+    const matriculationNumber = toValues(user?.matriculation_number)[0] ?? null;
+    const semester = toValues(user?.semester)[0] ?? null;
+
+    // Gültigkeit des Ausweises
+    const validUntil = parseValidUntil(user?.valid_until);
+    const isValid = validUntil ? validUntil >= DateTime.now() : false;
+    const validUntilText = validUntil
+        ?.setLocale(i18n.language)
+        .toLocaleString({ day: '2-digit', month: '2-digit', year: 'numeric' });
+    const reregistrationText = user?.reregistration_confirmed
+        ? [t('idcard:reregistrationConfirmed'), semester].filter(text => text).join(' · ')
+        : null;
 
     // Login starten, bei Fehlern wird der Nutzer per Dialog informiert
     const onLoginPress = () =>
@@ -287,6 +326,9 @@ export default function IdCardView(props) {
                 t('user:connectionErrorTryLoginAgain'),
             );
 
+    // Zur View des ÖPNV-Tickets wechseln
+    const onPublicTransportTicketPress = () => navigation.navigate('PublicTransportTicket');
+
     return (
         // SafeAreaView rendert den Inhalt innerhalb des sicheren Bereichs des Gerätes
         <SafeAreaView style={[styles.container, themeStyles.appSafeAreaContainer]}>
@@ -295,80 +337,198 @@ export default function IdCardView(props) {
             <View accessible={false} style={themeStyles.container}>
                 {
                     user
-                        ? <ScrollView contentContainerStyle={styles.scrollContent}>
+                        ? <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
+                            <Text style={styles.sectionTitle} accessibilityRole='header'>
+                                {t('idcard:myCard')}
+                            </Text>
+
+                            {/* Ausweis */}
                             <View
                                 style={styles.card}
                                 onLayout={event => setCardWidth(event.nativeEvent.layout.width)}
                             >
-                                {/* Kopfbereich mit Logo und Name der Hochschule */}
-                                <View style={styles.cardHeader} accessibilityRole='header'>
-                                    {
-                                        InstitutionLogo
-                                            ? <InstitutionLogo
-                                                width={institutionLogoSize}
-                                                height={institutionLogoSize}
-                                            />
-                                            : null
-                                    }
-                                    <View style={styles.cardHeaderText}>
+                                {/* Kopfbereich mit Logo und Name der Hochschule sowie dem Semester */}
+                                <View style={styles.cardHeader}>
+                                    <View style={styles.cardHeaderInstitution}>
+                                        {
+                                            InstitutionLogo
+                                                ? <InstitutionLogo
+                                                    width={institutionLogoSize}
+                                                    height={institutionLogoSize}
+                                                />
+                                                : null
+                                        }
                                         {
                                             institutionName
-                                                ? <Text style={styles.institutionName}>
+                                                ? <Text style={styles.institutionName} numberOfLines={1}>
                                                     {institutionName}
                                                 </Text>
                                                 : null
                                         }
-                                        <Text style={styles.cardTitle}>
-                                            {t('idcard:title')}
-                                        </Text>
                                     </View>
+                                    {
+                                        semester
+                                            ? <View style={styles.semesterBadge}>
+                                                <Text
+                                                    style={styles.semesterBadgeText}
+                                                    accessibilityLabel={`${t('user:semester')}: ${semester}`}
+                                                >
+                                                    {semester}
+                                                </Text>
+                                            </View>
+                                            : null
+                                    }
                                 </View>
 
-                                {/* Inhalt mit Avatar und Angaben zum Nutzer */}
+                                {/* Inhalt mit Profilbild-Platzhalter und Angaben zum Nutzer */}
                                 <View style={styles.cardBody}>
                                     <View
-                                        style={styles.avatar}
+                                        style={styles.photo}
                                         accessible={true}
                                         accessibilityRole='image'
                                         accessibilityLabel={t('accessibility:idcard.avatar')}
                                     >
-                                        <Text style={styles.avatarText}>
-                                            {initials}
-                                        </Text>
+                                        <PersonIcon size={30} color={styles.photoIcon.color} />
                                     </View>
 
-                                    <View style={styles.fields}>
-                                        <IdCardField
-                                            label={t('user:name')}
-                                            value={displayName}
-                                            styles={styles}
-                                        />
-                                        <IdCardField
-                                            label={t('user:memberTypes')}
-                                            value={memberTypes}
-                                            styles={styles}
-                                        />
-                                        {/* Matrikelnummer wird nur angezeigt, wenn sie vom Login geliefert wird */}
-                                        <IdCardField
-                                            label={t('user:matriculationNumber')}
-                                            value={user?.matriculation_number}
-                                            styles={styles}
-                                        />
-                                        <IdCardField
-                                            label={t('user:organizationalUnits')}
-                                            value={organizationalUnits}
-                                            styles={styles}
-                                        />
-                                        <IdCardField
-                                            label={t('user:email')}
-                                            value={user?.email}
-                                            styles={styles}
-                                        />
+                                    <View style={styles.cardInfo}>
+                                        {
+                                            displayName
+                                                ? <Text style={styles.name} numberOfLines={1}>
+                                                    {displayName}
+                                                </Text>
+                                                : null
+                                        }
+                                        {
+                                            memberTypes.length > 0
+                                                ? <Text style={styles.memberTypes}>
+                                                    {memberTypes.join(' · ')}
+                                                </Text>
+                                                : null
+                                        }
+                                        {
+                                            matriculationNumber
+                                                ? <Text
+                                                    style={styles.cardInfoText}
+                                                    accessibilityLabel={`${t('user:matriculationNumber')}: ${matriculationNumber}`}
+                                                >
+                                                    {t('user:matriculationNumberShort')}{' '}
+                                                    <Text style={styles.cardInfoValue}>
+                                                        {matriculationNumber}
+                                                    </Text>
+                                                </Text>
+                                                : null
+                                        }
+                                        {
+                                            studyPrograms.length > 0
+                                                ? <Text style={styles.cardInfoText} numberOfLines={1}>
+                                                    {studyPrograms.join(', ')}
+                                                </Text>
+                                                : null
+                                        }
                                     </View>
                                 </View>
 
+                                {/* Fußbereich mit Gültigkeitsdatum */}
+                                {
+                                    validUntilText
+                                        ? <View style={styles.cardFooter} accessible={true}>
+                                            <View style={styles.cardFooterLabel}>
+                                                <CalendarIcon size={13} color={styles.cardFooterLabelText.color} />
+                                                <Text style={styles.cardFooterLabelText}>
+                                                    {t('user:validUntil')}
+                                                </Text>
+                                            </View>
+                                            <Text style={styles.cardFooterValue}>
+                                                {validUntilText}
+                                            </Text>
+                                        </View>
+                                        : null
+                                }
+
                                 {/* Live-Element: animierter Hologramm-Streifen */}
                                 <IdCardShine cardWidth={cardWidth} styles={styles} />
+                            </View>
+
+                            {/* Gültigkeitsstatus */}
+                            {
+                                validUntil
+                                    ? <View style={styles.validity} accessible={true}>
+                                        {
+                                            isValid
+                                                ? <CheckCircleIcon size={16} color={styles.validityIconValid.color} />
+                                                : <AlertCircleIcon size={16} color={styles.validityIconInvalid.color} />
+                                        }
+                                        <View style={styles.validityContent}>
+                                            <Text style={isValid ? styles.validityTitleValid : styles.validityTitleInvalid}>
+                                                {isValid ? t('idcard:valid') : t('idcard:expired')}
+                                            </Text>
+                                            {
+                                                reregistrationText
+                                                    ? <Text style={styles.tileSubtitle}>
+                                                        {reregistrationText}
+                                                    </Text>
+                                                    : null
+                                            }
+                                        </View>
+                                    </View>
+                                    : null
+                            }
+
+                            {/* Verweis zum ÖPNV-Ticket (Deutschlandticket), nur wenn ein Ticket vorhanden ist */}
+                            {
+                                ticketBarcode
+                                    ? <TouchableOpacity
+                                        style={styles.ticket}
+                                        onPress={onPublicTransportTicketPress}
+                                        accessibilityRole='button'
+                                        accessibilityHint={t('accessibility:idcard.publicTransportTicketHint')}
+                                    >
+                                        <View style={styles.ticketIcon}>
+                                            <TrainIcon size={20} color={styles.ticketIconColor.color} />
+                                        </View>
+                                        <View style={styles.ticketContent}>
+                                            <Text style={styles.ticketTitle}>
+                                                {t('publictransportticket:title')}
+                                            </Text>
+                                            <Text style={styles.tileSubtitle}>
+                                                {[t('idcard:publicTransportTicketIncluded'), semester].filter(text => text).join(' · ')}
+                                            </Text>
+                                        </View>
+                                        <View style={styles.ticketAction}>
+                                            <Text style={styles.ticketActionText}>
+                                                {t('idcard:show')}
+                                            </Text>
+                                            <ChevronRightIcon size={14} color={styles.ticketActionText.color} />
+                                        </View>
+                                    </TouchableOpacity>
+                                    : null
+                            }
+
+                            {/* Kacheln mit weiteren Angaben */}
+                            <View style={styles.infoGrid}>
+                                <IdCardInfoTile
+                                    label={t('user:studyPrograms')}
+                                    value={studyPrograms}
+                                    styles={styles}
+                                />
+                                <IdCardInfoTile
+                                    label={t('user:organizationalUnits')}
+                                    value={organizationalUnits}
+                                    styles={styles}
+                                />
+                                <IdCardInfoTile
+                                    label={t('user:matriculationNumber')}
+                                    value={matriculationNumber}
+                                    large={true}
+                                    styles={styles}
+                                />
+                                <IdCardInfoTile
+                                    label={t('user:enrolledSince')}
+                                    value={user?.enrolled_since}
+                                    large={true}
+                                    styles={styles}
+                                />
                             </View>
                         </ScrollView>
                         : <View style={styles.notLoggedInContainer}>
