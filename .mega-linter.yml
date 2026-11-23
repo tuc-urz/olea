@@ -4,7 +4,12 @@
 # linters documentation
 ---
 # all, none, or list of linter keys
-APPLY_FIXES: all
+#
+# Auto-fixing is switched off for now, so MegaLinter no longer pushes
+# "[MegaLinter] Apply linters fixes" commits to PRs. Linters still run and
+# report. Re-enable (e.g. "all" or a list of linter keys) once the project
+# has decided how code should be formatted. Keep in sync with .github/workflows/mega-linter.yml.
+APPLY_FIXES: none
 
 # If you use ENABLE variable, all other languages/formats/tooling-formats will
 # be disabled by default
