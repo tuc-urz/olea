@@ -63,7 +63,7 @@ export default (setting = initialSetting, action) => {
                     ...setting,
                     settingsCanteens: action.payload
                 };
-            case 'SETTING_CANTEENS_MERGE':
+            case 'SETTING_CANTEENS_MERGE': {
                 const currentSettingsCanteens = setting?.settingsCanteens ?? {};
                 return {
                     ...setting,
@@ -72,6 +72,7 @@ export default (setting = initialSetting, action) => {
                         ...action.payload
                     }
                 };
+            }
             case 'SETTING_ACCESSIBILITY_OVERRIDE':
                 return {
                     ...setting,
