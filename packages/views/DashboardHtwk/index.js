@@ -76,7 +76,7 @@ class DashboardView extends React.Component {
      *
      * @private
      */
-    _onRefresh = () => {
+    handleRefresh = () => {
         this.props.onUpdateRefreshing(true);
         this.dataService.refresh();
     };
@@ -90,7 +90,7 @@ class DashboardView extends React.Component {
      *
      * @private
      */
-    _onScrollEndSnapToEdge = event => {
+    handleScrollEndSnapToEdge = event => {
       /* TODO Disabled at the moment. On smaller devices the user isn't able to
           use the course component because of the scroll back
 
@@ -150,8 +150,8 @@ class DashboardView extends React.Component {
                     style={this.styles.container}
                     contentContainerStyle={this.styles.contentContainer}
                     scrollEventThrottle={2}
-                    onScrollEndDrag={this._onScrollEndSnapToEdge}
-                    onMomentumScrollEnd={this._onScrollEndSnapToEdge}
+                    onScrollEndDrag={this.handleScrollEndSnapToEdge}
+                    onMomentumScrollEnd={this.handleScrollEndSnapToEdge}
                     onScroll={Animated.event(
                         [
                             {
@@ -165,7 +165,7 @@ class DashboardView extends React.Component {
                     refreshControl={
                         <RefreshControl
                             refreshing={this.props.refreshing}
-                            onRefresh={this._onRefresh}
+                            onRefresh={this.handleRefresh}
                         />
                     }>
                     <View>
