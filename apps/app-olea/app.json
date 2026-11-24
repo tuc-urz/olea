@@ -72,6 +72,7 @@
       "expo-font",
       "expo-localization",
       "expo-secure-store",
+      "expo-status-bar",
       [
         "expo-build-properties",
         {
@@ -84,7 +85,8 @@
             "useFrameworks": "static",
             "deploymentTarget": "16.4",
             "cocoapodsVersion": "1.15.2",
-            "privacyManifestAggregationEnabled": false
+            "privacyManifestAggregationEnabled": false,
+            "enableSceneSupport": true
           }
         }
       ],
