@@ -63,21 +63,6 @@ class DashboardView extends React.Component {
     constructor(props) {
         super(props);
 
-        // ------------------------------------------------------------------------
-        // PLUGIN FUNCTIONALITY
-        // ------------------------------------------------------------------------
-
-        const { pluginStyles,theme } = this.props;
-        this.styles = componentStyles(theme);
-
-        if(pluginStyles) {
-            this.styles = merge(this.styles, pluginStyles);
-        }
-
-        this.styles = StyleSheet.create(this.styles);
-
-        // ------------------------------------------------------------------------
-
         this.dataService = new DataService();
         this.props.onUpdateRefreshing(false);
 
@@ -131,8 +116,20 @@ class DashboardView extends React.Component {
         }
         // ------------------------------------------------------------------------
 
-        const { t } =  this.props;
-        const { themeStyles } = this.props.theme;
+        const {
+            pluginStyles,
+            theme
+        } = this.props;
+        const { themeStyles } = theme;
+
+        // Recreate styles with the current theme so runtime appearance changes are applied.
+        this.styles = componentStyles(theme);
+
+        if (pluginStyles) {
+            this.styles = merge(this.styles, pluginStyles);
+        }
+
+        this.styles = StyleSheet.create(this.styles);
 
         const scrollY = Animated.add(
             this.state.scrollY,
