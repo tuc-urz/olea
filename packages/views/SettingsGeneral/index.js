@@ -110,7 +110,7 @@ class GeneralSettingsView extends React.Component {
 
   _getColorScheme = () => {
     const value = this.props.settings.settingsGeneral.colorScheme
-    return ['system', 'light', 'dark'].includes(value) ? value : 'light'
+    return ['system', 'light', 'dark'].includes(value) ? value : 'system'
   }
 
   _renderColorScheme = () => {

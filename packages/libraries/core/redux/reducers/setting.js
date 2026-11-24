@@ -10,7 +10,10 @@ const supportedLanguages = ['de', 'en'];
 const initialSetting = {
     favorites: [],
     favoritesPtsStation: [],
-    settingsGeneral: {language: supportedLanguages.includes(lang) ? lang : 'en'},
+    settingsGeneral: {
+        language: supportedLanguages.includes(lang) ? lang : 'en',
+        colorScheme: 'system'
+    },
     settingsWeather: {location: 'uni'},
     settingsCanteens: {favoritePrice: ''},
     settingsAccessibility: {

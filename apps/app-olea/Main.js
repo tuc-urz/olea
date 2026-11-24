@@ -118,7 +118,7 @@ class Main extends React.Component {
       settingsGeneral?.colorScheme
     )
       ? settingsGeneral.colorScheme
-      : 'light'
+      : 'system'
 
     const dark = colorScheme === 'dark' ||
             (
