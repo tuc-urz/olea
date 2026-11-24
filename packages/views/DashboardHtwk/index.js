@@ -12,29 +12,28 @@
  * limitations under the License.
  */
 
-import React from 'react';
+import React from 'react'
 import {
-    Animated,
-    StyleSheet,
-    View,
-    RefreshControl,
-    SafeAreaView
-} from 'react-native';
-import {connect} from 'react-redux'
-import { withTheme } from "react-native-paper";
-import {withTranslation} from "react-i18next";
+  Animated,
+  StyleSheet,
+  View,
+  RefreshControl,
+  SafeAreaView
+} from 'react-native'
+import { connect } from 'react-redux'
+import { withTheme } from 'react-native-paper'
+import { withTranslation } from 'react-i18next'
 
-import merge from 'lodash/merge';
+import merge from 'lodash/merge'
 
-import { onUpdateRefreshing, DataService } from '../../libraries/core';
-import TopNewsComponent from '../../components/TopNewsHtwk';
-import MensaSliderComponent from '../../components/MensaSlider';
-import CourseInfoComponent from '../../components/CourseInfo';
-import QuickLinksComponent from '../../components/QuickLinks';
+import { onUpdateRefreshing, DataService } from '../../libraries/core'
+import TopNewsComponent from '../../components/TopNewsHtwk'
+import MensaSliderComponent from '../../components/MensaSlider'
+import CourseInfoComponent from '../../components/CourseInfo'
+import QuickLinksComponent from '../../components/QuickLinks'
 
-import componentStyles from "./styles"
-export const scrollRangeForAnimation = 160;
-
+import componentStyles from './styles'
+export const scrollRangeForAnimation = 160
 
 /**
  * Dashboard View
@@ -49,39 +48,38 @@ export const scrollRangeForAnimation = 160;
  *  - none
  */
 class DashboardView extends React.Component {
-    static navigationOptions = {
-        header: null
-    };
+  static navigationOptions = {
+    header: null
+  }
 
-    // Styles of this component
-    styles;
+  // Styles of this component
+  styles
 
-    dataService = null;
-    _scrollView = null;
+  dataService = null
+  _scrollView = null
 
+  constructor (props) {
+    super(props)
 
-    constructor(props) {
-        super(props);
+    this.dataService = new DataService()
+    this.props.onUpdateRefreshing(false)
 
-        this.dataService = new DataService();
-        this.props.onUpdateRefreshing(false);
-
-        this.state = {
-            scrollY: new Animated.Value(0)
-        };
+    this.state = {
+      scrollY: new Animated.Value(0)
     }
+  }
 
-    /**
+  /**
      * User has dragged down the view to update the informations
      *
      * @private
      */
-    handleRefresh = () => {
-        this.props.onUpdateRefreshing(true);
-        this.dataService.refresh();
-    };
+  handleRefresh = () => {
+    this.props.onUpdateRefreshing(true)
+    this.dataService.refresh()
+  }
 
-    /**
+  /**
      * User has scrolled down. If the header animation isn't fully finished,
      * scroll up or down (depends on how far the user has scrolled) to finish the animation.
      * This prevents that the top view looks like its stuck.
@@ -90,8 +88,8 @@ class DashboardView extends React.Component {
      *
      * @private
      */
-    handleScrollEndSnapToEdge = event => {
-      /* TODO Disabled at the moment. On smaller devices the user isn't able to
+  handleScrollEndSnapToEdge = event => {
+    /* TODO Disabled at the moment. On smaller devices the user isn't able to
           use the course component because of the scroll back
 
       const y = event.nativeEvent.contentOffset.y;
@@ -103,92 +101,93 @@ class DashboardView extends React.Component {
             if (this._scrollView) {
                 this._scrollView.scrollTo({y: this._scrollRangeForAnimation});
             }
-        }*/
-    };
+        } */
+  }
 
-    render() {
-        // ------------------------------------------------------------------------
-        // PLUGIN FUNCTIONALITY
-        // ------------------------------------------------------------------------
-        const PluginComponent = this.props.pluginComponent;
-        if (PluginComponent) {
-            return <PluginComponent />;
-        }
-        // ------------------------------------------------------------------------
-
-        const {
-            pluginStyles,
-            theme
-        } = this.props;
-        const { themeStyles } = theme;
-
-        // Recreate styles with the current theme so runtime appearance changes are applied.
-        this.styles = componentStyles(theme);
-
-        if (pluginStyles) {
-            this.styles = merge(this.styles, pluginStyles);
-        }
-
-        this.styles = StyleSheet.create(this.styles);
-
-        const scrollY = Animated.add(
-            this.state.scrollY,
-            0,
-        );
-        const headerTranslate = scrollY.interpolate({
-            inputRange: [0, scrollRangeForAnimation],
-            outputRange: [0, 1],
-            extrapolate: 'clamp',
-        });
-
-        return (
-            <SafeAreaView style={[this.styles.container, themeStyles.appSafeAreaContainer]}>
-                <Animated.ScrollView
-                    ref={scrollView => {
-                        this._scrollView = scrollView ? scrollView._component : null;
-                    }}
-                    style={this.styles.container}
-                    contentContainerStyle={this.styles.contentContainer}
-                    scrollEventThrottle={2}
-                    onScrollEndDrag={this.handleScrollEndSnapToEdge}
-                    onMomentumScrollEnd={this.handleScrollEndSnapToEdge}
-                    onScroll={Animated.event(
-                        [
-                            {
-                                nativeEvent: {contentOffset: {y: this.state.scrollY}},
-                            },
-                        ],
-                        {
-                            useNativeDriver: true,
-                        }
-                    )}
-                    refreshControl={
-                        <RefreshControl
-                            refreshing={this.props.refreshing}
-                            onRefresh={this.handleRefresh}
-                        />
-                    }>
-                    <View>
-                        <TopNewsComponent    {...this.props}  animationRange={headerTranslate}/>
-                        <QuickLinksComponent {...this.props} />
-                        <MensaSliderComponent {...this.props} />
-                        <CourseInfoComponent  {...this.props} />
-                    </View>
-                </Animated.ScrollView>
-            </SafeAreaView>
-        );
+  render () {
+    // ------------------------------------------------------------------------
+    // PLUGIN FUNCTIONALITY
+    // ------------------------------------------------------------------------
+    const PluginComponent = this.props.pluginComponent
+    if (PluginComponent) {
+      return <PluginComponent />
     }
+    // ------------------------------------------------------------------------
+
+    const {
+      pluginStyles,
+      theme
+    } = this.props
+    const { themeStyles } = theme
+
+    // Recreate styles with the current theme so runtime appearance changes are applied.
+    this.styles = componentStyles(theme)
+
+    if (pluginStyles) {
+      this.styles = merge(this.styles, pluginStyles)
+    }
+
+    this.styles = StyleSheet.create(this.styles)
+
+    const scrollY = Animated.add(
+      this.state.scrollY,
+      0
+    )
+    const headerTranslate = scrollY.interpolate({
+      inputRange: [0, scrollRangeForAnimation],
+      outputRange: [0, 1],
+      extrapolate: 'clamp'
+    })
+
+    return (
+      <SafeAreaView style={[this.styles.container, themeStyles.appSafeAreaContainer]}>
+        <Animated.ScrollView
+          ref={scrollView => {
+            this._scrollView = scrollView ? scrollView._component : null
+          }}
+          style={this.styles.container}
+          contentContainerStyle={this.styles.contentContainer}
+          scrollEventThrottle={2}
+          onScrollEndDrag={this.handleScrollEndSnapToEdge}
+          onMomentumScrollEnd={this.handleScrollEndSnapToEdge}
+          onScroll={Animated.event(
+            [
+              {
+                nativeEvent: { contentOffset: { y: this.state.scrollY } }
+              }
+            ],
+            {
+              useNativeDriver: true
+            }
+          )}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.props.refreshing}
+              onRefresh={this.handleRefresh}
+            />
+                    }
+        >
+          <View>
+            <TopNewsComponent {...this.props} animationRange={headerTranslate} />
+            <QuickLinksComponent {...this.props} />
+            <MensaSliderComponent {...this.props} />
+            <CourseInfoComponent {...this.props} />
+          </View>
+        </Animated.ScrollView>
+      </SafeAreaView>
+    )
+  }
 }
 
 const mapStateToProps = state => {
-    return {
-        pluginComponent: state.pluginReducer.dashboard.component,
-        pluginStyles: state.pluginReducer.dashboard.styles,
-        view : state.stateReducer.view,
-        feedItems: state.stateReducer.feedItems,
-        feeds: state.stateReducer.feeds,
-        refreshing: state.stateReducer.refreshing
-    };
-};
+  return {
+    pluginComponent: state.pluginReducer.dashboard.component,
+    pluginStyles: state.pluginReducer.dashboard.styles,
+    view: state.stateReducer.view,
+    feedItems: state.stateReducer.feedItems,
+    feeds: state.stateReducer.feeds,
+    refreshing: state.stateReducer.refreshing
+  }
+}
 
-export default connect(mapStateToProps, {onUpdateRefreshing})(withTranslation()(withTheme(DashboardView)))
+export default connect(mapStateToProps, { onUpdateRefreshing })(withTranslation()(withTheme(DashboardView)))
