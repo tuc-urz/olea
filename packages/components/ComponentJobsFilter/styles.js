@@ -6,12 +6,14 @@ export default function (theme) {
     },
     title: {
       fontSize: theme.fontSizes.m,
-      color: theme.colors.text
+      color: theme.colors.text,
+      fontWeight: 'bold',
+      textAlign: 'auto',
+      marginStart: 10
     },
     checkboxContainer: {
       backgroundColor: 'transparent',
-      borderWidth: 0,
-      borderRadius: 0,
+      paddingHorizontal: 14,
       paddingVertical: 14
     }
   }

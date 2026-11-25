@@ -17,13 +17,14 @@ import {SafeAreaView, View, Alert} from 'react-native';
 import { reloadAppAsync } from 'expo'
 
 import {connect} from 'react-redux'
-import { withTheme, Checkbox} from "react-native-paper";
+import { withTheme } from 'react-native-paper';
 import {withTranslation} from "react-i18next";
 
 import merge from 'lodash/merge';
 
 import { onSettingAccessibilityOverride, store } from '../../libraries/core';
 import AppbarComponent from '../../components/AppBar';
+import { CheckboxItem } from '../../components/SelectionControls'
 import componentStyles from "./styles";
 
 /**
@@ -106,21 +107,18 @@ class AccessibilitySettingsView extends React.Component {
         }
         // ------------------------------------------------------------------------
 
-        const { theme: { themeStyles, colors }, t } = this.props;
+        const { theme: { themeStyles }, t } = this.props;
         const { highContrast, increaseFontSize } = this.state;
         const accessibilitySettings = [
             {key: 'highContrast',       checked: highContrast,      title: t('settings:accessibility.highContrast')     },
             {key: 'increaseFontSize',   checked: increaseFontSize,  title: t('settings:accessibility.increaseFontSize') }
         ].map(({key, checked, title}) =>
-            <Checkbox.Item
+            <CheckboxItem
                 key={key}
                 status={checked ? 'checked' : 'unchecked'}
                 label={title}
                 labelStyle={this.styles.labelStyle}
                 onPress={() => this._handleChange(key)}
-                color={colors.checkboxChecked}
-                uncheckedColor={colors.checkboxUnchecked}
-                mode={'android'}
             />
         );
 

@@ -32,6 +32,11 @@ export { default as SettingsDialog } from './components/SettingsDialog';
 export { default as SettingsDialogRadio } from './components/SettingsDialogRadio';
 export { default as SettingsDialogSelect } from './components/SettingsDialogSelect';
 export { default as SettingSection } from './components/SettingSection';
+export {
+  CheckboxControl,
+  CheckboxItem,
+  RadioButtonItem
+} from './components/SelectionControls'
 export { default as TabBarIcon } from './components/TabBarIcon';
 export { default as TimetableCodeInput } from './components/TimetableCodeInput';
 export { default as TimetableDay } from './components/TimetableDay';

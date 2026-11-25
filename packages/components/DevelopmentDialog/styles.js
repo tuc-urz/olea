@@ -3,7 +3,12 @@ export default function (theme) {
     selectOption: {
       display: 'flex',
       flexDirection: 'row',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
+      alignItems: 'center'
+    },
+    menuItemOption: {
+      paddingStart: 16,
+      paddingEnd: 0
     },
     text: {
       color: theme.colors.text

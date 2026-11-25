@@ -15,10 +15,11 @@
 import React, { useMemo } from 'react';
 import { StyleSheet } from 'react-native';
 
-import { Checkbox, useTheme } from 'react-native-paper';
+import { useTheme } from 'react-native-paper';
 import { useTranslation } from 'react-i18next';
 
 import SettingsDialog from '../SettingsDialog';
+import { CheckboxItem } from '../SelectionControls';
 
 import componentStyles from './styles';
 
@@ -44,17 +45,13 @@ export default function SettingsDialogSelect({ title, visible, options, onDismis
           option => {
             const optionKey = option?.key;
             const isChecked = selectedOptions?.includes?.(optionKey) ?? false;
-            const colors = theme.colors;
             return (
-              <Checkbox.Item
+              <CheckboxItem
                 key={optionKey}
                 value={optionKey}
                 status={isChecked ? 'checked' : 'unchecked'}
                 label={t(option.label)}
                 labelStyle={styles.optionLabel}
-                color={colors.checkboxChecked}
-                uncheckedColor={colors.checkboxUnchecked}
-                mode={'android'}
                 onPress={
                   () => {
                     const nextSelectedOptions = selectedOptions.includes(optionKey)
