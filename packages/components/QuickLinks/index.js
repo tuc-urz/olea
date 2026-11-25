@@ -51,38 +51,38 @@ function QuickLinksComponent ({ theme, theme: { colors } }) {
     [theme, width, height]
   )
 
-/**
+  /**
  * Opens a quicklink using the operating system's URL handler.
  * Avoids a preliminary canOpenURL check that may incorrectly reject
  * valid web links on iOS.
  *
  * @param {string} url - URL of the quicklink to open.
  */
-function openQuicklink (url) {
-  Linking.openURL(url).catch((error) => {
-    console.warn('Could not open quicklink:', error)
-    Alert.alert(
-      t('quicklinks:openErrorTitle'),
-      t('quicklinks:openErrorMessage')
-    )
-  })
-}
+  function openQuicklink (url) {
+    Linking.openURL(url).catch((error) => {
+      console.warn('Could not open quicklink:', error)
+      Alert.alert(
+        t('quicklinks:openErrorTitle'),
+        t('quicklinks:openErrorMessage')
+      )
+    })
+  }
 
-/**
+  /**
  * Opens the native share dialog for a quicklink.
  * Users can copy the URL or share it with another app.
  *
  * @param {string} url - URL of the quicklink.
  * @param {string} title - Display title of the quicklink.
  */
-function shareQuicklink (url, title) {
-  Share.share({
-    message: url,
-    title
-  }).catch((error) => {
-    console.warn('Could not share quicklink:', error)
-  })
-}
+  function shareQuicklink (url, title) {
+    Share.share({
+      message: url,
+      title
+    }).catch((error) => {
+      console.warn('Could not share quicklink:', error)
+    })
+  }
 
   return (
     // If quicklinks are in settings.js defined return content, otherwise return nothing to render
