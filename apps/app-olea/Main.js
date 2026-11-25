@@ -118,13 +118,17 @@ class Main extends React.Component {
       settingsGeneral?.colorScheme
     )
       ? settingsGeneral.colorScheme
-      : 'light'
+      : 'system'
 
-    const dark = colorScheme === 'dark' ||
-            (
-              colorScheme === 'system' &&
-                this.currentSystemColorScheme === 'dark'
-            )
+    // Apply dark mode only when the app explicitly supports color schemes.
+    const dark = this.state.theme.supportsColorScheme === true &&
+      (
+        colorScheme === 'dark' ||
+        (
+          colorScheme === 'system' &&
+          this.currentSystemColorScheme === 'dark'
+        )
+      )
 
     if (
       this.currentHighContrastValue !== settingsAccessibility.highContrast ||
