@@ -211,7 +211,9 @@
     },
     "urls": {
       "library": "https://bibliothek.htwk-leipzig.de/en/micrositeen"
-    }
+    },
+    "openErrorTitle": "Could not open link",
+    "openErrorMessage": "Please try again or copy the link and open it in your browser."
   },
   "room": {
     "title": "Room",
