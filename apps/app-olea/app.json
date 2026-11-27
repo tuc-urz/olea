@@ -72,13 +72,15 @@
       "expo-font",
       "expo-localization",
       "expo-secure-store",
+      "expo-status-bar",
       [
         "expo-build-properties",
         {
           "android": {
             "extraMavenRepos": [
               "../../../../node_modules/@notifee/react-native/android/libs"
-            ]
+            ],
+            "enableMinifyInReleaseBuilds": false
           },
           "ios": {
             "useFrameworks": "static",
