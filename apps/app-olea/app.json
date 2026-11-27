@@ -79,14 +79,14 @@
           "android": {
             "extraMavenRepos": [
               "../../../../node_modules/@notifee/react-native/android/libs"
-            ]
+            ],
+            "enableMinifyInReleaseBuilds": false
           },
           "ios": {
             "useFrameworks": "static",
             "deploymentTarget": "16.4",
             "cocoapodsVersion": "1.15.2",
-            "privacyManifestAggregationEnabled": false,
-            "enableSceneSupport": true
+            "privacyManifestAggregationEnabled": false
           }
         }
       ],
